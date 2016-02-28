@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace Canal
 {
@@ -8,7 +9,7 @@ namespace Canal
         {
             InitializeComponent();
 
-            var file = FileUtil.Get("Examples/RepWriteSumm.cbl");
+            var file = FileUtil.Get(Environment.CurrentDirectory + "/Examples/RepWriteSumm.cbl");
 
             var newTab = new TabPage("RepWriteSumm.cbl");
             var editor = new CodeBox(file);
