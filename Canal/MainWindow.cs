@@ -5,18 +5,41 @@ namespace Canal
 {
     public partial class MainWindow : Form
     {
-        public MainWindow()
+        private TabUtil tabUtil;
+
+        public MainWindow(string[] files = null)
         {
             InitializeComponent();
 
-            var file = FileUtil.Get(Environment.CurrentDirectory + "/Examples/RepWriteSumm.cbl");
+            tabUtil = new TabUtil(FileTabs);
 
-            var newTab = new TabPage("RepWriteSumm.cbl");
-            var editor = new CodeBox(file);
-            editor.Dock = DockStyle.Fill;
-            newTab.Controls.Add(editor);
+            if (files != null)
+            {
+                foreach (var filename in files)
+                {
+                    var file = FileUtil.Get(filename);
+                    file.Name = filename;
+                    tabUtil.AddTab(file);
+                }
+            }
+        }
 
-            FileTabs.Controls.Add(newTab);
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var dialogResult = openFileDialog1.ShowDialog();
+
+            if (dialogResult == DialogResult.OK)
+            {
+                var file = FileUtil.Get(openFileDialog1.FileName);
+                file.Name = openFileDialog1.FileName;
+
+                tabUtil.AddTab(file);
+            }
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tabUtil.CloseCurrentTab();
         }
     }
 }

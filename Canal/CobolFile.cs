@@ -6,6 +6,7 @@ namespace Canal
     public class CobolFile
     {
         private IEnumerable<string> lines;
+        internal string Name;
 
         public string Text { get { return string.Join(Environment.NewLine, lines); } set { throw new NotImplementedException(); } }
 

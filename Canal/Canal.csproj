@@ -28,9 +28,9 @@
     <TargetCulture>en</TargetCulture>
     <ProductName>CANAL Cobol Analyzer</ProductName>
     <PublisherName>Jannik Arndt</PublisherName>
-    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>6</ApplicationRevision>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -66,6 +66,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>bridge.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -103,6 +106,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TabUtil.cs" />
     <EmbeddedResource Include="FileControl.resx">
       <DependentUpon>FileControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -119,6 +123,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="Canal_TemporaryKey.pfx" />
+    <Content Include="bridge.ico" />
     <Content Include="Examples\RepWriteSumm.cbl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -152,6 +157,20 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <FileAssociation Include=".cbl">
+      <Visible>False</Visible>
+      <Description>COBOL Copy Book</Description>
+      <Progid>de.jannikarndt.canal.cbl</Progid>
+      <DefaultIcon>bridge.ico</DefaultIcon>
+    </FileAssociation>
+    <FileAssociation Include=".cob">
+      <Visible>False</Visible>
+      <Description>COBOL File</Description>
+      <Progid>de.jannikarndt.canal.cob</Progid>
+      <DefaultIcon>bridge.ico</DefaultIcon>
+    </FileAssociation>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
