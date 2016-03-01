@@ -31,16 +31,14 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Level88ToEnum));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.csharpEnumMapper = new System.Windows.Forms.GroupBox();
-            this.csharpEnumMapperOutput = new FastColoredTextBoxNS.FastColoredTextBox();
-            this.csharpEnum = new System.Windows.Forms.GroupBox();
-            this.csharpEnumOutput = new FastColoredTextBoxNS.FastColoredTextBox();
-            this.cobolLevel88Input = new FastColoredTextBoxNS.FastColoredTextBox();
-            this.level88Names = new System.Windows.Forms.GroupBox();
-            this.csharpNames = new System.Windows.Forms.GroupBox();
-            this.csharpNamesInput = new FastColoredTextBoxNS.FastColoredTextBox();
             this.comment = new System.Windows.Forms.GroupBox();
             this.commentsInput = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.csharpEnum = new System.Windows.Forms.GroupBox();
+            this.csharpEnumOutput = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.level88Names = new System.Windows.Forms.GroupBox();
+            this.cobolLevel88Input = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.csharpNames = new System.Windows.Forms.GroupBox();
+            this.csharpNamesInput = new FastColoredTextBoxNS.FastColoredTextBox();
             this.settings = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
@@ -49,19 +47,21 @@
             this.label3 = new System.Windows.Forms.Label();
             this.namespaceEnumInput = new System.Windows.Forms.TextBox();
             this.namespaceMapperInput = new System.Windows.Forms.TextBox();
+            this.csharpEnumMapper = new System.Windows.Forms.GroupBox();
+            this.csharpEnumMapperOutput = new FastColoredTextBoxNS.FastColoredTextBox();
             this.tableLayoutPanel1.SuspendLayout();
-            this.csharpEnumMapper.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.csharpEnumMapperOutput)).BeginInit();
-            this.csharpEnum.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.csharpEnumOutput)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cobolLevel88Input)).BeginInit();
-            this.level88Names.SuspendLayout();
-            this.csharpNames.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.csharpNamesInput)).BeginInit();
             this.comment.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.commentsInput)).BeginInit();
+            this.csharpEnum.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.csharpEnumOutput)).BeginInit();
+            this.level88Names.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cobolLevel88Input)).BeginInit();
+            this.csharpNames.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.csharpNamesInput)).BeginInit();
             this.settings.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.csharpEnumMapper.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.csharpEnumMapperOutput)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -87,21 +87,20 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1140, 609);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // csharpEnumMapper
+            // comment
             // 
-            this.csharpEnumMapper.Controls.Add(this.csharpEnumMapperOutput);
-            this.csharpEnumMapper.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.csharpEnumMapper.Location = new System.Drawing.Point(703, 3);
-            this.csharpEnumMapper.Name = "csharpEnumMapper";
-            this.tableLayoutPanel1.SetRowSpan(this.csharpEnumMapper, 4);
-            this.csharpEnumMapper.Size = new System.Drawing.Size(494, 603);
-            this.csharpEnumMapper.TabIndex = 4;
-            this.csharpEnumMapper.TabStop = false;
-            this.csharpEnumMapper.Text = "C# Enum Mapper";
+            this.comment.Controls.Add(this.commentsInput);
+            this.comment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comment.Location = new System.Drawing.Point(3, 450);
+            this.comment.Name = "comment";
+            this.comment.Size = new System.Drawing.Size(294, 156);
+            this.comment.TabIndex = 9;
+            this.comment.TabStop = false;
+            this.comment.Text = "Comments";
             // 
-            // csharpEnumMapperOutput
+            // commentsInput
             // 
-            this.csharpEnumMapperOutput.AutoCompleteBracketsList = new char[] {
+            this.commentsInput.AutoCompleteBracketsList = new char[] {
         '(',
         ')',
         '{',
@@ -112,22 +111,22 @@
         '\"',
         '\'',
         '\''};
-            this.csharpEnumMapperOutput.AutoScrollMinSize = new System.Drawing.Size(27, 14);
-            this.csharpEnumMapperOutput.BackBrush = null;
-            this.csharpEnumMapperOutput.CharHeight = 14;
-            this.csharpEnumMapperOutput.CharWidth = 8;
-            this.csharpEnumMapperOutput.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.csharpEnumMapperOutput.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.csharpEnumMapperOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.csharpEnumMapperOutput.IsReplaceMode = false;
-            this.csharpEnumMapperOutput.Location = new System.Drawing.Point(3, 16);
-            this.csharpEnumMapperOutput.Name = "csharpEnumMapperOutput";
-            this.csharpEnumMapperOutput.Paddings = new System.Windows.Forms.Padding(0);
-            this.csharpEnumMapperOutput.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-            this.csharpEnumMapperOutput.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("csharpEnumMapperOutput.ServiceColors")));
-            this.csharpEnumMapperOutput.Size = new System.Drawing.Size(488, 584);
-            this.csharpEnumMapperOutput.TabIndex = 0;
-            this.csharpEnumMapperOutput.Zoom = 100;
+            this.commentsInput.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+            this.commentsInput.BackBrush = null;
+            this.commentsInput.CharHeight = 14;
+            this.commentsInput.CharWidth = 8;
+            this.commentsInput.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.commentsInput.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.commentsInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.commentsInput.IsReplaceMode = false;
+            this.commentsInput.Location = new System.Drawing.Point(3, 16);
+            this.commentsInput.Name = "commentsInput";
+            this.commentsInput.Paddings = new System.Windows.Forms.Padding(0);
+            this.commentsInput.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.commentsInput.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("commentsInput.ServiceColors")));
+            this.commentsInput.Size = new System.Drawing.Size(288, 137);
+            this.commentsInput.TabIndex = 0;
+            this.commentsInput.Zoom = 100;
             // 
             // csharpEnum
             // 
@@ -171,6 +170,17 @@
             this.csharpEnumOutput.TabIndex = 0;
             this.csharpEnumOutput.Zoom = 100;
             // 
+            // level88Names
+            // 
+            this.level88Names.Controls.Add(this.cobolLevel88Input);
+            this.level88Names.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.level88Names.Location = new System.Drawing.Point(3, 301);
+            this.level88Names.Name = "level88Names";
+            this.level88Names.Size = new System.Drawing.Size(294, 143);
+            this.level88Names.TabIndex = 0;
+            this.level88Names.TabStop = false;
+            this.level88Names.Text = "COBOL level 88";
+            // 
             // cobolLevel88Input
             // 
             this.cobolLevel88Input.AutoCompleteBracketsList = new char[] {
@@ -200,17 +210,6 @@
             this.cobolLevel88Input.Size = new System.Drawing.Size(288, 124);
             this.cobolLevel88Input.TabIndex = 0;
             this.cobolLevel88Input.Zoom = 100;
-            // 
-            // level88Names
-            // 
-            this.level88Names.Controls.Add(this.cobolLevel88Input);
-            this.level88Names.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.level88Names.Location = new System.Drawing.Point(3, 301);
-            this.level88Names.Name = "level88Names";
-            this.level88Names.Size = new System.Drawing.Size(294, 143);
-            this.level88Names.TabIndex = 0;
-            this.level88Names.TabStop = false;
-            this.level88Names.Text = "COBOL level 88";
             // 
             // csharpNames
             // 
@@ -252,47 +251,6 @@
             this.csharpNamesInput.Size = new System.Drawing.Size(288, 124);
             this.csharpNamesInput.TabIndex = 0;
             this.csharpNamesInput.Zoom = 100;
-            // 
-            // comment
-            // 
-            this.comment.Controls.Add(this.commentsInput);
-            this.comment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comment.Location = new System.Drawing.Point(3, 450);
-            this.comment.Name = "comment";
-            this.comment.Size = new System.Drawing.Size(294, 156);
-            this.comment.TabIndex = 9;
-            this.comment.TabStop = false;
-            this.comment.Text = "Comments";
-            // 
-            // commentsInput
-            // 
-            this.commentsInput.AutoCompleteBracketsList = new char[] {
-        '(',
-        ')',
-        '{',
-        '}',
-        '[',
-        ']',
-        '\"',
-        '\"',
-        '\'',
-        '\''};
-            this.commentsInput.AutoScrollMinSize = new System.Drawing.Size(27, 14);
-            this.commentsInput.BackBrush = null;
-            this.commentsInput.CharHeight = 14;
-            this.commentsInput.CharWidth = 8;
-            this.commentsInput.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.commentsInput.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.commentsInput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.commentsInput.IsReplaceMode = false;
-            this.commentsInput.Location = new System.Drawing.Point(3, 16);
-            this.commentsInput.Name = "commentsInput";
-            this.commentsInput.Paddings = new System.Windows.Forms.Padding(0);
-            this.commentsInput.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-            this.commentsInput.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("commentsInput.ServiceColors")));
-            this.commentsInput.Size = new System.Drawing.Size(288, 137);
-            this.commentsInput.TabIndex = 0;
-            this.commentsInput.Zoom = 100;
             // 
             // settings
             // 
@@ -380,6 +338,48 @@
             this.namespaceMapperInput.Size = new System.Drawing.Size(179, 20);
             this.namespaceMapperInput.TabIndex = 5;
             // 
+            // csharpEnumMapper
+            // 
+            this.csharpEnumMapper.Controls.Add(this.csharpEnumMapperOutput);
+            this.csharpEnumMapper.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.csharpEnumMapper.Location = new System.Drawing.Point(703, 3);
+            this.csharpEnumMapper.Name = "csharpEnumMapper";
+            this.tableLayoutPanel1.SetRowSpan(this.csharpEnumMapper, 4);
+            this.csharpEnumMapper.Size = new System.Drawing.Size(494, 603);
+            this.csharpEnumMapper.TabIndex = 4;
+            this.csharpEnumMapper.TabStop = false;
+            this.csharpEnumMapper.Text = "C# Enum Mapper";
+            // 
+            // csharpEnumMapperOutput
+            // 
+            this.csharpEnumMapperOutput.AutoCompleteBracketsList = new char[] {
+        '(',
+        ')',
+        '{',
+        '}',
+        '[',
+        ']',
+        '\"',
+        '\"',
+        '\'',
+        '\''};
+            this.csharpEnumMapperOutput.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+            this.csharpEnumMapperOutput.BackBrush = null;
+            this.csharpEnumMapperOutput.CharHeight = 14;
+            this.csharpEnumMapperOutput.CharWidth = 8;
+            this.csharpEnumMapperOutput.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.csharpEnumMapperOutput.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.csharpEnumMapperOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.csharpEnumMapperOutput.IsReplaceMode = false;
+            this.csharpEnumMapperOutput.Location = new System.Drawing.Point(3, 16);
+            this.csharpEnumMapperOutput.Name = "csharpEnumMapperOutput";
+            this.csharpEnumMapperOutput.Paddings = new System.Windows.Forms.Padding(0);
+            this.csharpEnumMapperOutput.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.csharpEnumMapperOutput.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("csharpEnumMapperOutput.ServiceColors")));
+            this.csharpEnumMapperOutput.Size = new System.Drawing.Size(488, 584);
+            this.csharpEnumMapperOutput.TabIndex = 0;
+            this.csharpEnumMapperOutput.Zoom = 100;
+            // 
             // Level88ToEnum
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -390,19 +390,19 @@
             this.Name = "Level88ToEnum";
             this.Text = "Level 88 To ENUM";
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.csharpEnumMapper.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.csharpEnumMapperOutput)).EndInit();
-            this.csharpEnum.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.csharpEnumOutput)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cobolLevel88Input)).EndInit();
-            this.level88Names.ResumeLayout(false);
-            this.csharpNames.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.csharpNamesInput)).EndInit();
             this.comment.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.commentsInput)).EndInit();
+            this.csharpEnum.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.csharpEnumOutput)).EndInit();
+            this.level88Names.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.cobolLevel88Input)).EndInit();
+            this.csharpNames.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.csharpNamesInput)).EndInit();
             this.settings.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
+            this.csharpEnumMapper.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.csharpEnumMapperOutput)).EndInit();
             this.ResumeLayout(false);
 
         }
