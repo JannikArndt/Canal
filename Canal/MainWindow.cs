@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Canal
 {
-    using _88ToEnum;
+    using Level88ToEnum;
 
     public partial class MainWindow : Form
     {
