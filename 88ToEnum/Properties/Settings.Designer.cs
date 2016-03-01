@@ -22,5 +22,29 @@ namespace Level88ToEnum.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string NamespaceEnum {
+            get {
+                return ((string)(this["NamespaceEnum"]));
+            }
+            set {
+                this["NamespaceEnum"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string NamespaceMapper {
+            get {
+                return ((string)(this["NamespaceMapper"]));
+            }
+            set {
+                this["NamespaceMapper"] = value;
+            }
+        }
     }
 }
