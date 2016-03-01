@@ -51,6 +51,8 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FileTabs = new System.Windows.Forms.TabControl();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.level88ToEnumConverterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,7 +63,8 @@
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
             this.viewToolStripMenuItem,
-            this.helpToolStripMenuItem});
+            this.helpToolStripMenuItem,
+            this.helpToolStripMenuItem1});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
@@ -203,15 +206,17 @@
             // 
             // helpToolStripMenuItem
             // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.level88ToEnumConverterToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.helpToolStripMenuItem.Text = "Tools";
             // 
             // FileTabs
             // 
             this.FileTabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FileTabs.Location = new System.Drawing.Point(0, 24);
-            this.FileTabs.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.FileTabs.Margin = new System.Windows.Forms.Padding(2);
             this.FileTabs.Name = "FileTabs";
             this.FileTabs.SelectedIndex = 0;
             this.FileTabs.Size = new System.Drawing.Size(1044, 684);
@@ -220,6 +225,19 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // helpToolStripMenuItem1
+            // 
+            this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem1.Text = "Help";
+            // 
+            // level88ToEnumConverterToolStripMenuItem
+            // 
+            this.level88ToEnumConverterToolStripMenuItem.Name = "level88ToEnumConverterToolStripMenuItem";
+            this.level88ToEnumConverterToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.level88ToEnumConverterToolStripMenuItem.Text = "Level 88 to Enum Converter";
+            this.level88ToEnumConverterToolStripMenuItem.Click += new System.EventHandler(this.level88ToEnumConverterToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -230,7 +248,7 @@
             this.Controls.Add(this.MainMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.MainMenu;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainWindow";
             this.Text = "CANAL Cobol Analyzer";
             this.MainMenu.ResumeLayout(false);
@@ -264,6 +282,8 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.TabControl FileTabs;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.ToolStripMenuItem level88ToEnumConverterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
     }
 }
 

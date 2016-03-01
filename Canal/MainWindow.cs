@@ -3,6 +3,8 @@ using System.Windows.Forms;
 
 namespace Canal
 {
+    using _88ToEnum;
+
     public partial class MainWindow : Form
     {
         private TabUtil tabUtil;
@@ -40,6 +42,12 @@ namespace Canal
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tabUtil.CloseCurrentTab();
+        }
+
+        private void level88ToEnumConverterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var converterWindow = new Level88ToEnum();
+            converterWindow.Show();
         }
     }
 }
