@@ -86,6 +86,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CobolFile.cs" />
+    <Compile Include="CobolTree\Models\CobolTree.cs" />
+    <Compile Include="CobolTree\Models\DataDivision.cs" />
+    <Compile Include="CobolTree\Models\EnvironmentDivision.cs" />
+    <Compile Include="CobolTree\Models\FileReference.cs" />
+    <Compile Include="CobolTree\Models\IdentificationDivision.cs" />
+    <Compile Include="CobolTree\Models\LinkageSection.cs" />
+    <Compile Include="CobolTree\Models\ProcedureDivision.cs" />
+    <Compile Include="CobolTree\Models\Section.cs" />
+    <Compile Include="CobolTree\Models\WorkingStorageSection.cs" />
     <Compile Include="CodeBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -183,6 +192,7 @@
       <DefaultIcon>bridge.ico</DefaultIcon>
     </FileAssociation>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

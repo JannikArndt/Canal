@@ -111,7 +111,7 @@
         '\"',
         '\'',
         '\''};
-            this.commentsInput.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+            this.commentsInput.AutoScrollMinSize = new System.Drawing.Size(2, 14);
             this.commentsInput.BackBrush = null;
             this.commentsInput.CharHeight = 14;
             this.commentsInput.CharWidth = 8;
@@ -153,7 +153,7 @@
         '\"',
         '\'',
         '\''};
-            this.csharpEnumOutput.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+            this.csharpEnumOutput.AutoScrollMinSize = new System.Drawing.Size(2, 14);
             this.csharpEnumOutput.BackBrush = null;
             this.csharpEnumOutput.CharHeight = 14;
             this.csharpEnumOutput.CharWidth = 8;
@@ -194,7 +194,7 @@
         '\"',
         '\'',
         '\''};
-            this.cobolLevel88Input.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+            this.cobolLevel88Input.AutoScrollMinSize = new System.Drawing.Size(2, 14);
             this.cobolLevel88Input.BackBrush = null;
             this.cobolLevel88Input.CharHeight = 14;
             this.cobolLevel88Input.CharWidth = 8;
@@ -235,7 +235,7 @@
         '\"',
         '\'',
         '\''};
-            this.csharpNamesInput.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+            this.csharpNamesInput.AutoScrollMinSize = new System.Drawing.Size(2, 14);
             this.csharpNamesInput.BackBrush = null;
             this.csharpNamesInput.CharHeight = 14;
             this.csharpNamesInput.CharWidth = 8;
@@ -366,7 +366,7 @@
         '\"',
         '\'',
         '\''};
-            this.csharpEnumMapperOutput.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+            this.csharpEnumMapperOutput.AutoScrollMinSize = new System.Drawing.Size(2, 14);
             this.csharpEnumMapperOutput.BackBrush = null;
             this.csharpEnumMapperOutput.CharHeight = 14;
             this.csharpEnumMapperOutput.CharWidth = 8;
