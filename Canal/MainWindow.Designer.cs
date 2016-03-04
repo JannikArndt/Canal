@@ -49,10 +49,11 @@
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.level88ToEnumConverterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.FileTabs = new System.Windows.Forms.TabControl();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.level88ToEnumConverterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showPERFORMsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -207,10 +208,24 @@
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.level88ToEnumConverterToolStripMenuItem});
+            this.level88ToEnumConverterToolStripMenuItem,
+            this.showPERFORMsToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.helpToolStripMenuItem.Text = "Tools";
+            // 
+            // level88ToEnumConverterToolStripMenuItem
+            // 
+            this.level88ToEnumConverterToolStripMenuItem.Name = "level88ToEnumConverterToolStripMenuItem";
+            this.level88ToEnumConverterToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.level88ToEnumConverterToolStripMenuItem.Text = "Level 88 to Enum Converter";
+            this.level88ToEnumConverterToolStripMenuItem.Click += new System.EventHandler(this.level88ToEnumConverterToolStripMenuItem_Click);
+            // 
+            // helpToolStripMenuItem1
+            // 
+            this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem1.Text = "Help";
             // 
             // FileTabs
             // 
@@ -226,18 +241,12 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // helpToolStripMenuItem1
+            // showPERFORMsToolStripMenuItem
             // 
-            this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem1.Text = "Help";
-            // 
-            // level88ToEnumConverterToolStripMenuItem
-            // 
-            this.level88ToEnumConverterToolStripMenuItem.Name = "level88ToEnumConverterToolStripMenuItem";
-            this.level88ToEnumConverterToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.level88ToEnumConverterToolStripMenuItem.Text = "Level 88 to Enum Converter";
-            this.level88ToEnumConverterToolStripMenuItem.Click += new System.EventHandler(this.level88ToEnumConverterToolStripMenuItem_Click);
+            this.showPERFORMsToolStripMenuItem.Name = "showPERFORMsToolStripMenuItem";
+            this.showPERFORMsToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.showPERFORMsToolStripMenuItem.Text = "Show PERFORMs";
+            this.showPERFORMsToolStripMenuItem.Click += new System.EventHandler(this.showPERFORMsToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -284,6 +293,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem level88ToEnumConverterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem showPERFORMsToolStripMenuItem;
     }
 }
 

@@ -1,23 +1,28 @@
-﻿namespace Canal.CobolTree.Models
+﻿using System.Collections.Generic;
+
+namespace Canal.CobolTree.Models
 {
-    using System.Collections.Generic;
+    using System.Text.RegularExpressions;
 
-    public class Section
+    public class Section : Procedure
     {
-        public Section(string name, string text)
+        public List<Procedure> Procedures { get; set; }
+
+        public Section(string name, string sourceCode)
+            : base(name)
         {
-            this.Name = name;
-            this.OriginalSource = text;
+            this.Procedures = new List<Procedure>();
+
+            var procedureNames = Regex.Matches(sourceCode, @"^ [\w\d-]+\.", RegexOptions.Compiled | RegexOptions.Multiline);
+
+            foreach (Match procedureName in procedureNames)
+            {
+                string procName = procedureName.Value.Trim().Trim('.');
+                var begin = procedureName.Index + procedureName.Length;
+                var length = (procedureName.NextMatch().Success ? procedureName.NextMatch().Index : sourceCode.Length) - begin;
+                string text = sourceCode.Substring(begin, length);
+                this.Procedures.Add(new Procedure(procName, text));
+            }
         }
-
-        public string Name { get; set; }
-
-        public string OriginalSource { get; set; }
-
-        public List<Section> PerformReferences { get; set; }
-
-        public List<FileReference> CallReferences { get; set; }
-
-        public List<FileReference> CopyReferences { get; set; }
     }
 }

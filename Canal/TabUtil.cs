@@ -6,6 +6,14 @@ namespace Canal
     {
         private TabControl tabControl;
 
+        public CobolFile CurrentFile
+        {
+            get
+            {
+                return ((CodeBox)this.tabControl.SelectedTab.Controls.Find("CodeBox", false)[0]).CobolFile;
+            }
+        }
+
         public TabUtil(TabControl tabControl)
         {
             this.tabControl = tabControl;
@@ -16,6 +24,7 @@ namespace Canal
             var newTab = new TabPage(file.Name);
             var editor = new CodeBox(file);
             editor.Dock = DockStyle.Fill;
+            editor.Name = "CodeBox";
             newTab.Controls.Add(editor);
 
             tabControl.Controls.Add(newTab);

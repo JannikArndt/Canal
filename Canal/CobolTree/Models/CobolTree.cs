@@ -12,20 +12,26 @@
 
         public ProcedureDivision ProcedureDivision { get; set; }
 
-        public CobolTree(string sourceCode)
+        public CobolTree(string code)
         {
+            var sourceCode = TextHelper.TrimAllLines(code);
+
             int indexIdentificationDivision = sourceCode.IndexOf("IDENTIFICATION DIVISION", StringComparison.Ordinal);
             int indexEnvironmentDivision = sourceCode.IndexOf("ENVIRONMENT DIVISION", StringComparison.Ordinal);
             int indexDataDivision = sourceCode.IndexOf("DATA DIVISION", StringComparison.Ordinal);
             int indexProcedureDivision = sourceCode.IndexOf("PROCEDURE DIVISION", StringComparison.Ordinal);
 
-            this.IdentificationDivision = new IdentificationDivision(sourceCode.Substring(indexProcedureDivision, indexEnvironmentDivision - indexIdentificationDivision));
+            if (indexIdentificationDivision > 0)
+                this.IdentificationDivision = new IdentificationDivision(sourceCode.Substring(indexProcedureDivision, indexEnvironmentDivision - indexIdentificationDivision));
 
-            this.EnvironmentDivision = new EnvironmentDivision(sourceCode.Substring(indexEnvironmentDivision, indexDataDivision - indexEnvironmentDivision));
+            if (indexEnvironmentDivision > 0)
+                this.EnvironmentDivision = new EnvironmentDivision(sourceCode.Substring(indexEnvironmentDivision, indexDataDivision - indexEnvironmentDivision));
 
-            this.DataDivision = new DataDivision(sourceCode.Substring(indexDataDivision, indexProcedureDivision - indexDataDivision));
+            if (indexDataDivision > 0)
+                this.DataDivision = new DataDivision(sourceCode.Substring(indexDataDivision, indexProcedureDivision - indexDataDivision));
 
-            this.ProcedureDivision = new ProcedureDivision(sourceCode.Substring(indexProcedureDivision, sourceCode.Length - indexProcedureDivision));
+            if (indexProcedureDivision > 0)
+                this.ProcedureDivision = new ProcedureDivision(sourceCode.Substring(indexProcedureDivision, sourceCode.Length - indexProcedureDivision));
         }
     }
 }

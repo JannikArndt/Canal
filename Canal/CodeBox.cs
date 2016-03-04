@@ -4,16 +4,16 @@ namespace Canal
 {
     public partial class CodeBox : FastColoredTextBox
     {
-        private CobolFile file;
+        public CobolFile CobolFile { get; set; }
 
-        public CodeBox() : base()
+        public CodeBox()
         {
             InitializeComponent();
         }
 
-        public CodeBox(CobolFile file) : base()
+        public CodeBox(CobolFile file)
         {
-            this.file = file;
+            this.CobolFile = file;
 
             Text = file.Text;
             Language = Language.Cobol;
