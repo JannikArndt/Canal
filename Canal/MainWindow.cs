@@ -54,6 +54,9 @@ namespace Canal
 
         private void showPERFORMsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (tabUtil.CurrentFile == null)
+                return;
+
             var performsWindow = new Performs(tabUtil.CurrentFile);
             performsWindow.Show();
         }

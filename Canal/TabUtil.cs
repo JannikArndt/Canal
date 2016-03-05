@@ -10,7 +10,7 @@ namespace Canal
         {
             get
             {
-                return ((CodeBox)this.tabControl.SelectedTab.Controls.Find("CodeBox", false)[0]).CobolFile;
+                return tabControl.SelectedTab != null ? ((CodeBox)tabControl.SelectedTab.Controls.Find("CodeBox", false)[0]).CobolFile : null;
             }
         }
 

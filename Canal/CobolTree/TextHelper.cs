@@ -13,7 +13,8 @@ namespace Canal.CobolTree
 
             foreach (var line in lines)
             {
-                result.AppendLine(line.Substring(6, 66));
+                var length = Math.Min(66, line.Length - 6);
+                result.AppendLine(line.Substring(6, length));
             }
 
             return result.ToString();
