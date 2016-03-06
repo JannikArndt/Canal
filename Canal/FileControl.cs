@@ -16,7 +16,7 @@ namespace Canal
             codeBox.SetFile(file);
             searchBox.Text = Resources.SearchPlaceholder;
 
-            treeView.Nodes.AddRange(CobolFile.CobolTree.AsTreeNodes);
+            treeView.Nodes.Add(CobolFile.CobolTree.AsTreeNodes);
             treeView.ExpandAll();
         }
 

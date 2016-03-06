@@ -40,7 +40,7 @@ namespace Canal
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tabUtil.CloseCurrentTab();
+            tabUtil.CloseTab();
         }
 
         private void level88ToEnumConverterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -60,7 +60,8 @@ namespace Canal
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Close();
+            if (tabUtil.CloseAllTabs())
+                Close();
         }
     }
 }

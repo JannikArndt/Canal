@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace Canal
 {
@@ -18,12 +19,40 @@ namespace Canal
 
         public TabUtil(TabControl tabControl)
         {
-            this._tabControl = tabControl;
+            _tabControl = tabControl;
+            _tabControl.DrawMode = TabDrawMode.OwnerDrawFixed;
+            _tabControl.DrawItem += _tabControl_DrawItem;
+            _tabControl.MouseDown += TabControlOnMouseDown;
+        }
+
+        private void TabControlOnMouseDown(object sender, MouseEventArgs mouseEventArgs)
+        {
+            //Looping through the controls.
+            for (int i = 0; i < _tabControl.TabPages.Count; i++)
+            {
+                Rectangle r = _tabControl.GetTabRect(i);
+                //Getting the position of the "x" mark.
+                Rectangle closeButton = new Rectangle(r.Right - 15, r.Top + 4, 9, 7);
+                if (closeButton.Contains(mouseEventArgs.Location))
+                {
+                    CloseTab(i);
+                }
+            }
+        }
+
+        private void _tabControl_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            //This code will render a "x" mark at the end of the Tab caption. 
+            Font xFont = new Font("Consolas", 10, FontStyle.Bold);
+
+            e.Graphics.DrawString("X", xFont, Brushes.Black, e.Bounds.Right - 15, e.Bounds.Top + 4);
+            e.Graphics.DrawString(_tabControl.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + 12, e.Bounds.Top + 4);
+            e.DrawFocusRectangle();
         }
 
         public void AddTab(CobolFile file)
         {
-            var newTab = new TabPage(file.Name);
+            var newTab = new TabPage(file.Name + "        ");
 
             var fileControl = new FileControl(file)
             {
@@ -32,15 +61,31 @@ namespace Canal
             };
 
             newTab.Controls.Add(fileControl);
-
             _tabControl.Controls.Add(newTab);
-
             _tabControl.SelectTab(newTab);
         }
 
-        public void CloseCurrentTab()
+        public bool CloseTab(int index = -1)
         {
-            _tabControl.Controls.Remove(_tabControl.SelectedTab);
+            var tabIndex = index < 0 ? _tabControl.SelectedIndex : index;
+
+            if (MessageBox.Show("Would you like to Close this Tab?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                _tabControl.TabPages.RemoveAt(tabIndex);
+                return true;
+            }
+            return false;
+        }
+
+        public bool CloseAllTabs()
+        {
+            for (int tabIndex = 0; tabIndex < _tabControl.TabCount; tabIndex++)
+            {
+                if (!CloseTab(tabIndex))
+                    return false;
+            }
+
+            return true;
         }
     }
 }

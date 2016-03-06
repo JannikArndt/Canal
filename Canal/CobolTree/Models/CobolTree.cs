@@ -16,18 +16,23 @@ namespace Canal.CobolTree.Models
 
         private string _name;
 
-        public TreeNode[] AsTreeNodes
+        public TreeNode AsTreeNodes
         {
             get
             {
-                return new[]
-                {
-                    new TreeNode(_name, new TreeNode[] {
-                    IdentificationDivision,
-                    EnvironmentDivision,
-                    DataDivision,
-                    ProcedureDivision})
-                };
+                var result = new TreeNode(_name);
+                if (IdentificationDivision != null)
+                    result.Nodes.Add(IdentificationDivision);
+
+                if (EnvironmentDivision != null)
+                    result.Nodes.Add(EnvironmentDivision);
+
+                if (DataDivision != null)
+                    result.Nodes.Add(DataDivision);
+
+                if (ProcedureDivision != null)
+                    result.Nodes.Add(ProcedureDivision);
+                return result;
             }
 
 
