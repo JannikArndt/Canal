@@ -3,9 +3,8 @@ using System.Windows.Forms;
 
 namespace Canal
 {
-    using Canal.Windows;
-
     using Level88ToEnum;
+    using Windows;
 
     public partial class MainWindow : Form
     {
@@ -30,12 +29,12 @@ namespace Canal
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var dialogResult = openFileDialog1.ShowDialog();
+            var dialogResult = openFileDialog.ShowDialog();
 
             if (dialogResult == DialogResult.OK)
             {
-                var file = FileUtil.Get(openFileDialog1.FileName);
-                file.Name = openFileDialog1.FileName;
+                var file = FileUtil.Get(openFileDialog.FileName);
+                file.Name = openFileDialog.FileName;
 
                 tabUtil.AddTab(file);
             }
@@ -59,6 +58,11 @@ namespace Canal
 
             var performsWindow = new Performs(tabUtil.CurrentFile);
             performsWindow.Show();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

@@ -50,10 +50,10 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.level88ToEnumConverterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showPERFORMsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.FileTabs = new System.Windows.Forms.TabControl();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.showPERFORMsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -150,6 +150,7 @@
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -221,6 +222,13 @@
             this.level88ToEnumConverterToolStripMenuItem.Text = "Level 88 to Enum Converter";
             this.level88ToEnumConverterToolStripMenuItem.Click += new System.EventHandler(this.level88ToEnumConverterToolStripMenuItem_Click);
             // 
+            // showPERFORMsToolStripMenuItem
+            // 
+            this.showPERFORMsToolStripMenuItem.Name = "showPERFORMsToolStripMenuItem";
+            this.showPERFORMsToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.showPERFORMsToolStripMenuItem.Text = "Show PERFORMs";
+            this.showPERFORMsToolStripMenuItem.Click += new System.EventHandler(this.showPERFORMsToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem1
             // 
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
@@ -237,16 +245,9 @@
             this.FileTabs.Size = new System.Drawing.Size(1044, 684);
             this.FileTabs.TabIndex = 1;
             // 
-            // openFileDialog1
+            // openFileDialog
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // showPERFORMsToolStripMenuItem
-            // 
-            this.showPERFORMsToolStripMenuItem.Name = "showPERFORMsToolStripMenuItem";
-            this.showPERFORMsToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.showPERFORMsToolStripMenuItem.Text = "Show PERFORMs";
-            this.showPERFORMsToolStripMenuItem.Click += new System.EventHandler(this.showPERFORMsToolStripMenuItem_Click);
+            this.openFileDialog.FileName = "openFileDialog";
             // 
             // MainWindow
             // 
@@ -290,7 +291,7 @@
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.TabControl FileTabs;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.ToolStripMenuItem level88ToEnumConverterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem showPERFORMsToolStripMenuItem;

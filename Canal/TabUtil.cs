@@ -4,35 +4,43 @@ namespace Canal
 {
     public class TabUtil
     {
-        private TabControl tabControl;
+        private readonly TabControl _tabControl;
+
+        // C# 6.0: public CobolFile CurrentFile => ((CodeBox) tabControl.SelectedTab?.Controls.Find("CodeBox", false)[0])?.CobolFile;
 
         public CobolFile CurrentFile
         {
             get
             {
-                return tabControl.SelectedTab != null ? ((CodeBox)tabControl.SelectedTab.Controls.Find("CodeBox", false)[0]).CobolFile : null;
+                return _tabControl.SelectedTab != null ? ((CodeBox)_tabControl.SelectedTab.Controls.Find("FileControl", false)[0]).CobolFile : null;
             }
         }
 
         public TabUtil(TabControl tabControl)
         {
-            this.tabControl = tabControl;
+            this._tabControl = tabControl;
         }
 
         public void AddTab(CobolFile file)
         {
             var newTab = new TabPage(file.Name);
-            var editor = new CodeBox(file);
-            editor.Dock = DockStyle.Fill;
-            editor.Name = "CodeBox";
-            newTab.Controls.Add(editor);
 
-            tabControl.Controls.Add(newTab);
+            var fileControl = new FileControl(file)
+            {
+                Name = "FileControl",
+                Dock = DockStyle.Fill
+            };
+
+            newTab.Controls.Add(fileControl);
+
+            _tabControl.Controls.Add(newTab);
+
+            _tabControl.SelectTab(newTab);
         }
 
         public void CloseCurrentTab()
         {
-            tabControl.Controls.Remove(tabControl.SelectedTab);
+            _tabControl.Controls.Remove(_tabControl.SelectedTab);
         }
     }
 }

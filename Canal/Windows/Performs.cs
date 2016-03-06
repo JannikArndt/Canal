@@ -3,16 +3,15 @@ using System.Windows.Forms;
 
 namespace Canal.Windows
 {
+    using CobolTree.Models;
     using System.Collections.Generic;
     using System.Linq;
-
-    using Canal.CobolTree.Models;
 
     public partial class Performs : Form
     {
         public Performs(CobolFile cobolFile)
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             var text = new StringBuilder();
             var sections = cobolFile.CobolTree.ProcedureDivision.Sections;
@@ -25,7 +24,7 @@ namespace Canal.Windows
 
                 foreach (var procedure in section.Procedures)
                 {
-                    this.FindPerformsRecursively(text, procedure, "    ", alreadyShown);
+                    FindPerformsRecursively(text, procedure, "    ", alreadyShown);
                 }
 
                 text.AppendLine();
@@ -34,7 +33,7 @@ namespace Canal.Windows
             performTextBox.Text = text.ToString();
         }
 
-        public void FindPerformsRecursively(StringBuilder text, Procedure procedure, string indent, List<string> alreadyShown)
+        private void FindPerformsRecursively(StringBuilder text, Procedure procedure, string indent, ICollection<string> alreadyShown)
         {
             if (procedure == null)
                 return;
@@ -45,7 +44,7 @@ namespace Canal.Windows
                 {
                     text.AppendLine(indent + performReference.ReferenceName);
                     alreadyShown.Add(performReference.ReferenceName);
-                    this.FindPerformsRecursively(text, performReference.Procedure, indent + "    ", alreadyShown);
+                    FindPerformsRecursively(text, performReference.Procedure, indent + "    ", alreadyShown);
                 }
                 else
                 {
