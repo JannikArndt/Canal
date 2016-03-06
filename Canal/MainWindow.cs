@@ -34,8 +34,6 @@ namespace Canal
             if (dialogResult == DialogResult.OK)
             {
                 var file = FileUtil.Get(openFileDialog.FileName);
-                file.Name = openFileDialog.FileName;
-
                 tabUtil.AddTab(file);
             }
         }

@@ -8,7 +8,7 @@ namespace Canal
         {
             var lines = File.ReadLines(filename);
 
-            var file = new CobolFile(lines);
+            var file = new CobolFile(lines, filename);
 
             return file;
         }

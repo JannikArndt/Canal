@@ -6,13 +6,13 @@ namespace Canal
     {
         private readonly TabControl _tabControl;
 
-        // C# 6.0: public CobolFile CurrentFile => ((CodeBox) tabControl.SelectedTab?.Controls.Find("CodeBox", false)[0])?.CobolFile;
+        // C# 6.0: public CobolFile CurrentFile => ((FileControl) tabControl.SelectedTab?.Controls.Find("FileControl", false)[0])?.CobolFile;
 
         public CobolFile CurrentFile
         {
             get
             {
-                return _tabControl.SelectedTab != null ? ((CodeBox)_tabControl.SelectedTab.Controls.Find("FileControl", false)[0]).CobolFile : null;
+                return _tabControl.SelectedTab != null ? ((FileControl)_tabControl.SelectedTab.Controls.Find("FileControl", false)[0]).CobolFile : null;
             }
         }
 

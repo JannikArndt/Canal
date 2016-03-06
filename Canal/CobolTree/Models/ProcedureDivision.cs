@@ -1,21 +1,23 @@
-﻿namespace Canal.CobolTree.Models
+﻿using System.Windows.Forms;
+
+namespace Canal.CobolTree.Models
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
 
-    public class ProcedureDivision
+    public class ProcedureDivision : TreeNode
     {
         public string OriginalSource { get; set; }
 
         public List<Section> Sections { get; set; }
 
-        public ProcedureDivision(string sourceCode)
+        public ProcedureDivision(string sourceCode) : base("Procedure Division")
         {
-            this.OriginalSource = sourceCode;
+            OriginalSource = sourceCode;
 
-            this.Sections = new List<Section>();
+            Sections = new List<Section>();
 
             var sectionNames = Regex.Matches(sourceCode, @"^ [\w\d-]+ SECTION\.", RegexOptions.Compiled | RegexOptions.Multiline);
 
@@ -25,12 +27,12 @@
                 var begin = sectionName.Index + sectionName.Length;
                 var length = (sectionName.NextMatch().Success ? sectionName.NextMatch().Index : sourceCode.Length) - begin;
                 string text = sourceCode.Substring(begin, length);
-                this.Sections.Add(new Section(name, text));
+                Sections.Add(new Section(name, text));
             }
 
             // Perform-Referenzen aufbauen
-            var allProcedures = this.Sections.SelectMany(sec => sec.Procedures).ToList();
-            var allProceduresAndSections = allProcedures.Union(this.Sections).ToList();
+            var allProcedures = Sections.SelectMany(sec => sec.Procedures).ToList();
+            var allProceduresAndSections = allProcedures.Union(Sections).ToList();
 
             foreach (var procedure in allProcedures)
             {
@@ -50,6 +52,10 @@
                 }
             }
 
+            foreach (var section in Sections)
+            {
+                Nodes.Add(section);
+            }
         }
     }
 }

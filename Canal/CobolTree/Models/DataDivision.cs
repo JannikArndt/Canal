@@ -1,13 +1,19 @@
 ﻿
+using System.Windows.Forms;
+
 namespace Canal.CobolTree.Models
 {
-    public class DataDivision
+    public class DataDivision : TreeNode
     {
         public string OriginalSource { get; set; }
 
-        public DataDivision(string sourceCode)
+        public DataDivision(string sourceCode) : base("Data Division")
         {
-            this.OriginalSource = sourceCode;
+            OriginalSource = sourceCode;
+            WorkingStorageSection = new WorkingStorageSection();
+            LinkageSection = new LinkageSection();
+            Nodes.Add(WorkingStorageSection);
+            Nodes.Add(LinkageSection);
         }
 
         public WorkingStorageSection WorkingStorageSection { get; set; }

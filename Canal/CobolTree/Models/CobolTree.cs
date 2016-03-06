@@ -1,4 +1,6 @@
-﻿namespace Canal.CobolTree.Models
+﻿using System.Windows.Forms;
+
+namespace Canal.CobolTree.Models
 {
     using System;
 
@@ -12,8 +14,29 @@
 
         public ProcedureDivision ProcedureDivision { get; set; }
 
-        public CobolTree(string code)
+        private string _name;
+
+        public TreeNode[] AsTreeNodes
         {
+            get
+            {
+                return new[]
+                {
+                    new TreeNode(_name, new TreeNode[] {
+                    IdentificationDivision,
+                    EnvironmentDivision,
+                    DataDivision,
+                    ProcedureDivision})
+                };
+            }
+
+
+        }
+
+        public CobolTree(string code, string name)
+        {
+            _name = name;
+
             var sourceCode = TextHelper.TrimAllLines(code);
 
             int indexIdentificationDivision = sourceCode.IndexOf("IDENTIFICATION DIVISION", StringComparison.Ordinal);
@@ -22,16 +45,16 @@
             int indexProcedureDivision = sourceCode.IndexOf("PROCEDURE DIVISION", StringComparison.Ordinal);
 
             if (indexIdentificationDivision > 0)
-                this.IdentificationDivision = new IdentificationDivision(sourceCode.Substring(indexProcedureDivision, indexEnvironmentDivision - indexIdentificationDivision));
+                IdentificationDivision = new IdentificationDivision(sourceCode.Substring(indexProcedureDivision, indexEnvironmentDivision - indexIdentificationDivision));
 
             if (indexEnvironmentDivision > 0)
-                this.EnvironmentDivision = new EnvironmentDivision(sourceCode.Substring(indexEnvironmentDivision, indexDataDivision - indexEnvironmentDivision));
+                EnvironmentDivision = new EnvironmentDivision(sourceCode.Substring(indexEnvironmentDivision, indexDataDivision - indexEnvironmentDivision));
 
             if (indexDataDivision > 0)
-                this.DataDivision = new DataDivision(sourceCode.Substring(indexDataDivision, indexProcedureDivision - indexDataDivision));
+                DataDivision = new DataDivision(sourceCode.Substring(indexDataDivision, indexProcedureDivision - indexDataDivision));
 
             if (indexProcedureDivision > 0)
-                this.ProcedureDivision = new ProcedureDivision(sourceCode.Substring(indexProcedureDivision, sourceCode.Length - indexProcedureDivision));
+                ProcedureDivision = new ProcedureDivision(sourceCode.Substring(indexProcedureDivision, sourceCode.Length - indexProcedureDivision));
         }
     }
 }

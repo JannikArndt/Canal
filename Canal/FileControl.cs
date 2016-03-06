@@ -15,6 +15,9 @@ namespace Canal
             CobolFile = file;
             codeBox.SetFile(file);
             searchBox.Text = Resources.SearchPlaceholder;
+
+            treeView.Nodes.AddRange(CobolFile.CobolTree.AsTreeNodes);
+            treeView.ExpandAll();
         }
 
         private void seachBox_TextChanged(object sender, EventArgs e)
