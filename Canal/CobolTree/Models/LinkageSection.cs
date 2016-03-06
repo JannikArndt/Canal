@@ -1,10 +1,8 @@
-﻿using System.Windows.Forms;
-
-namespace Canal.CobolTree.Models
+﻿namespace Canal.CobolTree.Models
 {
-    public class LinkageSection : TreeNode
+    public class LinkageSection : CobolTreeNode
     {
-        public LinkageSection() : base("Linkage Section")
+        public LinkageSection(int indexInSource) : base("Linkage Section", indexInSource)
         {
 
         }

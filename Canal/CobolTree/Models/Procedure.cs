@@ -1,15 +1,13 @@
-﻿using System.Windows.Forms;
-
-namespace Canal.CobolTree.Models
+﻿namespace Canal.CobolTree.Models
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
 
-    public class Procedure : TreeNode
+    public class Procedure : CobolTreeNode
     {
-        public Procedure(string name, string text)
-            : this(name)
+        public Procedure(string name, string text, int indexInSourceCode)
+            : this(name, indexInSourceCode)
         {
             OriginalSource = text;
 
@@ -23,7 +21,7 @@ namespace Canal.CobolTree.Models
             }
         }
 
-        protected Procedure(string name) : base(name)
+        protected Procedure(string name, int indexInSourceCode) : base(name, indexInSourceCode)
         {
             Name = name;
             PerformReferences = new List<PerformReference>();

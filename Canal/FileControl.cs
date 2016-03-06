@@ -1,4 +1,5 @@
-﻿using Canal.Properties;
+﻿using Canal.CobolTree.Models;
+using Canal.Properties;
 using FastColoredTextBoxNS;
 using System;
 using System.Windows.Forms;
@@ -61,6 +62,15 @@ namespace Canal
                 searchBox.Text = Resources.SearchPlaceholder;
                 searchBox.Tag = true;
             }
+        }
+
+        private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            var treeNode = treeView.SelectedNode as CobolTreeNode;
+            if (treeNode == null)
+                codeBox.DoRangeVisible(codeBox.GetRange(0, 0));
+            else
+                codeBox.FindNext(@"^.{7}" + treeNode.Text + @"(\.| +USING)", false, true, false, true);
         }
     }
 }

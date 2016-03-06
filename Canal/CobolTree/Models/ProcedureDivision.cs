@@ -1,19 +1,17 @@
-﻿using System.Windows.Forms;
-
-namespace Canal.CobolTree.Models
+﻿namespace Canal.CobolTree.Models
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
 
-    public class ProcedureDivision : TreeNode
+    public class ProcedureDivision : CobolTreeNode
     {
         public string OriginalSource { get; set; }
 
         public List<Section> Sections { get; set; }
 
-        public ProcedureDivision(string sourceCode) : base("Procedure Division")
+        public ProcedureDivision(string sourceCode, int indexProcedureDivision) : base("Procedure Division", indexProcedureDivision)
         {
             OriginalSource = sourceCode;
 
@@ -27,7 +25,7 @@ namespace Canal.CobolTree.Models
                 var begin = sectionName.Index + sectionName.Length;
                 var length = (sectionName.NextMatch().Success ? sectionName.NextMatch().Index : sourceCode.Length) - begin;
                 string text = sourceCode.Substring(begin, length);
-                Sections.Add(new Section(name, text));
+                Sections.Add(new Section(name, text, indexProcedureDivision + begin));
             }
 
             // Perform-Referenzen aufbauen

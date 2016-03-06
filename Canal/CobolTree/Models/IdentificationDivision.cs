@@ -1,14 +1,12 @@
-﻿using System.Windows.Forms;
-
-namespace Canal.CobolTree.Models
+﻿namespace Canal.CobolTree.Models
 {
-    public class IdentificationDivision : TreeNode
+    public class IdentificationDivision : CobolTreeNode
     {
         public string OriginalSource { get; set; }
 
-        public IdentificationDivision(string sourceCode) : base("Identification Division")
+        public IdentificationDivision(string sourceCode, int indexIdentificationDivision) : base("Identification Division", indexIdentificationDivision)
         {
-            this.OriginalSource = sourceCode;
+            OriginalSource = sourceCode;
         }
     }
 }

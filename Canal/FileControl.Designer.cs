@@ -50,6 +50,7 @@
             this.treeView.Name = "treeView";
             this.treeView.Size = new System.Drawing.Size(234, 553);
             this.treeView.TabIndex = 1;
+            this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
             // 
             // searchBox
             // 
@@ -97,7 +98,7 @@
             this.codeBox.CobolFile = null;
             this.codeBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.codeBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.codeBox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.codeBox.Font = new System.Drawing.Font("Consolas", 9.75F);
             this.codeBox.IsReplaceMode = false;
             this.codeBox.Location = new System.Drawing.Point(3, 28);
             this.codeBox.Margin = new System.Windows.Forms.Padding(2);

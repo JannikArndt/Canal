@@ -1,14 +1,12 @@
-﻿using System.Windows.Forms;
-
-namespace Canal.CobolTree.Models
+﻿namespace Canal.CobolTree.Models
 {
-    public class EnvironmentDivision : TreeNode
+    public class EnvironmentDivision : CobolTreeNode
     {
         public string OriginalSource { get; set; }
 
-        public EnvironmentDivision(string sourceCode) : base("Environment Division")
+        public EnvironmentDivision(string sourceCode, int indexEnvironmentDivision) : base("Environment Division", indexEnvironmentDivision)
         {
-            this.OriginalSource = sourceCode;
+            OriginalSource = sourceCode;
         }
     }
 }

@@ -29,6 +29,9 @@ namespace Canal
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            openFileDialog.Filter = @"COBOL Files|*.cob;*.cbl;*.txt";
+            openFileDialog.FileName = "";
+
             var dialogResult = openFileDialog.ShowDialog();
 
             if (dialogResult == DialogResult.OK)

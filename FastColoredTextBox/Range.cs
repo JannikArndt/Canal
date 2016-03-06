@@ -232,6 +232,23 @@ namespace FastColoredTextBoxNS
             }
         }
 
+        public Range GetRangeFromCharIndex(int index, int length = 0)
+        {
+            var startPlace = GetPlaceFromCharIndex(index);
+            var newRange = new Range(tb, startPlace.iChar, startPlace.iLine, startPlace.iChar + length, startPlace.iLine);
+            return newRange;
+        }
+
+        public Place GetPlaceFromCharIndex(int index)
+        {
+            string text;
+            List<Place> charIndexToPlace;
+            GetText(out text, out charIndexToPlace);
+            if (index < charIndexToPlace.Count)
+                return charIndexToPlace[index];
+            return new Place(0, 0);
+        }
+
         internal void GetText(out string text, out List<Place> charIndexToPlace)
         {
             //try get cached text
@@ -987,7 +1004,7 @@ namespace FastColoredTextBoxNS
             {
                 ClearStyle(tb.GetStyleIndexMask(styles));
             }
-            catch { ;}
+            catch {; }
         }
 
         /// <summary>
@@ -1442,12 +1459,12 @@ namespace FastColoredTextBoxNS
                         }
                         else
                             if (start.iChar < line.Count && start.iChar > 0)
-                            {
-                                var left = line[start.iChar - 1];
-                                var right = line[start.iChar];
-                                if ((left.style & si) != 0 &&
-                                    (right.style & si) != 0) return true;//we are between readonly chars
-                            }
+                        {
+                            var left = line[start.iChar - 1];
+                            var right = line[start.iChar];
+                            if ((left.style & si) != 0 &&
+                                (right.style & si) != 0) return true;//we are between readonly chars
+                        }
                     }
                     else
                         foreach (Char c in Chars)

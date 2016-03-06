@@ -1,10 +1,8 @@
-﻿using System.Windows.Forms;
-
-namespace Canal.CobolTree.Models
+﻿namespace Canal.CobolTree.Models
 {
-    public class WorkingStorageSection : TreeNode
+    public class WorkingStorageSection : CobolTreeNode
     {
-        public WorkingStorageSection() : base("Working Storage Section")
+        public WorkingStorageSection(int indexInSource) : base("Working-Storage Section", indexInSource)
         {
 
         }

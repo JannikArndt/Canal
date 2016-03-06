@@ -39,7 +39,7 @@ namespace Canal
                 //
                 Range searchRange = firstSearch ? new Range(this, Range.Start, Range.End) : new Range(this, Selection.End, Range.End);
 
-                var results = searchRange.GetRangesByLines(pattern, opt);
+                var results = searchRange.GetRangesByLines(pattern, opt | RegexOptions.Compiled);
                 foreach (var r in results)
                 {
                     Selection = r;

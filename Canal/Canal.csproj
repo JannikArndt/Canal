@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="CobolFile.cs" />
     <Compile Include="CobolTree\Models\CobolTree.cs" />
+    <Compile Include="CobolTree\Models\CobolTreeNode.cs" />
     <Compile Include="CobolTree\Models\DataDivision.cs" />
     <Compile Include="CobolTree\Models\EnvironmentDivision.cs" />
     <Compile Include="CobolTree\Models\FileReference.cs" />
