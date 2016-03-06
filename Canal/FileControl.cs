@@ -72,5 +72,11 @@ namespace Canal
             else
                 codeBox.FindNext(@"^.{7}" + treeNode.Text + @"(\.| +USING)", false, true, false, true);
         }
+
+        private void ResolveCopysButton_Click(object sender, EventArgs e)
+        {
+            ReferenceUtil.ResolveCopys(CobolFile);
+            codeBox.Text = CobolFile.Text;
+        }
     }
 }

@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace Canal
+﻿namespace Canal
 {
     public class CobolFile
     {
-        private IEnumerable<string> lines;
-
         internal string Name;
 
         private CobolTree.Models.CobolTree _cobolTree;
 
-        public string Text { get { return string.Join(Environment.NewLine, lines); } set { throw new NotImplementedException(); } }
+        public string Text { get; set; }
 
         public CobolTree.Models.CobolTree CobolTree
         {
@@ -23,10 +17,10 @@ namespace Canal
             }
         }
 
-        public CobolFile(IEnumerable<string> lines, string filename)
+        public CobolFile(string text, string name)
         {
-            Name = Path.GetFileNameWithoutExtension(filename);
-            this.lines = lines;
+            Name = name;
+            Text = text;
         }
     }
 }

@@ -26,8 +26,8 @@
             Name = name;
             PerformReferences = new List<PerformReference>();
             IsReferencedBy = new List<PerformReference>();
-            CallReferences = new List<FileReference>();
-            CopyReferences = new List<FileReference>();
+            CallReferences = new List<ProgramReference>();
+            CopyReferences = new List<ProgramReference>();
         }
 
         public new string Name { get; set; }
@@ -38,9 +38,9 @@
 
         public List<PerformReference> IsReferencedBy { get; set; }
 
-        public List<FileReference> CallReferences { get; set; }
+        public List<ProgramReference> CallReferences { get; set; }
 
-        public List<FileReference> CopyReferences { get; set; }
+        public List<ProgramReference> CopyReferences { get; set; }
 
         public override string ToString()
         {

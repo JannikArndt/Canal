@@ -31,8 +31,8 @@
     <PublisherName>Jannik Arndt</PublisherName>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>3</ApplicationRevision>
-    <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.3.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -101,7 +101,7 @@
     <Compile Include="CobolTree\Models\CobolTreeNode.cs" />
     <Compile Include="CobolTree\Models\DataDivision.cs" />
     <Compile Include="CobolTree\Models\EnvironmentDivision.cs" />
-    <Compile Include="CobolTree\Models\FileReference.cs" />
+    <Compile Include="CobolTree\Models\ProgramReference.cs" />
     <Compile Include="CobolTree\Models\IdentificationDivision.cs" />
     <Compile Include="CobolTree\Models\LinkageSection.cs" />
     <Compile Include="CobolTree\Models\PerformReference.cs" />
@@ -123,6 +123,7 @@
     <Compile Include="FileControl.Designer.cs">
       <DependentUpon>FileControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="FileReference.cs" />
     <Compile Include="FileUtil.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
@@ -132,6 +133,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReferenceUtil.cs" />
     <Compile Include="TabUtil.cs" />
     <Compile Include="Windows\Performs.cs">
       <SubType>Form</SubType>
