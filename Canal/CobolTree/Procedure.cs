@@ -4,34 +4,34 @@
     using System.Linq;
     using System.Text.RegularExpressions;
 
-    using Canal.Utils;
+    using Utils;
 
     public class Procedure : CobolTreeNode
     {
         public Procedure(string name, string text, int indexInSourceCode)
             : this(name, indexInSourceCode)
         {
-            this.OriginalSource = text;
+            OriginalSource = text;
 
             var performReferenceMatches = Regex.Matches(text, @"PERFORM ([\w\d-]+) ?(THRU|UNTIL|WITH)? ?[\w\d-]* ?(UNTIL|BEFORE|AFTER)? ?[\w\d-<>=]*", RegexOptions.Compiled | RegexOptions.Multiline);
 
             foreach (Match performMatch in performReferenceMatches)
             {
                 string procedureName = performMatch.Groups[1].ToString().Trim();
-                if (this.PerformReferences.All(re => re.ReferenceName != procedureName))
-                    this.PerformReferences.Add(new PerformReference(procedureName));
+                if (PerformReferences.All(re => re.ReferenceName != procedureName))
+                    PerformReferences.Add(new PerformReference(procedureName));
             }
         }
 
         protected Procedure(string name, int indexInSourceCode)
             : base(name, indexInSourceCode)
         {
-            this.Name = name;
-            this.PerformReferences = new List<PerformReference>();
-            this.IsReferencedBy = new List<PerformReference>();
-            this.CallReferences = new List<ProgramReference>();
-            this.CopyReferences = new List<ProgramReference>();
-            this.Variables = new List<Variable>();
+            Name = name;
+            PerformReferences = new List<PerformReference>();
+            IsReferencedBy = new List<PerformReference>();
+            CallReferences = new List<ProgramReference>();
+            CopyReferences = new List<ProgramReference>();
+            Variables = new List<Variable>();
         }
 
         public new string Name { get; set; }
@@ -63,7 +63,7 @@
 
         public override string ToString()
         {
-            return this.Name;
+            return Name;
         }
     }
 }

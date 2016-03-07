@@ -1,11 +1,10 @@
 ﻿namespace Canal.Utils
 {
+    using Canal.CobolTree;
     using System;
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Windows.Forms;
-
-    using Canal.CobolTree;
 
     public static class ReferenceUtil
     {
@@ -65,11 +64,22 @@
             if (procedure == null)
                 return;
 
+            var tempNode = topNode;
+
+            // find circles
+            while (tempNode.Parent != null)
+            {
+                if (tempNode.Text == procedure.Name)
+                    return;
+                tempNode = tempNode.Parent;
+            }
+
+            // create nodes for perform references and continue recusively
             foreach (var performReference in procedure.PerformReferences)
             {
                 var newNode = new TreeNode(performReference.ReferenceName);
-                FindPerformsRecursively(newNode, performReference.Procedure);
                 topNode.Nodes.Add(newNode);
+                FindPerformsRecursively(newNode, performReference.Procedure);
             }
         }
     }
