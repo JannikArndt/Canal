@@ -37,6 +37,8 @@
             this.ResolveCopysButton = new System.Windows.Forms.Button();
             this.tocTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tocToolStrip = new System.Windows.Forms.ToolStrip();
+            this.exportTocButton = new System.Windows.Forms.ToolStripButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.performsTree = new System.Windows.Forms.TreeView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -46,6 +48,7 @@
             this.codeBox = new Canal.CodeBox();
             this.tocTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tocToolStrip.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.proceduresTab.SuspendLayout();
@@ -54,14 +57,16 @@
             // 
             // treeView
             // 
+            this.treeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.treeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treeView.ItemHeight = 22;
-            this.treeView.Location = new System.Drawing.Point(3, 3);
+            this.treeView.Location = new System.Drawing.Point(3, 30);
             this.treeView.Margin = new System.Windows.Forms.Padding(2);
             this.treeView.Name = "treeView";
-            this.treeView.Size = new System.Drawing.Size(309, 523);
+            this.treeView.Size = new System.Drawing.Size(309, 496);
             this.treeView.TabIndex = 1;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
             // 
@@ -100,7 +105,7 @@
             // 
             // tocTabControl
             // 
-            this.tocTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tocTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tocTabControl.Controls.Add(this.tabPage1);
             this.tocTabControl.Controls.Add(this.tabPage2);
@@ -114,6 +119,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.tocToolStrip);
             this.tabPage1.Controls.Add(this.treeView);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
@@ -122,6 +128,27 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Table of Contents";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tocToolStrip
+            // 
+            this.tocToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tocToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportTocButton});
+            this.tocToolStrip.Location = new System.Drawing.Point(3, 3);
+            this.tocToolStrip.Name = "tocToolStrip";
+            this.tocToolStrip.Size = new System.Drawing.Size(309, 25);
+            this.tocToolStrip.TabIndex = 2;
+            this.tocToolStrip.Text = "toolStrip1";
+            // 
+            // exportTocButton
+            // 
+            this.exportTocButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+
+            this.exportTocButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.exportTocButton.Name = "exportTocButton";
+            this.exportTocButton.Size = new System.Drawing.Size(23, 22);
+            this.exportTocButton.Text = "Copy";
+            this.exportTocButton.Click += new System.EventHandler(this.ExportTocClick);
             // 
             // tabPage2
             // 
@@ -188,8 +215,8 @@
             // 
             // codeBox
             // 
-            this.codeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.codeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.codeBox.AutoCompleteBracketsList = new char[] {
         '(',
@@ -236,6 +263,9 @@
             this.Size = new System.Drawing.Size(827, 583);
             this.tocTabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tocToolStrip.ResumeLayout(false);
+            this.tocToolStrip.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.proceduresTab.ResumeLayout(false);
@@ -259,5 +289,7 @@
         private System.Windows.Forms.TreeView variablesTreeView;
         private System.Windows.Forms.TabPage proceduresTab;
         private System.Windows.Forms.TreeView proceduresTreeView;
+        private System.Windows.Forms.ToolStrip tocToolStrip;
+        private System.Windows.Forms.ToolStripButton exportTocButton;
     }
 }

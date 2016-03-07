@@ -12,7 +12,7 @@ namespace Canal
 
     public partial class FileControl : UserControl
     {
-        public CobolFile CobolFile { get; set; }
+        public CobolFile CobolFile { get; private set; }
 
         public FileControl(CobolFile file)
         {
@@ -187,6 +187,11 @@ namespace Canal
 
                 proceduresTreeView.Nodes.Add(sectionNode);
             }
+        }
+
+        private void ExportTocClick(object sender, EventArgs e)
+        {
+            Clipboard.SetText(treeView.ToText());
         }
     }
 }
