@@ -109,6 +109,7 @@
     <Compile Include="CobolTree\Models\ProcedureDivision.cs" />
     <Compile Include="CobolTree\Models\Procedure.cs" />
     <Compile Include="CobolTree\Models\Section.cs" />
+    <Compile Include="CobolTree\Models\Variable.cs" />
     <Compile Include="CobolTree\Models\WorkingStorageSection.cs" />
     <Compile Include="CobolTree\TextHelper.cs" />
     <Compile Include="CodeBox.cs">
@@ -117,6 +118,7 @@
     <Compile Include="CodeBox.Designer.cs">
       <DependentUpon>CodeBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Constants.cs" />
     <Compile Include="FileControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -135,6 +137,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReferenceUtil.cs" />
     <Compile Include="TabUtil.cs" />
+    <Compile Include="Utils\VariablesUtil.cs" />
     <EmbeddedResource Include="FileControl.resx">
       <DependentUpon>FileControl.cs</DependentUpon>
     </EmbeddedResource>

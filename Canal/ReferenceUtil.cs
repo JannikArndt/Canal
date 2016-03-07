@@ -12,18 +12,30 @@ namespace Canal
     {
         public static void ResolveCopys(CobolFile file)
         {
-            var copyRegex = new Regex(@"^[\d ]{7}COPY (?<program>[\w]+)( OF (?<folder>[\w]+)\.)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            var copyRegex = new Regex(
+                @"^[\d ]{7}COPY (?<program>[\w]+) +OF +(?<folder>[\w]+)\.",
+                RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
 
-            foreach (Match match in copyRegex.Matches(file.Text))
+            var matches = copyRegex.Matches(file.Text);
+            Console.WriteLine("Resolving " + matches.Count + " COPYs...");
+
+            foreach (Match match in matches)
             {
-                var copyFile = FileUtil.Get(match.Groups["program"].Value, match.Groups["folder"].Value);
+                var programName = match.Groups["program"].Value;
+                var folderName = match.Groups["folder"].Value;
+                Console.WriteLine("Resolving program " + programName + " in folder " + folderName);
+
+                var copyFile = FileUtil.Get(programName, folderName);
 
                 if (copyFile == null)
                     continue;
 
-                var lineAfterCopy = file.Text.IndexOf(Environment.NewLine, match.Index, StringComparison.Ordinal);
+                var updatedIndexOfCopy = file.Text.IndexOf(programName, match.Index - 1, StringComparison.Ordinal);
+                var lineAfterCopy = file.Text.IndexOf(Environment.NewLine, updatedIndexOfCopy, StringComparison.Ordinal);
                 file.Text = file.Text.Insert(lineAfterCopy + 1, copyFile.Text + Environment.NewLine);
             }
+
+            file.RebuildTree();
         }
 
         public static TreeNode GetPerformTree(CobolFile file)

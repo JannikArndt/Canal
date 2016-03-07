@@ -40,10 +40,13 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.performsTree = new System.Windows.Forms.TreeView();
             this.codeBox = new Canal.CodeBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.variablesTreeView = new System.Windows.Forms.TreeView();
             this.tocTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.codeBox)).BeginInit();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeView
@@ -55,7 +58,7 @@
             this.treeView.Location = new System.Drawing.Point(3, 3);
             this.treeView.Margin = new System.Windows.Forms.Padding(2);
             this.treeView.Name = "treeView";
-            this.treeView.Size = new System.Drawing.Size(217, 523);
+            this.treeView.Size = new System.Drawing.Size(309, 523);
             this.treeView.TabIndex = 1;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
             // 
@@ -98,10 +101,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tocTabControl.Controls.Add(this.tabPage1);
             this.tocTabControl.Controls.Add(this.tabPage2);
-            this.tocTabControl.Location = new System.Drawing.Point(593, 28);
+            this.tocTabControl.Controls.Add(this.tabPage3);
+            this.tocTabControl.Location = new System.Drawing.Point(501, 28);
             this.tocTabControl.Name = "tocTabControl";
             this.tocTabControl.SelectedIndex = 0;
-            this.tocTabControl.Size = new System.Drawing.Size(231, 555);
+            this.tocTabControl.Size = new System.Drawing.Size(323, 555);
             this.tocTabControl.TabIndex = 5;
             // 
             // tabPage1
@@ -110,7 +114,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(223, 529);
+            this.tabPage1.Size = new System.Drawing.Size(315, 529);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Table of Contents";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -121,7 +125,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(223, 529);
+            this.tabPage2.Size = new System.Drawing.Size(315, 529);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Performs";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -133,7 +137,7 @@
             this.performsTree.ItemHeight = 22;
             this.performsTree.Location = new System.Drawing.Point(3, 3);
             this.performsTree.Name = "performsTree";
-            this.performsTree.Size = new System.Drawing.Size(217, 523);
+            this.performsTree.Size = new System.Drawing.Size(309, 523);
             this.performsTree.TabIndex = 0;
             // 
             // codeBox
@@ -168,9 +172,28 @@
             this.codeBox.Paddings = new System.Windows.Forms.Padding(0);
             this.codeBox.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.codeBox.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("codeBox.ServiceColors")));
-            this.codeBox.Size = new System.Drawing.Size(585, 553);
+            this.codeBox.Size = new System.Drawing.Size(493, 553);
             this.codeBox.TabIndex = 0;
             this.codeBox.Zoom = 100;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.variablesTreeView);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(315, 529);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Variables";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // variablesTreeView
+            // 
+            this.variablesTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.variablesTreeView.Location = new System.Drawing.Point(3, 3);
+            this.variablesTreeView.Name = "variablesTreeView";
+            this.variablesTreeView.Size = new System.Drawing.Size(309, 523);
+            this.variablesTreeView.TabIndex = 0;
             // 
             // FileControl
             // 
@@ -188,6 +211,7 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.codeBox)).EndInit();
+            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -203,5 +227,7 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TreeView performsTree;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TreeView variablesTreeView;
     }
 }

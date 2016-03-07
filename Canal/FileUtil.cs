@@ -49,6 +49,8 @@ namespace Canal
             if (string.IsNullOrWhiteSpace(programName))
                 return null;
 
+            Console.Write("Searching for Program " + programName + " in folder " + folderName);
+
             var candidate = _files.Keys.FirstOrDefault(key => key.Contains(programName) && key.Contains(folderName));
 
             if (candidate == null && _files.Keys.Count(key => key.Contains(programName)) == 1)
@@ -58,10 +60,12 @@ namespace Canal
             {
                 foreach (var knownFolder in _recentFolders)
                 {
-                    AnalyzeFolder(Path.GetDirectoryName(Path.GetDirectoryName(knownFolder)));
+                    AnalyzeFolder(Path.GetDirectoryName(knownFolder));
                     return Get(programName, folderName, false);
                 }
             }
+
+            Console.WriteLine(candidate != null ? " => succeeded" : " => failed");
 
             return Get(candidate);
         }

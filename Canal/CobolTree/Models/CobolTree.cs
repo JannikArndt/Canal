@@ -3,6 +3,7 @@
 namespace Canal.CobolTree.Models
 {
     using System;
+    using System.Collections.Generic;
 
     public class CobolTree
     {
@@ -13,6 +14,14 @@ namespace Canal.CobolTree.Models
         public DataDivision DataDivision { get; set; }
 
         public ProcedureDivision ProcedureDivision { get; set; }
+
+        public List<Variable> Variables
+        {
+            get
+            {
+                return DataDivision.Variables;
+            }
+        }
 
         private string _name;
 
@@ -34,8 +43,6 @@ namespace Canal.CobolTree.Models
                     result.Nodes.Add(ProcedureDivision);
                 return result;
             }
-
-
         }
 
         public CobolTree(string code, string name)

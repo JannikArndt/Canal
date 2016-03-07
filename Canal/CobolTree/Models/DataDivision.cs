@@ -2,19 +2,36 @@
 
 namespace Canal.CobolTree.Models
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class DataDivision : CobolTreeNode
     {
         public string OriginalSource { get; set; }
 
-        public DataDivision(string sourceCode, int indexDataDivision) : base("Data Division", indexDataDivision)
+        public List<Variable> Variables
+        {
+            get
+            {
+                return WorkingStorageSection.Variables.Union(LinkageSection.Variables).ToList();
+            }
+        }
+
+        public DataDivision(string sourceCode, int indexDataDivision)
+            : base("Data Division", indexDataDivision)
         {
             OriginalSource = sourceCode;
 
-            int indexWorkingStorageSection = sourceCode.IndexOf("WORKING STORANGE SECTION", StringComparison.Ordinal);
-            WorkingStorageSection = new WorkingStorageSection(indexDataDivision + indexWorkingStorageSection);
-
+            int indexWorkingStorageSection = sourceCode.IndexOf("WORKING-STORAGE SECTION", StringComparison.Ordinal);
             int indexLinkageSection = sourceCode.IndexOf("LINKAGE SECTION", StringComparison.Ordinal);
-            LinkageSection = new LinkageSection(indexLinkageSection);
+
+            WorkingStorageSection = new WorkingStorageSection(
+                sourceCode.Substring(indexWorkingStorageSection, indexLinkageSection - indexWorkingStorageSection),
+                indexDataDivision + indexWorkingStorageSection);
+
+            LinkageSection = new LinkageSection(
+                sourceCode.Substring(indexLinkageSection, sourceCode.Length - indexLinkageSection),
+                indexDataDivision + indexLinkageSection);
 
             Nodes.Add(WorkingStorageSection);
             Nodes.Add(LinkageSection);

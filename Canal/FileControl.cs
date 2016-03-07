@@ -6,6 +6,7 @@ using FastColoredTextBoxNS;
 
 namespace Canal
 {
+
     public partial class FileControl : UserControl
     {
         public CobolFile CobolFile { get; set; }
@@ -22,6 +23,8 @@ namespace Canal
 
             performsTree.Nodes.Add(ReferenceUtil.GetPerformTree(file));
             performsTree.ExpandAll();
+
+            ShowVariablesTreeView();
         }
 
         private void seachBox_TextChanged(object sender, EventArgs e)
@@ -81,7 +84,34 @@ namespace Canal
             Cursor = Cursors.WaitCursor;
             ReferenceUtil.ResolveCopys(CobolFile);
             codeBox.Text = CobolFile.Text;
+
+            ShowVariablesTreeView();
+
             Cursor = Cursors.Default;
+        }
+
+        private void ShowVariablesTreeView()
+        {
+            variablesTreeView.Nodes.Clear();
+
+            var workingStorageSectionTreeNode = new TreeNode("Working-Storage Division");
+
+            foreach (var variable in CobolFile.CobolTree.DataDivision.WorkingStorageSection.Variables)
+            {
+                variable.FillNodesWithVariables();
+                workingStorageSectionTreeNode.Nodes.Add(variable);
+            }
+
+            var linkageSectionTreeNode = new TreeNode("Linkage Division");
+
+            foreach (var variable in CobolFile.CobolTree.DataDivision.LinkageSection.Variables)
+            {
+                variable.FillNodesWithVariables();
+                linkageSectionTreeNode.Nodes.Add(variable);
+            }
+
+            variablesTreeView.Nodes.Add(workingStorageSectionTreeNode);
+            variablesTreeView.Nodes.Add(linkageSectionTreeNode);
         }
     }
 }
