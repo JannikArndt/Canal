@@ -1,5 +1,5 @@
 ﻿
-namespace Canal.CobolTree.Models
+namespace Canal.CobolTree
 {
     using System.Collections.Generic;
     using System.Globalization;
@@ -18,22 +18,22 @@ namespace Canal.CobolTree.Models
         public Variable Parent { get; set; }
 
         public Variable(int level, string name, string code, Variable parent)
-            : base(level.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0') + " " + name)
+            : base(level.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0') + "  " + name)
         {
             this.Level = level;
             this.Name = name;
             this.Code = code;
-            Parent = parent;
-            Variables = new List<Variable>();
+            this.Parent = parent;
+            this.Variables = new List<Variable>();
         }
 
         public void FillNodesWithVariables()
         {
-            Nodes.Clear();
+            this.Nodes.Clear();
 
-            foreach (var variable in Variables)
+            foreach (var variable in this.Variables)
             {
-                Nodes.Add(variable);
+                this.Nodes.Add(variable);
 
                 variable.FillNodesWithVariables();
             }

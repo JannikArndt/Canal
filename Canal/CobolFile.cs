@@ -2,13 +2,13 @@
 {
     using System.Collections.Generic;
 
-    using Canal.CobolTree.Models;
+    using Canal.CobolTree;
 
     public class CobolFile
     {
         internal string Name;
 
-        private CobolTree.Models.CobolTree _cobolTree;
+        private CobolTree.CobolTree _cobolTree;
 
         public string Text { get; set; }
 
@@ -20,9 +20,9 @@
             }
         }
 
-        public CobolTree.Models.CobolTree CobolTree
+        public CobolTree.CobolTree CobolTree
         {
-            get { return _cobolTree ?? (_cobolTree = new CobolTree.Models.CobolTree(Text, Name)); }
+            get { return _cobolTree ?? (_cobolTree = new CobolTree.CobolTree(Text, Name)); }
             set
             {
                 _cobolTree = value;
@@ -37,7 +37,7 @@
 
         public void RebuildTree()
         {
-            _cobolTree = new CobolTree.Models.CobolTree(Text, Name);
+            _cobolTree = new CobolTree.CobolTree(Text, Name);
         }
     }
 }

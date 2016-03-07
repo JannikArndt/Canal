@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace Canal.CobolTree.Models
+﻿namespace Canal.CobolTree
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -13,28 +12,28 @@ namespace Canal.CobolTree.Models
         {
             get
             {
-                return WorkingStorageSection.Variables.Union(LinkageSection.Variables).ToList();
+                return this.WorkingStorageSection.Variables.Union(this.LinkageSection.Variables).ToList();
             }
         }
 
         public DataDivision(string sourceCode, int indexDataDivision)
             : base("Data Division", indexDataDivision)
         {
-            OriginalSource = sourceCode;
+            this.OriginalSource = sourceCode;
 
             int indexWorkingStorageSection = sourceCode.IndexOf("WORKING-STORAGE SECTION", StringComparison.Ordinal);
             int indexLinkageSection = sourceCode.IndexOf("LINKAGE SECTION", StringComparison.Ordinal);
 
-            WorkingStorageSection = new WorkingStorageSection(
+            this.WorkingStorageSection = new WorkingStorageSection(
                 sourceCode.Substring(indexWorkingStorageSection, indexLinkageSection - indexWorkingStorageSection),
                 indexDataDivision + indexWorkingStorageSection);
 
-            LinkageSection = new LinkageSection(
+            this.LinkageSection = new LinkageSection(
                 sourceCode.Substring(indexLinkageSection, sourceCode.Length - indexLinkageSection),
                 indexDataDivision + indexLinkageSection);
 
-            Nodes.Add(WorkingStorageSection);
-            Nodes.Add(LinkageSection);
+            this.Nodes.Add(this.WorkingStorageSection);
+            this.Nodes.Add(this.LinkageSection);
         }
 
         public WorkingStorageSection WorkingStorageSection { get; set; }

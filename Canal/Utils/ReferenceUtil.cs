@@ -5,7 +5,7 @@
     using System.Text.RegularExpressions;
     using System.Windows.Forms;
 
-    using Canal.CobolTree.Models;
+    using Canal.CobolTree;
 
     public static class ReferenceUtil
     {

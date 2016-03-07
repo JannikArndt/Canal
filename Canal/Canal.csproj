@@ -97,21 +97,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CobolFile.cs" />
-    <Compile Include="CobolTree\Models\CobolTree.cs" />
-    <Compile Include="CobolTree\Models\CobolTreeNode.cs" />
-    <Compile Include="CobolTree\Models\DataDivision.cs" />
-    <Compile Include="CobolTree\Models\EnvironmentDivision.cs" />
-    <Compile Include="CobolTree\Models\ProgramReference.cs" />
-    <Compile Include="CobolTree\Models\IdentificationDivision.cs" />
-    <Compile Include="CobolTree\Models\LinkageSection.cs" />
-    <Compile Include="CobolTree\Models\PerformReference.cs" />
-    <Compile Include="CobolTree\Models\PerformType.cs" />
-    <Compile Include="CobolTree\Models\ProcedureDivision.cs" />
-    <Compile Include="CobolTree\Models\Procedure.cs" />
-    <Compile Include="CobolTree\Models\Section.cs" />
-    <Compile Include="CobolTree\Models\Variable.cs" />
-    <Compile Include="CobolTree\Models\WorkingStorageSection.cs" />
-    <Compile Include="CobolTree\TextHelper.cs" />
+    <Compile Include="CobolTree\CobolTree.cs" />
+    <Compile Include="CobolTree\CobolTreeNode.cs" />
+    <Compile Include="CobolTree\DataDivision.cs" />
+    <Compile Include="CobolTree\EnvironmentDivision.cs" />
+    <Compile Include="CobolTree\ProgramReference.cs" />
+    <Compile Include="CobolTree\IdentificationDivision.cs" />
+    <Compile Include="CobolTree\LinkageSection.cs" />
+    <Compile Include="CobolTree\PerformReference.cs" />
+    <Compile Include="CobolTree\PerformType.cs" />
+    <Compile Include="CobolTree\ProcedureDivision.cs" />
+    <Compile Include="CobolTree\Procedure.cs" />
+    <Compile Include="CobolTree\Section.cs" />
+    <Compile Include="CobolTree\Variable.cs" />
+    <Compile Include="CobolTree\WorkingStorageSection.cs" />
+    <Compile Include="Utils\TextUtil.cs" />
     <Compile Include="CodeBox.cs">
       <SubType>UserControl</SubType>
     </Compile>

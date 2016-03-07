@@ -1,4 +1,4 @@
-﻿namespace Canal.CobolTree.Models
+﻿namespace Canal.CobolTree
 {
     using System.Collections.Generic;
 
@@ -13,8 +13,8 @@
         public LinkageSection(string sourceCode, int indexInSource)
             : base("Linkage Section", indexInSource)
         {
-            OriginalSource = sourceCode;
-            Variables = VariablesUtil.AnalyzeVariables(sourceCode);
+            this.OriginalSource = sourceCode;
+            this.Variables = VariablesUtil.AnalyzeVariables(sourceCode);
         }
     }
 }

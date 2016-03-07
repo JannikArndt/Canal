@@ -1,9 +1,9 @@
-﻿using System;
-using System.Text;
-
-namespace Canal.CobolTree
+﻿namespace Canal.Utils
 {
-    public static class TextHelper
+    using System;
+    using System.Text;
+
+    public static class TextUtil
     {
         public static string TrimAllLines(string text)
         {

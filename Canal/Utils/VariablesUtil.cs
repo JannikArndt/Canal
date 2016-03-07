@@ -4,7 +4,7 @@ namespace Canal.Utils
 {
     using System.Text.RegularExpressions;
 
-    using Canal.CobolTree.Models;
+    using Canal.CobolTree;
 
     public static class VariablesUtil
     {

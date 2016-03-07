@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Windows.Forms;
-using Canal.CobolTree.Models;
+
 using Canal.Properties;
 using FastColoredTextBoxNS;
 
 namespace Canal
 {
+    using Canal.CobolTree;
     using Canal.Utils;
 
     public partial class FileControl : UserControl

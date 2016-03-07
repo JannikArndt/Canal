@@ -1,5 +1,5 @@
 ﻿
-namespace Canal.CobolTree.Models
+namespace Canal.CobolTree
 {
     public enum PerformType
     {
