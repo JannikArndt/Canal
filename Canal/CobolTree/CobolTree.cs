@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Windows.Forms;
 
     using Canal.Utils;
@@ -68,6 +69,11 @@
 
             if (indexProcedureDivision > 0)
                 this.ProcedureDivision = new ProcedureDivision(sourceCode.Substring(indexProcedureDivision, sourceCode.Length - indexProcedureDivision), indexProcedureDivision);
+
+            foreach (var procedure in ProcedureDivision.Sections.SelectMany(s => s.Procedures))
+            {
+                procedure.AnalyzeVariables(DataDivision.Variables);
+            }
         }
     }
 }

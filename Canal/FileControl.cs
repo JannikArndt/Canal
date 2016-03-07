@@ -6,6 +6,9 @@ using FastColoredTextBoxNS;
 
 namespace Canal
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     using Canal.CobolTree;
     using Canal.Utils;
 
@@ -89,6 +92,10 @@ namespace Canal
 
             ShowVariablesTreeView();
 
+            this.ShowProceduresTreeView();
+
+            ResolveCopysButton.Enabled = false;
+
             Cursor = Cursors.Default;
         }
 
@@ -114,6 +121,44 @@ namespace Canal
 
             variablesTreeView.Nodes.Add(workingStorageSectionTreeNode);
             variablesTreeView.Nodes.Add(linkageSectionTreeNode);
+        }
+
+        private void ShowProceduresTreeView()
+        {
+            proceduresTreeView.Nodes.Clear();
+
+            foreach (var section in CobolFile.CobolTree.ProcedureDivision.Sections)
+            {
+                var sectionNode = new TreeNode(section.Name);
+
+                foreach (var procedure in section.Procedures)
+                {
+                    var procNode = new TreeNode(procedure.Name);
+                    sectionNode.Nodes.Add(procNode);
+
+                    var varDict = new Dictionary<Variable, List<Variable>>();
+
+                    foreach (var variable in procedure.Variables)
+                    {
+                        var root = variable.Root ?? variable;
+                        if (varDict.ContainsKey(root))
+                            varDict[root].Add(variable);
+                        else
+                            varDict.Add(root, new List<Variable> { variable });
+                    }
+
+                    foreach (var key in varDict.Keys.OrderBy(r => r.Name))
+                    {
+                        var rootVarNode = new TreeNode(key.Name);
+                        foreach (var variable in varDict[key])
+                            rootVarNode.Nodes.Add(new TreeNode(variable.Level.ToString("D2") + "  " + variable.Name));
+
+                        procNode.Nodes.Add(rootVarNode);
+                    }
+                }
+
+                proceduresTreeView.Nodes.Add(sectionNode);
+            }
         }
     }
 }

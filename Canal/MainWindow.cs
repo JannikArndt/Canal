@@ -3,6 +3,8 @@ using System.Windows.Forms;
 
 namespace Canal
 {
+    using System.Text;
+
     using Canal.Utils;
 
     using Level88ToEnum;
@@ -59,6 +61,34 @@ namespace Canal
         {
             if (tabUtil.CloseAllTabs())
                 Close();
+        }
+
+        private void variableUsagesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var text = new StringBuilder();
+
+            foreach (var section in tabUtil.CurrentFile.CobolTree.ProcedureDivision.Sections)
+            {
+                text.AppendLine("Section: " + section.Name);
+
+                foreach (var procedure in section.Procedures)
+                {
+                    text.AppendLine("Procedure: " + procedure.Name);
+
+                    foreach (var variable in procedure.Variables)
+                    {
+                        var root = variable.Root != null ? " (" + variable.Root.Name + ")" : "";
+                        text.AppendLine("  " + variable.Level.ToString("D2") + "  " + variable.Name + root);
+                    }
+
+                    text.AppendLine();
+                }
+
+                text.AppendLine();
+            }
+
+            var viewer = new TextViewer(text.ToString());
+            viewer.Show();
         }
     }
 }

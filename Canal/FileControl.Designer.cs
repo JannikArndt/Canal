@@ -42,11 +42,14 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.variablesTreeView = new System.Windows.Forms.TreeView();
             this.codeBox = new Canal.CodeBox();
+            this.proceduresTab = new System.Windows.Forms.TabPage();
+            this.proceduresTreeView = new System.Windows.Forms.TreeView();
             this.tocTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.codeBox)).BeginInit();
+            this.proceduresTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeView
@@ -102,6 +105,7 @@
             this.tocTabControl.Controls.Add(this.tabPage1);
             this.tocTabControl.Controls.Add(this.tabPage2);
             this.tocTabControl.Controls.Add(this.tabPage3);
+            this.tocTabControl.Controls.Add(this.proceduresTab);
             this.tocTabControl.Location = new System.Drawing.Point(501, 28);
             this.tocTabControl.Name = "tocTabControl";
             this.tocTabControl.SelectedIndex = 0;
@@ -197,6 +201,25 @@
             this.codeBox.TabIndex = 0;
             this.codeBox.Zoom = 100;
             // 
+            // proceduresTab
+            // 
+            this.proceduresTab.Controls.Add(this.proceduresTreeView);
+            this.proceduresTab.Location = new System.Drawing.Point(4, 22);
+            this.proceduresTab.Name = "proceduresTab";
+            this.proceduresTab.Padding = new System.Windows.Forms.Padding(3);
+            this.proceduresTab.Size = new System.Drawing.Size(315, 529);
+            this.proceduresTab.TabIndex = 3;
+            this.proceduresTab.Text = "Procedures";
+            this.proceduresTab.UseVisualStyleBackColor = true;
+            // 
+            // proceduresTreeView
+            // 
+            this.proceduresTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.proceduresTreeView.Location = new System.Drawing.Point(3, 3);
+            this.proceduresTreeView.Name = "proceduresTreeView";
+            this.proceduresTreeView.Size = new System.Drawing.Size(309, 523);
+            this.proceduresTreeView.TabIndex = 0;
+            // 
             // FileControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -214,6 +237,7 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.codeBox)).EndInit();
+            this.proceduresTab.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -231,5 +255,7 @@
         private System.Windows.Forms.TreeView performsTree;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TreeView variablesTreeView;
+        private System.Windows.Forms.TabPage proceduresTab;
+        private System.Windows.Forms.TreeView proceduresTreeView;
     }
 }

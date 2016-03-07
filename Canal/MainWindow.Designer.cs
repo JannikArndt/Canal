@@ -53,6 +53,7 @@
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.FileTabs = new System.Windows.Forms.TabControl();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.variableUsagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -208,7 +209,8 @@
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.level88ToEnumConverterToolStripMenuItem});
+            this.level88ToEnumConverterToolStripMenuItem,
+            this.variableUsagesToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.helpToolStripMenuItem.Text = "Tools";
@@ -239,6 +241,13 @@
             // openFileDialog
             // 
             this.openFileDialog.FileName = "openFileDialog";
+            // 
+            // variableUsagesToolStripMenuItem
+            // 
+            this.variableUsagesToolStripMenuItem.Name = "variableUsagesToolStripMenuItem";
+            this.variableUsagesToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.variableUsagesToolStripMenuItem.Text = "Variable usages";
+            this.variableUsagesToolStripMenuItem.Click += new System.EventHandler(this.variableUsagesToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -285,6 +294,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.ToolStripMenuItem level88ToEnumConverterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem variableUsagesToolStripMenuItem;
     }
 }
 

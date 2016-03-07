@@ -111,6 +111,13 @@
     <Compile Include="CobolTree\Section.cs" />
     <Compile Include="CobolTree\Variable.cs" />
     <Compile Include="CobolTree\WorkingStorageSection.cs" />
+    <Compile Include="TextViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TextViewer.Designer.cs">
+      <DependentUpon>TextViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\ExtensionMethods.cs" />
     <Compile Include="Utils\TextUtil.cs" />
     <Compile Include="CodeBox.cs">
       <SubType>UserControl</SubType>
@@ -158,6 +165,9 @@
     <Content Include="Examples\RepWriteSumm.cbl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="TextViewer.resx">
+      <DependentUpon>TextViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

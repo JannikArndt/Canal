@@ -17,6 +17,19 @@ namespace Canal.CobolTree
 
         public Variable Parent { get; set; }
 
+        public Variable Root
+        {
+            get
+            {
+                if (Parent == null) return null;
+
+                var result = Parent;
+                while ((result.Level != 1 || result.Level != 77) && result.Parent != null)
+                    result = result.Parent;
+                return result;
+            }
+        }
+
         public Variable(int level, string name, string code, Variable parent)
             : base(level.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0') + "  " + name)
         {
