@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Windows.Forms;
 
-    using Canal.Utils;
+    using Utils;
 
     public class CobolTree
     {
@@ -21,7 +21,7 @@
         {
             get
             {
-                return this.DataDivision.Variables;
+                return DataDivision.Variables;
             }
         }
 
@@ -31,25 +31,25 @@
         {
             get
             {
-                var result = new TreeNode(this._name);
-                if (this.IdentificationDivision != null)
-                    result.Nodes.Add(this.IdentificationDivision);
+                var result = new TreeNode(_name);
+                if (IdentificationDivision != null)
+                    result.Nodes.Add(IdentificationDivision);
 
-                if (this.EnvironmentDivision != null)
-                    result.Nodes.Add(this.EnvironmentDivision);
+                if (EnvironmentDivision != null)
+                    result.Nodes.Add(EnvironmentDivision);
 
-                if (this.DataDivision != null)
-                    result.Nodes.Add(this.DataDivision);
+                if (DataDivision != null)
+                    result.Nodes.Add(DataDivision);
 
-                if (this.ProcedureDivision != null)
-                    result.Nodes.Add(this.ProcedureDivision);
+                if (ProcedureDivision != null)
+                    result.Nodes.Add(ProcedureDivision);
                 return result;
             }
         }
 
         public CobolTree(string code, string name)
         {
-            this._name = name;
+            _name = name;
 
             var sourceCode = TextUtil.TrimAllLines(code);
 
@@ -58,17 +58,13 @@
             int indexDataDivision = sourceCode.IndexOf("DATA DIVISION", StringComparison.Ordinal);
             int indexProcedureDivision = sourceCode.IndexOf("PROCEDURE DIVISION", StringComparison.Ordinal);
 
-            if (indexIdentificationDivision > 0)
-                this.IdentificationDivision = new IdentificationDivision(sourceCode.Substring(indexProcedureDivision, indexEnvironmentDivision - indexIdentificationDivision), indexIdentificationDivision);
+            IdentificationDivision = indexIdentificationDivision > 0 ? new IdentificationDivision(sourceCode.Substring(indexProcedureDivision, indexEnvironmentDivision - indexIdentificationDivision), indexIdentificationDivision) : new IdentificationDivision("", 0);
 
-            if (indexEnvironmentDivision > 0)
-                this.EnvironmentDivision = new EnvironmentDivision(sourceCode.Substring(indexEnvironmentDivision, indexDataDivision - indexEnvironmentDivision), indexEnvironmentDivision);
+            EnvironmentDivision = indexEnvironmentDivision > 0 ? new EnvironmentDivision(sourceCode.Substring(indexEnvironmentDivision, indexDataDivision - indexEnvironmentDivision), indexEnvironmentDivision) : new EnvironmentDivision("", 0);
 
-            if (indexDataDivision > 0)
-                this.DataDivision = new DataDivision(sourceCode.Substring(indexDataDivision, indexProcedureDivision - indexDataDivision), indexDataDivision);
+            DataDivision = indexDataDivision > 0 ? new DataDivision(sourceCode.Substring(indexDataDivision, indexProcedureDivision - indexDataDivision), indexDataDivision) : new DataDivision("", 0);
 
-            if (indexProcedureDivision > 0)
-                this.ProcedureDivision = new ProcedureDivision(sourceCode.Substring(indexProcedureDivision, sourceCode.Length - indexProcedureDivision), indexProcedureDivision);
+            ProcedureDivision = indexProcedureDivision > 0 ? new ProcedureDivision(sourceCode.Substring(indexProcedureDivision, sourceCode.Length - indexProcedureDivision), indexProcedureDivision) : new ProcedureDivision("", 0);
 
             foreach (var procedure in ProcedureDivision.Sections.SelectMany(s => s.Procedures))
             {

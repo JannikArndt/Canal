@@ -1,16 +1,14 @@
-﻿using System;
-using System.Windows.Forms;
-
-using Canal.Properties;
+﻿using Canal.Properties;
 using FastColoredTextBoxNS;
+using System;
+using System.Windows.Forms;
 
 namespace Canal
 {
+    using CobolTree;
     using System.Collections.Generic;
     using System.Linq;
-
-    using Canal.CobolTree;
-    using Canal.Utils;
+    using Utils;
 
     public partial class FileControl : UserControl
     {
@@ -31,6 +29,8 @@ namespace Canal
 
             ShowVariablesTreeView();
         }
+
+        #region Search Box
 
         private void seachBox_TextChanged(object sender, EventArgs e)
         {
@@ -75,6 +75,10 @@ namespace Canal
             }
         }
 
+        #endregion
+
+        #region Tree View Selects
+
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             var treeNode = treeView.SelectedNode as CobolTreeNode;
@@ -84,6 +88,28 @@ namespace Canal
                 codeBox.FindNext(@"^.{7}" + treeNode.Text + @"(\.| +USING)", false, true, false, true);
         }
 
+        private void performsTree_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            var treeNode = performsTree.SelectedNode;
+            if (treeNode == null)
+                codeBox.DoRangeVisible(codeBox.GetRange(0, 0));
+            else
+                codeBox.FindNext(treeNode.Text, false, true, false, true);
+        }
+
+        private void variablesTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            var treeNode = variablesTreeView.SelectedNode as Variable;
+            if (treeNode == null)
+                codeBox.DoRangeVisible(codeBox.GetRange(0, 0));
+            else
+                codeBox.FindNext(treeNode.Name, false, true, false, true);
+        }
+
+        #endregion
+
+        #region Button Clicks
+
         private void ResolveCopysButton_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
@@ -92,12 +118,14 @@ namespace Canal
 
             ShowVariablesTreeView();
 
-            this.ShowProceduresTreeView();
+            ShowProceduresTreeView();
 
             ResolveCopysButton.Enabled = false;
 
             Cursor = Cursors.Default;
         }
+
+        #endregion
 
         private void ShowVariablesTreeView()
         {

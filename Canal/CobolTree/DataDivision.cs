@@ -12,28 +12,28 @@
         {
             get
             {
-                return this.WorkingStorageSection.Variables.Union(this.LinkageSection.Variables).ToList();
+                return WorkingStorageSection.Variables.Union(LinkageSection.Variables).ToList();
             }
         }
 
         public DataDivision(string sourceCode, int indexDataDivision)
             : base("Data Division", indexDataDivision)
         {
-            this.OriginalSource = sourceCode;
+            OriginalSource = sourceCode;
 
-            int indexWorkingStorageSection = sourceCode.IndexOf("WORKING-STORAGE SECTION", StringComparison.Ordinal);
-            int indexLinkageSection = sourceCode.IndexOf("LINKAGE SECTION", StringComparison.Ordinal);
+            int indexWorkingStorageSection = Math.Max(0, sourceCode.IndexOf("WORKING-STORAGE SECTION", StringComparison.Ordinal));
+            int indexLinkageSection = Math.Max(0, sourceCode.IndexOf("LINKAGE SECTION", StringComparison.Ordinal));
 
-            this.WorkingStorageSection = new WorkingStorageSection(
+            WorkingStorageSection = new WorkingStorageSection(
                 sourceCode.Substring(indexWorkingStorageSection, indexLinkageSection - indexWorkingStorageSection),
                 indexDataDivision + indexWorkingStorageSection);
 
-            this.LinkageSection = new LinkageSection(
+            LinkageSection = new LinkageSection(
                 sourceCode.Substring(indexLinkageSection, sourceCode.Length - indexLinkageSection),
                 indexDataDivision + indexLinkageSection);
 
-            this.Nodes.Add(this.WorkingStorageSection);
-            this.Nodes.Add(this.LinkageSection);
+            Nodes.Add(WorkingStorageSection);
+            Nodes.Add(LinkageSection);
         }
 
         public WorkingStorageSection WorkingStorageSection { get; set; }

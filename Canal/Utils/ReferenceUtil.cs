@@ -38,6 +38,9 @@
 
         public static TreeNode GetPerformTree(CobolFile file)
         {
+            if (file == null || file.CobolTree == null || file.CobolTree.ProcedureDivision == null)
+                return new TreeNode();
+
             var topNode = new TreeNode(file.Name);
 
             var sections = file.CobolTree.ProcedureDivision.Sections;
@@ -45,7 +48,6 @@
             // for all top-level-sections
             foreach (var section in sections.Where(sec => !sec.IsReferencedBy.Any()))
             {
-                // TODO Direkt FindPerformsRecursively ?
                 var node = new TreeNode(section.Name);
 
                 foreach (var procedure in section.Procedures)
