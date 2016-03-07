@@ -1,8 +1,8 @@
-﻿using Canal.CobolTree.Models;
+﻿using System;
+using System.Windows.Forms;
+using Canal.CobolTree.Models;
 using Canal.Properties;
 using FastColoredTextBoxNS;
-using System;
-using System.Windows.Forms;
 
 namespace Canal
 {
@@ -19,6 +19,9 @@ namespace Canal
 
             treeView.Nodes.Add(CobolFile.CobolTree.AsTreeNodes);
             treeView.ExpandAll();
+
+            performsTree.Nodes.Add(ReferenceUtil.GetPerformTree(file));
+            performsTree.ExpandAll();
         }
 
         private void seachBox_TextChanged(object sender, EventArgs e)
@@ -75,8 +78,10 @@ namespace Canal
 
         private void ResolveCopysButton_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             ReferenceUtil.ResolveCopys(CobolFile);
             codeBox.Text = CobolFile.Text;
+            Cursor = Cursors.Default;
         }
     }
 }

@@ -34,22 +34,28 @@
             this.treeView = new System.Windows.Forms.TreeView();
             this.searchBox = new System.Windows.Forms.TextBox();
             this.searchWithRegEx = new System.Windows.Forms.CheckBox();
-            this.codeBox = new Canal.CodeBox();
             this.ResolveCopysButton = new System.Windows.Forms.Button();
+            this.tocTabControl = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.performsTree = new System.Windows.Forms.TreeView();
+            this.codeBox = new Canal.CodeBox();
+            this.tocTabControl.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.codeBox)).BeginInit();
             this.SuspendLayout();
             // 
             // treeView
             // 
-            this.treeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.treeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treeView.ItemHeight = 22;
-            this.treeView.Location = new System.Drawing.Point(591, 28);
+            this.treeView.Location = new System.Drawing.Point(3, 3);
             this.treeView.Margin = new System.Windows.Forms.Padding(2);
             this.treeView.Name = "treeView";
-            this.treeView.Size = new System.Drawing.Size(234, 553);
+            this.treeView.Size = new System.Drawing.Size(217, 523);
             this.treeView.TabIndex = 1;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
             // 
@@ -76,6 +82,60 @@
             this.searchWithRegEx.Text = "RegEx";
             this.searchWithRegEx.UseVisualStyleBackColor = true;
             // 
+            // ResolveCopysButton
+            // 
+            this.ResolveCopysButton.Location = new System.Drawing.Point(241, 0);
+            this.ResolveCopysButton.Name = "ResolveCopysButton";
+            this.ResolveCopysButton.Size = new System.Drawing.Size(92, 23);
+            this.ResolveCopysButton.TabIndex = 4;
+            this.ResolveCopysButton.Text = "Resolve COPYs";
+            this.ResolveCopysButton.UseVisualStyleBackColor = true;
+            this.ResolveCopysButton.Click += new System.EventHandler(this.ResolveCopysButton_Click);
+            // 
+            // tocTabControl
+            // 
+            this.tocTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tocTabControl.Controls.Add(this.tabPage1);
+            this.tocTabControl.Controls.Add(this.tabPage2);
+            this.tocTabControl.Location = new System.Drawing.Point(593, 28);
+            this.tocTabControl.Name = "tocTabControl";
+            this.tocTabControl.SelectedIndex = 0;
+            this.tocTabControl.Size = new System.Drawing.Size(231, 555);
+            this.tocTabControl.TabIndex = 5;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.treeView);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(223, 529);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Table of Contents";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.performsTree);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(223, 529);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Performs";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // performsTree
+            // 
+            this.performsTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.performsTree.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.performsTree.ItemHeight = 22;
+            this.performsTree.Location = new System.Drawing.Point(3, 3);
+            this.performsTree.Name = "performsTree";
+            this.performsTree.Size = new System.Drawing.Size(217, 523);
+            this.performsTree.TabIndex = 0;
+            // 
             // codeBox
             // 
             this.codeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -100,6 +160,7 @@
             this.codeBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.codeBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.codeBox.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.codeBox.Hotkeys = resources.GetString("codeBox.Hotkeys");
             this.codeBox.IsReplaceMode = false;
             this.codeBox.Location = new System.Drawing.Point(3, 28);
             this.codeBox.Margin = new System.Windows.Forms.Padding(2);
@@ -111,28 +172,21 @@
             this.codeBox.TabIndex = 0;
             this.codeBox.Zoom = 100;
             // 
-            // ResolveCopysButton
-            // 
-            this.ResolveCopysButton.Location = new System.Drawing.Point(241, 0);
-            this.ResolveCopysButton.Name = "ResolveCopysButton";
-            this.ResolveCopysButton.Size = new System.Drawing.Size(92, 23);
-            this.ResolveCopysButton.TabIndex = 4;
-            this.ResolveCopysButton.Text = "Resolve COPYs";
-            this.ResolveCopysButton.UseVisualStyleBackColor = true;
-            this.ResolveCopysButton.Click += new System.EventHandler(this.ResolveCopysButton_Click);
-            // 
             // FileControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.tocTabControl);
             this.Controls.Add(this.ResolveCopysButton);
             this.Controls.Add(this.searchWithRegEx);
             this.Controls.Add(this.searchBox);
-            this.Controls.Add(this.treeView);
             this.Controls.Add(this.codeBox);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FileControl";
             this.Size = new System.Drawing.Size(827, 583);
+            this.tocTabControl.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.codeBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -145,5 +199,9 @@
         private CodeBox codeBox;
         private System.Windows.Forms.CheckBox searchWithRegEx;
         private System.Windows.Forms.Button ResolveCopysButton;
+        private System.Windows.Forms.TabControl tocTabControl;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TreeView performsTree;
     }
 }

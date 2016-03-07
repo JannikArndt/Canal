@@ -4,7 +4,6 @@ using System.Windows.Forms;
 namespace Canal
 {
     using Level88ToEnum;
-    using Windows;
 
     public partial class MainWindow : Form
     {
@@ -36,8 +35,10 @@ namespace Canal
 
             if (dialogResult == DialogResult.OK)
             {
+                Cursor = Cursors.WaitCursor;
                 var file = FileUtil.Get(openFileDialog.FileName);
                 tabUtil.AddTab(file);
+                Cursor = Cursors.Default;
             }
         }
 
@@ -50,15 +51,6 @@ namespace Canal
         {
             var converterWindow = new Level88ToEnum();
             converterWindow.Show();
-        }
-
-        private void showPERFORMsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (tabUtil.CurrentFile == null)
-                return;
-
-            var performsWindow = new Performs(tabUtil.CurrentFile);
-            performsWindow.Show();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)

@@ -42,8 +42,9 @@ namespace Canal
         /// </summary>
         /// <param name="programName">The name of a program, without extension.</param>
         /// <param name="folderName">The name of a directory, no full path required.</param>
+        /// <param name="includeParentDirectory">If the file is not found, the parent directory and all its subdirectories are analyzed as well.</param>
         /// <returns>A CobolFile with the file contents as Text.</returns>
-        public static CobolFile Get(string programName, string folderName)
+        public static CobolFile Get(string programName, string folderName, bool includeParentDirectory = true)
         {
             if (string.IsNullOrWhiteSpace(programName))
                 return null;
@@ -52,6 +53,15 @@ namespace Canal
 
             if (candidate == null && _files.Keys.Count(key => key.Contains(programName)) == 1)
                 candidate = _files.Keys.FirstOrDefault(key => key.Contains(programName));
+
+            if (candidate == null)
+            {
+                foreach (var knownFolder in _recentFolders)
+                {
+                    AnalyzeFolder(Path.GetDirectoryName(Path.GetDirectoryName(knownFolder)));
+                    return Get(programName, folderName, false);
+                }
+            }
 
             return Get(candidate);
         }
