@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
-namespace Canal
+﻿namespace Canal.Utils
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+
     public static class FileUtil
     {
         private static List<string> _recentFolders = new List<string>();

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Text.RegularExpressions;
-
-namespace Canal
+﻿namespace Canal.Utils
 {
+    using System;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Windows.Forms;
 
     using Canal.CobolTree.Models;

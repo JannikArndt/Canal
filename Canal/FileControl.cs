@@ -6,6 +6,7 @@ using FastColoredTextBoxNS;
 
 namespace Canal
 {
+    using Canal.Utils;
 
     public partial class FileControl : UserControl
     {

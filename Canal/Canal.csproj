@@ -118,15 +118,15 @@
     <Compile Include="CodeBox.Designer.cs">
       <DependentUpon>CodeBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Constants.cs" />
+    <Compile Include="Resources\Constants.cs" />
     <Compile Include="FileControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="FileControl.Designer.cs">
       <DependentUpon>FileControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="FileReference.cs" />
-    <Compile Include="FileUtil.cs" />
+    <Compile Include="Utils\FileReference.cs" />
+    <Compile Include="Utils\FileUtil.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -135,8 +135,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReferenceUtil.cs" />
-    <Compile Include="TabUtil.cs" />
+    <Compile Include="Utils\ReferenceUtil.cs" />
+    <Compile Include="Utils\TabUtil.cs" />
     <Compile Include="Utils\VariablesUtil.cs" />
     <EmbeddedResource Include="FileControl.resx">
       <DependentUpon>FileControl.cs</DependentUpon>
