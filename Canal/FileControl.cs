@@ -144,6 +144,11 @@ namespace Canal
             Clipboard.SetText(treeView.ToText());
         }
 
+        private void CopyProceduresClick(object sender, EventArgs e)
+        {
+            Clipboard.SetText(proceduresTreeView.ToText());
+        }
+
         #endregion
 
         #region Tree View Initializers

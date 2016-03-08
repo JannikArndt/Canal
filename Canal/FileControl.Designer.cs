@@ -46,6 +46,8 @@
             this.proceduresTab = new System.Windows.Forms.TabPage();
             this.proceduresTreeView = new System.Windows.Forms.TreeView();
             this.codeBox = new Canal.CodeBox();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.CopyProceduresButton = new System.Windows.Forms.ToolStripButton();
             this.tocTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tocToolStrip.SuspendLayout();
@@ -53,6 +55,7 @@
             this.tabPage3.SuspendLayout();
             this.proceduresTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.codeBox)).BeginInit();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeView
@@ -196,6 +199,7 @@
             // 
             // proceduresTab
             // 
+            this.proceduresTab.Controls.Add(this.toolStrip1);
             this.proceduresTab.Controls.Add(this.proceduresTreeView);
             this.proceduresTab.Location = new System.Drawing.Point(4, 22);
             this.proceduresTab.Name = "proceduresTab";
@@ -207,10 +211,14 @@
             // 
             // proceduresTreeView
             // 
-            this.proceduresTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.proceduresTreeView.Location = new System.Drawing.Point(3, 3);
+            this.proceduresTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.proceduresTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.proceduresTreeView.ItemHeight = 22;
+            this.proceduresTreeView.Location = new System.Drawing.Point(3, 31);
             this.proceduresTreeView.Name = "proceduresTreeView";
-            this.proceduresTreeView.Size = new System.Drawing.Size(309, 523);
+            this.proceduresTreeView.Size = new System.Drawing.Size(309, 495);
             this.proceduresTreeView.TabIndex = 0;
             this.proceduresTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.proceduresTreeView_AfterSelect);
             // 
@@ -250,6 +258,26 @@
             this.codeBox.TabIndex = 0;
             this.codeBox.Zoom = 100;
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CopyProceduresButton});
+            this.toolStrip1.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(309, 25);
+            this.toolStrip1.TabIndex = 1;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // CopyProceduresButton
+            // 
+            this.CopyProceduresButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.CopyProceduresButton.Image = ((System.Drawing.Image)(resources.GetObject("CopyProceduresButton.Image")));
+            this.CopyProceduresButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CopyProceduresButton.Name = "CopyProceduresButton";
+            this.CopyProceduresButton.Size = new System.Drawing.Size(23, 22);
+            this.CopyProceduresButton.Text = "Copy";
+            this.CopyProceduresButton.Click += new System.EventHandler(this.CopyProceduresClick);
+            // 
             // FileControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -270,7 +298,10 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.proceduresTab.ResumeLayout(false);
+            this.proceduresTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.codeBox)).EndInit();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -292,5 +323,7 @@
         private System.Windows.Forms.TreeView proceduresTreeView;
         private System.Windows.Forms.ToolStrip tocToolStrip;
         private System.Windows.Forms.ToolStripButton exportTocButton;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton CopyProceduresButton;
     }
 }
