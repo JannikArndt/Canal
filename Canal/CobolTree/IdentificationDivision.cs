@@ -7,7 +7,9 @@
         public IdentificationDivision(string sourceCode, int indexIdentificationDivision)
             : base("Identification Division", indexIdentificationDivision)
         {
-            this.OriginalSource = sourceCode;
+            OriginalSource = sourceCode;
+
+            // AUTHOR, INSTALLATION, DATE-WRITTEN; DATE-COMPILED; SECURITY
         }
     }
 }

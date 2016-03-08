@@ -2,14 +2,19 @@
 
 namespace Canal.Utils
 {
+    using CobolTree;
     using System.Text.RegularExpressions;
-
-    using Canal.CobolTree;
 
     public static class VariablesUtil
     {
         public static List<Variable> AnalyzeVariables(string text)
         {
+            // FILLER; REDEFINES; OCCURS; SPACES; 66
+            // 	[ "USAGE" [ "IS" ] ] ( "BINARY" | "COMP" | "COMP-1" | "COMP-2" | "COMP-3" | "COMP-4" | "COMPUTATIONAL" | "COMPUTATIONAL-1" | "COMPUTATIONAL-2" | "COMPUTATIONAL-3" | "COMPUTATIONAL-4" | "DISPLAY" | "DISPLAY-1" | "INDEX" | "PACKED-DECIMAL" | "POINTER" )
+            // ( "VALUE" [ "IS" ] | "VALUES" [ "ARE" ] ) { literal [ ( "THROUGH" | "THRU" ) literal ] }+
+            // "RENAMES" qualified-data-name [ ( "THROUGH" | "THRU" ) qualified-data-name ]
+
+
             var result = new List<Variable>();
             var regex =
                 new Regex(
@@ -55,20 +60,26 @@ namespace Canal.Utils
             return result;
         }
 
-        public static List<string> GetAllVariables(CobolFile file)
+        public static List<Literal> GetIdentifierLiterals(string text)
         {
-            return GetAllVariables(file.Text);
-        }
+            var result = new List<Literal>();
+            var regex = new Regex(Constants.LiteralWithInputOutput, Constants.compiledMultilineCaseInsensitive); // @" (?<token>[\w\d-]+)[\., ]"
 
-        public static List<string> GetAllVariables(string text)
-        {
-            var result = new List<string>();
-            var regex = new Regex(@" (?<token>[\w\d-]+)[\., ]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             foreach (Match match in regex.Matches(text))
             {
-                var token = match.Groups["token"].Value;
-                if (!Constants.cobolKeywords.Contains(token))
-                    result.Add(token);
+                var literal = match.Groups["literal"].Value;
+                var usedAs = UsedAs.Unknown;
+                if (match.Groups["beforeOutput"].Success)
+                    usedAs = UsedAs.Output;
+
+                if (match.Groups["beforeInputWithSpace"].Success || match.Groups["beforeInput"].Success ||
+                    match.Groups["afterInputWithSpace"].Success || match.Groups["afterInput"].Success)
+                {
+                    usedAs = usedAs == UsedAs.Output ? UsedAs.Both : UsedAs.Input;
+                }
+
+                if (!Constants.cobolKeywords.Contains(literal))
+                    result.Add(new Literal(literal, usedAs));
             }
 
             return result;

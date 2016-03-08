@@ -31,7 +31,7 @@
             IsReferencedBy = new List<PerformReference>();
             CallReferences = new List<ProgramReference>();
             CopyReferences = new List<ProgramReference>();
-            Variables = new List<Variable>();
+            Variables = new Dictionary<Variable, UsedAs>();
         }
 
         public new string Name { get; set; }
@@ -46,18 +46,18 @@
 
         public List<ProgramReference> CopyReferences { get; set; }
 
-        public List<Variable> Variables { get; set; }
+        public Dictionary<Variable, UsedAs> Variables { get; set; }
 
         public void AnalyzeVariables(List<Variable> variablesInFile)
         {
-            var foundTokens = VariablesUtil.GetAllVariables(OriginalSource);
+            var foundTokens = VariablesUtil.GetIdentifierLiterals(OriginalSource);
 
             foreach (var token in foundTokens)
             {
-                var variable = variablesInFile.FindVariable(token);
+                var variable = variablesInFile.FindVariable(token.Name);
 
                 if (variable != null)
-                    Variables.Add(variable);
+                    Variables.Add(variable, token.UsedAs);
             }
         }
 

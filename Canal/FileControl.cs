@@ -166,7 +166,7 @@ namespace Canal
 
                     var varDict = new Dictionary<Variable, List<Variable>>();
 
-                    foreach (var variable in procedure.Variables)
+                    foreach (var variable in procedure.Variables.Keys)
                     {
                         var root = variable.Root ?? variable;
                         if (varDict.ContainsKey(root))
@@ -179,7 +179,7 @@ namespace Canal
                     {
                         var rootVarNode = new TreeNode(key.Name);
                         foreach (var variable in varDict[key])
-                            rootVarNode.Nodes.Add(new TreeNode(variable.Level.ToString("D2") + "  " + variable.Name));
+                            rootVarNode.Nodes.Add(new TreeNode(variable.Level.ToString("D2") + "  " + variable.Name + " " + procedure.Variables[variable].ToShortString()));
 
                         procNode.Nodes.Add(rootVarNode);
                     }

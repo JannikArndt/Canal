@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -46,6 +47,23 @@ namespace Canal.Utils
                 result.Append(node.ToText(indent + "    "));
 
             return result.ToString();
+        }
+
+        public static string ToShortString(this UsedAs usedAs)
+        {
+            switch (usedAs)
+            {
+                case UsedAs.Unknown:
+                    return "";
+                case UsedAs.Input:
+                    return "(in)";
+                case UsedAs.Output:
+                    return "(out)";
+                case UsedAs.Both:
+                    return "(in/out)";
+                default:
+                    throw new ArgumentOutOfRangeException("usedAs", usedAs, null);
+            }
         }
     }
 }

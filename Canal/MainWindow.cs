@@ -3,11 +3,9 @@ using System.Windows.Forms;
 
 namespace Canal
 {
-    using System.Text;
-
     using Canal.Utils;
-
     using Level88ToEnum;
+    using System.Text;
 
     public partial class MainWindow : Form
     {
@@ -75,10 +73,10 @@ namespace Canal
                 {
                     text.AppendLine("Procedure: " + procedure.Name);
 
-                    foreach (var variable in procedure.Variables)
+                    foreach (var variable in procedure.Variables.Keys)
                     {
                         var root = variable.Root != null ? " (" + variable.Root.Name + ")" : "";
-                        text.AppendLine("  " + variable.Level.ToString("D2") + "  " + variable.Name + root);
+                        text.AppendLine("  " + variable.Level.ToString("D2") + "  " + variable.Name + root + " " + procedure.Variables[variable].ToShortString());
                     }
 
                     text.AppendLine();
