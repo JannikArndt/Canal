@@ -2,8 +2,8 @@
 
 namespace Canal.Utils
 {
-    using CobolTree;
     using System.Text.RegularExpressions;
+    using CobolTree;
 
     public static class VariablesUtil
     {
@@ -72,8 +72,7 @@ namespace Canal.Utils
                 if (match.Groups["beforeOutput"].Success)
                     usedAs = UsedAs.Output;
 
-                if (match.Groups["beforeInputWithSpace"].Success || match.Groups["beforeInput"].Success ||
-                    match.Groups["afterInputWithSpace"].Success || match.Groups["afterInput"].Success)
+                if (match.Groups["beforeInputWithSpace"].Success || match.Groups["beforeInput"].Success)
                 {
                     usedAs = usedAs == UsedAs.Output ? UsedAs.Both : UsedAs.Input;
                 }

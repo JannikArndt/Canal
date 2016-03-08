@@ -65,5 +65,25 @@ namespace Canal.Utils
                     throw new ArgumentOutOfRangeException("usedAs", usedAs, null);
             }
         }
+
+        public static UsedAs MergeUsages(this UsedAs usedAs, Literal literal)
+        {
+            if (usedAs == UsedAs.Both)
+                return UsedAs.Both;
+
+            if (usedAs == UsedAs.Input)
+                if (literal.UsedAs == UsedAs.Output)
+                    return UsedAs.Both;
+                else
+                    return UsedAs.Input;
+
+            if (usedAs == UsedAs.Output)
+                if (literal.UsedAs == UsedAs.Input)
+                    return UsedAs.Both;
+                else
+                    return UsedAs.Output;
+
+            return UsedAs.Unknown;
+        }
     }
 }

@@ -11,10 +11,8 @@ namespace Canal
 
         public const RegexOptions compiledCaseInsensitive = RegexOptions.Compiled | RegexOptions.IgnoreCase;
 
-        public const string LiteralWithInputOutput =
-            "(" + StatementsBeforeOutputLiteral + Or + StatementsBeforeInputLiteralSpaceMandatory + Or + StatementsBeforeInputLiteralSpaceOptional + ")"
-            + Literal
-            + "(" + StatementsAfterInputLiteralSpaceMandatory + Or + StatementsAfterInputLiteralSpaceOptional + Or + " *$)";
+        public const string LiteralWithInputOutput = "(" + StatementsBeforeOutputLiteral + Or + StatementsBeforeInputLiteralSpaceMandatory
+            + Or + StatementsBeforeInputLiteralSpaceOptional + ")" + Literal;
 
         public const string Or = @"|";
 
@@ -22,7 +20,7 @@ namespace Canal
 
         public const string StatementsBeforeInputLiteralSpaceMandatory = @"((?<beforeInputWithSpace>MOVE|DIVIDE|ADD|SUBTRACT|MULTIPLY|SET|IF|AND|OR|THAN|GIVING|REMAINDER|NOT|BY|UNTIL) +)";
 
-        public const string StatementsBeforeInputLiteralSpaceOptional = @"((?<beforeInput>|=|<|>) *)";
+        public const string StatementsBeforeInputLiteralSpaceOptional = @"((?<beforeInput>=|<|>) *)";
 
         public const string Literal = @"(?<literal>[\w\d-()]+)";
 

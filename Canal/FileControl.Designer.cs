@@ -212,6 +212,7 @@
             this.proceduresTreeView.Name = "proceduresTreeView";
             this.proceduresTreeView.Size = new System.Drawing.Size(309, 523);
             this.proceduresTreeView.TabIndex = 0;
+            this.proceduresTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.proceduresTreeView_AfterSelect);
             // 
             // codeBox
             // 

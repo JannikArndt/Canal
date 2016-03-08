@@ -52,12 +52,15 @@
         {
             var foundTokens = VariablesUtil.GetIdentifierLiterals(OriginalSource);
 
-            foreach (var token in foundTokens)
+            foreach (Literal token in foundTokens)
             {
-                var variable = variablesInFile.FindVariable(token.Name);
+                Variable variable = variablesInFile.FindVariable(token.Name);
 
                 if (variable != null)
-                    Variables.Add(variable, token.UsedAs);
+                    if (Variables.ContainsKey(variable))
+                        Variables[variable] = Variables[variable].MergeUsages(token);
+                    else
+                        Variables.Add(variable, token.UsedAs);
             }
         }
 

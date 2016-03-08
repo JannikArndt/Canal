@@ -1,13 +1,15 @@
-﻿using Canal.Properties;
-using FastColoredTextBoxNS;
-using System;
+﻿using System;
 using System.Windows.Forms;
+using Canal.Properties;
+using FastColoredTextBoxNS;
 
 namespace Canal
 {
-    using CobolTree;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
+
+    using CobolTree;
     using Utils;
 
     public partial class FileControl : UserControl
@@ -26,6 +28,9 @@ namespace Canal
 
             performsTree.Nodes.Add(ReferenceUtil.GetPerformTree(file));
             performsTree.ExpandAll();
+
+            // TODO insert friendly advise if copys are unresolved
+            ShowProceduresTreeView();
 
             ShowVariablesTreeView();
         }
@@ -94,7 +99,7 @@ namespace Canal
             if (treeNode == null)
                 codeBox.DoRangeVisible(codeBox.GetRange(0, 0));
             else
-                codeBox.FindNext(treeNode.Text, false, true, false, true);
+                codeBox.FindNext(treeNode.Text, false, false, false, true);
         }
 
         private void variablesTreeView_AfterSelect(object sender, TreeViewEventArgs e)
@@ -103,7 +108,16 @@ namespace Canal
             if (treeNode == null)
                 codeBox.DoRangeVisible(codeBox.GetRange(0, 0));
             else
-                codeBox.FindNext(treeNode.Name, false, true, false, true);
+                codeBox.FindNext(treeNode.Text, false, false, false, true);
+        }
+
+        private void proceduresTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            var treeNode = proceduresTreeView.SelectedNode;
+            if (treeNode == null)
+                codeBox.DoRangeVisible(codeBox.GetRange(0, 0));
+            else if (!Regex.IsMatch(treeNode.Text, @"^\d\d"))
+                codeBox.FindNext(@"^.{7}" + treeNode.Text + @"(\.| +USING)", false, true, false, true);
         }
 
         #endregion
@@ -125,7 +139,14 @@ namespace Canal
             Cursor = Cursors.Default;
         }
 
+        private void ExportTocClick(object sender, EventArgs e)
+        {
+            Clipboard.SetText(treeView.ToText());
+        }
+
         #endregion
+
+        #region Tree View Initializers
 
         private void ShowVariablesTreeView()
         {
@@ -189,9 +210,6 @@ namespace Canal
             }
         }
 
-        private void ExportTocClick(object sender, EventArgs e)
-        {
-            Clipboard.SetText(treeView.ToText());
-        }
+        #endregion
     }
 }
