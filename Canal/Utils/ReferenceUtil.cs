@@ -66,10 +66,10 @@
             if (procedure == null)
                 return;
 
-            var tempNode = topNode;
+            var tempNode = topNode.Parent;
 
             // find circles
-            while (tempNode.Parent != null)
+            while (tempNode != null && tempNode.Parent != null)
             {
                 if (tempNode.Text == procedure.Name)
                     return;
