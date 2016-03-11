@@ -25,13 +25,18 @@ namespace Canal
             treeView.Nodes.Add(CobolFile.CobolTree.AsTreeNodes);
             treeView.ExpandAll();
 
-            performsTree.Nodes.Add(ReferenceUtil.GetPerformTree(file));
-            performsTree.ExpandAll();
+            performsTreeView.Nodes.Add(ReferenceUtil.GetPerformTree(file));
+            performsTreeView.ExpandAll();
 
             // TODO insert friendly advise if copys are unresolved
             ShowProceduresTreeView();
 
             ShowVariablesTreeView();
+        }
+
+        public CodeBox CodeBox
+        {
+            get { return codeBox; }
         }
 
         #region Search Box
@@ -94,7 +99,7 @@ namespace Canal
 
         private void performsTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            var treeNode = performsTree.SelectedNode;
+            var treeNode = performsTreeView.SelectedNode;
             if (treeNode == null)
                 codeBox.DoRangeVisible(codeBox.GetRange(0, 0));
             else
@@ -215,5 +220,55 @@ namespace Canal
         }
 
         #endregion
+
+        private void TocExpandAllButton_Click(object sender, EventArgs e)
+        {
+            treeView.ExpandAll();
+        }
+
+        private void TocCollapseAllButton_Click(object sender, EventArgs e)
+        {
+            treeView.CollapseAll();
+        }
+
+        private void proceduresExpandAllButton_Click(object sender, EventArgs e)
+        {
+            proceduresTreeView.ExpandAll();
+        }
+
+        private void proceduresCollapseAllButton_Click(object sender, EventArgs e)
+        {
+            proceduresTreeView.CollapseAll();
+        }
+
+        private void variablesCopyButton_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(variablesTreeView.ToText());
+        }
+
+        private void variablesExpandAllButton_Click(object sender, EventArgs e)
+        {
+            variablesTreeView.ExpandAll();
+        }
+
+        private void variablesCollapseAllButton_Click(object sender, EventArgs e)
+        {
+            variablesTreeView.CollapseAll();
+        }
+
+        private void performsCopyButton_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(proceduresTreeView.ToText());
+        }
+
+        private void performsExpandAllButton_Click(object sender, EventArgs e)
+        {
+            performsTreeView.ExpandAll();
+        }
+
+        private void performsCollapseAllButton_Click(object sender, EventArgs e)
+        {
+            performsTreeView.CollapseAll();
+        }
     }
 }

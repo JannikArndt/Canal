@@ -8,7 +8,7 @@ namespace Canal
         {
             InitializeComponent();
 
-            this.fastColoredTextBox1.Text = text;
+            fastColoredTextBox1.Text = text;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Canal.Utils
 {
-    using Canal.CobolTree;
+    using CobolTree;
     using System;
     using System.Linq;
     using System.Text.RegularExpressions;

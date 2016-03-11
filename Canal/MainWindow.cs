@@ -3,13 +3,22 @@ using System.Windows.Forms;
 
 namespace Canal
 {
-    using Canal.Utils;
     using Level88ToEnum;
-    using System.Text;
+    using Utils;
 
     public partial class MainWindow : Form
     {
         private TabUtil tabUtil;
+
+        public CodeBox CurrentCodeBox
+        {
+            get
+            {
+                if (tabUtil.CurrentFileControl != null && tabUtil.CurrentFileControl.CodeBox != null)
+                    return tabUtil.CurrentFileControl.CodeBox;
+                return null;
+            }
+        }
 
         public MainWindow(string[] files = null)
         {
@@ -61,32 +70,9 @@ namespace Canal
                 Close();
         }
 
-        private void variableUsagesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var text = new StringBuilder();
-
-            foreach (var section in tabUtil.CurrentFile.CobolTree.ProcedureDivision.Sections)
-            {
-                text.AppendLine("Section: " + section.Name);
-
-                foreach (var procedure in section.Procedures)
-                {
-                    text.AppendLine("Procedure: " + procedure.Name);
-
-                    foreach (var variable in procedure.Variables.Keys)
-                    {
-                        var root = variable.Root != null ? " (" + variable.Root.Name + ")" : "";
-                        text.AppendLine("  " + variable.Level.ToString("D2") + "  " + variable.Name + root + " " + procedure.Variables[variable].ToShortString());
-                    }
-
-                    text.AppendLine();
-                }
-
-                text.AppendLine();
-            }
-
-            var viewer = new TextViewer(text.ToString());
-            viewer.Show();
+            tabUtil.AddTab(new CobolFile("", "New File"));
         }
     }
 }

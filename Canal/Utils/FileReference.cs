@@ -6,9 +6,9 @@
     {
         public FileReference(string fileSystemEntry)
         {
-            this.FullPath = fileSystemEntry;
-            this.ProgramName = Path.GetFileNameWithoutExtension(fileSystemEntry);
-            this.Directory = Path.GetDirectoryName(fileSystemEntry);
+            FullPath = fileSystemEntry;
+            ProgramName = Path.GetFileNameWithoutExtension(fileSystemEntry);
+            Directory = Path.GetDirectoryName(fileSystemEntry);
         }
 
         public string ProgramName { get; set; }

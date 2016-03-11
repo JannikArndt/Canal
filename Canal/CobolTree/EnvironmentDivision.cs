@@ -7,7 +7,7 @@
         public EnvironmentDivision(string sourceCode, int indexEnvironmentDivision)
             : base("Environment Division", indexEnvironmentDivision)
         {
-            this.OriginalSource = sourceCode;
+            OriginalSource = sourceCode;
         }
     }
 }

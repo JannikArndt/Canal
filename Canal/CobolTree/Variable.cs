@@ -33,20 +33,20 @@ namespace Canal.CobolTree
         public Variable(int level, string name, string code, Variable parent)
             : base(level.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0') + "  " + name)
         {
-            this.Level = level;
-            this.Name = name;
-            this.Code = code;
-            this.Parent = parent;
-            this.Variables = new List<Variable>();
+            Level = level;
+            Name = name;
+            Code = code;
+            Parent = parent;
+            Variables = new List<Variable>();
         }
 
         public void FillNodesWithVariables()
         {
-            this.Nodes.Clear();
+            Nodes.Clear();
 
-            foreach (var variable in this.Variables)
+            foreach (var variable in Variables)
             {
-                this.Nodes.Add(variable);
+                Nodes.Add(variable);
 
                 variable.FillNodesWithVariables();
             }
@@ -54,7 +54,7 @@ namespace Canal.CobolTree
 
         public override string ToString()
         {
-            return string.Format("{0} {1}, Variables: {2}", this.Level, this.Name, this.Variables.Count);
+            return string.Format("{0} {1}, Variables: {2}", Level, Name, Variables.Count);
         }
     }
 }

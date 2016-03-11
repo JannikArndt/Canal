@@ -6,7 +6,7 @@ namespace Canal.CobolTree
     {
         public PerformReference(string referenceName)
         {
-            this.ReferenceName = referenceName;
+            ReferenceName = referenceName;
         }
 
         public string ReferenceName { get; set; }
@@ -17,7 +17,7 @@ namespace Canal.CobolTree
 
         public override string ToString()
         {
-            return string.Format("PERFORM {0}", this.ReferenceName);
+            return string.Format("PERFORM {0}", ReferenceName);
         }
     }
 }

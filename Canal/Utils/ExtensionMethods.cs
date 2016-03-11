@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Canal.Utils
 {
-    using Canal.CobolTree;
+    using CobolTree;
 
     public static class ExtensionMethods
     {

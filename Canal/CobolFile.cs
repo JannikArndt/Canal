@@ -1,8 +1,7 @@
 ﻿namespace Canal
 {
+    using CobolTree;
     using System.Collections.Generic;
-
-    using Canal.CobolTree;
 
     public class CobolFile
     {

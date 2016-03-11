@@ -14,9 +14,9 @@
         public ProcedureDivision(string sourceCode, int indexProcedureDivision)
             : base("Procedure Division", indexProcedureDivision)
         {
-            this.OriginalSource = sourceCode;
+            OriginalSource = sourceCode;
 
-            this.Sections = new List<Section>();
+            Sections = new List<Section>();
 
             var sectionNames = Regex.Matches(sourceCode, @"^ [\w\d-]+ SECTION\.", RegexOptions.Compiled | RegexOptions.Multiline);
 
@@ -26,12 +26,12 @@
                 var begin = sectionName.Index + sectionName.Length;
                 var length = (sectionName.NextMatch().Success ? sectionName.NextMatch().Index : sourceCode.Length) - begin;
                 string text = sourceCode.Substring(begin, length);
-                this.Sections.Add(new Section(name, text, indexProcedureDivision + begin));
+                Sections.Add(new Section(name, text, indexProcedureDivision + begin));
             }
 
             // Perform-Referenzen aufbauen
-            var allProcedures = this.Sections.SelectMany(sec => sec.Procedures).ToList();
-            var allProceduresAndSections = allProcedures.Union(this.Sections).ToList();
+            var allProcedures = Sections.SelectMany(sec => sec.Procedures).ToList();
+            var allProceduresAndSections = allProcedures.Union(Sections).ToList();
 
             foreach (var procedure in allProcedures)
             {
@@ -51,9 +51,9 @@
                 }
             }
 
-            foreach (var section in this.Sections)
+            foreach (var section in Sections)
             {
-                this.Nodes.Add(section);
+                Nodes.Add(section);
             }
         }
     }
