@@ -1,15 +1,14 @@
-﻿using System;
-using System.Windows.Forms;
-using Canal.Properties;
+﻿using Canal.Properties;
 using FastColoredTextBoxNS;
+using System;
+using System.Windows.Forms;
 
 namespace Canal
 {
+    using CobolTree;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
-
-    using CobolTree;
     using Utils;
 
     public partial class FileControl : UserControl
