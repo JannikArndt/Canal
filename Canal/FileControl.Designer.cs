@@ -599,6 +599,7 @@
             this.filesTreeView.Size = new System.Drawing.Size(206, 523);
             this.filesTreeView.TabIndex = 0;
             this.filesTreeView.DoubleClick += new System.EventHandler(this.filesTreeView_DoubleClick);
+            this.filesTreeView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.filesTreeView_KeyUp);
             // 
             // FileControl
             // 

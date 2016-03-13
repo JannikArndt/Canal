@@ -293,11 +293,23 @@ namespace Canal
             filesTreeView.Nodes.Clear();
             filesTreeView.Nodes.AddRange(FileUtil.GetDirectoryStructure(((ToolStripTextBox)sender).Text));
             filesTreeView.ExpandAll();
+
+            if (filesTreeView.Nodes.Count == 1 && filesTreeView.Nodes[0].Nodes.Count == 1)
+            {
+                filesTreeView.SelectedNode = filesTreeView.Nodes[0].Nodes[0];
+                filesTreeView.Focus();
+            }
         }
 
         private void filesTreeView_DoubleClick(object sender, EventArgs e)
         {
             _parent.OpenFile(((FileReference)filesTreeView.SelectedNode.Tag).FullPath);
+        }
+
+        private void filesTreeView_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                _parent.OpenFile(((FileReference)filesTreeView.SelectedNode.Tag).FullPath);
         }
     }
 }
