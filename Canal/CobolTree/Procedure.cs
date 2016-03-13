@@ -1,4 +1,6 @@
-﻿namespace Canal.CobolTree
+﻿using System;
+
+namespace Canal.CobolTree
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -12,6 +14,8 @@
             : this(name, indexInSourceCode)
         {
             OriginalSource = text;
+
+            _lines = text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
 
             var performReferenceMatches = Regex.Matches(text, @"PERFORM ([\w\d-]+) ?(THRU|UNTIL|WITH)? ?[\w\d-]* ?(UNTIL|BEFORE|AFTER)? ?[\w\d-<>=]*", RegexOptions.Compiled | RegexOptions.Multiline);
 
@@ -47,6 +51,10 @@
         public List<ProgramReference> CopyReferences { get; set; }
 
         public Dictionary<Variable, UsedAs> Variables { get; set; }
+
+        private readonly List<string> _lines;
+
+        public int LinesOfCode { get { return _lines.Count; } }
 
         public void AnalyzeVariables(List<Variable> variablesInFile)
         {

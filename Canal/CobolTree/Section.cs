@@ -1,11 +1,15 @@
-﻿namespace Canal.CobolTree
+﻿using System.Linq;
+
+namespace Canal.CobolTree
 {
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
 
     public class Section : Procedure
     {
-        public List<Procedure> Procedures { get; set; }
+        public List<Procedure> Procedures { get; private set; }
+
+        public new int LinesOfCode { get { return Procedures.Sum(proc => proc.LinesOfCode); } }
 
         public Section(string name, string sourceCode, int indexInSourceCode)
             : base(name, indexInSourceCode)

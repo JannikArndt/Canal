@@ -100,6 +100,7 @@
     <Compile Include="CobolTree\CobolTree.cs" />
     <Compile Include="CobolTree\CobolTreeNode.cs" />
     <Compile Include="CobolTree\DataDivision.cs" />
+    <Compile Include="CobolTree\Division.cs" />
     <Compile Include="CobolTree\EnvironmentDivision.cs" />
     <Compile Include="CobolTree\ProgramReference.cs" />
     <Compile Include="CobolTree\IdentificationDivision.cs" />

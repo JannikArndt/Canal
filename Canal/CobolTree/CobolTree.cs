@@ -17,21 +17,19 @@
 
         public ProcedureDivision ProcedureDivision { get; set; }
 
-        public List<Variable> Variables
-        {
-            get
-            {
-                return DataDivision.Variables;
-            }
-        }
+        public List<Division> Divisions { get { return new List<Division> { IdentificationDivision, EnvironmentDivision, DataDivision, ProcedureDivision }; } }
 
-        private string _name;
+        public List<Variable> Variables { get { return DataDivision.Variables; } }
+
+        public string Name { get; private set; }
+
+        public int LinesOfCode { get { return Divisions.Sum(div => div.LinesOfCode); } }
 
         public TreeNode AsTreeNodes
         {
             get
             {
-                var result = new TreeNode(_name);
+                var result = new TreeNode(Name);
                 if (IdentificationDivision != null)
                     result.Nodes.Add(IdentificationDivision);
 
@@ -49,7 +47,7 @@
 
         public CobolTree(string code, string name)
         {
-            _name = name;
+            Name = name;
 
             var sourceCode = TextUtil.TrimAllLines(code);
 

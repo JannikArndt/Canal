@@ -32,6 +32,8 @@ namespace Canal
             ShowProceduresTreeView();
 
             ShowVariablesTreeView();
+
+            infoDataGridView.DataSource = CobolFile.Infos.ToArray();
         }
 
         public CodeBox CodeBox

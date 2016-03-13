@@ -66,6 +66,7 @@
             this.splitContainerRight = new System.Windows.Forms.SplitContainer();
             this.infoTabControl = new System.Windows.Forms.TabControl();
             this.infoTabPage = new System.Windows.Forms.TabPage();
+            this.infoDataGridView = new System.Windows.Forms.DataGridView();
             this.directoryTabPage = new System.Windows.Forms.TabPage();
             this.structureTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -87,6 +88,8 @@
             this.splitContainerRight.Panel2.SuspendLayout();
             this.splitContainerRight.SuspendLayout();
             this.infoTabControl.SuspendLayout();
+            this.infoTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.infoDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // treeView
@@ -509,6 +512,7 @@
             // 
             // infoTabPage
             // 
+            this.infoTabPage.Controls.Add(this.infoDataGridView);
             this.infoTabPage.Location = new System.Drawing.Point(4, 22);
             this.infoTabPage.Name = "infoTabPage";
             this.infoTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -516,6 +520,35 @@
             this.infoTabPage.TabIndex = 0;
             this.infoTabPage.Text = "Info";
             this.infoTabPage.UseVisualStyleBackColor = true;
+            // 
+            // infoDataGridView
+            // 
+            this.infoDataGridView.AllowUserToAddRows = false;
+            this.infoDataGridView.AllowUserToDeleteRows = false;
+            this.infoDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.infoDataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this.infoDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.infoDataGridView.ColumnHeadersVisible = false;
+            this.infoDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.infoDataGridView.GridColor = System.Drawing.SystemColors.ControlLightLight;
+            this.infoDataGridView.Location = new System.Drawing.Point(3, 3);
+            this.infoDataGridView.Name = "infoDataGridView";
+            this.infoDataGridView.ReadOnly = true;
+            this.infoDataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.infoDataGridView.RowHeadersVisible = false;
+            this.infoDataGridView.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
+            this.infoDataGridView.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.infoDataGridView.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
+            this.infoDataGridView.RowTemplate.DefaultCellStyle.NullValue = "-";
+            this.infoDataGridView.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.White;
+            this.infoDataGridView.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
+            this.infoDataGridView.RowTemplate.ReadOnly = true;
+            this.infoDataGridView.ShowCellErrors = false;
+            this.infoDataGridView.ShowCellToolTips = false;
+            this.infoDataGridView.ShowEditingIcon = false;
+            this.infoDataGridView.ShowRowErrors = false;
+            this.infoDataGridView.Size = new System.Drawing.Size(200, 551);
+            this.infoDataGridView.TabIndex = 0;
             // 
             // directoryTabPage
             // 
@@ -565,6 +598,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerRight)).EndInit();
             this.splitContainerRight.ResumeLayout(false);
             this.infoTabControl.ResumeLayout(false);
+            this.infoTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.infoDataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -606,5 +641,6 @@
         private System.Windows.Forms.ToolStripButton searchWithRegEx;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton ResolveCopysButton;
+        private System.Windows.Forms.DataGridView infoDataGridView;
     }
 }
