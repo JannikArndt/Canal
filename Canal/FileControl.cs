@@ -1,5 +1,4 @@
 ﻿using Canal.Properties;
-using FastColoredTextBoxNS;
 using System;
 using System.Windows.Forms;
 
@@ -20,6 +19,7 @@ namespace Canal
             InitializeComponent();
             CobolFile = file;
             codeBox.SetFile(file);
+            codeBox.KeyDown += searchBox_KeyDown;
             searchBox.Text = Resources.SearchPlaceholder;
 
             treeView.Nodes.Add(CobolFile.CobolTree.AsTreeNodes);
@@ -56,9 +56,9 @@ namespace Canal
                     return;
                 case Keys.Escape:
                     searchBox.Tag = false;
-                    codeBox.Selection = new Range(codeBox, Place.Empty, Place.Empty);
-                    codeBox.Invalidate();
-                    searchBox.Text = "";
+                    // codeBox.Selection = new Range(codeBox, Place.Empty, Place.Empty);
+                    // codeBox.Invalidate();
+                    searchBox.Text = string.Empty;
                     searchBox.Tag = true;
                     return;
             }
@@ -221,6 +221,8 @@ namespace Canal
 
         #endregion
 
+        #region Expand and Collapse Buttons
+
         private void TocExpandAllButton_Click(object sender, EventArgs e)
         {
             treeView.ExpandAll();
@@ -270,5 +272,7 @@ namespace Canal
         {
             performsTreeView.CollapseAll();
         }
+
+        #endregion
     }
 }

@@ -8,8 +8,6 @@ namespace Canal
 {
     public partial class CodeBox : FastColoredTextBox
     {
-        private Place _startPlace;
-        private bool firstSearch = true;
         public CobolFile CobolFile { get; set; }
 
         public CodeBox()
@@ -39,7 +37,7 @@ namespace Canal
                 //
                 Range searchRange = firstSearch ? new Range(this, Range.Start, Range.End) : new Range(this, Selection.End, Range.End);
 
-                var results = searchRange.GetRangesByLines(pattern, opt | RegexOptions.Compiled);
+                var results = searchRange.GetRangesByLines(pattern, opt | RegexOptions.Compiled).ToList();
                 foreach (var r in results)
                 {
                     Selection = r;
