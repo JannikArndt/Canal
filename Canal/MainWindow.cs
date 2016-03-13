@@ -31,7 +31,6 @@ namespace Canal
                 foreach (var filename in files)
                 {
                     var file = FileUtil.Get(filename);
-                    file.Name = filename;
                     tabUtil.AddTab(file);
                 }
             }
