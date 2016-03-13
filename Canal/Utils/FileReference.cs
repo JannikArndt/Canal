@@ -2,7 +2,7 @@
 {
     using System.IO;
 
-    internal class FileReference
+    public class FileReference
     {
         public FileReference(string fileSystemEntry)
         {

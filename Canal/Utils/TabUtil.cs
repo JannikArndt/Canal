@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Canal.Utils
 {
@@ -28,6 +29,18 @@ namespace Canal.Utils
             _tabControl.DrawMode = TabDrawMode.OwnerDrawFixed;
             _tabControl.DrawItem += _tabControl_DrawItem;
             _tabControl.MouseDown += TabControlOnMouseDown;
+        }
+
+        public List<CobolFile> GetOpenFiles()
+        {
+            var result = new List<CobolFile>();
+
+            foreach (TabPage tab in _tabControl.TabPages)
+            {
+                result.Add(((FileControl)tab.Controls.Find("FileControl", false)[0]).CobolFile);
+            }
+
+            return result;
         }
 
         private void TabControlOnMouseDown(object sender, MouseEventArgs mouseEventArgs)

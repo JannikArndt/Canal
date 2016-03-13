@@ -1,4 +1,6 @@
-﻿namespace Canal
+﻿using Canal.Utils;
+
+namespace Canal
 {
     using CobolTree;
     using System.Collections.Generic;
@@ -8,6 +10,8 @@
         public string Name;
 
         public string Text { get; set; }
+
+        public FileReference FileReference { get; set; }
 
         public Dictionary<string, string> Infos { get; set; }
 

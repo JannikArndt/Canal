@@ -34,7 +34,7 @@ namespace Canal.Utils
             {
                 var lines = File.ReadAllText(filename);
 
-                reference.CobolFile = new CobolFile(lines, Path.GetFileNameWithoutExtension(filename));
+                reference.CobolFile = new CobolFile(lines, Path.GetFileNameWithoutExtension(filename)) { FileReference = reference };
             }
 
             return reference.CobolFile;

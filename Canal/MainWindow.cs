@@ -1,4 +1,9 @@
-﻿using System;
+﻿using Canal.Properties;
+using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Canal
@@ -26,13 +31,20 @@ namespace Canal
 
             tabUtil = new TabUtil(FileTabs, this);
 
-            if (files != null)
-            {
-                foreach (var filename in files)
-                {
-                    OpenFile(filename);
-                }
-            }
+            var toOpen = new List<string>();
+            if (files != null) toOpen.AddRange(files);
+            if (Settings.Default.LastOpened != null) toOpen.AddRange(Settings.Default.LastOpened.Cast<string>());
+
+            foreach (string filepath in new HashSet<string>(toOpen))
+                OpenFile(filepath);
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            Settings.Default.LastOpened = new StringCollection();
+            Settings.Default.LastOpened.AddRange(tabUtil.GetOpenFiles().Select(file => file.FileReference.FullPath).ToArray());
+            Settings.Default.Save();
+            base.OnClosing(e);
         }
 
         public void OpenFile(string filename)
