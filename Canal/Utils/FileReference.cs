@@ -8,7 +8,8 @@
         {
             FullPath = fileSystemEntry;
             ProgramName = Path.GetFileNameWithoutExtension(fileSystemEntry);
-            Directory = Path.GetDirectoryName(fileSystemEntry);
+            var folder = Path.GetDirectoryName(fileSystemEntry);
+            Directory = folder.TrimEnd(Path.DirectorySeparatorChar).Substring(folder.LastIndexOf(Path.DirectorySeparatorChar) + 1);
         }
 
         public string ProgramName { get; set; }
@@ -18,5 +19,10 @@
         public string FullPath { get; set; }
 
         public CobolFile CobolFile { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0} > {1}", Directory, ProgramName);
+        }
     }
 }

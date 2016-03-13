@@ -19,8 +19,11 @@ namespace Canal.Utils
             }
         }
 
-        public TabUtil(TabControl tabControl)
+        private MainWindow _parent;
+
+        public TabUtil(TabControl tabControl, MainWindow parent)
         {
+            _parent = parent;
             _tabControl = tabControl;
             _tabControl.DrawMode = TabDrawMode.OwnerDrawFixed;
             _tabControl.DrawItem += _tabControl_DrawItem;
@@ -56,7 +59,7 @@ namespace Canal.Utils
         {
             var newTab = new TabPage(file.Name + "        ");
 
-            var fileControl = new FileControl(file)
+            var fileControl = new FileControl(file, _parent)
             {
                 Name = "FileControl",
                 Dock = DockStyle.Fill

@@ -24,16 +24,23 @@ namespace Canal
         {
             InitializeComponent();
 
-            tabUtil = new TabUtil(FileTabs);
+            tabUtil = new TabUtil(FileTabs, this);
 
             if (files != null)
             {
                 foreach (var filename in files)
                 {
-                    var file = FileUtil.Get(filename);
-                    tabUtil.AddTab(file);
+                    OpenFile(filename);
                 }
             }
+        }
+
+        public void OpenFile(string filename)
+        {
+            Cursor = Cursors.WaitCursor;
+            var file = FileUtil.Get(filename);
+            tabUtil.AddTab(file);
+            Cursor = Cursors.Default;
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -45,10 +52,7 @@ namespace Canal
 
             if (dialogResult == DialogResult.OK)
             {
-                Cursor = Cursors.WaitCursor;
-                var file = FileUtil.Get(openFileDialog.FileName);
-                tabUtil.AddTab(file);
-                Cursor = Cursors.Default;
+                OpenFile(openFileDialog.FileName);
             }
         }
 

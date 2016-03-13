@@ -1,4 +1,7 @@
-﻿namespace Canal.Utils
+﻿using System.Globalization;
+using System.Windows.Forms;
+
+namespace Canal.Utils
 {
     using System;
     using System.Collections.Generic;
@@ -10,6 +13,8 @@
         private static List<string> _recentFolders = new List<string>();
 
         private static Dictionary<string, FileReference> _files = new Dictionary<string, FileReference>();
+
+        private static Dictionary<string, List<FileReference>> directoriesAndFiles = new Dictionary<string, List<FileReference>>();
 
         /// <summary>
         /// Loads the given file. Uses internal cache for file contents.
@@ -90,10 +95,37 @@
             {
                 if (!_files.ContainsKey(fileSystemEntry))
                 {
-                    _files.Add(fileSystemEntry, new FileReference(fileSystemEntry));
+                    var newRef = new FileReference(fileSystemEntry);
+                    _files.Add(fileSystemEntry, newRef);
+                    if (!directoriesAndFiles.ContainsKey(newRef.Directory))
+                        directoriesAndFiles.Add(newRef.Directory, new List<FileReference>());
+
+                    directoriesAndFiles[newRef.Directory].Add(newRef);
                 }
             }
 
+        }
+
+        public static TreeNode[] GetDirectoryStructure(string query = "")
+        {
+            var result = new List<TreeNode>();
+
+            foreach (var dir in directoriesAndFiles.Keys.OrderBy(key => key))
+            {
+                if (string.IsNullOrWhiteSpace(query))
+                    result.Add(new TreeNode(dir,
+                        directoriesAndFiles[dir].Select(file => new TreeNode(file.ProgramName) { Tag = file }).ToArray()));
+                else
+                {
+                    var foundFiles = directoriesAndFiles[dir]
+                        .Where(file => CultureInfo.CurrentCulture.CompareInfo.IndexOf(file.ProgramName, query, CompareOptions.IgnoreCase) >= 0)
+                        .Select(file => new TreeNode(file.ProgramName) { Tag = file }).ToArray();
+                    if (foundFiles.Any())
+                        result.Add(new TreeNode(dir, foundFiles));
+                }
+            }
+
+            return result.ToArray();
         }
     }
 

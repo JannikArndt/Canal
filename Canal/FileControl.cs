@@ -14,9 +14,12 @@ namespace Canal
     {
         public CobolFile CobolFile { get; private set; }
 
-        public FileControl(CobolFile file)
+        private MainWindow _parent;
+
+        public FileControl(CobolFile file, MainWindow parent)
         {
             InitializeComponent();
+            _parent = parent;
             CobolFile = file;
             codeBox.SetFile(file);
             codeBox.KeyDown += searchBox_KeyDown;
@@ -34,6 +37,10 @@ namespace Canal
             ShowVariablesTreeView();
 
             infoDataGridView.DataSource = CobolFile.Infos.ToArray();
+
+            filesTreeView.Nodes.AddRange(FileUtil.GetDirectoryStructure());
+            filesTreeView.ExpandAll();
+            filesTabSearchBox.Text = Resources.SearchPlaceholder;
         }
 
         public CodeBox CodeBox
@@ -68,21 +75,23 @@ namespace Canal
 
         private void searchBox_Enter(object sender, EventArgs e)
         {
-            if (searchBox.Text == Resources.SearchPlaceholder)
+            var box = (ToolStripTextBox)sender;
+            if (box.Text == Resources.SearchPlaceholder)
             {
-                searchBox.Tag = false;
-                searchBox.Text = "";
-                searchBox.Tag = true;
+                box.Tag = false;
+                box.Text = "";
+                box.Tag = true;
             }
         }
 
         private void searchBox_Leave(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(searchBox.Text))
+            var box = (ToolStripTextBox)sender;
+            if (string.IsNullOrWhiteSpace(box.Text))
             {
-                searchBox.Tag = false;
-                searchBox.Text = Resources.SearchPlaceholder;
-                searchBox.Tag = true;
+                box.Tag = false;
+                box.Text = Resources.SearchPlaceholder;
+                box.Tag = true;
             }
         }
 
@@ -276,5 +285,19 @@ namespace Canal
         }
 
         #endregion
+
+        private void filesTabSearchBox_TextChanged(object sender, EventArgs e)
+        {
+            if (((ToolStripTextBox)sender).Text == Resources.SearchPlaceholder)
+                return;
+            filesTreeView.Nodes.Clear();
+            filesTreeView.Nodes.AddRange(FileUtil.GetDirectoryStructure(((ToolStripTextBox)sender).Text));
+            filesTreeView.ExpandAll();
+        }
+
+        private void filesTreeView_DoubleClick(object sender, EventArgs e)
+        {
+            _parent.OpenFile(((FileReference)filesTreeView.SelectedNode.Tag).FullPath);
+        }
     }
 }

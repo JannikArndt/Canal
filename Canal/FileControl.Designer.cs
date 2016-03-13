@@ -68,6 +68,9 @@
             this.infoTabPage = new System.Windows.Forms.TabPage();
             this.infoDataGridView = new System.Windows.Forms.DataGridView();
             this.directoryTabPage = new System.Windows.Forms.TabPage();
+            this.filesTabToolStrip = new System.Windows.Forms.ToolStrip();
+            this.filesTabSearchBox = new System.Windows.Forms.ToolStripTextBox();
+            this.filesTreeView = new System.Windows.Forms.TreeView();
             this.structureTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tocToolStrip.SuspendLayout();
@@ -90,6 +93,8 @@
             this.infoTabControl.SuspendLayout();
             this.infoTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.infoDataGridView)).BeginInit();
+            this.directoryTabPage.SuspendLayout();
+            this.filesTabToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeView
@@ -525,11 +530,13 @@
             // 
             this.infoDataGridView.AllowUserToAddRows = false;
             this.infoDataGridView.AllowUserToDeleteRows = false;
+            this.infoDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.infoDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.infoDataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.infoDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.infoDataGridView.ColumnHeadersVisible = false;
-            this.infoDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.infoDataGridView.GridColor = System.Drawing.SystemColors.ControlLightLight;
             this.infoDataGridView.Location = new System.Drawing.Point(3, 3);
             this.infoDataGridView.Name = "infoDataGridView";
@@ -552,6 +559,8 @@
             // 
             // directoryTabPage
             // 
+            this.directoryTabPage.Controls.Add(this.filesTabToolStrip);
+            this.directoryTabPage.Controls.Add(this.filesTreeView);
             this.directoryTabPage.Location = new System.Drawing.Point(4, 22);
             this.directoryTabPage.Name = "directoryTabPage";
             this.directoryTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -559,6 +568,37 @@
             this.directoryTabPage.TabIndex = 1;
             this.directoryTabPage.Text = "Files";
             this.directoryTabPage.UseVisualStyleBackColor = true;
+            // 
+            // filesTabToolStrip
+            // 
+            this.filesTabToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.filesTabToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.filesTabSearchBox});
+            this.filesTabToolStrip.Location = new System.Drawing.Point(3, 3);
+            this.filesTabToolStrip.Name = "filesTabToolStrip";
+            this.filesTabToolStrip.Size = new System.Drawing.Size(200, 25);
+            this.filesTabToolStrip.TabIndex = 1;
+            this.filesTabToolStrip.Text = "toolStrip1";
+            // 
+            // filesTabSearchBox
+            // 
+            this.filesTabSearchBox.Name = "filesTabSearchBox";
+            this.filesTabSearchBox.Size = new System.Drawing.Size(100, 25);
+            this.filesTabSearchBox.Text = "Search Files...";
+            this.filesTabSearchBox.Enter += new System.EventHandler(this.searchBox_Enter);
+            this.filesTabSearchBox.Leave += new System.EventHandler(this.searchBox_Leave);
+            this.filesTabSearchBox.TextChanged += new System.EventHandler(this.filesTabSearchBox_TextChanged);
+            // 
+            // filesTreeView
+            // 
+            this.filesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.filesTreeView.Location = new System.Drawing.Point(0, 31);
+            this.filesTreeView.Name = "filesTreeView";
+            this.filesTreeView.Size = new System.Drawing.Size(206, 523);
+            this.filesTreeView.TabIndex = 0;
+            this.filesTreeView.DoubleClick += new System.EventHandler(this.filesTreeView_DoubleClick);
             // 
             // FileControl
             // 
@@ -600,6 +640,10 @@
             this.infoTabControl.ResumeLayout(false);
             this.infoTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.infoDataGridView)).EndInit();
+            this.directoryTabPage.ResumeLayout(false);
+            this.directoryTabPage.PerformLayout();
+            this.filesTabToolStrip.ResumeLayout(false);
+            this.filesTabToolStrip.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -642,5 +686,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton ResolveCopysButton;
         private System.Windows.Forms.DataGridView infoDataGridView;
+        private System.Windows.Forms.ToolStrip filesTabToolStrip;
+        private System.Windows.Forms.ToolStripTextBox filesTabSearchBox;
+        private System.Windows.Forms.TreeView filesTreeView;
     }
 }
