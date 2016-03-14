@@ -21,7 +21,7 @@
             int indexLinkageSection = Math.Max(0, sourceCode.IndexOf("LINKAGE SECTION", StringComparison.Ordinal));
 
             WorkingStorageSection = new WorkingStorageSection(
-                sourceCode.Substring(indexWorkingStorageSection, indexLinkageSection - indexWorkingStorageSection),
+                sourceCode.Substring(indexWorkingStorageSection, Math.Max(0, indexLinkageSection - indexWorkingStorageSection)),
                 indexDataDivision + indexWorkingStorageSection);
 
             LinkageSection = new LinkageSection(

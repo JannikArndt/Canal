@@ -60,7 +60,7 @@ namespace Canal
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openFileDialog.Filter = @"COBOL Files|*.cob;*.cbl;*.txt";
+            openFileDialog.Filter = @"COBOL Files|*.cob;*.cbl;*.txt;.src";
             openFileDialog.FileName = "";
 
             var dialogResult = openFileDialog.ShowDialog();
@@ -91,6 +91,14 @@ namespace Canal
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tabUtil.AddTab(new CobolFile("", "New File"));
+        }
+
+        private void settings_sourceCodeFiles_Click(object sender, EventArgs e)
+        {
+            Settings.Default.FileTypeCob = settings_sourceCodeFiles_cobol.Checked;
+            Settings.Default.FileTypeTxt = settings_sourceCodeFiles_text.Checked;
+            Settings.Default.FileTypeSrc = settings_sourceCodeFiles_source.Checked;
+            Settings.Default.Save();
         }
     }
 }

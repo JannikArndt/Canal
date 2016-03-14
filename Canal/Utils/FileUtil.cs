@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using Canal.Properties;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace Canal.Utils
@@ -86,12 +87,15 @@ namespace Canal.Utils
 
             _recentFolders.Add(fileOrFolderPath);
 
-            var folderPath = Path.GetDirectoryName(fileOrFolderPath);
+            var folderPath = Path.GetDirectoryName(Path.GetDirectoryName(fileOrFolderPath));
+
+            if (folderPath == null)
+                return;
 
             foreach (var fileSystemEntry in Directory.EnumerateFiles(folderPath, "*.*", SearchOption.AllDirectories)
-                .Where(s => s.EndsWith(".cob", StringComparison.OrdinalIgnoreCase)
-                         || s.EndsWith(".cbl", StringComparison.OrdinalIgnoreCase)
-                         || s.EndsWith(".txt", StringComparison.OrdinalIgnoreCase)))
+                .Where(s => Settings.Default.FileTypeCob && (s.EndsWith(".cob", StringComparison.OrdinalIgnoreCase) || s.EndsWith(".cbl", StringComparison.OrdinalIgnoreCase))
+                            || Settings.Default.FileTypeTxt && s.EndsWith(".txt", StringComparison.OrdinalIgnoreCase)
+                            || Settings.Default.FileTypeSrc && s.EndsWith(".src", StringComparison.OrdinalIgnoreCase)))
             {
                 if (!_files.ContainsKey(fileSystemEntry))
                 {
@@ -103,7 +107,6 @@ namespace Canal.Utils
                     directoriesAndFiles[newRef.Directory].Add(newRef);
                 }
             }
-
         }
 
         public static TreeNode[] GetDirectoryStructure(string query = "")
