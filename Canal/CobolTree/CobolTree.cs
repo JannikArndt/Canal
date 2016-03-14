@@ -56,13 +56,21 @@
             int indexDataDivision = sourceCode.IndexOf("DATA DIVISION", StringComparison.Ordinal);
             int indexProcedureDivision = sourceCode.IndexOf("PROCEDURE DIVISION", StringComparison.Ordinal);
 
-            IdentificationDivision = indexIdentificationDivision > 0 ? new IdentificationDivision(sourceCode.Substring(indexProcedureDivision, indexEnvironmentDivision - indexIdentificationDivision), indexIdentificationDivision) : new IdentificationDivision("", 0);
+            IdentificationDivision = indexIdentificationDivision > 0
+                ? new IdentificationDivision(sourceCode.Substring(indexProcedureDivision, Math.Max(0, indexEnvironmentDivision - indexIdentificationDivision)), indexIdentificationDivision)
+                : new IdentificationDivision("", 0);
 
-            EnvironmentDivision = indexEnvironmentDivision > 0 ? new EnvironmentDivision(sourceCode.Substring(indexEnvironmentDivision, indexDataDivision - indexEnvironmentDivision), indexEnvironmentDivision) : new EnvironmentDivision("", 0);
+            EnvironmentDivision = indexEnvironmentDivision > 0
+                ? new EnvironmentDivision(sourceCode.Substring(indexEnvironmentDivision, Math.Max(0, indexDataDivision - indexEnvironmentDivision)), indexEnvironmentDivision)
+                : new EnvironmentDivision("", 0);
 
-            DataDivision = indexDataDivision > 0 ? new DataDivision(sourceCode.Substring(indexDataDivision, indexProcedureDivision - indexDataDivision), indexDataDivision) : new DataDivision("", 0);
+            DataDivision = indexDataDivision > 0
+                ? new DataDivision(sourceCode.Substring(indexDataDivision, Math.Max(0, indexProcedureDivision - indexDataDivision)), indexDataDivision)
+                : new DataDivision("", 0);
 
-            ProcedureDivision = indexProcedureDivision > 0 ? new ProcedureDivision(sourceCode.Substring(indexProcedureDivision, sourceCode.Length - indexProcedureDivision), indexProcedureDivision) : new ProcedureDivision("", 0);
+            ProcedureDivision = indexProcedureDivision > 0
+                ? new ProcedureDivision(sourceCode.Substring(indexProcedureDivision, Math.Max(0, sourceCode.Length - indexProcedureDivision)), indexProcedureDivision)
+                : new ProcedureDivision("", 0);
 
             foreach (var procedure in ProcedureDivision.Sections.SelectMany(s => s.Procedures))
             {

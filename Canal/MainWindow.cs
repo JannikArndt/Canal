@@ -49,6 +49,9 @@ namespace Canal
 
         public void OpenFile(string filename)
         {
+            if (tabUtil.TryShowTab(filename))
+                return;
+
             Cursor = Cursors.WaitCursor;
             var file = FileUtil.Get(filename);
             tabUtil.AddTab(file);

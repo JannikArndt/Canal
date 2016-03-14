@@ -303,6 +303,9 @@ namespace Canal
 
         private void filesTreeView_DoubleClick(object sender, EventArgs e)
         {
+            if (filesTreeView.SelectedNode == null || filesTreeView.SelectedNode.Tag == null)
+                return;
+
             _parent.OpenFile(((FileReference)filesTreeView.SelectedNode.Tag).FullPath);
         }
 

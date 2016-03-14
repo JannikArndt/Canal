@@ -43,6 +43,19 @@ namespace Canal.Utils
             return result;
         }
 
+        public bool TryShowTab(string filepath)
+        {
+            foreach (TabPage tab in _tabControl.TabPages)
+            {
+                if (((FileControl)tab.Controls.Find("FileControl", false)[0]).CobolFile.FileReference.FullPath == filepath)
+                {
+                    _tabControl.SelectedTab = tab;
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void TabControlOnMouseDown(object sender, MouseEventArgs mouseEventArgs)
         {
             //Looping through the controls.
