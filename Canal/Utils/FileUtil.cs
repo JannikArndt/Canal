@@ -11,11 +11,11 @@ namespace Canal.Utils
 
     public static class FileUtil
     {
-        private static List<string> _recentFolders = new List<string>();
+        private static readonly List<string> RecentFolders = new List<string>();
 
-        private static Dictionary<string, FileReference> _files = new Dictionary<string, FileReference>();
+        private static readonly Dictionary<string, FileReference> Files = new Dictionary<string, FileReference>();
 
-        private static Dictionary<string, List<FileReference>> directoriesAndFiles = new Dictionary<string, List<FileReference>>();
+        private static readonly Dictionary<string, List<FileReference>> DirectoriesAndFiles = new Dictionary<string, List<FileReference>>();
 
         /// <summary>
         /// Loads the given file. Uses internal cache for file contents.
@@ -29,7 +29,7 @@ namespace Canal.Utils
 
             AnalyzeFolder(filename);
 
-            var reference = _files[filename];
+            var reference = Files[filename];
 
             if (reference.CobolFile == null)
             {
@@ -48,26 +48,25 @@ namespace Canal.Utils
         /// </summary>
         /// <param name="programName">The name of a program, without extension.</param>
         /// <param name="folderName">The name of a directory, no full path required.</param>
-        /// <param name="includeParentDirectory">If the file is not found, the parent directory and all its subdirectories are analyzed as well.</param>
         /// <returns>A CobolFile with the file contents as Text.</returns>
-        public static CobolFile Get(string programName, string folderName, bool includeParentDirectory = true)
+        public static CobolFile Get(string programName, string folderName)
         {
             if (string.IsNullOrWhiteSpace(programName))
                 return null;
 
-            Console.Write("Searching for Program " + programName + " in folder " + folderName);
+            Console.Write(@"Searching for Program " + programName + @" in folder " + folderName);
 
-            var candidate = _files.Keys.FirstOrDefault(key => key.Contains(programName) && key.Contains(folderName));
+            var candidate = Files.Keys.FirstOrDefault(key => key.Contains(programName) && key.Contains(folderName));
 
-            if (candidate == null && _files.Keys.Count(key => key.Contains(programName)) == 1)
-                candidate = _files.Keys.FirstOrDefault(key => key.Contains(programName));
+            if (candidate == null && Files.Keys.Count(key => key.Contains(programName)) == 1)
+                candidate = Files.Keys.FirstOrDefault(key => key.Contains(programName));
 
             if (candidate == null)
             {
-                foreach (var knownFolder in _recentFolders)
+                foreach (var knownFolder in RecentFolders)
                 {
                     AnalyzeFolder(Path.GetDirectoryName(knownFolder));
-                    return Get(programName, folderName, false);
+                    return Get(programName, folderName);
                 }
             }
 
@@ -82,10 +81,10 @@ namespace Canal.Utils
         /// <param name="fileOrFolderPath">A path with or without filename.</param>
         private static void AnalyzeFolder(string fileOrFolderPath)
         {
-            if (_recentFolders.Contains(fileOrFolderPath))
+            if (RecentFolders.Contains(fileOrFolderPath))
                 return;
 
-            _recentFolders.Add(fileOrFolderPath);
+            RecentFolders.Add(fileOrFolderPath);
 
             var folderPath = Path.GetDirectoryName(Path.GetDirectoryName(fileOrFolderPath));
 
@@ -97,14 +96,14 @@ namespace Canal.Utils
                             || Settings.Default.FileTypeTxt && s.EndsWith(".txt", StringComparison.OrdinalIgnoreCase)
                             || Settings.Default.FileTypeSrc && s.EndsWith(".src", StringComparison.OrdinalIgnoreCase)))
             {
-                if (!_files.ContainsKey(fileSystemEntry))
+                if (!Files.ContainsKey(fileSystemEntry))
                 {
                     var newRef = new FileReference(fileSystemEntry);
-                    _files.Add(fileSystemEntry, newRef);
-                    if (!directoriesAndFiles.ContainsKey(newRef.Directory))
-                        directoriesAndFiles.Add(newRef.Directory, new List<FileReference>());
+                    Files.Add(fileSystemEntry, newRef);
+                    if (!DirectoriesAndFiles.ContainsKey(newRef.Directory))
+                        DirectoriesAndFiles.Add(newRef.Directory, new List<FileReference>());
 
-                    directoriesAndFiles[newRef.Directory].Add(newRef);
+                    DirectoriesAndFiles[newRef.Directory].Add(newRef);
                 }
             }
         }
@@ -113,14 +112,14 @@ namespace Canal.Utils
         {
             var result = new List<TreeNode>();
 
-            foreach (var dir in directoriesAndFiles.Keys.OrderBy(key => key))
+            foreach (var dir in DirectoriesAndFiles.Keys.OrderBy(key => key))
             {
                 if (string.IsNullOrWhiteSpace(query))
                     result.Add(new TreeNode(dir,
-                        directoriesAndFiles[dir].Select(file => new TreeNode(file.ProgramName) { Tag = file }).ToArray()));
+                        DirectoriesAndFiles[dir].Select(file => new TreeNode(file.ProgramName) { Tag = file }).ToArray()));
                 else
                 {
-                    var foundFiles = directoriesAndFiles[dir]
+                    var foundFiles = DirectoriesAndFiles[dir]
                         .Where(file => CultureInfo.CurrentCulture.CompareInfo.IndexOf(file.ProgramName, query, CompareOptions.IgnoreCase) >= 0)
                         .Select(file => new TreeNode(file.ProgramName) { Tag = file }).ToArray();
                     if (foundFiles.Any())

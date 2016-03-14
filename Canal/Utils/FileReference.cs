@@ -9,7 +9,8 @@
             FullPath = fileSystemEntry;
             ProgramName = Path.GetFileNameWithoutExtension(fileSystemEntry);
             var folder = Path.GetDirectoryName(fileSystemEntry);
-            Directory = folder.TrimEnd(Path.DirectorySeparatorChar).Substring(folder.LastIndexOf(Path.DirectorySeparatorChar) + 1);
+            if (folder != null)
+                Directory = folder.TrimEnd(Path.DirectorySeparatorChar).Substring(folder.LastIndexOf(Path.DirectorySeparatorChar) + 1);
         }
 
         public string ProgramName { get; set; }

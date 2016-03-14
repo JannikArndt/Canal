@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Canal.Properties;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Canal.Utils
@@ -20,7 +21,7 @@ namespace Canal.Utils
             }
         }
 
-        private MainWindow _parent;
+        private readonly MainWindow _parent;
 
         public TabUtil(TabControl tabControl, MainWindow parent)
         {
@@ -100,7 +101,7 @@ namespace Canal.Utils
         {
             var tabIndex = index < 0 ? _tabControl.SelectedIndex : index;
 
-            if (MessageBox.Show("Would you like to Close this Tab?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show(Resources.ReallyCloseThisTab, Resources.CloseTab, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 _tabControl.TabPages.RemoveAt(tabIndex);
                 return true;

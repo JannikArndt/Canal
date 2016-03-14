@@ -117,4 +117,10 @@
   <data name="SearchPlaceholder" xml:space="preserve">
     <value>Search...</value>
   </data>
+  <data name="ReallyCloseThisTab" xml:space="preserve">
+    <value>Would you like to close this tab?</value>
+  </data>
+  <data name="CloseTab" xml:space="preserve">
+    <value>Close Tab</value>
+  </data>
 </root>

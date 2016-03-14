@@ -62,7 +62,7 @@
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.MainMenu.Size = new System.Drawing.Size(1044, 24);
+            this.MainMenu.Size = new System.Drawing.Size(1384, 24);
             this.MainMenu.TabIndex = 0;
             this.MainMenu.Text = "MainMenu";
             // 
@@ -212,7 +212,7 @@
             this.FileTabs.Margin = new System.Windows.Forms.Padding(2);
             this.FileTabs.Name = "FileTabs";
             this.FileTabs.SelectedIndex = 0;
-            this.FileTabs.Size = new System.Drawing.Size(1044, 684);
+            this.FileTabs.Size = new System.Drawing.Size(1384, 738);
             this.FileTabs.TabIndex = 1;
             // 
             // openFileDialog
@@ -223,7 +223,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1044, 708);
+            this.ClientSize = new System.Drawing.Size(1384, 762);
             this.Controls.Add(this.FileTabs);
             this.Controls.Add(this.MainMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

@@ -7,9 +7,7 @@
 
     public class ProcedureDivision : Division
     {
-        public List<Section> Sections { get; set; }
-
-        public new int LinesOfCode { get { return Sections.Sum(sec => sec.LinesOfCode) + 1; } }
+        public List<Section> Sections { get; private set; }
 
         public ProcedureDivision(string sourceCode, int indexProcedureDivision)
             : base(sourceCode, "Procedure Division", indexProcedureDivision)
