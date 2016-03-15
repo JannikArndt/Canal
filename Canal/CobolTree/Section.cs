@@ -1,16 +1,20 @@
-﻿namespace Canal.CobolTree
+﻿using System.Linq;
+
+namespace Canal.CobolTree
 {
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
 
     public class Section : Procedure
     {
-        public List<Procedure> Procedures { get; set; }
+        public List<Procedure> Procedures { get; private set; }
+
+        public new int LinesOfCode { get { return Procedures.Sum(proc => proc.LinesOfCode); } }
 
         public Section(string name, string sourceCode, int indexInSourceCode)
             : base(name, indexInSourceCode)
         {
-            this.Procedures = new List<Procedure>();
+            Procedures = new List<Procedure>();
 
             var procedureNames = Regex.Matches(sourceCode, @"^ [\w\d-]+\.", RegexOptions.Compiled | RegexOptions.Multiline);
 
@@ -20,12 +24,12 @@
                 var begin = procedureName.Index + procedureName.Length;
                 var length = (procedureName.NextMatch().Success ? procedureName.NextMatch().Index : sourceCode.Length) - begin;
                 string text = sourceCode.Substring(begin, length);
-                this.Procedures.Add(new Procedure(procName, text, indexInSourceCode + begin));
+                Procedures.Add(new Procedure(procName, text, indexInSourceCode + begin));
             }
 
-            foreach (var procedure in this.Procedures)
+            foreach (var procedure in Procedures)
             {
-                this.Nodes.Add(procedure);
+                Nodes.Add(procedure);
             }
         }
     }

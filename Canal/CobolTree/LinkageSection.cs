@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    using Canal.Utils;
+    using Utils;
 
     public class LinkageSection : CobolTreeNode
     {
@@ -13,8 +13,8 @@
         public LinkageSection(string sourceCode, int indexInSource)
             : base("Linkage Section", indexInSource)
         {
-            this.OriginalSource = sourceCode;
-            this.Variables = VariablesUtil.AnalyzeVariables(sourceCode);
+            OriginalSource = sourceCode;
+            Variables = VariablesUtil.AnalyzeVariables(sourceCode);
         }
     }
 }

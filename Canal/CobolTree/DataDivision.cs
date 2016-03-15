@@ -4,10 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class DataDivision : CobolTreeNode
+    public class DataDivision : Division
     {
-        public string OriginalSource { get; set; }
-
         public List<Variable> Variables
         {
             get
@@ -17,15 +15,13 @@
         }
 
         public DataDivision(string sourceCode, int indexDataDivision)
-            : base("Data Division", indexDataDivision)
+            : base(sourceCode, "Data Division", indexDataDivision)
         {
-            OriginalSource = sourceCode;
-
             int indexWorkingStorageSection = Math.Max(0, sourceCode.IndexOf("WORKING-STORAGE SECTION", StringComparison.Ordinal));
             int indexLinkageSection = Math.Max(0, sourceCode.IndexOf("LINKAGE SECTION", StringComparison.Ordinal));
 
             WorkingStorageSection = new WorkingStorageSection(
-                sourceCode.Substring(indexWorkingStorageSection, indexLinkageSection - indexWorkingStorageSection),
+                sourceCode.Substring(indexWorkingStorageSection, Math.Max(0, indexLinkageSection - indexWorkingStorageSection)),
                 indexDataDivision + indexWorkingStorageSection);
 
             LinkageSection = new LinkageSection(

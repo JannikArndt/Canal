@@ -40,20 +40,15 @@
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.level88ToEnumConverterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.sourceCodeFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settings_sourceCodeFiles_cobol = new System.Windows.Forms.ToolStripMenuItem();
+            this.settings_sourceCodeFiles_text = new System.Windows.Forms.ToolStripMenuItem();
+            this.settings_sourceCodeFiles_source = new System.Windows.Forms.ToolStripMenuItem();
             this.FileTabs = new System.Windows.Forms.TabControl();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.variableUsagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,14 +57,12 @@
             this.MainMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.editToolStripMenuItem,
-            this.viewToolStripMenuItem,
             this.helpToolStripMenuItem,
             this.helpToolStripMenuItem1});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.MainMenu.Size = new System.Drawing.Size(1044, 24);
+            this.MainMenu.Size = new System.Drawing.Size(1384, 24);
             this.MainMenu.TabIndex = 0;
             this.MainMenu.Text = "MainMenu";
             // 
@@ -95,6 +88,7 @@
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.newToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.newToolStripMenuItem.Text = "New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
@@ -152,65 +146,10 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // editToolStripMenuItem
-            // 
-            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.undoToolStripMenuItem,
-            this.redoToolStripMenuItem,
-            this.toolStripSeparator3,
-            this.cutToolStripMenuItem,
-            this.copyToolStripMenuItem,
-            this.pasteToolStripMenuItem});
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.editToolStripMenuItem.Text = "Edit";
-            // 
-            // undoToolStripMenuItem
-            // 
-            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.undoToolStripMenuItem.Text = "Undo";
-            // 
-            // redoToolStripMenuItem
-            // 
-            this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.redoToolStripMenuItem.Text = "Redo";
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(100, 6);
-            // 
-            // cutToolStripMenuItem
-            // 
-            this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.cutToolStripMenuItem.Text = "Cut";
-            // 
-            // copyToolStripMenuItem
-            // 
-            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.copyToolStripMenuItem.Text = "Copy";
-            // 
-            // pasteToolStripMenuItem
-            // 
-            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.pasteToolStripMenuItem.Text = "Paste";
-            // 
-            // viewToolStripMenuItem
-            // 
-            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.viewToolStripMenuItem.Text = "View";
-            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.level88ToEnumConverterToolStripMenuItem,
-            this.variableUsagesToolStripMenuItem});
+            this.level88ToEnumConverterToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.helpToolStripMenuItem.Text = "Tools";
@@ -224,9 +163,47 @@
             // 
             // helpToolStripMenuItem1
             // 
+            this.helpToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sourceCodeFilesToolStripMenuItem});
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem1.Text = "Help";
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(61, 20);
+            this.helpToolStripMenuItem1.Text = "Settings";
+            // 
+            // sourceCodeFilesToolStripMenuItem
+            // 
+            this.sourceCodeFilesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.settings_sourceCodeFiles_cobol,
+            this.settings_sourceCodeFiles_text,
+            this.settings_sourceCodeFiles_source});
+            this.sourceCodeFilesToolStripMenuItem.Name = "sourceCodeFilesToolStripMenuItem";
+            this.sourceCodeFilesToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.sourceCodeFilesToolStripMenuItem.Text = "Source Code Files";
+            // 
+            // settings_sourceCodeFiles_cobol
+            // 
+            this.settings_sourceCodeFiles_cobol.Checked = true;
+            this.settings_sourceCodeFiles_cobol.CheckOnClick = true;
+            this.settings_sourceCodeFiles_cobol.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.settings_sourceCodeFiles_cobol.Name = "settings_sourceCodeFiles_cobol";
+            this.settings_sourceCodeFiles_cobol.Size = new System.Drawing.Size(175, 22);
+            this.settings_sourceCodeFiles_cobol.Text = "Cobol (*.cob, *.cbl)";
+            this.settings_sourceCodeFiles_cobol.Click += new System.EventHandler(this.settings_sourceCodeFiles_Click);
+            // 
+            // settings_sourceCodeFiles_text
+            // 
+            this.settings_sourceCodeFiles_text.CheckOnClick = true;
+            this.settings_sourceCodeFiles_text.Name = "settings_sourceCodeFiles_text";
+            this.settings_sourceCodeFiles_text.Size = new System.Drawing.Size(175, 22);
+            this.settings_sourceCodeFiles_text.Text = "Text (*.txt)";
+            this.settings_sourceCodeFiles_text.Click += new System.EventHandler(this.settings_sourceCodeFiles_Click);
+            // 
+            // settings_sourceCodeFiles_source
+            // 
+            this.settings_sourceCodeFiles_source.CheckOnClick = true;
+            this.settings_sourceCodeFiles_source.Name = "settings_sourceCodeFiles_source";
+            this.settings_sourceCodeFiles_source.Size = new System.Drawing.Size(175, 22);
+            this.settings_sourceCodeFiles_source.Text = "Source (*.src)";
+            this.settings_sourceCodeFiles_source.Click += new System.EventHandler(this.settings_sourceCodeFiles_Click);
             // 
             // FileTabs
             // 
@@ -235,25 +212,18 @@
             this.FileTabs.Margin = new System.Windows.Forms.Padding(2);
             this.FileTabs.Name = "FileTabs";
             this.FileTabs.SelectedIndex = 0;
-            this.FileTabs.Size = new System.Drawing.Size(1044, 684);
+            this.FileTabs.Size = new System.Drawing.Size(1384, 738);
             this.FileTabs.TabIndex = 1;
             // 
             // openFileDialog
             // 
             this.openFileDialog.FileName = "openFileDialog";
             // 
-            // variableUsagesToolStripMenuItem
-            // 
-            this.variableUsagesToolStripMenuItem.Name = "variableUsagesToolStripMenuItem";
-            this.variableUsagesToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.variableUsagesToolStripMenuItem.Text = "Variable usages";
-            this.variableUsagesToolStripMenuItem.Click += new System.EventHandler(this.variableUsagesToolStripMenuItem_Click);
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1044, 708);
+            this.ClientSize = new System.Drawing.Size(1384, 762);
             this.Controls.Add(this.FileTabs);
             this.Controls.Add(this.MainMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -281,20 +251,15 @@
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.TabControl FileTabs;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.ToolStripMenuItem level88ToEnumConverterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem variableUsagesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sourceCodeFilesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settings_sourceCodeFiles_cobol;
+        private System.Windows.Forms.ToolStripMenuItem settings_sourceCodeFiles_text;
+        private System.Windows.Forms.ToolStripMenuItem settings_sourceCodeFiles_source;
     }
 }
 

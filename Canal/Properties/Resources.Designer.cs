@@ -61,6 +61,24 @@ namespace Canal.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close Tab.
+        /// </summary>
+        internal static string CloseTab {
+            get {
+                return ResourceManager.GetString("CloseTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Would you like to close this tab?.
+        /// </summary>
+        internal static string ReallyCloseThisTab {
+            get {
+                return ResourceManager.GetString("ReallyCloseThisTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search....
         /// </summary>
         internal static string SearchPlaceholder {

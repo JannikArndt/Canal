@@ -1,46 +1,73 @@
-﻿using System;
+﻿using Canal.Properties;
+using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Canal
 {
-    using Canal.Utils;
     using Level88ToEnum;
-    using System.Text;
+    using Utils;
 
     public partial class MainWindow : Form
     {
         private TabUtil tabUtil;
 
+        public CodeBox CurrentCodeBox
+        {
+            get
+            {
+                if (tabUtil.CurrentFileControl != null && tabUtil.CurrentFileControl.CodeBox != null)
+                    return tabUtil.CurrentFileControl.CodeBox;
+                return null;
+            }
+        }
+
         public MainWindow(string[] files = null)
         {
             InitializeComponent();
 
-            tabUtil = new TabUtil(FileTabs);
+            tabUtil = new TabUtil(FileTabs, this);
 
-            if (files != null)
-            {
-                foreach (var filename in files)
-                {
-                    var file = FileUtil.Get(filename);
-                    file.Name = filename;
-                    tabUtil.AddTab(file);
-                }
-            }
+            var toOpen = new List<string>();
+            if (files != null) toOpen.AddRange(files);
+            if (Settings.Default.LastOpened != null) toOpen.AddRange(Settings.Default.LastOpened.Cast<string>());
+
+            foreach (string filepath in new HashSet<string>(toOpen))
+                OpenFile(filepath);
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            Settings.Default.LastOpened = new StringCollection();
+            Settings.Default.LastOpened.AddRange(tabUtil.GetOpenFiles().Select(file => file.FileReference.FullPath).ToArray());
+            Settings.Default.Save();
+            base.OnClosing(e);
+        }
+
+        public void OpenFile(string filename)
+        {
+            if (tabUtil.TryShowTab(filename))
+                return;
+
+            Cursor = Cursors.WaitCursor;
+            var file = FileUtil.Get(filename);
+            tabUtil.AddTab(file);
+            Cursor = Cursors.Default;
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openFileDialog.Filter = @"COBOL Files|*.cob;*.cbl;*.txt";
+            openFileDialog.Filter = @"COBOL Files|*.cob;*.cbl;*.txt;.src";
             openFileDialog.FileName = "";
 
             var dialogResult = openFileDialog.ShowDialog();
 
             if (dialogResult == DialogResult.OK)
             {
-                Cursor = Cursors.WaitCursor;
-                var file = FileUtil.Get(openFileDialog.FileName);
-                tabUtil.AddTab(file);
-                Cursor = Cursors.Default;
+                OpenFile(openFileDialog.FileName);
             }
         }
 
@@ -61,32 +88,17 @@ namespace Canal
                 Close();
         }
 
-        private void variableUsagesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var text = new StringBuilder();
+            tabUtil.AddTab(new CobolFile("", "New File"));
+        }
 
-            foreach (var section in tabUtil.CurrentFile.CobolTree.ProcedureDivision.Sections)
-            {
-                text.AppendLine("Section: " + section.Name);
-
-                foreach (var procedure in section.Procedures)
-                {
-                    text.AppendLine("Procedure: " + procedure.Name);
-
-                    foreach (var variable in procedure.Variables.Keys)
-                    {
-                        var root = variable.Root != null ? " (" + variable.Root.Name + ")" : "";
-                        text.AppendLine("  " + variable.Level.ToString("D2") + "  " + variable.Name + root + " " + procedure.Variables[variable].ToShortString());
-                    }
-
-                    text.AppendLine();
-                }
-
-                text.AppendLine();
-            }
-
-            var viewer = new TextViewer(text.ToString());
-            viewer.Show();
+        private void settings_sourceCodeFiles_Click(object sender, EventArgs e)
+        {
+            Settings.Default.FileTypeCob = settings_sourceCodeFiles_cobol.Checked;
+            Settings.Default.FileTypeTxt = settings_sourceCodeFiles_text.Checked;
+            Settings.Default.FileTypeSrc = settings_sourceCodeFiles_source.Checked;
+            Settings.Default.Save();
         }
     }
 }

@@ -7,7 +7,7 @@
         public CobolTreeNode(string nodeText, int indexDataDivision)
             : base(nodeText)
         {
-            this.IndexInSource = indexDataDivision;
+            IndexInSource = indexDataDivision;
         }
 
         public int IndexInSource { get; set; }

@@ -1,43 +1,39 @@
-﻿namespace Canal
-{
-    using System.Collections.Generic;
+﻿using Canal.Utils;
 
-    using Canal.CobolTree;
+namespace Canal
+{
+    using CobolTree;
+    using System.Collections.Generic;
 
     public class CobolFile
     {
-        internal string Name;
-
-        private CobolTree.CobolTree _cobolTree;
+        public string Name;
 
         public string Text { get; set; }
 
-        public List<Variable> Variables
-        {
-            get
-            {
-                return CobolTree.Variables;
-            }
-        }
+        public FileReference FileReference { get; set; }
 
-        public CobolTree.CobolTree CobolTree
-        {
-            get { return _cobolTree ?? (_cobolTree = new CobolTree.CobolTree(Text, Name)); }
-            set
-            {
-                _cobolTree = value;
-            }
-        }
+        public Dictionary<string, string> Infos { get; set; }
+
+        public List<Variable> Variables { get { return CobolTree.Variables; } }
+
+        public CobolTree.CobolTree CobolTree { get; set; }
 
         public CobolFile(string text, string name)
         {
             Name = name;
             Text = text;
+            CobolTree = new CobolTree.CobolTree(Text, Name);
+            Infos = new Dictionary<string, string>
+            {
+                {"Name", Name },
+                {"Lines of Code", CobolTree.LinesOfCode.ToString() }
+            };
         }
 
         public void RebuildTree()
         {
-            _cobolTree = new CobolTree.CobolTree(Text, Name);
+            CobolTree = new CobolTree.CobolTree(Text, Name);
         }
     }
 }

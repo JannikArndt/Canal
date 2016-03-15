@@ -32,7 +32,7 @@
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.4.2.%2a</ApplicationVersion>
+    <ApplicationVersion>1.5.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -100,6 +100,7 @@
     <Compile Include="CobolTree\CobolTree.cs" />
     <Compile Include="CobolTree\CobolTreeNode.cs" />
     <Compile Include="CobolTree\DataDivision.cs" />
+    <Compile Include="CobolTree\Division.cs" />
     <Compile Include="CobolTree\EnvironmentDivision.cs" />
     <Compile Include="CobolTree\ProgramReference.cs" />
     <Compile Include="CobolTree\IdentificationDivision.cs" />
@@ -116,6 +117,12 @@
     </Compile>
     <Compile Include="TextViewer.Designer.cs">
       <DependentUpon>TextViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\WordInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\WordInfo.Designer.cs">
+      <DependentUpon>WordInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\ExtensionMethods.cs" />
     <Compile Include="Utils\Literal.cs" />
@@ -168,6 +175,9 @@
     </Content>
     <EmbeddedResource Include="TextViewer.resx">
       <DependentUpon>TextViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\WordInfo.resx">
+      <DependentUpon>WordInfo.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
