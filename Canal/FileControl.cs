@@ -1,4 +1,6 @@
 ﻿using Canal.Properties;
+using Canal.UserControls;
+using FastColoredTextBoxNS;
 using System;
 using System.Windows.Forms;
 
@@ -23,6 +25,7 @@ namespace Canal
             CobolFile = file;
             codeBox.SetFile(file);
             codeBox.KeyDown += searchBox_KeyDown;
+            codeBox.WordSelected += CodeBoxOnWordSelected;
             searchBox.Text = Resources.SearchPlaceholder;
 
             treeView.Nodes.Add(CobolFile.CobolTree.AsTreeNodes);
@@ -41,6 +44,12 @@ namespace Canal
             filesTreeView.Nodes.AddRange(FileUtil.GetDirectoryStructure());
             filesTreeView.ExpandAll();
             filesTabSearchBox.Text = Resources.SearchPlaceholder;
+        }
+
+        private void CodeBoxOnWordSelected(object sender, WordSelectedEventArgs eventArgs)
+        {
+            infoTabPage.Controls.Clear();
+            infoTabPage.Controls.Add(new WordInfo(eventArgs.Word, this) { Dock = DockStyle.Fill });
         }
 
         public CodeBox CodeBox

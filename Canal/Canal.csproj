@@ -118,6 +118,12 @@
     <Compile Include="TextViewer.Designer.cs">
       <DependentUpon>TextViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\WordInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\WordInfo.Designer.cs">
+      <DependentUpon>WordInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils\ExtensionMethods.cs" />
     <Compile Include="Utils\Literal.cs" />
     <Compile Include="Utils\TextUtil.cs" />
@@ -169,6 +175,9 @@
     </Content>
     <EmbeddedResource Include="TextViewer.resx">
       <DependentUpon>TextViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\WordInfo.resx">
+      <DependentUpon>WordInfo.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">

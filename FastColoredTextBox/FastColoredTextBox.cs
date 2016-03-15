@@ -1852,6 +1852,13 @@ namespace FastColoredTextBoxNS
         public event EventHandler VisibleRangeChanged;
 
         /// <summary>
+        /// A word is selected
+        /// </summary>
+        [Browsable(true)]
+        [Description("It occurs if a word is double clicked.")]
+        public event EventHandler<WordSelectedEventArgs> WordSelected;
+
+        /// <summary>
         /// TextChangedDelayed event. 
         /// It occurs after insert, delete, clear, undo and redo operations. 
         /// This event occurs with a delay relative to TextChanged, and fires only once.
@@ -5757,7 +5764,7 @@ namespace FastColoredTextBoxNS
             for (int i = p.iChar; i < lines[p.iLine].Count; i++)
             {
                 char c = lines[p.iLine][i].c;
-                if (char.IsLetterOrDigit(c) || c == '_')
+                if (CharIsInWord(c))
                     toX = i + 1;
                 else
                     break;
@@ -5766,13 +5773,20 @@ namespace FastColoredTextBoxNS
             for (int i = p.iChar - 1; i >= 0; i--)
             {
                 char c = lines[p.iLine][i].c;
-                if (char.IsLetterOrDigit(c) || c == '_')
+                if (CharIsInWord(c))
                     fromX = i;
                 else
                     break;
             }
 
             Selection = new Range(this, toX, p.iLine, fromX, p.iLine);
+
+            OnWordSelected(Selection.Text);
+        }
+
+        private bool CharIsInWord(char c)
+        {
+            return char.IsLetterOrDigit(c) || c == '_' || c == '-';
         }
 
         private int YtoLineIndex(int y)
@@ -5858,6 +5872,11 @@ namespace FastColoredTextBoxNS
         public int PointToPosition(Point point)
         {
             return PlaceToPosition(PointToPlace(point));
+        }
+
+        public virtual void OnWordSelected(string word)
+        {
+            WordSelected(this, new WordSelectedEventArgs(word));
         }
 
         /// <summary>
@@ -8212,6 +8231,15 @@ window.status = ""#print"";
         /// This range contains changed area of text
         /// </summary>
         public Range ChangedRange { get; set; }
+    }
+
+    public class WordSelectedEventArgs : EventArgs
+    {
+        public string Word { get; set; }
+        public WordSelectedEventArgs(string word)
+        {
+            Word = word;
+        }
     }
 
     public class TextChangingEventArgs : EventArgs
