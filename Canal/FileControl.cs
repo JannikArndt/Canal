@@ -123,7 +123,7 @@ namespace Canal
             if (treeNode == null)
                 codeBox.DoRangeVisible(codeBox.GetRange(0, 0));
             else
-                codeBox.FindNext(treeNode.Text, false, false, false, true);
+                codeBox.FindNext(@"^.{7}" + treeNode.Text + @"(\.| +USING)", false, true, false, true);
         }
 
         private void variablesTreeView_AfterSelect(object sender, TreeViewEventArgs e)
