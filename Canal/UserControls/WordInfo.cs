@@ -22,7 +22,11 @@ namespace Canal.UserControls
         {
             var variable = parent.CobolFile.Variables.FindVariable(word);
             if (variable == null)
+            {
+                variableTreeView.Nodes.Add(new TreeNode("No data found - is this variable in a copy book?"));
+                variableTreeView.ExpandAll();
                 return;
+            }
 
             // Get all vars to the root
             var currentVar = variable;
@@ -34,6 +38,7 @@ namespace Canal.UserControls
                 node = newNode;
                 currentVar = currentVar.Parent;
             }
+
 
             variableTreeView.Nodes.Add(node);
             variableTreeView.ExpandAll();

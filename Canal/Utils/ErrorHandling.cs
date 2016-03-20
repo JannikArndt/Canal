@@ -20,7 +20,7 @@ namespace Canal.Utils
             Track("Exception", exception);
         }
 
-        public static void Track(string name, Exception exception = null)
+        public static void Track(string name, Exception exception = null, string infotext = "")
         {
             var client = MixpanelClient.GetCurrentClient();
             var ev = new TrackingEvent(name)
@@ -40,7 +40,14 @@ namespace Canal.Utils
                 ev.Properties.All["StackTrace"] = exception.StackTrace;
             }
 
+            ev.Properties.All["Info"] = infotext;
+
             client.Track(ev);
+        }
+
+        public static void Info(string infotext)
+        {
+            Track("Info", infotext: infotext);
         }
     }
 }

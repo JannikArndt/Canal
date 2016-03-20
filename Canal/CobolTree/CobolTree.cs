@@ -75,6 +75,8 @@
             foreach (var procedure in ProcedureDivision.Sections.SelectMany(s => s.Procedures))
             {
                 procedure.AnalyzeVariables(DataDivision.Variables);
+                procedure.AnalyzePerformReferences();
+                procedure.AnalyzeGoTos();
             }
         }
     }

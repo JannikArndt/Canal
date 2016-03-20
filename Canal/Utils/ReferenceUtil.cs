@@ -79,7 +79,7 @@
             // create nodes for perform references and continue recusively
             foreach (var performReference in procedure.PerformReferences)
             {
-                var newNode = new TreeNode(performReference.ReferenceName);
+                var newNode = new TreeNode(performReference.ReferencedProcedure);
                 topNode.Nodes.Add(newNode);
                 FindPerformsRecursively(newNode, performReference.Procedure);
             }

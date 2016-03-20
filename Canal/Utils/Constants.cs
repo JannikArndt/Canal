@@ -5,30 +5,32 @@ namespace Canal.Utils
 {
     public static class Constants
     {
+        public static readonly string Literal = @"(?<literal>[\w\d-()]+)";
 
+        public static readonly string Or = @"|";
 
-        public const RegexOptions CompiledMultilineCaseInsensitive = RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase;
+        public static readonly RegexOptions CompiledMultilineCaseInsensitive = RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase;
 
-        public const RegexOptions CompiledCaseInsensitive = RegexOptions.Compiled | RegexOptions.IgnoreCase;
+        public static readonly RegexOptions CompiledCaseInsensitive = RegexOptions.Compiled | RegexOptions.IgnoreCase;
 
-        public const string LiteralWithInputOutput = "(" + StatementsBeforeOutputLiteral + Or + StatementsBeforeInputLiteralSpaceMandatory
+        public static readonly string StatementsBeforeOutputLiteral = @"((?<beforeOutput>INTO|TO) +)";
+
+        public static readonly string StatementsBeforeInputLiteralSpaceMandatory = @"((?<beforeInputWithSpace>MOVE|DIVIDE|ADD|SUBTRACT|MULTIPLY|SET|IF|AND|OR|THAN|GIVING|REMAINDER|NOT|BY|UNTIL) +)";
+
+        public static readonly string StatementsBeforeInputLiteralSpaceOptional = @"((?<beforeInput>=|<|>) *)";
+
+        public static readonly string LiteralWithInputOutput = "(" + StatementsBeforeOutputLiteral + Or + StatementsBeforeInputLiteralSpaceMandatory
             + Or + StatementsBeforeInputLiteralSpaceOptional + ")" + Literal;
 
-        public const string Or = @"|";
+        public static readonly string StatementsAfterInputLiteralSpaceMandatory = @"( +(?<afterInputWithSpace>TO|AND|OR|GREATER|LESS|BY|GIVING|REMAINDER|NOT))";
 
-        public const string StatementsBeforeOutputLiteral = @"((?<beforeOutput>INTO|TO) +)";
+        public static readonly string StatementsAfterInputLiteralSpaceOptional = @"( *(?<afterInput>\.|=|<|>))";
 
-        public const string StatementsBeforeInputLiteralSpaceMandatory = @"((?<beforeInputWithSpace>MOVE|DIVIDE|ADD|SUBTRACT|MULTIPLY|SET|IF|AND|OR|THAN|GIVING|REMAINDER|NOT|BY|UNTIL) +)";
+        public static readonly string Perform = @"PERFORM (" + Literal + @") ?(THRU|UNTIL|WITH)? ?" + Literal + @"? ?(UNTIL|BEFORE|AFTER)? ?(" + Literal + @"|[<>=]|)";
 
-        public const string StatementsBeforeInputLiteralSpaceOptional = @"((?<beforeInput>=|<|>) *)";
+        public static readonly string GoTo = @" GO TO +" + Literal;
 
-        public const string Literal = @"(?<literal>[\w\d-()]+)";
-
-        public const string StatementsAfterInputLiteralSpaceMandatory = @"( +(?<afterInputWithSpace>TO|AND|OR|GREATER|LESS|BY|GIVING|REMAINDER|NOT))";
-
-        public const string StatementsAfterInputLiteralSpaceOptional = @"( *(?<afterInput>\.|=|<|>))";
-
-        public static readonly HashSet<string> cobolKeywords = new HashSet<string>
+        public static readonly HashSet<string> CobolKeywords = new HashSet<string>
         {
             "ACCEPT",
             "ACCESS",

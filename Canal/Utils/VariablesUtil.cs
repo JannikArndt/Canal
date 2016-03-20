@@ -77,7 +77,7 @@ namespace Canal.Utils
                     usedAs = usedAs == UsedAs.Output ? UsedAs.Both : UsedAs.Input;
                 }
 
-                if (!Constants.cobolKeywords.Contains(literal))
+                if (!Constants.CobolKeywords.Contains(literal))
                     result.Add(new Literal(literal, usedAs));
             }
 

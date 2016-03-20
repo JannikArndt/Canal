@@ -106,10 +106,12 @@
     <Compile Include="CobolTree\DataDivision.cs" />
     <Compile Include="CobolTree\Division.cs" />
     <Compile Include="CobolTree\EnvironmentDivision.cs" />
-    <Compile Include="CobolTree\ProgramReference.cs" />
+    <Compile Include="CobolTree\References\GoToReference.cs" />
+    <Compile Include="CobolTree\References\ProcedureReference.cs" />
+    <Compile Include="CobolTree\References\ProgramReference.cs" />
     <Compile Include="CobolTree\IdentificationDivision.cs" />
     <Compile Include="CobolTree\LinkageSection.cs" />
-    <Compile Include="CobolTree\PerformReference.cs" />
+    <Compile Include="CobolTree\References\PerformReference.cs" />
     <Compile Include="CobolTree\PerformType.cs" />
     <Compile Include="CobolTree\ProcedureDivision.cs" />
     <Compile Include="CobolTree\Procedure.cs" />

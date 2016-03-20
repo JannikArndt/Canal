@@ -1,5 +1,4 @@
-﻿using Canal.Properties;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows.Forms;
 
 namespace Canal.Utils
@@ -106,12 +105,8 @@ namespace Canal.Utils
 
                 foreach (var fileSystemEntry in Directory.EnumerateFiles(folderPath, "*.*", SearchOption.AllDirectories)
                     .Where(
-                        s =>
-                            Settings.Default.FileTypeCob &&
-                            (s.EndsWith(".cob", StringComparison.OrdinalIgnoreCase) ||
-                             s.EndsWith(".cbl", StringComparison.OrdinalIgnoreCase))
-                            || Settings.Default.FileTypeTxt && s.EndsWith(".txt", StringComparison.OrdinalIgnoreCase)
-                            || Settings.Default.FileTypeSrc && s.EndsWith(".src", StringComparison.OrdinalIgnoreCase)))
+                        s => s.EndsWith(".cob", StringComparison.OrdinalIgnoreCase) || s.EndsWith(".cbl", StringComparison.OrdinalIgnoreCase)
+                            || s.EndsWith(".txt", StringComparison.OrdinalIgnoreCase) || s.EndsWith(".src", StringComparison.OrdinalIgnoreCase)))
                 {
                     if (!Files.ContainsKey(fileSystemEntry))
                     {
