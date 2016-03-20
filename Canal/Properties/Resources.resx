@@ -123,4 +123,16 @@
   <data name="CloseTab" xml:space="preserve">
     <value>Close Tab</value>
   </data>
+  <data name="ErrorMessage_FileControl_Constructor" xml:space="preserve">
+    <value>An error occured trying to display the file: </value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ErrorMessage_MainWindow_OpenPrevious" xml:space="preserve">
+    <value>An error occured while trying to restore previously opened files: </value>
+  </data>
+  <data name="ErrorMessage_MainWindow_ErrorLoadingFile" xml:space="preserve">
+    <value>Error loading file: </value>
+  </data>
 </root>

@@ -1,4 +1,5 @@
-﻿using FastColoredTextBoxNS;
+﻿using Canal.Utils;
+using FastColoredTextBoxNS;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -51,6 +52,7 @@ namespace Canal
             }
             catch (Exception ex)
             {
+                ErrorHandling.Exception(ex);
                 MessageBox.Show(ex.Message);
             }
         }

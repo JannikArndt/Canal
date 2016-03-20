@@ -27,18 +27,29 @@ namespace Canal.Utils
             if (string.IsNullOrWhiteSpace(filename))
                 return null;
 
-            AnalyzeFolder(filename);
-
-            var reference = Files[filename];
-
-            if (reference.CobolFile == null)
+            try
             {
-                var lines = File.ReadAllText(filename);
+                AnalyzeFolder(filename);
 
-                reference.CobolFile = new CobolFile(lines, Path.GetFileNameWithoutExtension(filename)) { FileReference = reference };
+                var reference = Files[filename];
+
+                if (reference.CobolFile == null)
+                {
+                    var lines = File.ReadAllText(filename);
+
+                    reference.CobolFile = new CobolFile(lines, Path.GetFileNameWithoutExtension(filename))
+                    {
+                        FileReference = reference
+                    };
+                }
+
+                return reference.CobolFile;
             }
-
-            return reference.CobolFile;
+            catch (Exception exception)
+            {
+                ErrorHandling.Exception(exception);
+                throw new FileNotFoundException("File could not be loaded.", filename, exception);
+            }
         }
 
         /// <summary>
@@ -84,27 +95,39 @@ namespace Canal.Utils
             if (RecentFolders.Contains(fileOrFolderPath))
                 return;
 
-            RecentFolders.Add(fileOrFolderPath);
+            try
+            {
+                RecentFolders.Add(fileOrFolderPath);
 
-            var folderPath = Path.GetDirectoryName(Path.GetDirectoryName(fileOrFolderPath));
+                var folderPath = Path.GetDirectoryName(Path.GetDirectoryName(fileOrFolderPath));
 
-            if (folderPath == null)
-                return;
+                if (folderPath == null)
+                    return;
 
-            foreach (var fileSystemEntry in Directory.EnumerateFiles(folderPath, "*.*", SearchOption.AllDirectories)
-                .Where(s => Settings.Default.FileTypeCob && (s.EndsWith(".cob", StringComparison.OrdinalIgnoreCase) || s.EndsWith(".cbl", StringComparison.OrdinalIgnoreCase))
+                foreach (var fileSystemEntry in Directory.EnumerateFiles(folderPath, "*.*", SearchOption.AllDirectories)
+                    .Where(
+                        s =>
+                            Settings.Default.FileTypeCob &&
+                            (s.EndsWith(".cob", StringComparison.OrdinalIgnoreCase) ||
+                             s.EndsWith(".cbl", StringComparison.OrdinalIgnoreCase))
                             || Settings.Default.FileTypeTxt && s.EndsWith(".txt", StringComparison.OrdinalIgnoreCase)
                             || Settings.Default.FileTypeSrc && s.EndsWith(".src", StringComparison.OrdinalIgnoreCase)))
-            {
-                if (!Files.ContainsKey(fileSystemEntry))
                 {
-                    var newRef = new FileReference(fileSystemEntry);
-                    Files.Add(fileSystemEntry, newRef);
-                    if (!DirectoriesAndFiles.ContainsKey(newRef.Directory))
-                        DirectoriesAndFiles.Add(newRef.Directory, new List<FileReference>());
+                    if (!Files.ContainsKey(fileSystemEntry))
+                    {
+                        var newRef = new FileReference(fileSystemEntry);
+                        Files.Add(fileSystemEntry, newRef);
+                        if (!DirectoriesAndFiles.ContainsKey(newRef.Directory))
+                            DirectoriesAndFiles.Add(newRef.Directory, new List<FileReference>());
 
-                    DirectoriesAndFiles[newRef.Directory].Add(newRef);
+                        DirectoriesAndFiles[newRef.Directory].Add(newRef);
+                    }
                 }
+            }
+            catch (Exception exception)
+            {
+                ErrorHandling.Exception(exception);
+                throw new FileNotFoundException("Error analyzing file/folder.", fileOrFolderPath, exception);
             }
         }
 

@@ -70,6 +70,42 @@ namespace Canal.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occured trying to display the file: .
+        /// </summary>
+        internal static string ErrorMessage_FileControl_Constructor {
+            get {
+                return ResourceManager.GetString("ErrorMessage_FileControl_Constructor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error loading file: .
+        /// </summary>
+        internal static string ErrorMessage_MainWindow_ErrorLoadingFile {
+            get {
+                return ResourceManager.GetString("ErrorMessage_MainWindow_ErrorLoadingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occured while trying to restore previously opened files: .
+        /// </summary>
+        internal static string ErrorMessage_MainWindow_OpenPrevious {
+            get {
+                return ResourceManager.GetString("ErrorMessage_MainWindow_OpenPrevious", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Would you like to close this tab?.
         /// </summary>
         internal static string ReallyCloseThisTab {

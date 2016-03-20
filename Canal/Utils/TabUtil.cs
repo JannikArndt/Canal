@@ -1,4 +1,5 @@
 ﻿using Canal.Properties;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -46,15 +47,26 @@ namespace Canal.Utils
 
         public bool TryShowTab(string filepath)
         {
-            foreach (TabPage tab in _tabControl.TabPages)
+            try
             {
-                if (((FileControl)tab.Controls.Find("FileControl", false)[0]).CobolFile.FileReference.FullPath == filepath)
+                foreach (TabPage tab in _tabControl.TabPages)
                 {
-                    _tabControl.SelectedTab = tab;
-                    return true;
+                    var fileControl = tab.Controls.Find("FileControl", false)[0] as FileControl;
+
+                    if (fileControl != null && fileControl.CobolFile.FileReference.FullPath == filepath)
+                    {
+                        _tabControl.SelectedTab = tab;
+                        return true;
+                    }
                 }
+                return false;
+
             }
-            return false;
+            catch (Exception exception)
+            {
+                ErrorHandling.Exception(exception);
+                return false;
+            }
         }
 
         private void TabControlOnMouseDown(object sender, MouseEventArgs mouseEventArgs)

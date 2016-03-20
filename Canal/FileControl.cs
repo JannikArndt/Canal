@@ -16,34 +16,42 @@ namespace Canal
     {
         public CobolFile CobolFile { get; private set; }
 
-        private MainWindow _parent;
+        private readonly MainWindow _parent;
 
         public FileControl(CobolFile file, MainWindow parent)
         {
             InitializeComponent();
-            _parent = parent;
-            CobolFile = file;
-            codeBox.SetFile(file);
-            codeBox.KeyDown += searchBox_KeyDown;
-            codeBox.WordSelected += CodeBoxOnWordSelected;
-            searchBox.Text = Resources.SearchPlaceholder;
+            try
+            {
+                _parent = parent;
+                CobolFile = file;
+                codeBox.SetFile(file);
+                codeBox.KeyDown += searchBox_KeyDown;
+                codeBox.WordSelected += CodeBoxOnWordSelected;
+                searchBox.Text = Resources.SearchPlaceholder;
 
-            treeView.Nodes.Add(CobolFile.CobolTree.AsTreeNodes);
-            treeView.ExpandAll();
+                treeView.Nodes.Add(CobolFile.CobolTree.AsTreeNodes);
+                treeView.ExpandAll();
 
-            performsTreeView.Nodes.Add(ReferenceUtil.GetPerformTree(file));
-            performsTreeView.ExpandAll();
+                performsTreeView.Nodes.Add(ReferenceUtil.GetPerformTree(file));
+                performsTreeView.ExpandAll();
 
-            // TODO insert friendly advise if copys are unresolved
-            ShowProceduresTreeView();
+                // TODO insert friendly advise if copys are unresolved
+                ShowProceduresTreeView();
 
-            ShowVariablesTreeView();
+                ShowVariablesTreeView();
 
-            infoDataGridView.DataSource = CobolFile.Infos.ToArray();
+                infoDataGridView.DataSource = CobolFile.Infos.ToArray();
 
-            filesTreeView.Nodes.AddRange(FileUtil.GetDirectoryStructure());
-            filesTreeView.ExpandAll();
-            filesTabSearchBox.Text = Resources.SearchPlaceholder;
+                filesTreeView.Nodes.AddRange(FileUtil.GetDirectoryStructure());
+                filesTreeView.ExpandAll();
+                filesTabSearchBox.Text = Resources.SearchPlaceholder;
+            }
+            catch (Exception exception)
+            {
+                ErrorHandling.Exception(exception);
+                MessageBox.Show(Resources.ErrorMessage_FileControl_Constructor + exception.Message, Resources.Error, MessageBoxButtons.OK);
+            }
         }
 
         private void CodeBoxOnWordSelected(object sender, WordSelectedEventArgs eventArgs)
