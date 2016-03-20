@@ -21,6 +21,8 @@
 //
 // #define Styles32
 
+using FastColoredTextBoxNS.Enums;
+using FastColoredTextBoxNS.Events;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;

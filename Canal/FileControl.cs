@@ -3,6 +3,7 @@ using Canal.UserControls;
 using FastColoredTextBoxNS;
 using System;
 using System.Windows.Forms;
+using FastColoredTextBoxNS.Events;
 
 namespace Canal
 {

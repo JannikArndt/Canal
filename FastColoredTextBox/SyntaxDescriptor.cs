@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using FastColoredTextBoxNS.Enums;
 
 namespace FastColoredTextBoxNS
 {
-    public class SyntaxDescriptor: IDisposable
+    public class SyntaxDescriptor : IDisposable
     {
         public char leftBracket = '(';
         public char rightBracket = ')';
@@ -20,32 +20,5 @@ namespace FastColoredTextBoxNS
             foreach (var style in styles)
                 style.Dispose();
         }
-    }
-
-    public class RuleDesc
-    {
-        Regex regex;
-        public string pattern;
-        public RegexOptions options = RegexOptions.None;
-        public Style style;
-
-        public Regex Regex
-        {
-            get
-            {
-                if (regex == null)
-                {
-                    regex = new Regex(pattern, SyntaxHighlighter.RegexCompiledOption | options);
-                }
-                return regex;
-            }
-        }
-    }
-
-    public class FoldingDesc
-    {
-        public string startMarkerRegex;
-        public string finishMarkerRegex;
-        public RegexOptions options = RegexOptions.None;
     }
 }

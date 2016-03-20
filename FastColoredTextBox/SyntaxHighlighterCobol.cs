@@ -1,4 +1,7 @@
 ﻿
+using FastColoredTextBoxNS.Enums;
+using FastColoredTextBoxNS.Events;
+
 namespace FastColoredTextBoxNS
 {
     using System.Text.RegularExpressions;

@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Drawing;
 using System.Collections.Generic;
+using FastColoredTextBoxNS.Enums;
 
 namespace FastColoredTextBoxNS
 {

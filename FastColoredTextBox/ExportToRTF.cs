@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using FastColoredTextBoxNS.Enums;
 
 namespace FastColoredTextBoxNS
 {
@@ -87,7 +87,7 @@ namespace FastColoredTextBoxNS
                     default:
                         var ch = c.c;
                         var code = (int)ch;
-                        if(code < 128)
+                        if (code < 128)
                             tempSB.Append(c.c);
                         else
                             tempSB.AppendFormat(@"{{\u{0}}}", code);
@@ -95,7 +95,7 @@ namespace FastColoredTextBoxNS
                 }
             }
             Flush(sb, tempSB, currentStyleId);
-           
+
             //build color table
             var list = new SortedList<int, Color>();
             foreach (var pair in colorTable)
@@ -105,7 +105,7 @@ namespace FastColoredTextBoxNS
             tempSB.AppendFormat(@"{{\colortbl;");
 
             foreach (var pair in list)
-                tempSB.Append(GetColorAsString(pair.Value)+";");
+                tempSB.Append(GetColorAsString(pair.Value) + ";");
             tempSB.AppendLine("}");
 
             //
@@ -186,10 +186,10 @@ namespace FastColoredTextBoxNS
                 tags.AppendFormat(@"\cf{0}", cf);
             if (cb >= 0)
                 tags.AppendFormat(@"\highlight{0}", cb);
-            if(!string.IsNullOrEmpty(desc.AdditionalTags))
+            if (!string.IsNullOrEmpty(desc.AdditionalTags))
                 tags.Append(desc.AdditionalTags.Trim());
 
-            if(tags.Length > 0)
+            if (tags.Length > 0)
                 sb.AppendFormat(@"{{{0} {1}}}", tags, tempSB.ToString());
             else
                 sb.Append(tempSB.ToString());
@@ -206,12 +206,5 @@ namespace FastColoredTextBoxNS
 
             return colorTable[color];
         }
-    }
-
-    public class RTFStyleDescriptor
-    {
-        public Color ForeColor { get; set; }
-        public Color BackColor { get; set; }
-        public string AdditionalTags { get; set; }
     }
 }

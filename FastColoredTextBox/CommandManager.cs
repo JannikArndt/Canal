@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FastColoredTextBoxNS
 {
@@ -8,7 +8,7 @@ namespace FastColoredTextBoxNS
         readonly int maxHistoryLength = 200;
         LimitedStack<UndoableCommand> history;
         Stack<UndoableCommand> redoStack = new Stack<UndoableCommand>();
-        public TextSource TextSource{ get; private set; }
+        public TextSource TextSource { get; private set; }
         public bool UndoRedoStackIsEnabled { get; set; }
 
         public CommandManager(TextSource ts)
@@ -25,9 +25,9 @@ namespace FastColoredTextBoxNS
 
             //multirange ?
             if (cmd.ts.CurrentTB.Selection.ColumnSelectionMode)
-            if (cmd is UndoableCommand)
-                //make wrapper
-                cmd = new MultiRangeCommand((UndoableCommand)cmd);
+                if (cmd is UndoableCommand)
+                    //make wrapper
+                    cmd = new MultiRangeCommand((UndoableCommand)cmd);
 
 
             if (cmd is UndoableCommand)
@@ -147,8 +147,8 @@ namespace FastColoredTextBoxNS
             TextSource.CurrentTB.OnUndoRedoStateChanged();
         }
 
-        public bool UndoEnabled 
-        { 
+        public bool UndoEnabled
+        {
             get
             {
                 return history.Count > 0;
@@ -162,78 +162,5 @@ namespace FastColoredTextBoxNS
                 return redoStack.Count > 0;
             }
         }
-    }
-
-    public abstract class Command
-    {
-        public TextSource ts;
-        public abstract void Execute();
-    }
-
-    internal class RangeInfo
-    {
-        public Place Start { get; set; }
-        public Place End { get; set; }
-
-        public RangeInfo(Range r)
-        {
-            Start = r.Start;
-            End = r.End;
-        }
-
-        internal int FromX
-        {
-            get
-            {
-                if (End.iLine < Start.iLine) return End.iChar;
-                if (End.iLine > Start.iLine) return Start.iChar;
-                return Math.Min(End.iChar, Start.iChar);
-            }
-        }
-    }
-
-    public abstract class UndoableCommand : Command
-    {
-        internal RangeInfo sel;
-        internal RangeInfo lastSel;
-        internal bool autoUndo;
-
-        public UndoableCommand(TextSource ts)
-        {
-            this.ts = ts;
-            sel = new RangeInfo(ts.CurrentTB.Selection);
-        }
-
-        public virtual void Undo()
-        {
-            OnTextChanged(true);
-        }
-
-        public override void Execute()
-        {
-            lastSel = new RangeInfo(ts.CurrentTB.Selection);
-            OnTextChanged(false);
-        }
-
-        protected virtual void OnTextChanged(bool invert)
-        {
-            bool b = sel.Start.iLine < lastSel.Start.iLine;
-            if (invert)
-            {
-                if (b)
-                    ts.OnTextChanged(sel.Start.iLine, sel.Start.iLine);
-                else
-                    ts.OnTextChanged(sel.Start.iLine, lastSel.Start.iLine);
-            }
-            else
-            {
-                if (b)
-                    ts.OnTextChanged(sel.Start.iLine, lastSel.Start.iLine);
-                else
-                    ts.OnTextChanged(lastSel.Start.iLine, lastSel.Start.iLine);
-            }
-        }
-
-        public abstract UndoableCommand Clone();
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Level88ToEnum
+﻿using FastColoredTextBoxNS.Enums;
+
+namespace Level88ToEnum
 {
     using System;
     using System.Collections.Generic;
