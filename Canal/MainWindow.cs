@@ -1,8 +1,10 @@
 ﻿using Canal.Properties;
+using Canal.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -114,6 +116,17 @@ namespace Canal
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _tabUtil.AddTab(new CobolFile("", "New File"));
+        }
+
+        private void reportIssueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/JannikArndt/Canal/issues/new");
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var about = new About();
+            about.Show();
         }
     }
 }
