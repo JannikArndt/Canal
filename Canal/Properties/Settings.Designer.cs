@@ -69,5 +69,17 @@ namespace Canal.Properties {
                 this["FileTypeSrc"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string FileTypeCustom {
+            get {
+                return ((string)(this["FileTypeCustom"]));
+            }
+            set {
+                this["FileTypeCustom"] = value;
+            }
+        }
     }
 }

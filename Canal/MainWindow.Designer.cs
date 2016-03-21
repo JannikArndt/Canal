@@ -42,11 +42,6 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.level88ToEnumConverterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.sourceCodeFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settings_sourceCodeFiles_cobol = new System.Windows.Forms.ToolStripMenuItem();
-            this.settings_sourceCodeFiles_text = new System.Windows.Forms.ToolStripMenuItem();
-            this.settings_sourceCodeFiles_source = new System.Windows.Forms.ToolStripMenuItem();
             this.FileTabs = new System.Windows.Forms.TabControl();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.MainMenu.SuspendLayout();
@@ -57,8 +52,7 @@
             this.MainMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.helpToolStripMenuItem,
-            this.helpToolStripMenuItem1});
+            this.helpToolStripMenuItem});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
@@ -161,50 +155,6 @@
             this.level88ToEnumConverterToolStripMenuItem.Text = "Level 88 to Enum Converter";
             this.level88ToEnumConverterToolStripMenuItem.Click += new System.EventHandler(this.level88ToEnumConverterToolStripMenuItem_Click);
             // 
-            // helpToolStripMenuItem1
-            // 
-            this.helpToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sourceCodeFilesToolStripMenuItem});
-            this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(61, 20);
-            this.helpToolStripMenuItem1.Text = "Settings";
-            // 
-            // sourceCodeFilesToolStripMenuItem
-            // 
-            this.sourceCodeFilesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.settings_sourceCodeFiles_cobol,
-            this.settings_sourceCodeFiles_text,
-            this.settings_sourceCodeFiles_source});
-            this.sourceCodeFilesToolStripMenuItem.Name = "sourceCodeFilesToolStripMenuItem";
-            this.sourceCodeFilesToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.sourceCodeFilesToolStripMenuItem.Text = "Source Code Files";
-            // 
-            // settings_sourceCodeFiles_cobol
-            // 
-            this.settings_sourceCodeFiles_cobol.Checked = true;
-            this.settings_sourceCodeFiles_cobol.CheckOnClick = true;
-            this.settings_sourceCodeFiles_cobol.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.settings_sourceCodeFiles_cobol.Name = "settings_sourceCodeFiles_cobol";
-            this.settings_sourceCodeFiles_cobol.Size = new System.Drawing.Size(175, 22);
-            this.settings_sourceCodeFiles_cobol.Text = "Cobol (*.cob, *.cbl)";
-            this.settings_sourceCodeFiles_cobol.Click += new System.EventHandler(this.settings_sourceCodeFiles_Click);
-            // 
-            // settings_sourceCodeFiles_text
-            // 
-            this.settings_sourceCodeFiles_text.CheckOnClick = true;
-            this.settings_sourceCodeFiles_text.Name = "settings_sourceCodeFiles_text";
-            this.settings_sourceCodeFiles_text.Size = new System.Drawing.Size(175, 22);
-            this.settings_sourceCodeFiles_text.Text = "Text (*.txt)";
-            this.settings_sourceCodeFiles_text.Click += new System.EventHandler(this.settings_sourceCodeFiles_Click);
-            // 
-            // settings_sourceCodeFiles_source
-            // 
-            this.settings_sourceCodeFiles_source.CheckOnClick = true;
-            this.settings_sourceCodeFiles_source.Name = "settings_sourceCodeFiles_source";
-            this.settings_sourceCodeFiles_source.Size = new System.Drawing.Size(175, 22);
-            this.settings_sourceCodeFiles_source.Text = "Source (*.src)";
-            this.settings_sourceCodeFiles_source.Click += new System.EventHandler(this.settings_sourceCodeFiles_Click);
-            // 
             // FileTabs
             // 
             this.FileTabs.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -255,11 +205,6 @@
         private System.Windows.Forms.TabControl FileTabs;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.ToolStripMenuItem level88ToEnumConverterToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem sourceCodeFilesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem settings_sourceCodeFiles_cobol;
-        private System.Windows.Forms.ToolStripMenuItem settings_sourceCodeFiles_text;
-        private System.Windows.Forms.ToolStripMenuItem settings_sourceCodeFiles_source;
     }
 }
 

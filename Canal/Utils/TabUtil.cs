@@ -1,4 +1,5 @@
-﻿using Canal.Properties;
+﻿using Canal.Events;
+using Canal.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,16 +34,14 @@ namespace Canal.Utils
             _tabControl.MouseDown += TabControlOnMouseDown;
         }
 
-        public List<CobolFile> GetOpenFiles()
+        public IEnumerable<FileControl> GetFileControls()
         {
-            var result = new List<CobolFile>();
+            return (from TabPage tab in _tabControl.TabPages select (FileControl)tab.Controls.Find("FileControl", false)[0]);
+        }
 
-            foreach (TabPage tab in _tabControl.TabPages)
-            {
-                result.Add(((FileControl)tab.Controls.Find("FileControl", false)[0]).CobolFile);
-            }
-
-            return result;
+        public IEnumerable<CobolFile> GetOpenFiles()
+        {
+            return GetFileControls().Select(fileControl => fileControl.CobolFile);
         }
 
         public bool TryShowTab(string filepath)
@@ -104,9 +103,19 @@ namespace Canal.Utils
                 Dock = DockStyle.Fill
             };
 
+            fileControl.UsedFileTypesChanged += UsedFileTypesChanged;
+
             newTab.Controls.Add(fileControl);
             _tabControl.Controls.Add(newTab);
             _tabControl.SelectTab(newTab);
+        }
+
+        private void UsedFileTypesChanged(object sender, UsedFileTypesChangedEventArgs usedFileTypesChangedEventArgs)
+        {
+            foreach (FileControl fileControl in GetFileControls())
+            {
+                fileControl.RefreshUsedFileTypes(sender, usedFileTypesChangedEventArgs);
+            }
         }
 
         public bool CloseTab(int index = -1)

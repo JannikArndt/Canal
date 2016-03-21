@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -67,7 +66,6 @@ namespace Canal
 
             try
             {
-                IncludeFileType(Path.GetExtension(filename));
                 var file = FileUtil.Get(filename);
                 _tabUtil.AddTab(file);
 
@@ -81,33 +79,6 @@ namespace Canal
             {
                 Cursor = Cursors.Default;
             }
-        }
-
-        private void IncludeFileType(string fileEnding)
-        {
-            switch (fileEnding.ToLowerInvariant())
-            {
-                case ".cob":
-                    settings_sourceCodeFiles_cobol.Checked = true;
-                    Settings.Default.FileTypeCob = true;
-                    break;
-                case ".cbl":
-                    settings_sourceCodeFiles_cobol.Checked = true;
-                    Settings.Default.FileTypeCob = true;
-                    break;
-                case ".txt":
-                    settings_sourceCodeFiles_text.Checked = true;
-                    Settings.Default.FileTypeTxt = true;
-                    break;
-                case ".src":
-                    settings_sourceCodeFiles_source.Checked = true;
-                    Settings.Default.FileTypeSrc = true;
-                    break;
-                default:
-                    ErrorHandling.Info("Wrong File Extension " + fileEnding);
-                    break;
-            }
-            Settings.Default.Save();
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -143,14 +114,6 @@ namespace Canal
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _tabUtil.AddTab(new CobolFile("", "New File"));
-        }
-
-        private void settings_sourceCodeFiles_Click(object sender, EventArgs e)
-        {
-            Settings.Default.FileTypeCob = settings_sourceCodeFiles_cobol.Checked;
-            Settings.Default.FileTypeTxt = settings_sourceCodeFiles_text.Checked;
-            Settings.Default.FileTypeSrc = settings_sourceCodeFiles_source.Checked;
-            Settings.Default.Save();
         }
     }
 }

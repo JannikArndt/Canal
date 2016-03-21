@@ -1,9 +1,9 @@
-﻿using Canal.Properties;
+﻿using Canal.Events;
+using Canal.Properties;
 using Canal.UserControls;
-using FastColoredTextBoxNS;
+using FastColoredTextBoxNS.Events;
 using System;
 using System.Windows.Forms;
-using FastColoredTextBoxNS.Events;
 
 namespace Canal
 {
@@ -16,6 +16,8 @@ namespace Canal
     public partial class FileControl : UserControl
     {
         public CobolFile CobolFile { get; private set; }
+
+        public event EventHandler<UsedFileTypesChangedEventArgs> UsedFileTypesChanged;
 
         private readonly MainWindow _parent;
 
@@ -331,6 +333,46 @@ namespace Canal
         {
             if (e.KeyCode == Keys.Enter)
                 _parent.OpenFile(((FileReference)filesTreeView.SelectedNode.Tag).FullPath);
+        }
+
+        private void settings_sourceCodeFiles_Click(object sender, EventArgs e)
+        {
+            Settings.Default.FileTypeCob = showFileTypes_cob.Checked;
+            Settings.Default.FileTypeTxt = showFileTypes_txt.Checked;
+            Settings.Default.FileTypeSrc = showFileTypes_src.Checked;
+            Settings.Default.FileTypeCustom = showFileTypes_custom.Text;
+            Settings.Default.Save();
+
+            if (UsedFileTypesChanged != null) UsedFileTypesChanged(this, new UsedFileTypesChangedEventArgs());
+
+            RefreshFileView();
+        }
+
+        /// <summary>
+        /// Updates the DropDownButton in the Files-tab with the settings stored in Settings.Default.FileType* and refreshes the Files-tab
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void RefreshUsedFileTypes(object sender, EventArgs e)
+        {
+            showFileTypes_cob.Checked = Settings.Default.FileTypeCob;
+            showFileTypes_txt.Checked = Settings.Default.FileTypeTxt;
+            showFileTypes_src.Checked = Settings.Default.FileTypeSrc;
+            showFileTypes_custom.Text = Settings.Default.FileTypeCustom;
+
+            RefreshFileView();
+        }
+
+        /// <summary>
+        /// Refreshes the Files-tab
+        /// </summary>
+        public void RefreshFileView()
+        {
+            var searchText = filesTabSearchBox.Text == Resources.SearchPlaceholder ? "" : filesTabSearchBox.Text;
+            var nodes = FileUtil.GetDirectoryStructure(searchText);
+            filesTreeView.Nodes.Clear();
+            filesTreeView.Nodes.AddRange(nodes);
+            filesTreeView.ExpandAll();
         }
     }
 }

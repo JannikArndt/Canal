@@ -31,8 +31,8 @@
     <PublisherName>Jannik Arndt</PublisherName>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>3</ApplicationRevision>
-    <ApplicationVersion>1.5.3.%2a</ApplicationVersion>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>1.6.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -118,6 +118,7 @@
     <Compile Include="CobolTree\Section.cs" />
     <Compile Include="CobolTree\Variable.cs" />
     <Compile Include="CobolTree\WorkingStorageSection.cs" />
+    <Compile Include="Events\UsedFileTypesChangedEventArgs.cs" />
     <Compile Include="Utils\ErrorHandling.cs" />
     <Compile Include="TextViewer.cs">
       <SubType>Form</SubType>

@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using Canal.Properties;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace Canal.Utils
@@ -103,10 +104,7 @@ namespace Canal.Utils
                 if (folderPath == null)
                     return;
 
-                foreach (var fileSystemEntry in Directory.EnumerateFiles(folderPath, "*.*", SearchOption.AllDirectories)
-                    .Where(
-                        s => s.EndsWith(".cob", StringComparison.OrdinalIgnoreCase) || s.EndsWith(".cbl", StringComparison.OrdinalIgnoreCase)
-                            || s.EndsWith(".txt", StringComparison.OrdinalIgnoreCase) || s.EndsWith(".src", StringComparison.OrdinalIgnoreCase)))
+                foreach (var fileSystemEntry in Directory.EnumerateFiles(folderPath, "*.*", SearchOption.AllDirectories))
                 {
                     if (!Files.ContainsKey(fileSystemEntry))
                     {
@@ -130,19 +128,21 @@ namespace Canal.Utils
         {
             var result = new List<TreeNode>();
 
+            var allowedEndings = new List<string>();
+            if (Settings.Default.FileTypeCob) allowedEndings.AddRange(new List<string> { ".cob", ".cbl" });
+            if (Settings.Default.FileTypeTxt) allowedEndings.Add(".txt");
+            if (Settings.Default.FileTypeCob) allowedEndings.Add(".src");
+            if (!string.IsNullOrWhiteSpace(Settings.Default.FileTypeCustom)) allowedEndings.Add(Settings.Default.FileTypeCustom);
+
             foreach (var dir in DirectoriesAndFiles.Keys.OrderBy(key => key))
             {
-                if (string.IsNullOrWhiteSpace(query))
-                    result.Add(new TreeNode(dir,
-                        DirectoriesAndFiles[dir].Select(file => new TreeNode(file.ProgramName) { Tag = file }).ToArray()));
-                else
-                {
-                    var foundFiles = DirectoriesAndFiles[dir]
-                        .Where(file => CultureInfo.CurrentCulture.CompareInfo.IndexOf(file.ProgramName, query, CompareOptions.IgnoreCase) >= 0)
-                        .Select(file => new TreeNode(file.ProgramName) { Tag = file }).ToArray();
-                    if (foundFiles.Any())
-                        result.Add(new TreeNode(dir, foundFiles));
-                }
+                var foundFiles = DirectoriesAndFiles[dir]
+                    .Where(file => CultureInfo.CurrentCulture.CompareInfo.IndexOf(file.ProgramName, query, CompareOptions.IgnoreCase) >= 0)
+                    .Where(file => allowedEndings.Contains(file.FullPath.Substring(file.FullPath.Length - 4, 4).ToLowerInvariant()))
+                    .Select(file => new TreeNode(file.ProgramName) { Tag = file }).ToArray();
+
+                if (foundFiles.Any())
+                    result.Add(new TreeNode(dir, foundFiles));
             }
 
             return result.ToArray();

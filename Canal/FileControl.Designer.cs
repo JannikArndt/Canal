@@ -70,6 +70,11 @@
             this.directoryTabPage = new System.Windows.Forms.TabPage();
             this.filesTabToolStrip = new System.Windows.Forms.ToolStrip();
             this.filesTabSearchBox = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.showFileTypes_cob = new System.Windows.Forms.ToolStripMenuItem();
+            this.showFileTypes_txt = new System.Windows.Forms.ToolStripMenuItem();
+            this.showFileTypes_src = new System.Windows.Forms.ToolStripMenuItem();
+            this.showFileTypes_custom = new System.Windows.Forms.ToolStripTextBox();
             this.filesTreeView = new System.Windows.Forms.TreeView();
             this.structureTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -99,8 +104,8 @@
             // 
             // treeView
             // 
-            this.treeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.treeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.treeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.treeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -237,8 +242,8 @@
             // 
             // performsTreeView
             // 
-            this.performsTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.performsTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.performsTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.performsTreeView.ItemHeight = 22;
@@ -305,8 +310,8 @@
             // 
             // variablesTreeView
             // 
-            this.variablesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.variablesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.variablesTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.variablesTreeView.ItemHeight = 18;
@@ -373,8 +378,8 @@
             // 
             // proceduresTreeView
             // 
-            this.proceduresTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.proceduresTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.proceduresTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.proceduresTreeView.ItemHeight = 22;
@@ -386,8 +391,8 @@
             // 
             // codeBox
             // 
-            this.codeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.codeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.codeBox.AutoCompleteBracketsList = new char[] {
         '(',
@@ -530,8 +535,8 @@
             // 
             this.infoDataGridView.AllowUserToAddRows = false;
             this.infoDataGridView.AllowUserToDeleteRows = false;
-            this.infoDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.infoDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.infoDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.infoDataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
@@ -573,7 +578,8 @@
             // 
             this.filesTabToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.filesTabToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.filesTabSearchBox});
+            this.filesTabSearchBox,
+            this.toolStripDropDownButton1});
             this.filesTabToolStrip.Location = new System.Drawing.Point(3, 3);
             this.filesTabToolStrip.Name = "filesTabToolStrip";
             this.filesTabToolStrip.Size = new System.Drawing.Size(200, 25);
@@ -589,10 +595,57 @@
             this.filesTabSearchBox.Leave += new System.EventHandler(this.searchBox_Leave);
             this.filesTabSearchBox.TextChanged += new System.EventHandler(this.filesTabSearchBox_TextChanged);
             // 
+            // toolStripDropDownButton1
+            // 
+            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showFileTypes_cob,
+            this.showFileTypes_txt,
+            this.showFileTypes_src,
+            this.showFileTypes_custom});
+            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
+            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(29, 22);
+            this.toolStripDropDownButton1.Text = "File Types";
+            this.toolStripDropDownButton1.Click += new System.EventHandler(this.RefreshUsedFileTypes);
+            // 
+            // showFileTypes_cob
+            // 
+            this.showFileTypes_cob.Checked = true;
+            this.showFileTypes_cob.CheckOnClick = true;
+            this.showFileTypes_cob.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showFileTypes_cob.Name = "showFileTypes_cob";
+            this.showFileTypes_cob.Size = new System.Drawing.Size(160, 22);
+            this.showFileTypes_cob.Text = "*.cob/*.cbl";
+            this.showFileTypes_cob.Click += new System.EventHandler(this.settings_sourceCodeFiles_Click);
+            // 
+            // showFileTypes_txt
+            // 
+            this.showFileTypes_txt.CheckOnClick = true;
+            this.showFileTypes_txt.Name = "showFileTypes_txt";
+            this.showFileTypes_txt.Size = new System.Drawing.Size(160, 22);
+            this.showFileTypes_txt.Text = "*.txt";
+            this.showFileTypes_txt.Click += new System.EventHandler(this.settings_sourceCodeFiles_Click);
+            // 
+            // showFileTypes_src
+            // 
+            this.showFileTypes_src.CheckOnClick = true;
+            this.showFileTypes_src.Name = "showFileTypes_src";
+            this.showFileTypes_src.Size = new System.Drawing.Size(160, 22);
+            this.showFileTypes_src.Text = "*.src";
+            this.showFileTypes_src.Click += new System.EventHandler(this.settings_sourceCodeFiles_Click);
+            // 
+            // showFileTypes_custom
+            // 
+            this.showFileTypes_custom.Name = "showFileTypes_custom";
+            this.showFileTypes_custom.Size = new System.Drawing.Size(100, 23);
+            this.showFileTypes_custom.TextChanged += new System.EventHandler(this.settings_sourceCodeFiles_Click);
+            // 
             // filesTreeView
             // 
-            this.filesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.filesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.filesTreeView.Location = new System.Drawing.Point(0, 31);
             this.filesTreeView.Name = "filesTreeView";
@@ -690,5 +743,10 @@
         private System.Windows.Forms.ToolStrip filesTabToolStrip;
         private System.Windows.Forms.ToolStripTextBox filesTabSearchBox;
         private System.Windows.Forms.TreeView filesTreeView;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripMenuItem showFileTypes_cob;
+        private System.Windows.Forms.ToolStripMenuItem showFileTypes_txt;
+        private System.Windows.Forms.ToolStripMenuItem showFileTypes_src;
+        private System.Windows.Forms.ToolStripTextBox showFileTypes_custom;
     }
 }
