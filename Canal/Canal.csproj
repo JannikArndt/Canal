@@ -108,7 +108,6 @@
     <Compile Include="CobolTree\EnvironmentDivision.cs" />
     <Compile Include="CobolTree\References\GoToReference.cs" />
     <Compile Include="CobolTree\References\ProcedureReference.cs" />
-    <Compile Include="CobolTree\References\ProgramReference.cs" />
     <Compile Include="CobolTree\IdentificationDivision.cs" />
     <Compile Include="CobolTree\LinkageSection.cs" />
     <Compile Include="CobolTree\References\PerformReference.cs" />
@@ -124,6 +123,12 @@
     </Compile>
     <Compile Include="UserControls\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\FileInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\FileInfo.Designer.cs">
+      <DependentUpon>FileInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\ErrorHandling.cs" />
     <Compile Include="TextViewer.cs">
@@ -192,6 +197,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\About.resx">
       <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\FileInfo.resx">
+      <DependentUpon>FileInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\WordInfo.resx">
       <DependentUpon>WordInfo.cs</DependentUpon>

@@ -24,9 +24,7 @@ namespace Canal.CobolTree
 
         public List<PerformReference> IsReferencedBy { get; set; }
 
-        public List<ProgramReference> CallReferences { get; set; }
-
-        public List<ProgramReference> CopyReferences { get; set; }
+        public List<FileReference> CallReferences { get; set; }
 
         #endregion
 
@@ -51,8 +49,7 @@ namespace Canal.CobolTree
             PerformReferences = new List<PerformReference>();
             GoToReferences = new List<GoToReference>();
             IsReferencedBy = new List<PerformReference>();
-            CallReferences = new List<ProgramReference>();
-            CopyReferences = new List<ProgramReference>();
+            CallReferences = new List<FileReference>();
             Variables = new Dictionary<Variable, UsedAs>();
         }
 
@@ -100,6 +97,30 @@ namespace Canal.CobolTree
         public override string ToString()
         {
             return Name;
+        }
+
+        public void AnalyzeCalls()
+        {
+            var referenceMatches = Regex.Matches(OriginalSource, Constants.Call, RegexOptions.Compiled | RegexOptions.Multiline);
+
+            foreach (Match match in referenceMatches)
+            {
+                string programName = match.Groups["literal"].ToString().Trim();
+
+                var fileRefs = FileUtil.GetFileReferences(programName);
+
+                if (fileRefs.Count > 1)
+                    Console.WriteLine(@"error: ambiguous name");
+
+                var fileRef = fileRefs.FirstOrDefault();
+
+                if (fileRef == null) continue;
+
+                fileRef.ReferencedIn.Add(this);
+
+                if (!CallReferences.Contains(fileRef))
+                    CallReferences.Add(fileRef);
+            }
         }
     }
 }

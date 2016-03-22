@@ -5,7 +5,8 @@ namespace Canal.Utils
 {
     public static class Constants
     {
-        public static readonly string Literal = @"(?<literal>[\w\d-()]+)";
+        public static readonly string Literal = @"([\w\d-()]+)";
+        public static readonly string NamedLiteral = @"(?<literal>[\w\d-()]+)";
 
         public static readonly string Or = @"|";
 
@@ -20,15 +21,17 @@ namespace Canal.Utils
         public static readonly string StatementsBeforeInputLiteralSpaceOptional = @"((?<beforeInput>=|<|>) *)";
 
         public static readonly string LiteralWithInputOutput = "(" + StatementsBeforeOutputLiteral + Or + StatementsBeforeInputLiteralSpaceMandatory
-            + Or + StatementsBeforeInputLiteralSpaceOptional + ")" + Literal;
+            + Or + StatementsBeforeInputLiteralSpaceOptional + ")" + NamedLiteral;
 
         public static readonly string StatementsAfterInputLiteralSpaceMandatory = @"( +(?<afterInputWithSpace>TO|AND|OR|GREATER|LESS|BY|GIVING|REMAINDER|NOT))";
 
         public static readonly string StatementsAfterInputLiteralSpaceOptional = @"( *(?<afterInput>\.|=|<|>))";
 
-        public static readonly string Perform = @"PERFORM (" + Literal + @") ?(THRU|UNTIL|WITH)? ?" + Literal + @"? ?(UNTIL|BEFORE|AFTER)? ?(" + Literal + @"|[<>=]|)";
+        public static readonly string Perform = @"PERFORM (" + NamedLiteral + @") ?(THRU|UNTIL|WITH)? ?" + Literal + @"? ?(UNTIL|BEFORE|AFTER)? ?(" + Literal + @"|[<>=]|)";
 
-        public static readonly string GoTo = @" GO TO +" + Literal;
+        public static readonly string GoTo = @" GO TO +" + NamedLiteral;
+
+        public static readonly string Call = @"CALL +""" + NamedLiteral + @""" +(USING (" + Literal + ",? ?)*)?"; // TODO multiline calls
 
         public static readonly HashSet<string> CobolKeywords = new HashSet<string>
         {

@@ -86,6 +86,20 @@ namespace Canal.Utils
             return Get(candidate);
         }
 
+        public static List<FileReference> GetFileReferences(string programName)
+        {
+            if (string.IsNullOrWhiteSpace(programName))
+                return null;
+
+            Console.Write(@"Searching for Program " + programName);
+
+            var candidates = Files.Where(file => file.Key.Contains(programName)).Select(file => file.Value).ToList();
+
+            Console.WriteLine(candidates.Any() ? " => succeeded" : " => failed");
+
+            return candidates;
+        }
+
         /// <summary>
         /// Creates a cache of all subfolders and files in the current directory.
         /// </summary>

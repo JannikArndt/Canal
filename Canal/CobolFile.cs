@@ -17,6 +17,8 @@ namespace Canal
 
         public List<Variable> Variables { get { return CobolTree.Variables; } }
 
+        public List<FileReference> CallReferences { get { return CobolTree.CallReferences; } }
+
         public CobolTree.CobolTree CobolTree { get; set; }
 
         public CobolFile(string text, string name)

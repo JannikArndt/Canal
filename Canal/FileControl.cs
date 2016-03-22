@@ -21,6 +21,8 @@ namespace Canal
 
         private readonly MainWindow _parent;
 
+        private FileInfo fileInfoControl;
+
         public FileControl(CobolFile file, MainWindow parent)
         {
             InitializeComponent();
@@ -44,7 +46,8 @@ namespace Canal
 
                 ShowVariablesTreeView();
 
-                infoDataGridView.DataSource = CobolFile.Infos.ToArray();
+                fileInfoControl = new FileInfo(CobolFile, _parent) { Dock = DockStyle.Fill };
+                infoTabPage.Controls.Add(fileInfoControl);
 
                 filesTreeView.Nodes.AddRange(FileUtil.GetDirectoryStructure());
                 filesTreeView.ExpandAll();
@@ -59,8 +62,8 @@ namespace Canal
 
         private void CodeBoxOnWordSelected(object sender, WordSelectedEventArgs eventArgs)
         {
-            infoTabPage.Controls.Clear();
-            infoTabPage.Controls.Add(new WordInfo(eventArgs.Word, this) { Dock = DockStyle.Fill });
+            fileInfoControl.VariableInfoPanel.Controls.Clear();
+            fileInfoControl.VariableInfoPanel.Controls.Add(new WordInfo(eventArgs.Word, this) { Dock = DockStyle.Fill });
         }
 
         public CodeBox CodeBox

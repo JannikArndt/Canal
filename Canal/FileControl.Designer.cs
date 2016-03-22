@@ -66,7 +66,6 @@
             this.splitContainerRight = new System.Windows.Forms.SplitContainer();
             this.infoTabControl = new System.Windows.Forms.TabControl();
             this.infoTabPage = new System.Windows.Forms.TabPage();
-            this.infoDataGridView = new System.Windows.Forms.DataGridView();
             this.directoryTabPage = new System.Windows.Forms.TabPage();
             this.filesTabToolStrip = new System.Windows.Forms.ToolStrip();
             this.filesTabSearchBox = new System.Windows.Forms.ToolStripTextBox();
@@ -96,16 +95,14 @@
             this.splitContainerRight.Panel2.SuspendLayout();
             this.splitContainerRight.SuspendLayout();
             this.infoTabControl.SuspendLayout();
-            this.infoTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.infoDataGridView)).BeginInit();
             this.directoryTabPage.SuspendLayout();
             this.filesTabToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeView
             // 
-            this.treeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.treeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.treeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.treeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -242,8 +239,8 @@
             // 
             // performsTreeView
             // 
-            this.performsTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.performsTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.performsTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.performsTreeView.ItemHeight = 22;
@@ -310,8 +307,8 @@
             // 
             // variablesTreeView
             // 
-            this.variablesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.variablesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.variablesTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.variablesTreeView.ItemHeight = 18;
@@ -378,8 +375,8 @@
             // 
             // proceduresTreeView
             // 
-            this.proceduresTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.proceduresTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.proceduresTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.proceduresTreeView.ItemHeight = 22;
@@ -391,8 +388,8 @@
             // 
             // codeBox
             // 
-            this.codeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.codeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.codeBox.AutoCompleteBracketsList = new char[] {
         '(',
@@ -522,7 +519,6 @@
             // 
             // infoTabPage
             // 
-            this.infoTabPage.Controls.Add(this.infoDataGridView);
             this.infoTabPage.Location = new System.Drawing.Point(4, 22);
             this.infoTabPage.Name = "infoTabPage";
             this.infoTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -530,37 +526,6 @@
             this.infoTabPage.TabIndex = 0;
             this.infoTabPage.Text = "Info";
             this.infoTabPage.UseVisualStyleBackColor = true;
-            // 
-            // infoDataGridView
-            // 
-            this.infoDataGridView.AllowUserToAddRows = false;
-            this.infoDataGridView.AllowUserToDeleteRows = false;
-            this.infoDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.infoDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.infoDataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
-            this.infoDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.infoDataGridView.ColumnHeadersVisible = false;
-            this.infoDataGridView.GridColor = System.Drawing.SystemColors.ControlLightLight;
-            this.infoDataGridView.Location = new System.Drawing.Point(3, 3);
-            this.infoDataGridView.Name = "infoDataGridView";
-            this.infoDataGridView.ReadOnly = true;
-            this.infoDataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            this.infoDataGridView.RowHeadersVisible = false;
-            this.infoDataGridView.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
-            this.infoDataGridView.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.infoDataGridView.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
-            this.infoDataGridView.RowTemplate.DefaultCellStyle.NullValue = "-";
-            this.infoDataGridView.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.White;
-            this.infoDataGridView.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
-            this.infoDataGridView.RowTemplate.ReadOnly = true;
-            this.infoDataGridView.ShowCellErrors = false;
-            this.infoDataGridView.ShowCellToolTips = false;
-            this.infoDataGridView.ShowEditingIcon = false;
-            this.infoDataGridView.ShowRowErrors = false;
-            this.infoDataGridView.Size = new System.Drawing.Size(200, 551);
-            this.infoDataGridView.TabIndex = 0;
             // 
             // directoryTabPage
             // 
@@ -644,8 +609,8 @@
             // 
             // filesTreeView
             // 
-            this.filesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.filesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.filesTreeView.Location = new System.Drawing.Point(0, 31);
             this.filesTreeView.Name = "filesTreeView";
@@ -692,8 +657,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerRight)).EndInit();
             this.splitContainerRight.ResumeLayout(false);
             this.infoTabControl.ResumeLayout(false);
-            this.infoTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.infoDataGridView)).EndInit();
             this.directoryTabPage.ResumeLayout(false);
             this.directoryTabPage.PerformLayout();
             this.filesTabToolStrip.ResumeLayout(false);
@@ -739,7 +702,6 @@
         private System.Windows.Forms.ToolStripButton searchWithRegEx;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton ResolveCopysButton;
-        private System.Windows.Forms.DataGridView infoDataGridView;
         private System.Windows.Forms.ToolStrip filesTabToolStrip;
         private System.Windows.Forms.ToolStripTextBox filesTabSearchBox;
         private System.Windows.Forms.TreeView filesTreeView;

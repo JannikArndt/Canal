@@ -21,6 +21,14 @@
 
         public List<Variable> Variables { get { return DataDivision.Variables; } }
 
+        public List<FileReference> CallReferences
+        {
+            get
+            {
+                return ProcedureDivision.Sections.SelectMany(sec => sec.Procedures).SelectMany(proc => proc.CallReferences).ToList();
+            }
+        }
+
         public string Name { get; private set; }
 
         public int LinesOfCode { get { return Divisions.Sum(div => div.LinesOfCode); } }
@@ -77,6 +85,7 @@
                 procedure.AnalyzeVariables(DataDivision.Variables);
                 procedure.AnalyzePerformReferences();
                 procedure.AnalyzeGoTos();
+                procedure.AnalyzeCalls();
             }
         }
     }
