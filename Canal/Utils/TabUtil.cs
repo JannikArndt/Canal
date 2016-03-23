@@ -124,6 +124,9 @@ namespace Canal.Utils
 
             if (MessageBox.Show(Resources.ReallyCloseThisTab, Resources.CloseTab, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
+                var fileControl = (FileControl)_tabControl.SelectedTab.Controls.Find("FileControl", false)[0];
+                // TODO dispose everything
+                fileControl.Dispose();
                 _tabControl.TabPages.RemoveAt(tabIndex);
                 return true;
             }
