@@ -27,6 +27,8 @@ namespace Canal.Utils
             if (string.IsNullOrWhiteSpace(filename))
                 return null;
 
+            try
+            {
             AnalyzeFolder(filename);
 
             if (!Files.Any()) return null;
@@ -37,10 +39,19 @@ namespace Canal.Utils
             {
                 var lines = File.ReadAllText(filename);
 
-                reference.CobolFile = new CobolFile(lines, Path.GetFileNameWithoutExtension(filename)) { FileReference = reference };
+                    reference.CobolFile = new CobolFile(lines, Path.GetFileNameWithoutExtension(filename))
+                    {
+                        FileReference = reference
+                    };
             }
 
             return reference.CobolFile;
+        }
+            catch (Exception exception)
+            {
+                ErrorHandling.Exception(exception);
+                throw new FileNotFoundException("File could not be loaded.", filename, exception);
+            }
         }
 
         /// <summary>
@@ -77,6 +88,20 @@ namespace Canal.Utils
             return Get(candidate);
         }
 
+        public static List<FileReference> GetFileReferences(string programName)
+        {
+            if (string.IsNullOrWhiteSpace(programName))
+                return null;
+
+            Console.Write(@"Searching for Program " + programName);
+
+            var candidates = Files.Where(file => file.Key.Contains(programName)).Select(file => file.Value).ToList();
+
+            Console.WriteLine(candidates.Any() ? " => succeeded" : " => failed");
+
+            return candidates;
+        }
+
         /// <summary>
         /// Creates a cache of all subfolders and files in the current directory.
         /// </summary>
@@ -86,6 +111,8 @@ namespace Canal.Utils
             if (RecentFolders.Contains(fileOrFolderPath))
                 return;
 
+            try
+            {
             RecentFolders.Add(fileOrFolderPath);
 
             var folderPath = Path.GetDirectoryName(Path.GetDirectoryName(fileOrFolderPath));
@@ -93,10 +120,7 @@ namespace Canal.Utils
             if (folderPath == null)
                 return;
 
-            foreach (var fileSystemEntry in Directory.EnumerateFiles(folderPath, "*.*", SearchOption.AllDirectories)
-                .Where(s => Settings.Default.FileTypeCob && (s.EndsWith(".cob", StringComparison.OrdinalIgnoreCase) || s.EndsWith(".cbl", StringComparison.OrdinalIgnoreCase))
-                            || Settings.Default.FileTypeTxt && s.EndsWith(".txt", StringComparison.OrdinalIgnoreCase)
-                            || Settings.Default.FileTypeSrc && s.EndsWith(".src", StringComparison.OrdinalIgnoreCase)))
+                foreach (var fileSystemEntry in Directory.EnumerateFiles(folderPath, "*.*", SearchOption.AllDirectories))
             {
                 if (!Files.ContainsKey(fileSystemEntry))
                 {
@@ -107,6 +131,12 @@ namespace Canal.Utils
 
                     DirectoriesAndFiles[newRef.Directory].Add(newRef);
                 }
+                }
+            }
+            catch (Exception exception)
+            {
+                ErrorHandling.Exception(exception);
+                throw new FileNotFoundException("Error analyzing file/folder.", fileOrFolderPath, exception);
             }
         }
 
@@ -114,20 +144,22 @@ namespace Canal.Utils
         {
             var result = new List<TreeNode>();
 
+            var allowedEndings = new List<string>();
+            if (Settings.Default.FileTypeCob) allowedEndings.AddRange(new List<string> { ".cob", ".cbl" });
+            if (Settings.Default.FileTypeTxt) allowedEndings.Add(".txt");
+            if (Settings.Default.FileTypeCob) allowedEndings.Add(".src");
+            if (!string.IsNullOrWhiteSpace(Settings.Default.FileTypeCustom)) allowedEndings.Add(Settings.Default.FileTypeCustom);
+
             foreach (var dir in DirectoriesAndFiles.Keys.OrderBy(key => key))
             {
-                if (string.IsNullOrWhiteSpace(query))
-                    result.Add(new TreeNode(dir,
-                        DirectoriesAndFiles[dir].Select(file => new TreeNode(file.ProgramName) { Tag = file }).ToArray()));
-                else
-                {
                     var foundFiles = DirectoriesAndFiles[dir]
                         .Where(file => CultureInfo.CurrentCulture.CompareInfo.IndexOf(file.ProgramName, query, CompareOptions.IgnoreCase) >= 0)
+                    .Where(file => allowedEndings.Contains(file.FullPath.Substring(file.FullPath.Length - 4, 4).ToLowerInvariant()))
                         .Select(file => new TreeNode(file.ProgramName) { Tag = file }).ToArray();
+
                     if (foundFiles.Any())
                         result.Add(new TreeNode(dir, foundFiles));
                 }
-            }
 
             return result.ToArray();
         }

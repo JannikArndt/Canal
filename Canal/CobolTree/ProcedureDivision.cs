@@ -33,7 +33,7 @@
             {
                 foreach (var reference in procedure.PerformReferences)
                 {
-                    var referencedProcedure = allProceduresAndSections.FirstOrDefault(proc => proc.Name == reference.ReferenceName);
+                    var referencedProcedure = allProceduresAndSections.FirstOrDefault(proc => proc.Name == reference.ReferencedProcedure);
 
                     if (referencedProcedure != null)
                     {
@@ -42,7 +42,7 @@
                     }
                     else
                     {
-                        Console.WriteLine(@"Referenz nicht gefunden: " + reference.ReferenceName);
+                        Console.WriteLine(@"Referenz nicht gefunden: " + reference.ReferencedProcedure);
                     }
                 }
             }

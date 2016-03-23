@@ -1,4 +1,6 @@
-﻿using FastColoredTextBoxNS;
+﻿using Canal.Utils;
+using FastColoredTextBoxNS;
+using FastColoredTextBoxNS.Enums;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -18,6 +20,8 @@ namespace Canal
         public void SetFile(CobolFile file)
         {
             CobolFile = file;
+
+            Font = SourceCodePro.Regular;
 
             Text = file.Text;
             Language = Language.Cobol;
@@ -51,6 +55,7 @@ namespace Canal
             }
             catch (Exception ex)
             {
+                ErrorHandling.Exception(ex);
                 MessageBox.Show(ex.Message);
             }
         }

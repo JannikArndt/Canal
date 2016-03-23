@@ -17,7 +17,7 @@ namespace FastColoredTextBoxNS
         {
             if ((provider != null) && (((IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService))) != null))
             {
-                var form = new HotkeysEditorForm(Hotkeys.Parse(value as string));
+                var form = new HotkeysEditorForm(HotkeysMapping.Parse(value as string));
 
                 if (form.ShowDialog() == DialogResult.OK)
                     value = form.GetHotkeys().ToString();

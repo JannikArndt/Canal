@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using FastColoredTextBoxNS.Enums;
 
 namespace FastColoredTextBoxNS
 {
@@ -59,19 +58,19 @@ namespace FastColoredTextBoxNS
         private void dgv_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             var cell = (dgv[0, e.RowIndex] as DataGridViewComboBoxCell);
-            if(cell.Items.Count == 0)
-            foreach(var item in new string[]{"", "Ctrl", "Ctrl + Shift", "Ctrl + Alt", "Shift", "Shift + Alt", "Alt", "Ctrl + Shift + Alt"})
-                cell.Items.Add(item);
+            if (cell.Items.Count == 0)
+                foreach (var item in new string[] { "", "Ctrl", "Ctrl + Shift", "Ctrl + Alt", "Shift", "Shift + Alt", "Alt", "Ctrl + Shift + Alt" })
+                    cell.Items.Add(item);
 
             cell = (dgv[1, e.RowIndex] as DataGridViewComboBoxCell);
             if (cell.Items.Count == 0)
-            foreach (var item in Enum.GetValues(typeof(Keys)))
-                cell.Items.Add(item);
+                foreach (var item in Enum.GetValues(typeof(Keys)))
+                    cell.Items.Add(item);
 
             cell = (dgv[2, e.RowIndex] as DataGridViewComboBoxCell);
             if (cell.Items.Count == 0)
-            foreach (var item in Enum.GetValues(typeof(FCTBAction)))
-                cell.Items.Add(item);
+                foreach (var item in Enum.GetValues(typeof(FCTBAction)))
+                    cell.Items.Add(item);
         }
 
         private void btResore_Click(object sender, EventArgs e)
@@ -89,7 +88,7 @@ namespace FastColoredTextBoxNS
 
         private void HotkeysEditorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(DialogResult == System.Windows.Forms.DialogResult.OK)
+            if (DialogResult == System.Windows.Forms.DialogResult.OK)
             {
                 var actions = GetUnAssignedActions();
                 if (!string.IsNullOrEmpty(actions))
@@ -109,71 +108,14 @@ namespace FastColoredTextBoxNS
                 dic[w.Action] = w.Action;
 
             foreach (var item in Enum.GetValues(typeof(FCTBAction)))
-            if ((FCTBAction)item != FCTBAction.None)
-            if(!((FCTBAction)item).ToString().StartsWith("CustomAction"))
-            {
-                if(!dic.ContainsKey((FCTBAction)item))
-                    sb.Append(item+", ");
-            }
+                if ((FCTBAction)item != FCTBAction.None)
+                    if (!((FCTBAction)item).ToString().StartsWith("CustomAction"))
+                    {
+                        if (!dic.ContainsKey((FCTBAction)item))
+                            sb.Append(item + ", ");
+                    }
 
             return sb.ToString().TrimEnd(' ', ',');
         }
-    }
-
-    internal class HotkeyWrapper
-    {
-        public HotkeyWrapper(Keys keyData, FCTBAction action)
-        {
-            KeyEventArgs a = new KeyEventArgs(keyData);
-            Ctrl = a.Control;
-            Shift = a.Shift;
-            Alt = a.Alt;
-
-            Key = a.KeyCode;
-            Action = action;
-        }
-
-        public Keys ToKeyData()
-        {
-            var res = Key;
-            if (Ctrl) res |= Keys.Control;
-            if (Alt) res |= Keys.Alt;
-            if (Shift) res |= Keys.Shift;
-
-            return res;
-        }
-
-        bool Ctrl;
-        bool Shift;
-        bool Alt;
-        
-        public string Modifiers
-        {
-            get
-            {
-                var res = "";
-                if (Ctrl) res += "Ctrl + ";
-                if (Shift) res += "Shift + ";
-                if (Alt) res += "Alt + ";
-
-                return res.Trim(' ', '+');
-            }
-            set
-            {
-                if (value == null)
-                {
-                    Ctrl = Alt = Shift = false;
-                }
-                else
-                {
-                    Ctrl = value.Contains("Ctrl");
-                    Shift = value.Contains("Shift");
-                    Alt = value.Contains("Alt");
-                }
-            }
-        }
-
-        public Keys Key { get; set; }
-        public FCTBAction Action { get; set; }
     }
 }

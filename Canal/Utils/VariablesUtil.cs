@@ -2,8 +2,8 @@
 
 namespace Canal.Utils
 {
-    using System.Text.RegularExpressions;
     using CobolTree;
+    using System.Text.RegularExpressions;
 
     public static class VariablesUtil
     {
@@ -63,7 +63,7 @@ namespace Canal.Utils
         public static List<Literal> GetIdentifierLiterals(string text)
         {
             var result = new List<Literal>();
-            var regex = new Regex(Constants.LiteralWithInputOutput, Constants.compiledMultilineCaseInsensitive); // @" (?<token>[\w\d-]+)[\., ]"
+            var regex = new Regex(Constants.LiteralWithInputOutput, Constants.CompiledMultilineCaseInsensitive); // @" (?<token>[\w\d-]+)[\., ]"
 
             foreach (Match match in regex.Matches(text))
             {
@@ -77,7 +77,7 @@ namespace Canal.Utils
                     usedAs = usedAs == UsedAs.Output ? UsedAs.Both : UsedAs.Input;
                 }
 
-                if (!Constants.cobolKeywords.Contains(literal))
+                if (!Constants.CobolKeywords.Contains(literal))
                     result.Add(new Literal(literal, usedAs));
             }
 

@@ -53,41 +53,98 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutocompleteItem.cs" />
+    <Compile Include="AutocompleteListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="AutocompleteMenu.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="BaseBookmarks.cs" />
+    <Compile Include="Bookmark.cs" />
+    <Compile Include="ClearSelectedCommand.cs" />
+    <Compile Include="CollapseFoldingMarker.cs" />
+    <Compile Include="Command.cs" />
+    <Compile Include="Enums\CompareResult.cs" />
+    <Compile Include="Events\AutoIndentEventArgs.cs" />
     <Compile Include="Bookmarks.cs" />
+    <Compile Include="Enums\BracketsHighlightStrategy.cs" />
     <Compile Include="Char.cs" />
+    <Compile Include="Events\CustomActionEventArgs.cs" />
     <Compile Include="DocumentMap.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="EncodingDetector.cs" />
+    <Compile Include="ExpandFoldingMarker.cs" />
     <Compile Include="ExportToHTML.cs" />
     <Compile Include="ExportToRTF.cs" />
+    <Compile Include="Enums\FCTBAction.cs" />
+    <Compile Include="FCTBTypeDescriptor.cs" />
+    <Compile Include="Enums\FindEndOfFoldingBlockStrategy.cs" />
+    <Compile Include="FoldedAreaMarker.cs" />
+    <Compile Include="FoldedBlockStyle.cs" />
+    <Compile Include="FoldingDesc.cs" />
+    <Compile Include="FooTextChangedDescriptor.cs" />
     <Compile Include="GoToForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GoToForm.Designer.cs">
       <DependentUpon>GoToForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Enums\HighlightingRangeType.cs" />
+    <Compile Include="Events\HintClickEventArgs.cs" />
+    <Compile Include="Hint.cs" />
     <Compile Include="Hints.cs" />
+    <Compile Include="HotkeysEditor.cs" />
     <Compile Include="HotkeysEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="HotkeysEditorForm.Designer.cs">
       <DependentUpon>HotkeysEditorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Language.cs" />
+    <Compile Include="HotkeyWrapper.cs" />
+    <Compile Include="Enums\IndentMarker.cs" />
+    <Compile Include="InsertTextCommand.cs" />
+    <Compile Include="Enums\Language.cs" />
+    <Compile Include="Events\LineInsertedEventArgs.cs" />
+    <Compile Include="Events\LineRemovedEventArgs.cs" />
+    <Compile Include="LineInfo.cs" />
+    <Compile Include="LineNeededEventArgs.cs" />
+    <Compile Include="LinePushedEventArgs.cs" />
     <Compile Include="LinesAccessor.cs" />
     <Compile Include="MacrosManager.cs" />
+    <Compile Include="Events\PaintLineEventArgs.cs" />
+    <Compile Include="MarkerStyle.cs" />
+    <Compile Include="MethodAutocompleteItem.cs" />
+    <Compile Include="MultiRangeCommand.cs" />
+    <Compile Include="Enums\Platform.cs" />
     <Compile Include="PlatformType.cs" />
-    <Compile Include="Hotkeys.cs" />
+    <Compile Include="HotkeysMapping.cs" />
+    <Compile Include="PrintDialogSettings.cs" />
+    <Compile Include="RangeInfo.cs" />
+    <Compile Include="RangeRect.cs" />
+    <Compile Include="ReadOnlyStyle.cs" />
+    <Compile Include="RemoveLinesCommand.cs" />
+    <Compile Include="ReplaceMultipleTextCommand.cs" />
+    <Compile Include="ReplaceTextCommand.cs" />
+    <Compile Include="RTFStyleDescriptor.cs" />
+    <Compile Include="RuleDesc.cs" />
     <Compile Include="Ruler.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Ruler.Designer.cs">
       <DependentUpon>Ruler.cs</DependentUpon>
     </Compile>
+    <Compile Include="Enums\ScrollDirection.cs" />
+    <Compile Include="SelectCommand.cs" />
+    <Compile Include="SelectedEventArgs.cs" />
+    <Compile Include="SelectingEventArgs.cs" />
+    <Compile Include="SelectionStyle.cs" />
+    <Compile Include="ServiceColors.cs" />
+    <Compile Include="ShortcutStyle.cs" />
+    <Compile Include="SnippetAutocompleteItem.cs" />
+    <Compile Include="Enums\StyleIndex.cs" />
+    <Compile Include="StyleVisualMarker.cs" />
+    <Compile Include="SuggestItem.cs" />
     <Compile Include="SyntaxDescriptor.cs" />
     <Compile Include="SyntaxHighlighter.cs" />
     <Compile Include="ReplaceForm.cs">
@@ -100,7 +157,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="CommandManager.cs" />
-    <Compile Include="Commands.cs" />
+    <Compile Include="InsertCharCommand.cs" />
     <Compile Include="FindForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,13 +171,25 @@
     <Compile Include="Range.cs" />
     <Compile Include="Style.cs" />
     <Compile Include="SyntaxHighlighterCobol.cs" />
+    <Compile Include="Enums\TextAreaBorderType.cs" />
+    <Compile Include="Events\TextChangedEventArgs.cs" />
+    <Compile Include="Events\TextChangingEventArgs.cs" />
     <Compile Include="TextSource.cs" />
-    <Compile Include="TypeDescriptor.cs" />
+    <Compile Include="Events\ToolTipNeededEventArgs.cs" />
+    <Compile Include="TextStyle.cs" />
+    <Compile Include="FCTBDescriptionProvider.cs" />
     <Compile Include="FileTextSource.cs" />
+    <Compile Include="UndoableCommand.cs" />
     <Compile Include="UnfocusablePanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Enums\VisibleState.cs" />
     <Compile Include="VisualMarker.cs" />
+    <Compile Include="Events\WordSelectedEventArgs.cs" />
+    <Compile Include="VisualMarkerEventArgs.cs" />
+    <Compile Include="WavyLineStyle.cs" />
+    <Compile Include="Enums\WordWrapMode.cs" />
+    <Compile Include="Events\WordWrapNeededEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FastColoredTextBox.resx">
@@ -146,6 +215,7 @@
   <ItemGroup>
     <Content Include="bridge.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -23,7 +23,7 @@ namespace FastColoredTextBoxNS
         public override ICustomTypeDescriptor GetTypeDescriptor(Type objectType, object instance)
         {
             ICustomTypeDescriptor defaultDescriptor = base.GetTypeDescriptor(objectType, instance);
-            return new TypeDescriptor(defaultDescriptor, instance);
+            return new FCTBTypeDescriptor(defaultDescriptor, instance);
         }
     }
 }

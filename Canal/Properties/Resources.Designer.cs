@@ -70,6 +70,42 @@ namespace Canal.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occured trying to display the file: .
+        /// </summary>
+        internal static string ErrorMessage_FileControl_Constructor {
+            get {
+                return ResourceManager.GetString("ErrorMessage_FileControl_Constructor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error loading file: .
+        /// </summary>
+        internal static string ErrorMessage_MainWindow_ErrorLoadingFile {
+            get {
+                return ResourceManager.GetString("ErrorMessage_MainWindow_ErrorLoadingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occured while trying to restore previously opened files: .
+        /// </summary>
+        internal static string ErrorMessage_MainWindow_OpenPrevious {
+            get {
+                return ResourceManager.GetString("ErrorMessage_MainWindow_OpenPrevious", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Would you like to close this tab?.
         /// </summary>
         internal static string ReallyCloseThisTab {
@@ -84,6 +120,146 @@ namespace Canal.Properties {
         internal static string SearchPlaceholder {
             get {
                 return ResourceManager.GetString("SearchPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SourceCodePro_Black {
+            get {
+                object obj = ResourceManager.GetObject("SourceCodePro_Black", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SourceCodePro_BlackIt {
+            get {
+                object obj = ResourceManager.GetObject("SourceCodePro_BlackIt", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SourceCodePro_Bold {
+            get {
+                object obj = ResourceManager.GetObject("SourceCodePro_Bold", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SourceCodePro_BoldIt {
+            get {
+                object obj = ResourceManager.GetObject("SourceCodePro_BoldIt", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SourceCodePro_ExtraLight {
+            get {
+                object obj = ResourceManager.GetObject("SourceCodePro_ExtraLight", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SourceCodePro_ExtraLightIt {
+            get {
+                object obj = ResourceManager.GetObject("SourceCodePro_ExtraLightIt", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SourceCodePro_It {
+            get {
+                object obj = ResourceManager.GetObject("SourceCodePro_It", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SourceCodePro_Light {
+            get {
+                object obj = ResourceManager.GetObject("SourceCodePro_Light", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SourceCodePro_LightIt {
+            get {
+                object obj = ResourceManager.GetObject("SourceCodePro_LightIt", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SourceCodePro_Medium {
+            get {
+                object obj = ResourceManager.GetObject("SourceCodePro_Medium", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SourceCodePro_MediumIt {
+            get {
+                object obj = ResourceManager.GetObject("SourceCodePro_MediumIt", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SourceCodePro_Regular {
+            get {
+                object obj = ResourceManager.GetObject("SourceCodePro_Regular", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SourceCodePro_Semibold {
+            get {
+                object obj = ResourceManager.GetObject("SourceCodePro_Semibold", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SourceCodePro_SemiboldIt {
+            get {
+                object obj = ResourceManager.GetObject("SourceCodePro_SemiboldIt", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }

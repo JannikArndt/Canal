@@ -31,8 +31,8 @@
     <PublisherName>Jannik Arndt</PublisherName>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.5.1.%2a</ApplicationVersion>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>1.6.3.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -83,6 +83,10 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mixpanel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7ea54850ac7adc26, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mixpanel.1.2.6\lib\net40-client\Mixpanel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -102,16 +106,31 @@
     <Compile Include="CobolTree\DataDivision.cs" />
     <Compile Include="CobolTree\Division.cs" />
     <Compile Include="CobolTree\EnvironmentDivision.cs" />
-    <Compile Include="CobolTree\ProgramReference.cs" />
+    <Compile Include="CobolTree\References\GoToReference.cs" />
+    <Compile Include="CobolTree\References\ProcedureReference.cs" />
     <Compile Include="CobolTree\IdentificationDivision.cs" />
     <Compile Include="CobolTree\LinkageSection.cs" />
-    <Compile Include="CobolTree\PerformReference.cs" />
+    <Compile Include="CobolTree\References\PerformReference.cs" />
     <Compile Include="CobolTree\PerformType.cs" />
     <Compile Include="CobolTree\ProcedureDivision.cs" />
     <Compile Include="CobolTree\Procedure.cs" />
     <Compile Include="CobolTree\Section.cs" />
     <Compile Include="CobolTree\Variable.cs" />
     <Compile Include="CobolTree\WorkingStorageSection.cs" />
+    <Compile Include="Events\UsedFileTypesChangedEventArgs.cs" />
+    <Compile Include="UserControls\About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControls\About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\FileInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\FileInfo.Designer.cs">
+      <DependentUpon>FileInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\ErrorHandling.cs" />
     <Compile Include="TextViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,6 +145,7 @@
     </Compile>
     <Compile Include="Utils\ExtensionMethods.cs" />
     <Compile Include="Utils\Literal.cs" />
+    <Compile Include="Utils\SourceCodePro.cs" />
     <Compile Include="Utils\TextUtil.cs" />
     <Compile Include="CodeBox.cs">
       <SubType>UserControl</SubType>
@@ -133,7 +153,7 @@
     <Compile Include="CodeBox.Designer.cs">
       <DependentUpon>CodeBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Resources\Constants.cs" />
+    <Compile Include="Utils\Constants.cs" />
     <Compile Include="FileControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -176,9 +196,16 @@
     <EmbeddedResource Include="TextViewer.resx">
       <DependentUpon>TextViewer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\FileInfo.resx">
+      <DependentUpon>FileInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\WordInfo.resx">
       <DependentUpon>WordInfo.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -189,6 +216,51 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="UserControls\AboutText.rtf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SourceCodePro-Black.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SourceCodePro-BlackIt.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SourceCodePro-Bold.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SourceCodePro-BoldIt.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SourceCodePro-ExtraLight.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SourceCodePro-ExtraLightIt.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SourceCodePro-It.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SourceCodePro-Light.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SourceCodePro-LightIt.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SourceCodePro-Medium.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SourceCodePro-MediumIt.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SourceCodePro-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SourceCodePro-Semibold.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SourceCodePro-SemiboldIt.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

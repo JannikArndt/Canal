@@ -66,10 +66,14 @@
             this.splitContainerRight = new System.Windows.Forms.SplitContainer();
             this.infoTabControl = new System.Windows.Forms.TabControl();
             this.infoTabPage = new System.Windows.Forms.TabPage();
-            this.infoDataGridView = new System.Windows.Forms.DataGridView();
             this.directoryTabPage = new System.Windows.Forms.TabPage();
             this.filesTabToolStrip = new System.Windows.Forms.ToolStrip();
             this.filesTabSearchBox = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.showFileTypes_cob = new System.Windows.Forms.ToolStripMenuItem();
+            this.showFileTypes_txt = new System.Windows.Forms.ToolStripMenuItem();
+            this.showFileTypes_src = new System.Windows.Forms.ToolStripMenuItem();
+            this.showFileTypes_custom = new System.Windows.Forms.ToolStripTextBox();
             this.filesTreeView = new System.Windows.Forms.TreeView();
             this.structureTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -91,8 +95,6 @@
             this.splitContainerRight.Panel2.SuspendLayout();
             this.splitContainerRight.SuspendLayout();
             this.infoTabControl.SuspendLayout();
-            this.infoTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.infoDataGridView)).BeginInit();
             this.directoryTabPage.SuspendLayout();
             this.filesTabToolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -517,7 +519,6 @@
             // 
             // infoTabPage
             // 
-            this.infoTabPage.Controls.Add(this.infoDataGridView);
             this.infoTabPage.Location = new System.Drawing.Point(4, 22);
             this.infoTabPage.Name = "infoTabPage";
             this.infoTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -525,37 +526,6 @@
             this.infoTabPage.TabIndex = 0;
             this.infoTabPage.Text = "Info";
             this.infoTabPage.UseVisualStyleBackColor = true;
-            // 
-            // infoDataGridView
-            // 
-            this.infoDataGridView.AllowUserToAddRows = false;
-            this.infoDataGridView.AllowUserToDeleteRows = false;
-            this.infoDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.infoDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.infoDataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
-            this.infoDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.infoDataGridView.ColumnHeadersVisible = false;
-            this.infoDataGridView.GridColor = System.Drawing.SystemColors.ControlLightLight;
-            this.infoDataGridView.Location = new System.Drawing.Point(3, 3);
-            this.infoDataGridView.Name = "infoDataGridView";
-            this.infoDataGridView.ReadOnly = true;
-            this.infoDataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            this.infoDataGridView.RowHeadersVisible = false;
-            this.infoDataGridView.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
-            this.infoDataGridView.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.infoDataGridView.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
-            this.infoDataGridView.RowTemplate.DefaultCellStyle.NullValue = "-";
-            this.infoDataGridView.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.White;
-            this.infoDataGridView.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
-            this.infoDataGridView.RowTemplate.ReadOnly = true;
-            this.infoDataGridView.ShowCellErrors = false;
-            this.infoDataGridView.ShowCellToolTips = false;
-            this.infoDataGridView.ShowEditingIcon = false;
-            this.infoDataGridView.ShowRowErrors = false;
-            this.infoDataGridView.Size = new System.Drawing.Size(200, 551);
-            this.infoDataGridView.TabIndex = 0;
             // 
             // directoryTabPage
             // 
@@ -573,7 +543,8 @@
             // 
             this.filesTabToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.filesTabToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.filesTabSearchBox});
+            this.filesTabSearchBox,
+            this.toolStripDropDownButton1});
             this.filesTabToolStrip.Location = new System.Drawing.Point(3, 3);
             this.filesTabToolStrip.Name = "filesTabToolStrip";
             this.filesTabToolStrip.Size = new System.Drawing.Size(200, 25);
@@ -588,6 +559,53 @@
             this.filesTabSearchBox.Enter += new System.EventHandler(this.searchBox_Enter);
             this.filesTabSearchBox.Leave += new System.EventHandler(this.searchBox_Leave);
             this.filesTabSearchBox.TextChanged += new System.EventHandler(this.filesTabSearchBox_TextChanged);
+            // 
+            // toolStripDropDownButton1
+            // 
+            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showFileTypes_cob,
+            this.showFileTypes_txt,
+            this.showFileTypes_src,
+            this.showFileTypes_custom});
+            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
+            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(29, 22);
+            this.toolStripDropDownButton1.Text = "File Types";
+            this.toolStripDropDownButton1.Click += new System.EventHandler(this.RefreshUsedFileTypes);
+            // 
+            // showFileTypes_cob
+            // 
+            this.showFileTypes_cob.Checked = true;
+            this.showFileTypes_cob.CheckOnClick = true;
+            this.showFileTypes_cob.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showFileTypes_cob.Name = "showFileTypes_cob";
+            this.showFileTypes_cob.Size = new System.Drawing.Size(160, 22);
+            this.showFileTypes_cob.Text = "*.cob/*.cbl";
+            this.showFileTypes_cob.Click += new System.EventHandler(this.settings_sourceCodeFiles_Click);
+            // 
+            // showFileTypes_txt
+            // 
+            this.showFileTypes_txt.CheckOnClick = true;
+            this.showFileTypes_txt.Name = "showFileTypes_txt";
+            this.showFileTypes_txt.Size = new System.Drawing.Size(160, 22);
+            this.showFileTypes_txt.Text = "*.txt";
+            this.showFileTypes_txt.Click += new System.EventHandler(this.settings_sourceCodeFiles_Click);
+            // 
+            // showFileTypes_src
+            // 
+            this.showFileTypes_src.CheckOnClick = true;
+            this.showFileTypes_src.Name = "showFileTypes_src";
+            this.showFileTypes_src.Size = new System.Drawing.Size(160, 22);
+            this.showFileTypes_src.Text = "*.src";
+            this.showFileTypes_src.Click += new System.EventHandler(this.settings_sourceCodeFiles_Click);
+            // 
+            // showFileTypes_custom
+            // 
+            this.showFileTypes_custom.Name = "showFileTypes_custom";
+            this.showFileTypes_custom.Size = new System.Drawing.Size(100, 23);
+            this.showFileTypes_custom.TextChanged += new System.EventHandler(this.settings_sourceCodeFiles_Click);
             // 
             // filesTreeView
             // 
@@ -639,8 +657,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerRight)).EndInit();
             this.splitContainerRight.ResumeLayout(false);
             this.infoTabControl.ResumeLayout(false);
-            this.infoTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.infoDataGridView)).EndInit();
             this.directoryTabPage.ResumeLayout(false);
             this.directoryTabPage.PerformLayout();
             this.filesTabToolStrip.ResumeLayout(false);
@@ -686,9 +702,13 @@
         private System.Windows.Forms.ToolStripButton searchWithRegEx;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton ResolveCopysButton;
-        private System.Windows.Forms.DataGridView infoDataGridView;
         private System.Windows.Forms.ToolStrip filesTabToolStrip;
         private System.Windows.Forms.ToolStripTextBox filesTabSearchBox;
         private System.Windows.Forms.TreeView filesTreeView;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripMenuItem showFileTypes_cob;
+        private System.Windows.Forms.ToolStripMenuItem showFileTypes_txt;
+        private System.Windows.Forms.ToolStripMenuItem showFileTypes_src;
+        private System.Windows.Forms.ToolStripTextBox showFileTypes_custom;
     }
 }

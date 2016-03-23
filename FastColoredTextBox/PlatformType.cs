@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
+using FastColoredTextBoxNS.Enums;
 
 namespace FastColoredTextBoxNS
 {
@@ -64,12 +63,4 @@ namespace FastColoredTextBoxNS
             }
         }
     }
-
-    public enum Platform
-    {
-        X86,
-        X64,
-        Unknown
-    }
-
 }

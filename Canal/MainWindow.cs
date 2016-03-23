@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Canal.Properties;
+using Canal.UserControls;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using Canal.Properties;
@@ -13,14 +16,14 @@ namespace Canal
 
     public partial class MainWindow : Form
     {
-        private TabUtil tabUtil;
+        private readonly TabUtil _tabUtil;
 
         public CodeBox CurrentCodeBox
         {
             get
             {
-                if (tabUtil.CurrentFileControl != null && tabUtil.CurrentFileControl.CodeBox != null)
-                    return tabUtil.CurrentFileControl.CodeBox;
+                if (_tabUtil.CurrentFileControl != null && _tabUtil.CurrentFileControl.CodeBox != null)
+                    return _tabUtil.CurrentFileControl.CodeBox;
                 return null;
             }
         }
@@ -29,8 +32,11 @@ namespace Canal
         {
             InitializeComponent();
 
-            tabUtil = new TabUtil(FileTabs, this);
+            ErrorHandling.Start();
 
+            _tabUtil = new TabUtil(FileTabs, this);
+            try
+            {
             var toOpen = new List<string>();
             if (files != null) toOpen.AddRange(files);
             if (Settings.Default.LastOpened != null) toOpen.AddRange(Settings.Default.LastOpened.Cast<string>());
@@ -38,25 +44,44 @@ namespace Canal
             foreach (string filepath in new HashSet<string>(toOpen))
                 OpenFile(filepath);
         }
+            catch (Exception exception)
+            {
+                ErrorHandling.Exception(exception);
+                MessageBox.Show(Resources.ErrorMessage_MainWindow_OpenPrevious + exception.Message, Resources.Error, MessageBoxButtons.OK);
+            }
+        }
 
         protected override void OnClosing(CancelEventArgs e)
         {
             Settings.Default.LastOpened = new StringCollection();
-            Settings.Default.LastOpened.AddRange(tabUtil.GetOpenFiles().Select(file => file.FileReference.FullPath).ToArray());
+            Settings.Default.LastOpened.AddRange(_tabUtil.GetOpenFiles().Select(file => file.FileReference.FullPath).ToArray());
             Settings.Default.Save();
+            ErrorHandling.End();
             base.OnClosing(e);
         }
 
         public void OpenFile(string filename)
         {
-            if (tabUtil.TryShowTab(filename))
+            if (_tabUtil.TryShowTab(filename))
                 return;
 
             Cursor = Cursors.WaitCursor;
+
+            try
+            {
             var file = FileUtil.Get(filename);
-            if (file != null)
-                tabUtil.AddTab(file);
+                _tabUtil.AddTab(file);
+
+            }
+            catch (Exception exception)
+            {
+                ErrorHandling.Exception(exception);
+                MessageBox.Show(Resources.ErrorMessage_MainWindow_ErrorLoadingFile + exception.Message, Resources.Error, MessageBoxButtons.OK);
+            }
+            finally
+            {
             Cursor = Cursors.Default;
+        }
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -74,7 +99,7 @@ namespace Canal
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tabUtil.CloseTab();
+            _tabUtil.CloseTab();
         }
 
         private void level88ToEnumConverterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -85,21 +110,24 @@ namespace Canal
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (tabUtil.CloseAllTabs())
+            if (_tabUtil.CloseAllTabs())
                 Close();
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tabUtil.AddTab(new CobolFile("", "New File"));
+            _tabUtil.AddTab(new CobolFile("", "New File"));
         }
 
-        private void settings_sourceCodeFiles_Click(object sender, EventArgs e)
+        private void reportIssueToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Settings.Default.FileTypeCob = settings_sourceCodeFiles_cobol.Checked;
-            Settings.Default.FileTypeTxt = settings_sourceCodeFiles_text.Checked;
-            Settings.Default.FileTypeSrc = settings_sourceCodeFiles_source.Checked;
-            Settings.Default.Save();
+            Process.Start("https://github.com/JannikArndt/Canal/issues/new");
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var about = new About();
+            about.Show();
         }
     }
 }

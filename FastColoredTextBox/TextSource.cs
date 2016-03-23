@@ -4,6 +4,8 @@ using System.Text;
 using System.Collections;
 using System.Drawing;
 using System.IO;
+using FastColoredTextBoxNS.Enums;
+using FastColoredTextBoxNS.Events;
 
 namespace FastColoredTextBoxNS
 {

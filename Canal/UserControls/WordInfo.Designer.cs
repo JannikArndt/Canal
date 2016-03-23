@@ -47,9 +47,9 @@
             this.variableTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.variableTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.variableTreeView.Location = new System.Drawing.Point(8, 35);
+            this.variableTreeView.Location = new System.Drawing.Point(0, 35);
             this.variableTreeView.Name = "variableTreeView";
-            this.variableTreeView.Size = new System.Drawing.Size(272, 177);
+            this.variableTreeView.Size = new System.Drawing.Size(294, 435);
             this.variableTreeView.TabIndex = 1;
             // 
             // WordInfo

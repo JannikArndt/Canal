@@ -1,6 +1,7 @@
-﻿using Canal.Properties;
+﻿using Canal.Events;
+using Canal.Properties;
 using Canal.UserControls;
-using FastColoredTextBoxNS;
+using FastColoredTextBoxNS.Events;
 using System;
 using System.Windows.Forms;
 
@@ -16,40 +17,53 @@ namespace Canal
     {
         public CobolFile CobolFile { get; private set; }
 
-        private MainWindow _parent;
+        public event EventHandler<UsedFileTypesChangedEventArgs> UsedFileTypesChanged;
+
+        private readonly MainWindow _parent;
+
+        private FileInfo fileInfoControl;
 
         public FileControl(CobolFile file, MainWindow parent)
         {
             InitializeComponent();
-            _parent = parent;
-            CobolFile = file;
-            codeBox.SetFile(file);
-            codeBox.KeyDown += searchBox_KeyDown;
-            codeBox.WordSelected += CodeBoxOnWordSelected;
-            searchBox.Text = Resources.SearchPlaceholder;
+            try
+            {
+                _parent = parent;
+                CobolFile = file;
+                codeBox.SetFile(file);
+                codeBox.KeyDown += searchBox_KeyDown;
+                codeBox.WordSelected += CodeBoxOnWordSelected;
+                searchBox.Text = Resources.SearchPlaceholder;
 
-            treeView.Nodes.Add(CobolFile.CobolTree.AsTreeNodes);
-            treeView.ExpandAll();
+                treeView.Nodes.Add(CobolFile.CobolTree.AsTreeNodes);
+                treeView.ExpandAll();
 
-            performsTreeView.Nodes.Add(ReferenceUtil.GetPerformTree(file));
-            performsTreeView.ExpandAll();
+                performsTreeView.Nodes.Add(ReferenceUtil.GetPerformTree(file));
+                performsTreeView.ExpandAll();
 
-            // TODO insert friendly advise if copys are unresolved
-            ShowProceduresTreeView();
+                // TODO insert friendly advise if copys are unresolved
+                ShowProceduresTreeView();
 
-            ShowVariablesTreeView();
+                ShowVariablesTreeView();
 
-            infoDataGridView.DataSource = CobolFile.Infos.ToArray();
+                fileInfoControl = new FileInfo(CobolFile, _parent) { Dock = DockStyle.Fill };
+                infoTabPage.Controls.Add(fileInfoControl);
 
-            filesTreeView.Nodes.AddRange(FileUtil.GetDirectoryStructure());
-            filesTreeView.ExpandAll();
-            filesTabSearchBox.Text = Resources.SearchPlaceholder;
+                filesTreeView.Nodes.AddRange(FileUtil.GetDirectoryStructure());
+                filesTreeView.ExpandAll();
+                filesTabSearchBox.Text = Resources.SearchPlaceholder;
+            }
+            catch (Exception exception)
+            {
+                ErrorHandling.Exception(exception);
+                MessageBox.Show(Resources.ErrorMessage_FileControl_Constructor + exception.Message, Resources.Error, MessageBoxButtons.OK);
+            }
         }
 
         private void CodeBoxOnWordSelected(object sender, WordSelectedEventArgs eventArgs)
         {
-            infoTabPage.Controls.Clear();
-            infoTabPage.Controls.Add(new WordInfo(eventArgs.Word, this) { Dock = DockStyle.Fill });
+            fileInfoControl.VariableInfoPanel.Controls.Clear();
+            fileInfoControl.VariableInfoPanel.Controls.Add(new WordInfo(eventArgs.Word, this) { Dock = DockStyle.Fill });
         }
 
         public CodeBox CodeBox
@@ -322,6 +336,46 @@ namespace Canal
         {
             if (e.KeyCode == Keys.Enter)
                 _parent.OpenFile(((FileReference)filesTreeView.SelectedNode.Tag).FullPath);
+        }
+
+        private void settings_sourceCodeFiles_Click(object sender, EventArgs e)
+        {
+            Settings.Default.FileTypeCob = showFileTypes_cob.Checked;
+            Settings.Default.FileTypeTxt = showFileTypes_txt.Checked;
+            Settings.Default.FileTypeSrc = showFileTypes_src.Checked;
+            Settings.Default.FileTypeCustom = showFileTypes_custom.Text;
+            Settings.Default.Save();
+
+            if (UsedFileTypesChanged != null) UsedFileTypesChanged(this, new UsedFileTypesChangedEventArgs());
+
+            RefreshFileView();
+        }
+
+        /// <summary>
+        /// Updates the DropDownButton in the Files-tab with the settings stored in Settings.Default.FileType* and refreshes the Files-tab
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void RefreshUsedFileTypes(object sender, EventArgs e)
+        {
+            showFileTypes_cob.Checked = Settings.Default.FileTypeCob;
+            showFileTypes_txt.Checked = Settings.Default.FileTypeTxt;
+            showFileTypes_src.Checked = Settings.Default.FileTypeSrc;
+            showFileTypes_custom.Text = Settings.Default.FileTypeCustom;
+
+            RefreshFileView();
+        }
+
+        /// <summary>
+        /// Refreshes the Files-tab
+        /// </summary>
+        public void RefreshFileView()
+        {
+            var searchText = filesTabSearchBox.Text == Resources.SearchPlaceholder ? "" : filesTabSearchBox.Text;
+            var nodes = FileUtil.GetDirectoryStructure(searchText);
+            filesTreeView.Nodes.Clear();
+            filesTreeView.Nodes.AddRange(nodes);
+            filesTreeView.ExpandAll();
         }
     }
 }
