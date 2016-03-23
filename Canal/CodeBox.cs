@@ -1,10 +1,10 @@
 ﻿using Canal.Utils;
 using FastColoredTextBoxNS;
+using FastColoredTextBoxNS.Enums;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using FastColoredTextBoxNS.Enums;
 
 namespace Canal
 {
@@ -20,6 +20,8 @@ namespace Canal
         public void SetFile(CobolFile file)
         {
             CobolFile = file;
+
+            Font = SourceCodePro.Regular;
 
             Text = file.Text;
             Language = Language.Cobol;
