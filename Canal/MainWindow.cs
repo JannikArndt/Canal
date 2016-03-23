@@ -1,10 +1,10 @@
-﻿using Canal.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
+using Canal.Properties;
 
 namespace Canal
 {
@@ -54,7 +54,8 @@ namespace Canal
 
             Cursor = Cursors.WaitCursor;
             var file = FileUtil.Get(filename);
-            tabUtil.AddTab(file);
+            if (file != null)
+                tabUtil.AddTab(file);
             Cursor = Cursors.Default;
         }
 

@@ -29,6 +29,8 @@ namespace Canal.Utils
 
             AnalyzeFolder(filename);
 
+            if (!Files.Any()) return null;
+
             var reference = Files[filename];
 
             if (reference.CobolFile == null)
