@@ -142,10 +142,6 @@
             // tocToolStrip
             // 
             this.tocToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.tocToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exportTocButton,
-            this.TocExpandAllButton,
-            this.TocCollapseAllButton});
             this.tocToolStrip.Location = new System.Drawing.Point(3, 3);
             this.tocToolStrip.Name = "tocToolStrip";
             this.tocToolStrip.Size = new System.Drawing.Size(257, 25);
@@ -197,10 +193,6 @@
             // performsToolStrip
             // 
             this.performsToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.performsToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.performsCopyButton,
-            this.performsExpandAllButton,
-            this.performsCollapseAllButton});
             this.performsToolStrip.Location = new System.Drawing.Point(3, 3);
             this.performsToolStrip.Name = "performsToolStrip";
             this.performsToolStrip.Size = new System.Drawing.Size(257, 25);
@@ -265,10 +257,6 @@
             // variablesToolStrip
             // 
             this.variablesToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.variablesToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.variablesCopyButton,
-            this.variablesExpandAllButton,
-            this.variablesCollapseAllButton});
             this.variablesToolStrip.Location = new System.Drawing.Point(3, 3);
             this.variablesToolStrip.Name = "variablesToolStrip";
             this.variablesToolStrip.Size = new System.Drawing.Size(257, 25);
@@ -333,10 +321,6 @@
             // proceduresToolStrip
             // 
             this.proceduresToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.proceduresToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CopyProceduresButton,
-            this.proceduresExpandAllButton,
-            this.proceduresCollapseAllButton});
             this.proceduresToolStrip.Location = new System.Drawing.Point(3, 3);
             this.proceduresToolStrip.Name = "proceduresToolStrip";
             this.proceduresToolStrip.Size = new System.Drawing.Size(257, 25);
@@ -457,7 +441,7 @@
             // searchBox
             // 
             this.searchBox.Name = "searchBox";
-            this.searchBox.Size = new System.Drawing.Size(100, 25);
+            this.searchBox.Size = new System.Drawing.Size(200, 25);
             this.searchBox.Text = "Search...";
             this.searchBox.Enter += new System.EventHandler(this.searchBox_Enter);
             this.searchBox.Leave += new System.EventHandler(this.searchBox_Leave);
@@ -542,9 +526,6 @@
             // filesTabToolStrip
             // 
             this.filesTabToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.filesTabToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.filesTabSearchBox,
-            this.toolStripDropDownButton1});
             this.filesTabToolStrip.Location = new System.Drawing.Point(3, 3);
             this.filesTabToolStrip.Name = "filesTabToolStrip";
             this.filesTabToolStrip.Size = new System.Drawing.Size(200, 25);

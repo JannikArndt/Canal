@@ -231,6 +231,16 @@
     <Content Include="Resources\SourceCodePro-Regular.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\SourceCodePro-Black.ttf" />
+    <None Include="Resources\SourceCodePro-BlackIt.ttf" />
+    <None Include="Resources\SourceCodePro-ExtraLight.ttf" />
+    <None Include="Resources\SourceCodePro-ExtraLightIt.ttf" />
+    <None Include="Resources\SourceCodePro-Light.ttf" />
+    <None Include="Resources\SourceCodePro-LightIt.ttf" />
+    <None Include="Resources\SourceCodePro-Medium.ttf" />
+    <None Include="Resources\SourceCodePro-MediumIt.ttf" />
+    <None Include="Resources\SourceCodePro-Semibold.ttf" />
+    <None Include="Resources\SourceCodePro-SemiboldIt.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
