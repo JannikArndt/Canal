@@ -3,6 +3,7 @@ using Canal.Properties;
 using Canal.UserControls;
 using FastColoredTextBoxNS.Events;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Canal
@@ -41,8 +42,7 @@ namespace Canal
                 performsTreeView.Nodes.Add(ReferenceUtil.GetPerformTree(file));
                 performsTreeView.ExpandAll();
 
-                // TODO insert friendly advise if copys are unresolved
-                ShowProceduresTreeView();
+                ShowProceduresTreeView(true);
 
                 ShowVariablesTreeView();
 
@@ -215,9 +215,12 @@ namespace Canal
             variablesTreeView.Nodes.Add(linkageSectionTreeNode);
         }
 
-        private void ShowProceduresTreeView()
+        private void ShowProceduresTreeView(bool showWarning = false)
         {
             proceduresTreeView.Nodes.Clear();
+
+            if (showWarning)
+                proceduresTreeView.Nodes.Add(new TreeNode("Copy files aren't resolved yet, references may be incomplete!") { ForeColor = Color.Red });
 
             foreach (var section in CobolFile.CobolTree.ProcedureDivision.Sections)
             {
