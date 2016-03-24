@@ -80,13 +80,21 @@
                 ? new ProcedureDivision(sourceCode.Substring(indexProcedureDivision, Math.Max(0, sourceCode.Length - indexProcedureDivision)), indexProcedureDivision)
                 : new ProcedureDivision("", 0);
 
-            foreach (var procedure in ProcedureDivision.Sections.SelectMany(s => s.Procedures))
+            var allProcedures = ProcedureDivision.Sections.SelectMany(s => s.Procedures).ToList();
+            foreach (var procedure in allProcedures)
             {
                 procedure.AnalyzeVariables(DataDivision.Variables);
                 procedure.AnalyzePerformReferences();
                 procedure.AnalyzeGoTos();
                 procedure.AnalyzeCalls();
             }
+
+            // fix deeper references
+            foreach (var performReference in allProcedures.SelectMany(procedure => procedure.PerformReferences.Where(pref => pref.Procedure == null)))
+            {
+                performReference.Procedure = allProcedures.FirstOrDefault(p => p.Name == performReference.ReferencedProcedure);
+            }
+
         }
     }
 }
