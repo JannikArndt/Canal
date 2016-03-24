@@ -139,46 +139,16 @@
     <value>Error loading file: </value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="SourceCodePro_Black" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SourceCodePro-Black.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="SourceCodePro_BlackIt" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SourceCodePro-BlackIt.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="SourceCodePro_Bold" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SourceCodePro-Bold.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="SourceCodePro_BoldIt" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SourceCodePro-BoldIt.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="SourceCodePro_ExtraLight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SourceCodePro-ExtraLight.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="SourceCodePro_ExtraLightIt" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SourceCodePro-ExtraLightIt.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="SourceCodePro_It" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SourceCodePro-It.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="SourceCodePro_Light" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SourceCodePro-Light.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="SourceCodePro_LightIt" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SourceCodePro-LightIt.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="SourceCodePro_Medium" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SourceCodePro-Medium.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="SourceCodePro_MediumIt" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SourceCodePro-MediumIt.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="SourceCodePro_Regular" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SourceCodePro-Regular.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="SourceCodePro_Semibold" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SourceCodePro-Semibold.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="SourceCodePro_SemiboldIt" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SourceCodePro-SemiboldIt.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

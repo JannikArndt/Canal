@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Canal.CobolTree.References;
+using System;
 
 namespace Canal.CobolTree
 {
@@ -93,12 +94,6 @@ namespace Canal.CobolTree
             }
         }
 
-
-        public override string ToString()
-        {
-            return Name;
-        }
-
         public void AnalyzeCalls()
         {
             var referenceMatches = Regex.Matches(OriginalSource, Constants.Call, RegexOptions.Compiled | RegexOptions.Multiline);
@@ -121,6 +116,11 @@ namespace Canal.CobolTree
                 if (!CallReferences.Contains(fileRef))
                     CallReferences.Add(fileRef);
             }
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

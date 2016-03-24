@@ -1,4 +1,4 @@
-﻿namespace Canal.CobolTree
+﻿namespace Canal.CobolTree.References
 {
     public class GoToReference : ProcedureReference
     {
