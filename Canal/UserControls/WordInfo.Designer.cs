@@ -38,9 +38,8 @@
             this.headingLabel.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.headingLabel.Location = new System.Drawing.Point(4, 4);
             this.headingLabel.Name = "headingLabel";
-            this.headingLabel.Size = new System.Drawing.Size(63, 19);
+            this.headingLabel.Size = new System.Drawing.Size(0, 19);
             this.headingLabel.TabIndex = 0;
-            this.headingLabel.Text = "label1";
             // 
             // variableTreeView
             // 

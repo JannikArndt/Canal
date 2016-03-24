@@ -4,6 +4,10 @@
 
     public abstract class CobolTreeNode : TreeNode
     {
+        public CobolTreeNode()
+        {
+        }
+
         public CobolTreeNode(string nodeText, int indexDataDivision)
             : base(nodeText)
         {

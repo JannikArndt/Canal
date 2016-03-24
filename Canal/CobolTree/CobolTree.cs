@@ -17,6 +17,14 @@
 
         public ProcedureDivision ProcedureDivision { get; set; }
 
+        public List<Procedure> AllProcedures
+        {
+            get
+            {
+                return ProcedureDivision.Sections.SelectMany(s => s.Procedures).ToList();
+            }
+        }
+
         public List<Division> Divisions { get { return new List<Division> { IdentificationDivision, EnvironmentDivision, DataDivision, ProcedureDivision }; } }
 
         public List<Variable> Variables { get { return DataDivision.Variables; } }
@@ -80,8 +88,7 @@
                 ? new ProcedureDivision(sourceCode.Substring(indexProcedureDivision, Math.Max(0, sourceCode.Length - indexProcedureDivision)), indexProcedureDivision)
                 : new ProcedureDivision("", 0);
 
-            var allProcedures = ProcedureDivision.Sections.SelectMany(s => s.Procedures).ToList();
-            foreach (var procedure in allProcedures)
+            foreach (var procedure in AllProcedures)
             {
                 procedure.AnalyzeVariables(DataDivision.Variables);
                 procedure.AnalyzePerformReferences();
@@ -90,9 +97,9 @@
             }
 
             // fix deeper references
-            foreach (var performReference in allProcedures.SelectMany(procedure => procedure.PerformReferences.Where(pref => pref.Procedure == null)))
+            foreach (var performReference in AllProcedures.SelectMany(procedure => procedure.PerformReferences.Where(pref => pref.Procedure == null)))
             {
-                performReference.Procedure = allProcedures.FirstOrDefault(p => p.Name == performReference.ReferencedProcedure);
+                performReference.Procedure = AllProcedures.FirstOrDefault(p => p.Name == performReference.ReferencedProcedure);
             }
 
         }

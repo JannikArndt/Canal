@@ -35,6 +35,10 @@ namespace Canal.CobolTree
 
         public int LinesOfCode { get { return _lines.Count; } }
 
+        public Procedure()
+        {
+        }
+
         public Procedure(string name, string text, int indexInSourceCode)
             : this(name, indexInSourceCode)
         {

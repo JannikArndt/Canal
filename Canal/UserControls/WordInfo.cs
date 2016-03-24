@@ -1,4 +1,5 @@
-﻿using Canal.Utils;
+﻿using Canal.CobolTree;
+using Canal.Utils;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -6,28 +7,52 @@ namespace Canal.UserControls
 {
     public partial class WordInfo : UserControl
     {
-        public string Word { get; set; }
-
         public FileControl parent { get; set; }
 
         public WordInfo(string word, FileControl fileControl)
         {
             InitializeComponent();
-            headingLabel.Text = word;
             parent = fileControl;
-            FillVariableTreeView(word);
-        }
 
-        private void FillVariableTreeView(string word)
-        {
+            // is the word a variable?
             var variable = parent.CobolFile.Variables.FindVariable(word);
-            if (variable == null)
+            if (variable != null)
             {
-                variableTreeView.Nodes.Add(new TreeNode("No data found - is this variable in a copy book?"));
-                variableTreeView.ExpandAll();
+                headingLabel.Text = word;
+                FillVariableTreeView(variable);
                 return;
             }
 
+            var procedure = parent.CobolFile.CobolTree.AllProcedures.FirstOrDefault(proc => proc.Name == word);
+            if (procedure != null)
+            {
+                headingLabel.Text = word;
+                FillProcedureTreeView(procedure);
+            }
+        }
+
+        private void FillProcedureTreeView(Procedure procedure)
+        {
+            variableTreeView.Nodes.Add(procedure.Name);
+
+            var performs = procedure.PerformReferences.Select(pref => new TreeNode(pref.ReferencedProcedure)).ToArray();
+            if (performs.Any())
+                variableTreeView.Nodes.Add(new TreeNode("Performs", performs));
+
+            var gotos = procedure.GoToReferences.Select(pref => new TreeNode(pref.ReferencedProcedure)).ToArray();
+            if (gotos.Any())
+                variableTreeView.Nodes.Add(new TreeNode("GO TOs", gotos));
+
+            var calls = procedure.CallReferences.Select(pref => new TreeNode(pref.ProgramName)).ToArray();
+            if (calls.Any())
+                variableTreeView.Nodes.Add(new TreeNode("Calls", calls));
+
+
+            variableTreeView.ExpandAll();
+        }
+
+        private void FillVariableTreeView(Variable variable)
+        {
             // Get all vars to the root
             var currentVar = variable;
             var node = new TreeNode(currentVar.Name, currentVar.Variables.Select(child => new TreeNode(child.Name)).ToArray());
@@ -38,7 +63,6 @@ namespace Canal.UserControls
                 node = newNode;
                 currentVar = currentVar.Parent;
             }
-
 
             variableTreeView.Nodes.Add(node);
             variableTreeView.ExpandAll();
