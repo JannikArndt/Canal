@@ -1,5 +1,6 @@
 ﻿using Canal.Properties;
 using Canal.UserControls;
+using FastColoredTextBoxNS;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -7,7 +8,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
-using Canal.Properties;
 
 namespace Canal
 {
@@ -18,7 +18,7 @@ namespace Canal
     {
         private readonly TabUtil _tabUtil;
 
-        public CodeBox CurrentCodeBox
+        public FastColoredTextBox CurrentCodeBox
         {
             get
             {
@@ -37,13 +37,13 @@ namespace Canal
             _tabUtil = new TabUtil(FileTabs, this);
             try
             {
-            var toOpen = new List<string>();
-            if (files != null) toOpen.AddRange(files);
-            if (Settings.Default.LastOpened != null) toOpen.AddRange(Settings.Default.LastOpened.Cast<string>());
+                var toOpen = new List<string>();
+                if (files != null) toOpen.AddRange(files);
+                if (Settings.Default.LastOpened != null) toOpen.AddRange(Settings.Default.LastOpened.Cast<string>());
 
-            foreach (string filepath in new HashSet<string>(toOpen))
-                OpenFile(filepath);
-        }
+                foreach (string filepath in new HashSet<string>(toOpen))
+                    OpenFile(filepath);
+            }
             catch (Exception exception)
             {
                 ErrorHandling.Exception(exception);
@@ -69,7 +69,7 @@ namespace Canal
 
             try
             {
-            var file = FileUtil.Get(filename);
+                var file = FileUtil.Get(filename);
                 _tabUtil.AddTab(file);
 
             }
@@ -80,8 +80,8 @@ namespace Canal
             }
             finally
             {
-            Cursor = Cursors.Default;
-        }
+                Cursor = Cursors.Default;
+            }
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)

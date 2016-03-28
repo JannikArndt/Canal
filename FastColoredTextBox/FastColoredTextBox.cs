@@ -31,6 +31,7 @@ using System.Drawing;
 using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -1810,6 +1811,8 @@ namespace FastColoredTextBoxNS
             HorizontalScroll.SmallChange = CharWidth;
         }
 
+        #region EventHandlers
+
         /// <summary>
         /// HintClick event.
         /// It occurs if user click on the hint.
@@ -1868,6 +1871,13 @@ namespace FastColoredTextBoxNS
         [Browsable(true)]
         [Description("It occurs if a word is double clicked.")]
         public event EventHandler<WordSelectedEventArgs> WordSelected;
+
+        /// <summary>
+        /// A function key is pressed and not handled
+        /// </summary>
+        [Browsable(true)]
+        [Description("It occurs if a function key is pressed and not handled.")]
+        public event EventHandler<FunctionKeyPressedEventArgs> FunctionKeyPressed;
 
         /// <summary>
         /// TextChangedDelayed event. 
@@ -1998,6 +2008,7 @@ namespace FastColoredTextBoxNS
         [Description("Occurs when custom wordwrap is needed.")]
         public event EventHandler<WordWrapNeededEventArgs> WordWrapNeeded;
 
+        #endregion
 
         /// <summary>
         /// Returns list of styles of given place
@@ -2357,6 +2368,29 @@ namespace FastColoredTextBoxNS
 
             Styles[i] = style;
             return i;
+        }
+
+        public void FindNext(string pattern, bool matchCase, bool regex, bool wholeWord, bool firstSearch = false)
+        {
+            RegexOptions opt = matchCase ? RegexOptions.None : RegexOptions.IgnoreCase;
+            if (!regex)
+                pattern = Regex.Escape(pattern);
+            if (wholeWord)
+                pattern = "\\b" + pattern + "\\b";
+            //
+            Range searchRange = firstSearch ? new Range(this, Range.Start, Range.End) : new Range(this, Selection.End, Range.End);
+
+            var results = searchRange.GetRangesByLines(pattern, opt | RegexOptions.Compiled).ToList();
+            foreach (var r in results)
+            {
+                Selection = r;
+                DoSelectionVisible();
+                Invalidate();
+                return;
+            }
+
+            if (!results.Any() && !firstSearch)
+                FindNext(pattern, matchCase, regex, wholeWord, true);
         }
 
         /// <summary>
@@ -3461,6 +3495,11 @@ namespace FastColoredTextBoxNS
             Invalidate();
         }
 
+        public virtual void OnFunctionKeyPressed(KeyEventArgs key)
+        {
+            if (FunctionKeyPressed != null) FunctionKeyPressed(this, new FunctionKeyPressedEventArgs(key));
+        }
+
         protected override bool ProcessDialogKey(Keys keyData)
         {
             if ((keyData & Keys.Alt) > 0)
@@ -3525,6 +3564,8 @@ namespace FastColoredTextBoxNS
                     return true;
             }
 
+            OnFunctionKeyPressed(a);
+
             return false;
         }
 
@@ -3562,10 +3603,10 @@ namespace FastColoredTextBoxNS
                     break;
 
                 case FCTBAction.FindNext:
-                    if (findForm == null || findForm.tbFind.Text == "")
-                        ShowFindDialog();
-                    else
-                        findForm.FindNext(findForm.tbFind.Text);
+                    //if (findForm == null || findForm.tbFind.Text == "")
+                    //    ShowFindDialog();
+                    //else
+                    //    findForm.FindNext(findForm.tbFind.Text);
                     break;
 
                 case FCTBAction.ReplaceDialog:

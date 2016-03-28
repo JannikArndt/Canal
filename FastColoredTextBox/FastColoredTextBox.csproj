@@ -84,6 +84,7 @@
     <Compile Include="FoldedBlockStyle.cs" />
     <Compile Include="FoldingDesc.cs" />
     <Compile Include="FooTextChangedDescriptor.cs" />
+    <Compile Include="Events\FunctionKeyPressedEventArgs.cs" />
     <Compile Include="GoToForm.cs">
       <SubType>Form</SubType>
     </Compile>

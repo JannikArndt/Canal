@@ -1,14 +1,16 @@
-﻿using System;
+﻿using Canal.CobolTree;
+using Canal.Events;
+using Canal.Properties;
+using Canal.Utils;
+using FastColoredTextBoxNS;
+using FastColoredTextBoxNS.Enums;
+using FastColoredTextBoxNS.Events;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Canal.CobolTree;
-using Canal.Events;
-using Canal.Properties;
-using Canal.Utils;
-using FastColoredTextBoxNS.Events;
 
 namespace Canal.UserControls
 {
@@ -17,6 +19,8 @@ namespace Canal.UserControls
         public CobolFile CobolFile { get; private set; }
 
         public event EventHandler<UsedFileTypesChangedEventArgs> UsedFileTypesChanged;
+
+        public FastColoredTextBox CodeBox { get { return codeBox; } }
 
         private readonly MainWindow _parent;
 
@@ -29,9 +33,17 @@ namespace Canal.UserControls
             {
                 _parent = parent;
                 CobolFile = file;
-                codeBox.SetFile(file);
+
+                // initialize FastColoredTextBox
+                codeBox.Font = SourceCodePro.Regular;
+                codeBox.Text = file.Text;
+                codeBox.Language = Language.Cobol;
+                codeBox.HighlightingRangeType = HighlightingRangeType.VisibleRange;
+                codeBox.SyntaxHighlighter.HighlightSyntax(Language.Cobol, codeBox.Range);
                 codeBox.KeyDown += searchBox_KeyDown;
                 codeBox.WordSelected += CodeBoxOnWordSelected;
+                codeBox.FunctionKeyPressed += HandleFunctionKeyInCodeBox;
+
                 searchBox.Text = Resources.SearchPlaceholder;
 
                 treeView.Nodes.Add(CobolFile.CobolTree.AsTreeNodes);
@@ -58,16 +70,32 @@ namespace Canal.UserControls
             }
         }
 
+        #region Code Box Events
+
+        private void HandleFunctionKeyInCodeBox(object sender, FunctionKeyPressedEventArgs functionKeyPressedEventArgs)
+        {
+            switch (functionKeyPressedEventArgs.Key.KeyCode)
+            {
+                case Keys.F3:
+                    codeBox.FindNext(searchBox.Text, false, searchWithRegEx.Checked, false);
+                    return;
+                case Keys.Escape:
+                    searchBox.Tag = false;
+                    // codeBox.Selection = new Range(codeBox, Place.Empty, Place.Empty);
+                    // codeBox.Invalidate();
+                    searchBox.Text = string.Empty;
+                    searchBox.Tag = true;
+                    return;
+            }
+        }
+
         private void CodeBoxOnWordSelected(object sender, WordSelectedEventArgs eventArgs)
         {
             _fileInfoControl.VariableInfoPanel.Controls.Clear();
             _fileInfoControl.VariableInfoPanel.Controls.Add(new WordInfo(eventArgs.Word, this) { Dock = DockStyle.Fill });
         }
 
-        public CodeBox CodeBox
-        {
-            get { return codeBox; }
-        }
+        #endregion
 
         #region Search Box
 
@@ -310,6 +338,8 @@ namespace Canal.UserControls
 
         #endregion
 
+        #region Files Tree
+
         private void filesTabSearchBox_TextChanged(object sender, EventArgs e)
         {
             if (((ToolStripTextBox)sender).Text == Resources.SearchPlaceholder)
@@ -378,5 +408,7 @@ namespace Canal.UserControls
             filesTreeView.Nodes.AddRange(nodes);
             filesTreeView.ExpandAll();
         }
+
+        #endregion
     }
 }

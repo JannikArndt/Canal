@@ -1,4 +1,6 @@
-﻿namespace Canal.UserControls
+﻿using FastColoredTextBoxNS;
+
+namespace Canal.UserControls
 {
     partial class FileControl
     {
@@ -56,7 +58,7 @@
             this.proceduresExpandAllButton = new System.Windows.Forms.ToolStripButton();
             this.proceduresCollapseAllButton = new System.Windows.Forms.ToolStripButton();
             this.proceduresTreeView = new System.Windows.Forms.TreeView();
-            this.codeBox = new CodeBox();
+            this.codeBox = new FastColoredTextBox();
             this.splitContainerTop = new System.Windows.Forms.SplitContainer();
             this.codeViewToolStrip = new System.Windows.Forms.ToolStrip();
             this.searchBox = new System.Windows.Forms.ToolStripTextBox();
@@ -101,8 +103,8 @@
             // 
             // treeView
             // 
-            this.treeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.treeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.treeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.treeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -231,8 +233,8 @@
             // 
             // performsTreeView
             // 
-            this.performsTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.performsTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.performsTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.performsTreeView.ItemHeight = 22;
@@ -295,8 +297,8 @@
             // 
             // variablesTreeView
             // 
-            this.variablesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.variablesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.variablesTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.variablesTreeView.ItemHeight = 18;
@@ -359,8 +361,8 @@
             // 
             // proceduresTreeView
             // 
-            this.proceduresTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.proceduresTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.proceduresTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.proceduresTreeView.ItemHeight = 22;
@@ -372,8 +374,8 @@
             // 
             // codeBox
             // 
-            this.codeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.codeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.codeBox.AutoCompleteBracketsList = new char[] {
         '(',
@@ -390,7 +392,6 @@
             this.codeBox.BackBrush = null;
             this.codeBox.CharHeight = 15;
             this.codeBox.CharWidth = 7;
-            this.codeBox.CobolFile = null;
             this.codeBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.codeBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.codeBox.Font = new System.Drawing.Font("Consolas", 9.75F);
@@ -590,8 +591,8 @@
             // 
             // filesTreeView
             // 
-            this.filesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.filesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.filesTreeView.Location = new System.Drawing.Point(0, 31);
             this.filesTreeView.Name = "filesTreeView";
@@ -648,7 +649,7 @@
 
         #endregion
         private System.Windows.Forms.TreeView treeView;
-        private CodeBox codeBox;
+        private FastColoredTextBox codeBox;
         private System.Windows.Forms.TabControl structureTabControl;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;

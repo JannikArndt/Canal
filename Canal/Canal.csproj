@@ -152,12 +152,6 @@
     <Compile Include="Utils\Literal.cs" />
     <Compile Include="Utils\SourceCodePro.cs" />
     <Compile Include="Utils\TextUtil.cs" />
-    <Compile Include="UserControls\CodeBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\CodeBox.Designer.cs">
-      <DependentUpon>CodeBox.cs</DependentUpon>
-    </Compile>
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="UserControls\FileControl.cs">
       <SubType>UserControl</SubType>
