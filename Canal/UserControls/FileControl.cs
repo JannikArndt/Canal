@@ -24,9 +24,7 @@ namespace Canal.UserControls
 
         private FileInfo _fileInfoControl;
 
-        private readonly BackgroundWorker _analyzeCobolTreeWorker = new BackgroundWorker();
-
-        private readonly BackgroundWorker _resolveDependenciesWorker = new BackgroundWorker();
+        private BackgroundWorker _worker = new BackgroundWorker();
 
         public FileControl(CobolFile file, MainWindow parent)
         {
@@ -51,13 +49,13 @@ namespace Canal.UserControls
 
                 searchBox.Text = Resources.SearchPlaceholder;
 
-                _analyzeCobolTreeWorker.DoWork += BuildCobolTree;
+                _worker.DoWork += BuildCobolTree;
 
                 // Display the analysis info in side tabs
-                _analyzeCobolTreeWorker.RunWorkerCompleted += (sender, args) => InitTabs();
+                _worker.RunWorkerCompleted += (sender, args) => InitTabs();
 
                 // Build the CobolTree in the CobolFile which contains all analysis information
-                _analyzeCobolTreeWorker.RunWorkerAsync(file);
+                _worker.RunWorkerAsync(file);
             }
             catch (Exception exception)
             {
@@ -105,7 +103,7 @@ namespace Canal.UserControls
 
         void IDisposable.Dispose()
         {
-            _analyzeCobolTreeWorker.Dispose();
+            _worker.Dispose();
         }
 
         #region Code Box Events
@@ -228,15 +226,17 @@ namespace Canal.UserControls
 
         private void ResolveCopysButton_Click(object sender, EventArgs e)
         {
-            _resolveDependenciesWorker.DoWork += (o, args) =>
+            _worker = new BackgroundWorker();
+
+            _worker.DoWork += (o, args) =>
             {
                 var refUtil = new ReferenceUtil();
-                refUtil.ProgressChanged += (sender1, eventArgs) => _resolveDependenciesWorker.ReportProgress(eventArgs.ProgressPercentage);
+                refUtil.ProgressChanged += (sender1, eventArgs) => _worker.ReportProgress(eventArgs.ProgressPercentage);
                 refUtil.ResolveCopys(CobolFile);
                 args.Result = CobolFile;
             };
 
-            _resolveDependenciesWorker.RunWorkerCompleted += (o, args) =>
+            _worker.RunWorkerCompleted += (o, args) =>
             {
                 var cobolFile = args.Result as CobolFile;
                 if (cobolFile != null)
@@ -253,9 +253,9 @@ namespace Canal.UserControls
 
             toolStripProgressBar.Visible = true;
 
-            _resolveDependenciesWorker.WorkerReportsProgress = true;
-            _resolveDependenciesWorker.ProgressChanged += (o, args) => toolStripProgressBar.Value = args.ProgressPercentage;
-            _resolveDependenciesWorker.RunWorkerAsync();
+            _worker.WorkerReportsProgress = true;
+            _worker.ProgressChanged += (o, args) => toolStripProgressBar.Value = args.ProgressPercentage;
+            _worker.RunWorkerAsync();
 
             Cursor = Cursors.Default;
         }
