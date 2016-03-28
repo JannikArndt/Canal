@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 
 namespace Canal.CobolTree
 {
@@ -11,8 +10,6 @@ namespace Canal.CobolTree
     {
         public void Build(CobolFile file)
         {
-            Thread.Sleep(3000);
-
             var tree = new CobolTree(file.Name);
 
             var sourceCode = TextUtil.TrimAllLines(file.Text);

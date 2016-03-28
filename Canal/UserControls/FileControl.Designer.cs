@@ -37,6 +37,7 @@ namespace Canal.UserControls
             this.treeView = new System.Windows.Forms.TreeView();
             this.structureTabControl = new System.Windows.Forms.TabControl();
             this.tocTabPage = new System.Windows.Forms.TabPage();
+            this.loaderImageToc = new System.Windows.Forms.PictureBox();
             this.tocToolStrip = new System.Windows.Forms.ToolStrip();
             this.TocCopyButton = new System.Windows.Forms.ToolStripButton();
             this.TocCollapseAllButton = new System.Windows.Forms.ToolStripButton();
@@ -69,6 +70,7 @@ namespace Canal.UserControls
             this.splitContainerRight = new System.Windows.Forms.SplitContainer();
             this.infoTabControl = new System.Windows.Forms.TabControl();
             this.infoTabPage = new System.Windows.Forms.TabPage();
+            this.loaderImageInfoTab = new System.Windows.Forms.PictureBox();
             this.filesTabPage = new System.Windows.Forms.TabPage();
             this.filesTabToolStrip = new System.Windows.Forms.ToolStrip();
             this.filesTabSearchBox = new System.Windows.Forms.ToolStripTextBox();
@@ -78,10 +80,10 @@ namespace Canal.UserControls
             this.showFileTypes_txt = new System.Windows.Forms.ToolStripMenuItem();
             this.showFileTypes_src = new System.Windows.Forms.ToolStripMenuItem();
             this.showFileTypes_custom = new System.Windows.Forms.ToolStripTextBox();
-            this.loaderImageToc = new System.Windows.Forms.PictureBox();
-            this.loaderImageInfoTab = new System.Windows.Forms.PictureBox();
+            this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.structureTabControl.SuspendLayout();
             this.tocTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.loaderImageToc)).BeginInit();
             this.tocToolStrip.SuspendLayout();
             this.performsTabPage.SuspendLayout();
             this.performsToolStrip.SuspendLayout();
@@ -101,10 +103,9 @@ namespace Canal.UserControls
             this.splitContainerRight.SuspendLayout();
             this.infoTabControl.SuspendLayout();
             this.infoTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.loaderImageInfoTab)).BeginInit();
             this.filesTabPage.SuspendLayout();
             this.filesTabToolStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.loaderImageToc)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.loaderImageInfoTab)).BeginInit();
             this.SuspendLayout();
             // 
             // treeView
@@ -147,6 +148,17 @@ namespace Canal.UserControls
             this.tocTabPage.TabIndex = 0;
             this.tocTabPage.Text = "Table of Contents";
             this.tocTabPage.UseVisualStyleBackColor = true;
+            // 
+            // loaderImageToc
+            // 
+            this.loaderImageToc.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.loaderImageToc.Image = ((System.Drawing.Image)(resources.GetObject("loaderImageToc.Image")));
+            this.loaderImageToc.Location = new System.Drawing.Point(3, 28);
+            this.loaderImageToc.Name = "loaderImageToc";
+            this.loaderImageToc.Size = new System.Drawing.Size(257, 526);
+            this.loaderImageToc.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.loaderImageToc.TabIndex = 3;
+            this.loaderImageToc.TabStop = false;
             // 
             // tocToolStrip
             // 
@@ -455,7 +467,8 @@ namespace Canal.UserControls
             this.searchBox,
             this.searchWithRegEx,
             this.toolStripSeparator1,
-            this.ResolveCopysButton});
+            this.ResolveCopysButton,
+            this.toolStripProgressBar});
             this.codeViewToolStrip.Location = new System.Drawing.Point(0, 0);
             this.codeViewToolStrip.Name = "codeViewToolStrip";
             this.codeViewToolStrip.Size = new System.Drawing.Size(680, 25);
@@ -535,6 +548,17 @@ namespace Canal.UserControls
             this.infoTabPage.TabIndex = 0;
             this.infoTabPage.Text = "Info";
             this.infoTabPage.UseVisualStyleBackColor = true;
+            // 
+            // loaderImageInfoTab
+            // 
+            this.loaderImageInfoTab.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.loaderImageInfoTab.Image = ((System.Drawing.Image)(resources.GetObject("loaderImageInfoTab.Image")));
+            this.loaderImageInfoTab.Location = new System.Drawing.Point(3, 3);
+            this.loaderImageInfoTab.Name = "loaderImageInfoTab";
+            this.loaderImageInfoTab.Size = new System.Drawing.Size(200, 551);
+            this.loaderImageInfoTab.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.loaderImageInfoTab.TabIndex = 4;
+            this.loaderImageInfoTab.TabStop = false;
             // 
             // filesTabPage
             // 
@@ -627,27 +651,13 @@ namespace Canal.UserControls
             this.showFileTypes_custom.Size = new System.Drawing.Size(100, 23);
             this.showFileTypes_custom.TextChanged += new System.EventHandler(this.settings_sourceCodeFiles_Click);
             // 
-            // loaderImageToc
+            // toolStripProgressBar
             // 
-            this.loaderImageToc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.loaderImageToc.Image = ((System.Drawing.Image)(resources.GetObject("loaderImageToc.Image")));
-            this.loaderImageToc.Location = new System.Drawing.Point(3, 28);
-            this.loaderImageToc.Name = "loaderImageToc";
-            this.loaderImageToc.Size = new System.Drawing.Size(257, 526);
-            this.loaderImageToc.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.loaderImageToc.TabIndex = 3;
-            this.loaderImageToc.TabStop = false;
-            // 
-            // loaderImageInfoTab
-            // 
-            this.loaderImageInfoTab.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.loaderImageInfoTab.Image = ((System.Drawing.Image)(resources.GetObject("loaderImageInfoTab.Image")));
-            this.loaderImageInfoTab.Location = new System.Drawing.Point(3, 3);
-            this.loaderImageInfoTab.Name = "loaderImageInfoTab";
-            this.loaderImageInfoTab.Size = new System.Drawing.Size(200, 551);
-            this.loaderImageInfoTab.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.loaderImageInfoTab.TabIndex = 4;
-            this.loaderImageInfoTab.TabStop = false;
+            this.toolStripProgressBar.Name = "toolStripProgressBar";
+            this.toolStripProgressBar.Size = new System.Drawing.Size(100, 22);
+            this.toolStripProgressBar.Step = 1;
+            this.toolStripProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.toolStripProgressBar.Visible = false;
             // 
             // FileControl
             // 
@@ -660,6 +670,7 @@ namespace Canal.UserControls
             this.structureTabControl.ResumeLayout(false);
             this.tocTabPage.ResumeLayout(false);
             this.tocTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.loaderImageToc)).EndInit();
             this.tocToolStrip.ResumeLayout(false);
             this.tocToolStrip.PerformLayout();
             this.performsTabPage.ResumeLayout(false);
@@ -688,12 +699,11 @@ namespace Canal.UserControls
             this.splitContainerRight.ResumeLayout(false);
             this.infoTabControl.ResumeLayout(false);
             this.infoTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.loaderImageInfoTab)).EndInit();
             this.filesTabPage.ResumeLayout(false);
             this.filesTabPage.PerformLayout();
             this.filesTabToolStrip.ResumeLayout(false);
             this.filesTabToolStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.loaderImageToc)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.loaderImageInfoTab)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -745,5 +755,6 @@ namespace Canal.UserControls
         private System.Windows.Forms.ToolStripTextBox showFileTypes_custom;
         private PictureBox loaderImageToc;
         private PictureBox loaderImageInfoTab;
+        private ToolStripProgressBar toolStripProgressBar;
     }
 }
