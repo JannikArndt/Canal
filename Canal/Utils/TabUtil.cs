@@ -1,5 +1,4 @@
-﻿using Canal.CobolTree;
-using Canal.Events;
+﻿using Canal.Events;
 using Canal.Properties;
 using Canal.UserControls;
 using System;
@@ -14,16 +13,6 @@ namespace Canal.Utils
     public class TabUtil
     {
         private readonly TabControl _tabControl;
-
-        // C# 6.0: public CobolFile CurrentFile => ((FileControl) tabControl.SelectedTab?.Controls.Find("FileControl", false)[0])?.CobolFile;
-
-        public CobolFile CurrentFile
-        {
-            get
-            {
-                return _tabControl.SelectedTab != null ? ((FileControl)_tabControl.SelectedTab.Controls.Find("FileControl", false)[0]).CobolFile : null;
-            }
-        }
 
         private readonly MainWindow _parent;
 
@@ -99,24 +88,13 @@ namespace Canal.Utils
         {
             var newTab = new TabPage(file.Name + "        ");
 
-            var fileControl = new FileControl(file, _parent)
-            {
-                Name = "FileControl",
-                Dock = DockStyle.Fill
-            };
+            var fileControl = new FileControl(file, _parent);
 
             fileControl.UsedFileTypesChanged += UsedFileTypesChanged;
 
             newTab.Controls.Add(fileControl);
             _tabControl.Controls.Add(newTab);
             _tabControl.SelectTab(newTab);
-
-            // Build the CobolTree in the CobolFile which contains all analysis information
-            var builder = new CobolTreeBuilder();
-            builder.Build(file); // TODO Async
-
-            // Display the analysis info in side tabs
-            fileControl.InitTabs();
         }
 
         private void UsedFileTypesChanged(object sender, UsedFileTypesChangedEventArgs usedFileTypesChangedEventArgs)

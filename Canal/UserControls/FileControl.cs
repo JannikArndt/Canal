@@ -6,6 +6,7 @@ using FastColoredTextBoxNS.Enums;
 using FastColoredTextBoxNS.Events;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -13,7 +14,7 @@ using System.Windows.Forms;
 
 namespace Canal.UserControls
 {
-    public partial class FileControl : UserControl
+    public sealed partial class FileControl : UserControl, IDisposable
     {
         public CobolFile CobolFile { get; private set; }
 
@@ -23,9 +24,14 @@ namespace Canal.UserControls
 
         private FileInfo _fileInfoControl;
 
+        private readonly BackgroundWorker _worker = new BackgroundWorker();
+
         public FileControl(CobolFile file, MainWindow parent)
         {
             InitializeComponent();
+            Name = "FileControl";
+            Dock = DockStyle.Fill;
+
             try
             {
                 _parent = parent;
@@ -42,6 +48,14 @@ namespace Canal.UserControls
                 codeBox.FunctionKeyPressed += HandleFunctionKeyInCodeBox;
 
                 searchBox.Text = Resources.SearchPlaceholder;
+
+                _worker.DoWork += BuildCobolTree;
+
+                // Display the analysis info in side tabs
+                _worker.RunWorkerCompleted += (sender, args) => InitTabs();
+
+                // Build the CobolTree in the CobolFile which contains all analysis information
+                _worker.RunWorkerAsync(file);
             }
             catch (Exception exception)
             {
@@ -50,10 +64,13 @@ namespace Canal.UserControls
             }
         }
 
-        public void InitTabs()
+        private void InitTabs()
         {
             try
             {
+                tocTabPage.Controls.Remove(loaderImageToc);
+                infoTabPage.Controls.Remove(loaderImageInfoTab);
+
                 treeView.Nodes.Add(CobolFile.CobolTree.GetAsTreeNodes());
                 treeView.ExpandAll();
 
@@ -76,6 +93,17 @@ namespace Canal.UserControls
                 ErrorHandling.Exception(exception);
                 MessageBox.Show(Resources.ErrorMessage_FileControl_Constructor + exception.Message, Resources.Error, MessageBoxButtons.OK);
             }
+        }
+
+        private void BuildCobolTree(object sender, DoWorkEventArgs doWorkEventArgs)
+        {
+            var builder = new CobolTreeBuilder();
+            builder.Build(doWorkEventArgs.Argument as CobolFile);
+        }
+
+        void IDisposable.Dispose()
+        {
+            _worker.Dispose();
         }
 
         #region Code Box Events

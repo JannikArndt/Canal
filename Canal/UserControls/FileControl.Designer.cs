@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Canal.UserControls
 {
-    partial class FileControl
+    sealed partial class FileControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -36,24 +36,24 @@ namespace Canal.UserControls
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileControl));
             this.treeView = new System.Windows.Forms.TreeView();
             this.structureTabControl = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tocTabPage = new System.Windows.Forms.TabPage();
             this.tocToolStrip = new System.Windows.Forms.ToolStrip();
             this.TocCopyButton = new System.Windows.Forms.ToolStripButton();
             this.TocCollapseAllButton = new System.Windows.Forms.ToolStripButton();
             this.TocExpandAllButton = new System.Windows.Forms.ToolStripButton();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.performsTabPage = new System.Windows.Forms.TabPage();
             this.performsToolStrip = new System.Windows.Forms.ToolStrip();
             this.performsCopyButton = new System.Windows.Forms.ToolStripButton();
             this.performsCollapseAllButton = new System.Windows.Forms.ToolStripButton();
             this.performsExpandAllButton = new System.Windows.Forms.ToolStripButton();
             this.performsTreeView = new System.Windows.Forms.TreeView();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.variablesTabPage = new System.Windows.Forms.TabPage();
             this.variablesToolStrip = new System.Windows.Forms.ToolStrip();
             this.variablesCopyButton = new System.Windows.Forms.ToolStripButton();
             this.variablesCollapseAllButton = new System.Windows.Forms.ToolStripButton();
             this.variablesExpandAllButton = new System.Windows.Forms.ToolStripButton();
             this.variablesTreeView = new System.Windows.Forms.TreeView();
-            this.proceduresTab = new System.Windows.Forms.TabPage();
+            this.proceduresTabPage = new System.Windows.Forms.TabPage();
             this.proceduresToolStrip = new System.Windows.Forms.ToolStrip();
             this.proceduresCopyButton = new System.Windows.Forms.ToolStripButton();
             this.proceduresCollapseAllButton = new System.Windows.Forms.ToolStripButton();
@@ -69,23 +69,25 @@ namespace Canal.UserControls
             this.splitContainerRight = new System.Windows.Forms.SplitContainer();
             this.infoTabControl = new System.Windows.Forms.TabControl();
             this.infoTabPage = new System.Windows.Forms.TabPage();
-            this.directoryTabPage = new System.Windows.Forms.TabPage();
+            this.filesTabPage = new System.Windows.Forms.TabPage();
             this.filesTabToolStrip = new System.Windows.Forms.ToolStrip();
-            this.filesTreeView = new System.Windows.Forms.TreeView();
             this.filesTabSearchBox = new System.Windows.Forms.ToolStripTextBox();
+            this.filesTreeView = new System.Windows.Forms.TreeView();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.showFileTypes_cob = new System.Windows.Forms.ToolStripMenuItem();
             this.showFileTypes_txt = new System.Windows.Forms.ToolStripMenuItem();
             this.showFileTypes_src = new System.Windows.Forms.ToolStripMenuItem();
             this.showFileTypes_custom = new System.Windows.Forms.ToolStripTextBox();
+            this.loaderImageToc = new System.Windows.Forms.PictureBox();
+            this.loaderImageInfoTab = new System.Windows.Forms.PictureBox();
             this.structureTabControl.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tocTabPage.SuspendLayout();
             this.tocToolStrip.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.performsTabPage.SuspendLayout();
             this.performsToolStrip.SuspendLayout();
-            this.tabPage3.SuspendLayout();
+            this.variablesTabPage.SuspendLayout();
             this.variablesToolStrip.SuspendLayout();
-            this.proceduresTab.SuspendLayout();
+            this.proceduresTabPage.SuspendLayout();
             this.proceduresToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.codeBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerTop)).BeginInit();
@@ -98,13 +100,17 @@ namespace Canal.UserControls
             this.splitContainerRight.Panel2.SuspendLayout();
             this.splitContainerRight.SuspendLayout();
             this.infoTabControl.SuspendLayout();
-            this.directoryTabPage.SuspendLayout();
+            this.infoTabPage.SuspendLayout();
+            this.filesTabPage.SuspendLayout();
+            this.filesTabToolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.loaderImageToc)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.loaderImageInfoTab)).BeginInit();
             this.SuspendLayout();
             // 
             // treeView
             // 
-            this.treeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.treeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.treeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.treeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -118,10 +124,10 @@ namespace Canal.UserControls
             // 
             // structureTabControl
             // 
-            this.structureTabControl.Controls.Add(this.tabPage1);
-            this.structureTabControl.Controls.Add(this.tabPage2);
-            this.structureTabControl.Controls.Add(this.tabPage3);
-            this.structureTabControl.Controls.Add(this.proceduresTab);
+            this.structureTabControl.Controls.Add(this.tocTabPage);
+            this.structureTabControl.Controls.Add(this.performsTabPage);
+            this.structureTabControl.Controls.Add(this.variablesTabPage);
+            this.structureTabControl.Controls.Add(this.proceduresTabPage);
             this.structureTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.structureTabControl.Location = new System.Drawing.Point(0, 0);
             this.structureTabControl.Name = "structureTabControl";
@@ -129,17 +135,18 @@ namespace Canal.UserControls
             this.structureTabControl.Size = new System.Drawing.Size(271, 583);
             this.structureTabControl.TabIndex = 5;
             // 
-            // tabPage1
+            // tocTabPage
             // 
-            this.tabPage1.Controls.Add(this.tocToolStrip);
-            this.tabPage1.Controls.Add(this.treeView);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(263, 557);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Table of Contents";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tocTabPage.Controls.Add(this.loaderImageToc);
+            this.tocTabPage.Controls.Add(this.tocToolStrip);
+            this.tocTabPage.Controls.Add(this.treeView);
+            this.tocTabPage.Location = new System.Drawing.Point(4, 22);
+            this.tocTabPage.Name = "tocTabPage";
+            this.tocTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.tocTabPage.Size = new System.Drawing.Size(263, 557);
+            this.tocTabPage.TabIndex = 0;
+            this.tocTabPage.Text = "Table of Contents";
+            this.tocTabPage.UseVisualStyleBackColor = true;
             // 
             // tocToolStrip
             // 
@@ -184,17 +191,17 @@ namespace Canal.UserControls
             this.TocExpandAllButton.Text = "Expand all";
             this.TocExpandAllButton.Click += new System.EventHandler(this.TocExpandAllButton_Click);
             // 
-            // tabPage2
+            // performsTabPage
             // 
-            this.tabPage2.Controls.Add(this.performsToolStrip);
-            this.tabPage2.Controls.Add(this.performsTreeView);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(263, 557);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Performs";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.performsTabPage.Controls.Add(this.performsToolStrip);
+            this.performsTabPage.Controls.Add(this.performsTreeView);
+            this.performsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.performsTabPage.Name = "performsTabPage";
+            this.performsTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.performsTabPage.Size = new System.Drawing.Size(263, 557);
+            this.performsTabPage.TabIndex = 1;
+            this.performsTabPage.Text = "Performs";
+            this.performsTabPage.UseVisualStyleBackColor = true;
             // 
             // performsToolStrip
             // 
@@ -241,8 +248,8 @@ namespace Canal.UserControls
             // 
             // performsTreeView
             // 
-            this.performsTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.performsTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.performsTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.performsTreeView.ItemHeight = 22;
@@ -252,17 +259,17 @@ namespace Canal.UserControls
             this.performsTreeView.TabIndex = 0;
             this.performsTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.performsTree_AfterSelect);
             // 
-            // tabPage3
+            // variablesTabPage
             // 
-            this.tabPage3.Controls.Add(this.variablesToolStrip);
-            this.tabPage3.Controls.Add(this.variablesTreeView);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(263, 557);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Variables";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.variablesTabPage.Controls.Add(this.variablesToolStrip);
+            this.variablesTabPage.Controls.Add(this.variablesTreeView);
+            this.variablesTabPage.Location = new System.Drawing.Point(4, 22);
+            this.variablesTabPage.Name = "variablesTabPage";
+            this.variablesTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.variablesTabPage.Size = new System.Drawing.Size(263, 557);
+            this.variablesTabPage.TabIndex = 2;
+            this.variablesTabPage.Text = "Variables";
+            this.variablesTabPage.UseVisualStyleBackColor = true;
             // 
             // variablesToolStrip
             // 
@@ -309,8 +316,8 @@ namespace Canal.UserControls
             // 
             // variablesTreeView
             // 
-            this.variablesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.variablesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.variablesTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.variablesTreeView.ItemHeight = 18;
@@ -320,17 +327,17 @@ namespace Canal.UserControls
             this.variablesTreeView.TabIndex = 0;
             this.variablesTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.variablesTreeView_AfterSelect);
             // 
-            // proceduresTab
+            // proceduresTabPage
             // 
-            this.proceduresTab.Controls.Add(this.proceduresToolStrip);
-            this.proceduresTab.Controls.Add(this.proceduresTreeView);
-            this.proceduresTab.Location = new System.Drawing.Point(4, 22);
-            this.proceduresTab.Name = "proceduresTab";
-            this.proceduresTab.Padding = new System.Windows.Forms.Padding(3);
-            this.proceduresTab.Size = new System.Drawing.Size(263, 557);
-            this.proceduresTab.TabIndex = 3;
-            this.proceduresTab.Text = "Procedures";
-            this.proceduresTab.UseVisualStyleBackColor = true;
+            this.proceduresTabPage.Controls.Add(this.proceduresToolStrip);
+            this.proceduresTabPage.Controls.Add(this.proceduresTreeView);
+            this.proceduresTabPage.Location = new System.Drawing.Point(4, 22);
+            this.proceduresTabPage.Name = "proceduresTabPage";
+            this.proceduresTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.proceduresTabPage.Size = new System.Drawing.Size(263, 557);
+            this.proceduresTabPage.TabIndex = 3;
+            this.proceduresTabPage.Text = "Procedures";
+            this.proceduresTabPage.UseVisualStyleBackColor = true;
             // 
             // proceduresToolStrip
             // 
@@ -377,8 +384,8 @@ namespace Canal.UserControls
             // 
             // proceduresTreeView
             // 
-            this.proceduresTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.proceduresTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.proceduresTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.proceduresTreeView.ItemHeight = 22;
@@ -390,8 +397,8 @@ namespace Canal.UserControls
             // 
             // codeBox
             // 
-            this.codeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.codeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.codeBox.AutoCompleteBracketsList = new char[] {
         '(',
@@ -510,7 +517,7 @@ namespace Canal.UserControls
             // infoTabControl
             // 
             this.infoTabControl.Controls.Add(this.infoTabPage);
-            this.infoTabControl.Controls.Add(this.directoryTabPage);
+            this.infoTabControl.Controls.Add(this.filesTabPage);
             this.infoTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.infoTabControl.Location = new System.Drawing.Point(0, 0);
             this.infoTabControl.Name = "infoTabControl";
@@ -520,6 +527,7 @@ namespace Canal.UserControls
             // 
             // infoTabPage
             // 
+            this.infoTabPage.Controls.Add(this.loaderImageInfoTab);
             this.infoTabPage.Location = new System.Drawing.Point(4, 22);
             this.infoTabPage.Name = "infoTabPage";
             this.infoTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -528,39 +536,28 @@ namespace Canal.UserControls
             this.infoTabPage.Text = "Info";
             this.infoTabPage.UseVisualStyleBackColor = true;
             // 
-            // directoryTabPage
+            // filesTabPage
             // 
-            this.directoryTabPage.Controls.Add(this.filesTabToolStrip);
-            this.directoryTabPage.Controls.Add(this.filesTreeView);
-            this.directoryTabPage.Location = new System.Drawing.Point(4, 22);
-            this.directoryTabPage.Name = "directoryTabPage";
-            this.directoryTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.directoryTabPage.Size = new System.Drawing.Size(206, 557);
-            this.directoryTabPage.TabIndex = 1;
-            this.directoryTabPage.Text = "Files";
-            this.directoryTabPage.UseVisualStyleBackColor = true;
+            this.filesTabPage.Controls.Add(this.filesTabToolStrip);
+            this.filesTabPage.Controls.Add(this.filesTreeView);
+            this.filesTabPage.Location = new System.Drawing.Point(4, 22);
+            this.filesTabPage.Name = "filesTabPage";
+            this.filesTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.filesTabPage.Size = new System.Drawing.Size(206, 557);
+            this.filesTabPage.TabIndex = 1;
+            this.filesTabPage.Text = "Files";
+            this.filesTabPage.UseVisualStyleBackColor = true;
             // 
             // filesTabToolStrip
             // 
             this.filesTabToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            filesTabToolStrip.Items.AddRange(new ToolStripItem[] { filesTabSearchBox });
+            this.filesTabToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.filesTabSearchBox});
             this.filesTabToolStrip.Location = new System.Drawing.Point(3, 3);
             this.filesTabToolStrip.Name = "filesTabToolStrip";
             this.filesTabToolStrip.Size = new System.Drawing.Size(200, 25);
             this.filesTabToolStrip.TabIndex = 1;
             this.filesTabToolStrip.Text = "toolStrip1";
-            // 
-            // filesTreeView
-            // 
-            this.filesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.filesTreeView.Location = new System.Drawing.Point(0, 31);
-            this.filesTreeView.Name = "filesTreeView";
-            this.filesTreeView.Size = new System.Drawing.Size(206, 523);
-            this.filesTreeView.TabIndex = 0;
-            this.filesTreeView.DoubleClick += new System.EventHandler(this.filesTreeView_DoubleClick);
-            this.filesTreeView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.filesTreeView_KeyUp);
             // 
             // filesTabSearchBox
             // 
@@ -570,6 +567,18 @@ namespace Canal.UserControls
             this.filesTabSearchBox.Enter += new System.EventHandler(this.searchBox_Enter);
             this.filesTabSearchBox.Leave += new System.EventHandler(this.searchBox_Leave);
             this.filesTabSearchBox.TextChanged += new System.EventHandler(this.filesTabSearchBox_TextChanged);
+            // 
+            // filesTreeView
+            // 
+            this.filesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.filesTreeView.Location = new System.Drawing.Point(0, 31);
+            this.filesTreeView.Name = "filesTreeView";
+            this.filesTreeView.Size = new System.Drawing.Size(206, 523);
+            this.filesTreeView.TabIndex = 0;
+            this.filesTreeView.DoubleClick += new System.EventHandler(this.filesTreeView_DoubleClick);
+            this.filesTreeView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.filesTreeView_KeyUp);
             // 
             // toolStripDropDownButton1
             // 
@@ -618,6 +627,28 @@ namespace Canal.UserControls
             this.showFileTypes_custom.Size = new System.Drawing.Size(100, 23);
             this.showFileTypes_custom.TextChanged += new System.EventHandler(this.settings_sourceCodeFiles_Click);
             // 
+            // loaderImageToc
+            // 
+            this.loaderImageToc.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.loaderImageToc.Image = ((System.Drawing.Image)(resources.GetObject("loaderImageToc.Image")));
+            this.loaderImageToc.Location = new System.Drawing.Point(3, 28);
+            this.loaderImageToc.Name = "loaderImageToc";
+            this.loaderImageToc.Size = new System.Drawing.Size(257, 526);
+            this.loaderImageToc.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.loaderImageToc.TabIndex = 3;
+            this.loaderImageToc.TabStop = false;
+            // 
+            // loaderImageInfoTab
+            // 
+            this.loaderImageInfoTab.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.loaderImageInfoTab.Image = ((System.Drawing.Image)(resources.GetObject("loaderImageInfoTab.Image")));
+            this.loaderImageInfoTab.Location = new System.Drawing.Point(3, 3);
+            this.loaderImageInfoTab.Name = "loaderImageInfoTab";
+            this.loaderImageInfoTab.Size = new System.Drawing.Size(200, 551);
+            this.loaderImageInfoTab.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.loaderImageInfoTab.TabIndex = 4;
+            this.loaderImageInfoTab.TabStop = false;
+            // 
             // FileControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -627,20 +658,20 @@ namespace Canal.UserControls
             this.Name = "FileControl";
             this.Size = new System.Drawing.Size(1173, 583);
             this.structureTabControl.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.tocTabPage.ResumeLayout(false);
+            this.tocTabPage.PerformLayout();
             this.tocToolStrip.ResumeLayout(false);
             this.tocToolStrip.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.performsTabPage.ResumeLayout(false);
+            this.performsTabPage.PerformLayout();
             this.performsToolStrip.ResumeLayout(false);
             this.performsToolStrip.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
+            this.variablesTabPage.ResumeLayout(false);
+            this.variablesTabPage.PerformLayout();
             this.variablesToolStrip.ResumeLayout(false);
             this.variablesToolStrip.PerformLayout();
-            this.proceduresTab.ResumeLayout(false);
-            this.proceduresTab.PerformLayout();
+            this.proceduresTabPage.ResumeLayout(false);
+            this.proceduresTabPage.PerformLayout();
             this.proceduresToolStrip.ResumeLayout(false);
             this.proceduresToolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.codeBox)).EndInit();
@@ -656,8 +687,13 @@ namespace Canal.UserControls
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerRight)).EndInit();
             this.splitContainerRight.ResumeLayout(false);
             this.infoTabControl.ResumeLayout(false);
-            this.directoryTabPage.ResumeLayout(false);
-            this.directoryTabPage.PerformLayout();
+            this.infoTabPage.ResumeLayout(false);
+            this.filesTabPage.ResumeLayout(false);
+            this.filesTabPage.PerformLayout();
+            this.filesTabToolStrip.ResumeLayout(false);
+            this.filesTabToolStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.loaderImageToc)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.loaderImageInfoTab)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -666,12 +702,12 @@ namespace Canal.UserControls
         private System.Windows.Forms.TreeView treeView;
         private FastColoredTextBox codeBox;
         private System.Windows.Forms.TabControl structureTabControl;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tocTabPage;
+        private System.Windows.Forms.TabPage performsTabPage;
         private System.Windows.Forms.TreeView performsTreeView;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage variablesTabPage;
         private System.Windows.Forms.TreeView variablesTreeView;
-        private System.Windows.Forms.TabPage proceduresTab;
+        private System.Windows.Forms.TabPage proceduresTabPage;
         private System.Windows.Forms.TreeView proceduresTreeView;
         private System.Windows.Forms.ToolStrip tocToolStrip;
         private System.Windows.Forms.ToolStripButton TocCopyButton;
@@ -691,7 +727,7 @@ namespace Canal.UserControls
         private System.Windows.Forms.ToolStripButton proceduresCollapseAllButton;
         private System.Windows.Forms.SplitContainer splitContainerTop;
         private System.Windows.Forms.SplitContainer splitContainerRight;
-        private System.Windows.Forms.TabPage directoryTabPage;
+        private System.Windows.Forms.TabPage filesTabPage;
         private System.Windows.Forms.TabPage infoTabPage;
         private System.Windows.Forms.TabControl infoTabControl;
         private System.Windows.Forms.ToolStrip codeViewToolStrip;
@@ -707,5 +743,7 @@ namespace Canal.UserControls
         private System.Windows.Forms.ToolStripMenuItem showFileTypes_txt;
         private System.Windows.Forms.ToolStripMenuItem showFileTypes_src;
         private System.Windows.Forms.ToolStripTextBox showFileTypes_custom;
+        private PictureBox loaderImageToc;
+        private PictureBox loaderImageInfoTab;
     }
 }
