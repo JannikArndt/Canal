@@ -120,17 +120,8 @@
   <metadata name="tocToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="performsToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>240, 17</value>
-  </metadata>
-  <metadata name="variablesToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>345, 17</value>
-  </metadata>
-  <metadata name="proceduresToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>135, 17</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="exportTocButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="TocCopyButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHJSURBVDhPvZHdK4NhGMb3pzAt4dgfIPmMosgBB8pHjnbA
@@ -144,13 +135,6 @@
         gsd7A8Wc0VfbPf1MAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="TocExpandAllButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABISURBVDhPYxhc4Nu3b/+JxVAtqAAk4eTkRBDTx4AP7z9i
-        YLIMYAieQ74BIM0wTJYBMENgbLIMQMYkGYAP09YAYjFUy9AHDAwALXVUItsXe+wAAAAASUVORK5CYII=
-</value>
-  </data>
   <data name="TocCollapseAllButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -158,6 +142,16 @@
         YPobwBA8B47JMgAd09cAfJi2BhCLoVqGPmBgAABFsVfkaPROQAAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="TocExpandAllButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABISURBVDhPYxhc4Nu3b/+JxVAtqAAk4eTkRBDTx4AP7z9i
+        YLIMYAieQ74BIM0wTJYBMENgbLIMQMYkGYAP09YAYjFUy9AHDAwALXVUItsXe+wAAAAASUVORK5CYII=
+</value>
+  </data>
+  <metadata name="performsToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>240, 17</value>
+  </metadata>
   <data name="performsCopyButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -172,13 +166,6 @@
         gsd7A8Wc0VfbPf1MAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="performsExpandAllButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABISURBVDhPYxhc4Nu3b/+JxVAtqAAk4eTkRBDTx4AP7z9i
-        YLIMYAieQ74BIM0wTJYBMENgbLIMQMYkGYAP09YAYjFUy9AHDAwALXVUItsXe+wAAAAASUVORK5CYII=
-</value>
-  </data>
   <data name="performsCollapseAllButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -186,6 +173,16 @@
         YPobwBA8B47JMgAd09cAfJi2BhCLoVqGPmBgAABFsVfkaPROQAAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="performsExpandAllButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABISURBVDhPYxhc4Nu3b/+JxVAtqAAk4eTkRBDTx4AP7z9i
+        YLIMYAieQ74BIM0wTJYBMENgbLIMQMYkGYAP09YAYjFUy9AHDAwALXVUItsXe+wAAAAASUVORK5CYII=
+</value>
+  </data>
+  <metadata name="variablesToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>345, 17</value>
+  </metadata>
   <data name="variablesCopyButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -200,13 +197,6 @@
         gsd7A8Wc0VfbPf1MAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="variablesExpandAllButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABISURBVDhPYxhc4Nu3b/+JxVAtqAAk4eTkRBDTx4AP7z9i
-        YLIMYAieQ74BIM0wTJYBMENgbLIMQMYkGYAP09YAYjFUy9AHDAwALXVUItsXe+wAAAAASUVORK5CYII=
-</value>
-  </data>
   <data name="variablesCollapseAllButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -214,7 +204,17 @@
         YPobwBA8B47JMgAd09cAfJi2BhCLoVqGPmBgAABFsVfkaPROQAAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="CopyProceduresButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="variablesExpandAllButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABISURBVDhPYxhc4Nu3b/+JxVAtqAAk4eTkRBDTx4AP7z9i
+        YLIMYAieQ74BIM0wTJYBMENgbLIMQMYkGYAP09YAYjFUy9AHDAwALXVUItsXe+wAAAAASUVORK5CYII=
+</value>
+  </data>
+  <metadata name="proceduresToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>135, 17</value>
+  </metadata>
+  <data name="proceduresCopyButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHJSURBVDhPvZHdK4NhGMb3pzAt4dgfIPmMosgBB8pHjnbA
@@ -228,18 +228,18 @@
         gsd7A8Wc0VfbPf1MAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="proceduresExpandAllButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABISURBVDhPYxhc4Nu3b/+JxVAtqAAk4eTkRBDTx4AP7z9i
-        YLIMYAieQ74BIM0wTJYBMENgbLIMQMYkGYAP09YAYjFUy9AHDAwALXVUItsXe+wAAAAASUVORK5CYII=
-</value>
-  </data>
   <data name="proceduresCollapseAllButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA+SURBVDhPYxhc4Nu3b/+JxVAtqAAk4eTkRBDTx4AP7z9i
         YPobwBA8B47JMgAd09cAfJi2BhCLoVqGPmBgAABFsVfkaPROQAAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="proceduresExpandAllButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABISURBVDhPYxhc4Nu3b/+JxVAtqAAk4eTkRBDTx4AP7z9i
+        YLIMYAieQ74BIM0wTJYBMENgbLIMQMYkGYAP09YAYjFUy9AHDAwALXVUItsXe+wAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="codeBox.Hotkeys" xml:space="preserve">

@@ -1,4 +1,5 @@
 ﻿using FastColoredTextBoxNS;
+using System.Windows.Forms;
 
 namespace Canal.UserControls
 {
@@ -37,28 +38,28 @@ namespace Canal.UserControls
             this.structureTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tocToolStrip = new System.Windows.Forms.ToolStrip();
-            this.exportTocButton = new System.Windows.Forms.ToolStripButton();
-            this.TocExpandAllButton = new System.Windows.Forms.ToolStripButton();
+            this.TocCopyButton = new System.Windows.Forms.ToolStripButton();
             this.TocCollapseAllButton = new System.Windows.Forms.ToolStripButton();
+            this.TocExpandAllButton = new System.Windows.Forms.ToolStripButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.performsToolStrip = new System.Windows.Forms.ToolStrip();
             this.performsCopyButton = new System.Windows.Forms.ToolStripButton();
-            this.performsExpandAllButton = new System.Windows.Forms.ToolStripButton();
             this.performsCollapseAllButton = new System.Windows.Forms.ToolStripButton();
+            this.performsExpandAllButton = new System.Windows.Forms.ToolStripButton();
             this.performsTreeView = new System.Windows.Forms.TreeView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.variablesToolStrip = new System.Windows.Forms.ToolStrip();
             this.variablesCopyButton = new System.Windows.Forms.ToolStripButton();
-            this.variablesExpandAllButton = new System.Windows.Forms.ToolStripButton();
             this.variablesCollapseAllButton = new System.Windows.Forms.ToolStripButton();
+            this.variablesExpandAllButton = new System.Windows.Forms.ToolStripButton();
             this.variablesTreeView = new System.Windows.Forms.TreeView();
             this.proceduresTab = new System.Windows.Forms.TabPage();
             this.proceduresToolStrip = new System.Windows.Forms.ToolStrip();
-            this.CopyProceduresButton = new System.Windows.Forms.ToolStripButton();
-            this.proceduresExpandAllButton = new System.Windows.Forms.ToolStripButton();
+            this.proceduresCopyButton = new System.Windows.Forms.ToolStripButton();
             this.proceduresCollapseAllButton = new System.Windows.Forms.ToolStripButton();
+            this.proceduresExpandAllButton = new System.Windows.Forms.ToolStripButton();
             this.proceduresTreeView = new System.Windows.Forms.TreeView();
-            this.codeBox = new FastColoredTextBox();
+            this.codeBox = new FastColoredTextBoxNS.FastColoredTextBox();
             this.splitContainerTop = new System.Windows.Forms.SplitContainer();
             this.codeViewToolStrip = new System.Windows.Forms.ToolStrip();
             this.searchBox = new System.Windows.Forms.ToolStripTextBox();
@@ -70,13 +71,13 @@ namespace Canal.UserControls
             this.infoTabPage = new System.Windows.Forms.TabPage();
             this.directoryTabPage = new System.Windows.Forms.TabPage();
             this.filesTabToolStrip = new System.Windows.Forms.ToolStrip();
+            this.filesTreeView = new System.Windows.Forms.TreeView();
             this.filesTabSearchBox = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.showFileTypes_cob = new System.Windows.Forms.ToolStripMenuItem();
             this.showFileTypes_txt = new System.Windows.Forms.ToolStripMenuItem();
             this.showFileTypes_src = new System.Windows.Forms.ToolStripMenuItem();
             this.showFileTypes_custom = new System.Windows.Forms.ToolStripTextBox();
-            this.filesTreeView = new System.Windows.Forms.TreeView();
             this.structureTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tocToolStrip.SuspendLayout();
@@ -98,7 +99,6 @@ namespace Canal.UserControls
             this.splitContainerRight.SuspendLayout();
             this.infoTabControl.SuspendLayout();
             this.directoryTabPage.SuspendLayout();
-            this.filesTabToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeView
@@ -144,31 +144,25 @@ namespace Canal.UserControls
             // tocToolStrip
             // 
             this.tocToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tocToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TocCopyButton,
+            this.TocCollapseAllButton,
+            this.TocExpandAllButton});
             this.tocToolStrip.Location = new System.Drawing.Point(3, 3);
             this.tocToolStrip.Name = "tocToolStrip";
             this.tocToolStrip.Size = new System.Drawing.Size(257, 25);
             this.tocToolStrip.TabIndex = 2;
             this.tocToolStrip.Text = "toolStrip1";
             // 
-            // exportTocButton
+            // TocCopyButton
             // 
-            this.exportTocButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.exportTocButton.Image = ((System.Drawing.Image)(resources.GetObject("exportTocButton.Image")));
-            this.exportTocButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.exportTocButton.Name = "exportTocButton";
-            this.exportTocButton.Size = new System.Drawing.Size(23, 22);
-            this.exportTocButton.Text = "Copy";
-            this.exportTocButton.Click += new System.EventHandler(this.ExportTocClick);
-            // 
-            // TocExpandAllButton
-            // 
-            this.TocExpandAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TocExpandAllButton.Image = ((System.Drawing.Image)(resources.GetObject("TocExpandAllButton.Image")));
-            this.TocExpandAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TocExpandAllButton.Name = "TocExpandAllButton";
-            this.TocExpandAllButton.Size = new System.Drawing.Size(23, 22);
-            this.TocExpandAllButton.Text = "Expand all";
-            this.TocExpandAllButton.Click += new System.EventHandler(this.TocExpandAllButton_Click);
+            this.TocCopyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TocCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("TocCopyButton.Image")));
+            this.TocCopyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TocCopyButton.Name = "TocCopyButton";
+            this.TocCopyButton.Size = new System.Drawing.Size(23, 22);
+            this.TocCopyButton.Text = "Copy";
+            this.TocCopyButton.Click += new System.EventHandler(this.ExportTocClick);
             // 
             // TocCollapseAllButton
             // 
@@ -179,6 +173,16 @@ namespace Canal.UserControls
             this.TocCollapseAllButton.Size = new System.Drawing.Size(23, 22);
             this.TocCollapseAllButton.Text = "Collapse All";
             this.TocCollapseAllButton.Click += new System.EventHandler(this.TocCollapseAllButton_Click);
+            // 
+            // TocExpandAllButton
+            // 
+            this.TocExpandAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TocExpandAllButton.Image = ((System.Drawing.Image)(resources.GetObject("TocExpandAllButton.Image")));
+            this.TocExpandAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TocExpandAllButton.Name = "TocExpandAllButton";
+            this.TocExpandAllButton.Size = new System.Drawing.Size(23, 22);
+            this.TocExpandAllButton.Text = "Expand all";
+            this.TocExpandAllButton.Click += new System.EventHandler(this.TocExpandAllButton_Click);
             // 
             // tabPage2
             // 
@@ -195,6 +199,10 @@ namespace Canal.UserControls
             // performsToolStrip
             // 
             this.performsToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.performsToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.performsCopyButton,
+            this.performsCollapseAllButton,
+            this.performsExpandAllButton});
             this.performsToolStrip.Location = new System.Drawing.Point(3, 3);
             this.performsToolStrip.Name = "performsToolStrip";
             this.performsToolStrip.Size = new System.Drawing.Size(257, 25);
@@ -211,16 +219,6 @@ namespace Canal.UserControls
             this.performsCopyButton.Text = "Copy";
             this.performsCopyButton.Click += new System.EventHandler(this.performsCopyButton_Click);
             // 
-            // performsExpandAllButton
-            // 
-            this.performsExpandAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.performsExpandAllButton.Image = ((System.Drawing.Image)(resources.GetObject("performsExpandAllButton.Image")));
-            this.performsExpandAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.performsExpandAllButton.Name = "performsExpandAllButton";
-            this.performsExpandAllButton.Size = new System.Drawing.Size(23, 22);
-            this.performsExpandAllButton.Text = "Expand all";
-            this.performsExpandAllButton.Click += new System.EventHandler(this.performsExpandAllButton_Click);
-            // 
             // performsCollapseAllButton
             // 
             this.performsCollapseAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -230,6 +228,16 @@ namespace Canal.UserControls
             this.performsCollapseAllButton.Size = new System.Drawing.Size(23, 22);
             this.performsCollapseAllButton.Text = "Collapse All";
             this.performsCollapseAllButton.Click += new System.EventHandler(this.performsCollapseAllButton_Click);
+            // 
+            // performsExpandAllButton
+            // 
+            this.performsExpandAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.performsExpandAllButton.Image = ((System.Drawing.Image)(resources.GetObject("performsExpandAllButton.Image")));
+            this.performsExpandAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.performsExpandAllButton.Name = "performsExpandAllButton";
+            this.performsExpandAllButton.Size = new System.Drawing.Size(23, 22);
+            this.performsExpandAllButton.Text = "Expand all";
+            this.performsExpandAllButton.Click += new System.EventHandler(this.performsExpandAllButton_Click);
             // 
             // performsTreeView
             // 
@@ -259,6 +267,10 @@ namespace Canal.UserControls
             // variablesToolStrip
             // 
             this.variablesToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.variablesToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.variablesCopyButton,
+            this.variablesCollapseAllButton,
+            this.variablesExpandAllButton});
             this.variablesToolStrip.Location = new System.Drawing.Point(3, 3);
             this.variablesToolStrip.Name = "variablesToolStrip";
             this.variablesToolStrip.Size = new System.Drawing.Size(257, 25);
@@ -275,16 +287,6 @@ namespace Canal.UserControls
             this.variablesCopyButton.Text = "Copy";
             this.variablesCopyButton.Click += new System.EventHandler(this.variablesCopyButton_Click);
             // 
-            // variablesExpandAllButton
-            // 
-            this.variablesExpandAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.variablesExpandAllButton.Image = ((System.Drawing.Image)(resources.GetObject("variablesExpandAllButton.Image")));
-            this.variablesExpandAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.variablesExpandAllButton.Name = "variablesExpandAllButton";
-            this.variablesExpandAllButton.Size = new System.Drawing.Size(23, 22);
-            this.variablesExpandAllButton.Text = "Expand all";
-            this.variablesExpandAllButton.Click += new System.EventHandler(this.variablesExpandAllButton_Click);
-            // 
             // variablesCollapseAllButton
             // 
             this.variablesCollapseAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -294,6 +296,16 @@ namespace Canal.UserControls
             this.variablesCollapseAllButton.Size = new System.Drawing.Size(23, 22);
             this.variablesCollapseAllButton.Text = "Collapse All";
             this.variablesCollapseAllButton.Click += new System.EventHandler(this.variablesCollapseAllButton_Click);
+            // 
+            // variablesExpandAllButton
+            // 
+            this.variablesExpandAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.variablesExpandAllButton.Image = ((System.Drawing.Image)(resources.GetObject("variablesExpandAllButton.Image")));
+            this.variablesExpandAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.variablesExpandAllButton.Name = "variablesExpandAllButton";
+            this.variablesExpandAllButton.Size = new System.Drawing.Size(23, 22);
+            this.variablesExpandAllButton.Text = "Expand all";
+            this.variablesExpandAllButton.Click += new System.EventHandler(this.variablesExpandAllButton_Click);
             // 
             // variablesTreeView
             // 
@@ -323,31 +335,25 @@ namespace Canal.UserControls
             // proceduresToolStrip
             // 
             this.proceduresToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.proceduresToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.proceduresCopyButton,
+            this.proceduresCollapseAllButton,
+            this.proceduresExpandAllButton});
             this.proceduresToolStrip.Location = new System.Drawing.Point(3, 3);
             this.proceduresToolStrip.Name = "proceduresToolStrip";
             this.proceduresToolStrip.Size = new System.Drawing.Size(257, 25);
             this.proceduresToolStrip.TabIndex = 1;
             this.proceduresToolStrip.Text = "toolStrip1";
             // 
-            // CopyProceduresButton
+            // proceduresCopyButton
             // 
-            this.CopyProceduresButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.CopyProceduresButton.Image = ((System.Drawing.Image)(resources.GetObject("CopyProceduresButton.Image")));
-            this.CopyProceduresButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.CopyProceduresButton.Name = "CopyProceduresButton";
-            this.CopyProceduresButton.Size = new System.Drawing.Size(23, 22);
-            this.CopyProceduresButton.Text = "Copy";
-            this.CopyProceduresButton.Click += new System.EventHandler(this.CopyProceduresClick);
-            // 
-            // proceduresExpandAllButton
-            // 
-            this.proceduresExpandAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.proceduresExpandAllButton.Image = ((System.Drawing.Image)(resources.GetObject("proceduresExpandAllButton.Image")));
-            this.proceduresExpandAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.proceduresExpandAllButton.Name = "proceduresExpandAllButton";
-            this.proceduresExpandAllButton.Size = new System.Drawing.Size(23, 22);
-            this.proceduresExpandAllButton.Text = "Expand all";
-            this.proceduresExpandAllButton.Click += new System.EventHandler(this.proceduresExpandAllButton_Click);
+            this.proceduresCopyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.proceduresCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("proceduresCopyButton.Image")));
+            this.proceduresCopyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.proceduresCopyButton.Name = "proceduresCopyButton";
+            this.proceduresCopyButton.Size = new System.Drawing.Size(23, 22);
+            this.proceduresCopyButton.Text = "Copy";
+            this.proceduresCopyButton.Click += new System.EventHandler(this.CopyProceduresClick);
             // 
             // proceduresCollapseAllButton
             // 
@@ -358,6 +364,16 @@ namespace Canal.UserControls
             this.proceduresCollapseAllButton.Size = new System.Drawing.Size(23, 22);
             this.proceduresCollapseAllButton.Text = "Collapse All";
             this.proceduresCollapseAllButton.Click += new System.EventHandler(this.proceduresCollapseAllButton_Click);
+            // 
+            // proceduresExpandAllButton
+            // 
+            this.proceduresExpandAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.proceduresExpandAllButton.Image = ((System.Drawing.Image)(resources.GetObject("proceduresExpandAllButton.Image")));
+            this.proceduresExpandAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.proceduresExpandAllButton.Name = "proceduresExpandAllButton";
+            this.proceduresExpandAllButton.Size = new System.Drawing.Size(23, 22);
+            this.proceduresExpandAllButton.Text = "Expand all";
+            this.proceduresExpandAllButton.Click += new System.EventHandler(this.proceduresExpandAllButton_Click);
             // 
             // proceduresTreeView
             // 
@@ -527,11 +543,24 @@ namespace Canal.UserControls
             // filesTabToolStrip
             // 
             this.filesTabToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            filesTabToolStrip.Items.AddRange(new ToolStripItem[] { filesTabSearchBox });
             this.filesTabToolStrip.Location = new System.Drawing.Point(3, 3);
             this.filesTabToolStrip.Name = "filesTabToolStrip";
             this.filesTabToolStrip.Size = new System.Drawing.Size(200, 25);
             this.filesTabToolStrip.TabIndex = 1;
             this.filesTabToolStrip.Text = "toolStrip1";
+            // 
+            // filesTreeView
+            // 
+            this.filesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.filesTreeView.Location = new System.Drawing.Point(0, 31);
+            this.filesTreeView.Name = "filesTreeView";
+            this.filesTreeView.Size = new System.Drawing.Size(206, 523);
+            this.filesTreeView.TabIndex = 0;
+            this.filesTreeView.DoubleClick += new System.EventHandler(this.filesTreeView_DoubleClick);
+            this.filesTreeView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.filesTreeView_KeyUp);
             // 
             // filesTabSearchBox
             // 
@@ -589,18 +618,6 @@ namespace Canal.UserControls
             this.showFileTypes_custom.Size = new System.Drawing.Size(100, 23);
             this.showFileTypes_custom.TextChanged += new System.EventHandler(this.settings_sourceCodeFiles_Click);
             // 
-            // filesTreeView
-            // 
-            this.filesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.filesTreeView.Location = new System.Drawing.Point(0, 31);
-            this.filesTreeView.Name = "filesTreeView";
-            this.filesTreeView.Size = new System.Drawing.Size(206, 523);
-            this.filesTreeView.TabIndex = 0;
-            this.filesTreeView.DoubleClick += new System.EventHandler(this.filesTreeView_DoubleClick);
-            this.filesTreeView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.filesTreeView_KeyUp);
-            // 
             // FileControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -641,8 +658,6 @@ namespace Canal.UserControls
             this.infoTabControl.ResumeLayout(false);
             this.directoryTabPage.ResumeLayout(false);
             this.directoryTabPage.PerformLayout();
-            this.filesTabToolStrip.ResumeLayout(false);
-            this.filesTabToolStrip.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -659,9 +674,9 @@ namespace Canal.UserControls
         private System.Windows.Forms.TabPage proceduresTab;
         private System.Windows.Forms.TreeView proceduresTreeView;
         private System.Windows.Forms.ToolStrip tocToolStrip;
-        private System.Windows.Forms.ToolStripButton exportTocButton;
+        private System.Windows.Forms.ToolStripButton TocCopyButton;
         private System.Windows.Forms.ToolStrip proceduresToolStrip;
-        private System.Windows.Forms.ToolStripButton CopyProceduresButton;
+        private System.Windows.Forms.ToolStripButton proceduresCopyButton;
         private System.Windows.Forms.ToolStripButton TocExpandAllButton;
         private System.Windows.Forms.ToolStripButton TocCollapseAllButton;
         private System.Windows.Forms.ToolStrip performsToolStrip;
