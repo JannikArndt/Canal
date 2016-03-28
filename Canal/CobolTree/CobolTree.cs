@@ -1,6 +1,5 @@
 ﻿namespace Canal.CobolTree
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows.Forms;
@@ -17,7 +16,7 @@
 
         public ProcedureDivision ProcedureDivision { get; set; }
 
-        public List<Procedure> AllProcedures
+        public IEnumerable<Procedure> AllProcedures
         {
             get
             {
@@ -37,71 +36,30 @@
             }
         }
 
-        public string Name { get; private set; }
-
         public int LinesOfCode { get { return Divisions.Sum(div => div.LinesOfCode); } }
 
-        public TreeNode AsTreeNodes
+        private readonly string _name;
+
+        public CobolTree(string name)
         {
-            get
-            {
-                var result = new TreeNode(Name);
-                if (IdentificationDivision != null)
-                    result.Nodes.Add(IdentificationDivision);
-
-                if (EnvironmentDivision != null)
-                    result.Nodes.Add(EnvironmentDivision);
-
-                if (DataDivision != null)
-                    result.Nodes.Add(DataDivision);
-
-                if (ProcedureDivision != null)
-                    result.Nodes.Add(ProcedureDivision);
-                return result;
-            }
+            _name = name;
         }
 
-        public CobolTree(string code, string name)
+        public TreeNode GetAsTreeNodes()
         {
-            Name = name;
+            var result = new TreeNode(_name);
+            if (IdentificationDivision != null)
+                result.Nodes.Add(IdentificationDivision);
 
-            var sourceCode = TextUtil.TrimAllLines(code);
+            if (EnvironmentDivision != null)
+                result.Nodes.Add(EnvironmentDivision);
 
-            int indexIdentificationDivision = sourceCode.IndexOf("IDENTIFICATION DIVISION", StringComparison.Ordinal);
-            int indexEnvironmentDivision = sourceCode.IndexOf("ENVIRONMENT DIVISION", StringComparison.Ordinal);
-            int indexDataDivision = sourceCode.IndexOf("DATA DIVISION", StringComparison.Ordinal);
-            int indexProcedureDivision = sourceCode.IndexOf("PROCEDURE DIVISION", StringComparison.Ordinal);
+            if (DataDivision != null)
+                result.Nodes.Add(DataDivision);
 
-            IdentificationDivision = indexIdentificationDivision > 0
-                ? new IdentificationDivision(sourceCode.Substring(indexProcedureDivision, Math.Max(0, indexEnvironmentDivision - indexIdentificationDivision)), indexIdentificationDivision)
-                : new IdentificationDivision("", 0);
-
-            EnvironmentDivision = indexEnvironmentDivision > 0
-                ? new EnvironmentDivision(sourceCode.Substring(indexEnvironmentDivision, Math.Max(0, indexDataDivision - indexEnvironmentDivision)), indexEnvironmentDivision)
-                : new EnvironmentDivision("", 0);
-
-            DataDivision = indexDataDivision > 0
-                ? new DataDivision(sourceCode.Substring(indexDataDivision, Math.Max(0, indexProcedureDivision - indexDataDivision)), indexDataDivision)
-                : new DataDivision("", 0);
-
-            ProcedureDivision = indexProcedureDivision > 0
-                ? new ProcedureDivision(sourceCode.Substring(indexProcedureDivision, Math.Max(0, sourceCode.Length - indexProcedureDivision)), indexProcedureDivision)
-                : new ProcedureDivision("", 0);
-
-            foreach (var procedure in AllProcedures)
-            {
-                procedure.AnalyzeVariables(DataDivision.Variables);
-                procedure.AnalyzePerformReferences();
-                procedure.AnalyzeGoTos();
-                procedure.AnalyzeCalls();
-            }
-
-            // fix deeper references
-            foreach (var performReference in AllProcedures.SelectMany(procedure => procedure.PerformReferences.Where(pref => pref.Procedure == null)))
-            {
-                performReference.Procedure = AllProcedures.FirstOrDefault(p => p.Name == performReference.ReferencedProcedure);
-            }
-
+            if (ProcedureDivision != null)
+                result.Nodes.Add(ProcedureDivision);
+            return result;
         }
     }
 }

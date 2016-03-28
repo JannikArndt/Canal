@@ -6,7 +6,7 @@ namespace Canal.CobolTree
 {
     public abstract class Division : CobolTreeNode
     {
-        public string OriginalSource { get; set; }
+        public string OriginalSource { get; private set; }
 
         protected readonly List<string> Lines;
 

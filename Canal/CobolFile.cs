@@ -7,7 +7,7 @@ namespace Canal
 
     public class CobolFile
     {
-        public string Name;
+        public string Name { get; set; }
 
         public string Text { get; set; }
 
@@ -15,9 +15,9 @@ namespace Canal
 
         public Dictionary<string, string> Infos { get; set; }
 
-        public List<Variable> Variables { get { return CobolTree.Variables; } }
+        public List<Variable> Variables { get { return CobolTree == null ? new List<Variable>() : CobolTree.Variables; } }
 
-        public List<FileReference> CallReferences { get { return CobolTree.CallReferences; } }
+        public List<FileReference> CallReferences { get { return CobolTree == null ? new List<FileReference>() : CobolTree.CallReferences; } }
 
         public CobolTree.CobolTree CobolTree { get; set; }
 
@@ -25,17 +25,6 @@ namespace Canal
         {
             Name = name;
             Text = text;
-            CobolTree = new CobolTree.CobolTree(Text, Name);
-            Infos = new Dictionary<string, string>
-            {
-                {"Name", Name },
-                {"Lines of Code", CobolTree.LinesOfCode.ToString() }
-            };
-        }
-
-        public void RebuildTree()
-        {
-            CobolTree = new CobolTree.CobolTree(Text, Name);
         }
     }
 }

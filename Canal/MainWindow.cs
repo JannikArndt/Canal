@@ -1,6 +1,5 @@
 ﻿using Canal.Properties;
 using Canal.UserControls;
-using FastColoredTextBoxNS;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -17,16 +16,6 @@ namespace Canal
     public partial class MainWindow : Form
     {
         private readonly TabUtil _tabUtil;
-
-        public FastColoredTextBox CurrentCodeBox
-        {
-            get
-            {
-                if (_tabUtil.CurrentFileControl != null && _tabUtil.CurrentFileControl.CodeBox != null)
-                    return _tabUtil.CurrentFileControl.CodeBox;
-                return null;
-            }
-        }
 
         public MainWindow(string[] files = null)
         {
@@ -71,7 +60,6 @@ namespace Canal
             {
                 var file = FileUtil.Get(filename);
                 _tabUtil.AddTab(file);
-
             }
             catch (Exception exception)
             {

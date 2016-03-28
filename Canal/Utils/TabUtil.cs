@@ -1,9 +1,10 @@
-﻿using Canal.Events;
+﻿using Canal.CobolTree;
+using Canal.Events;
 using Canal.Properties;
+using Canal.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Canal.UserControls;
 
 namespace Canal.Utils
 {
@@ -109,6 +110,13 @@ namespace Canal.Utils
             newTab.Controls.Add(fileControl);
             _tabControl.Controls.Add(newTab);
             _tabControl.SelectTab(newTab);
+
+            // Build the CobolTree in the CobolFile which contains all analysis information
+            var builder = new CobolTreeBuilder();
+            builder.Build(file); // TODO Async
+
+            // Display the analysis info in side tabs
+            fileControl.InitTabs();
         }
 
         private void UsedFileTypesChanged(object sender, UsedFileTypesChangedEventArgs usedFileTypesChangedEventArgs)

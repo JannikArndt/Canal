@@ -2,7 +2,6 @@
 using Canal.Events;
 using Canal.Properties;
 using Canal.Utils;
-using FastColoredTextBoxNS;
 using FastColoredTextBoxNS.Enums;
 using FastColoredTextBoxNS.Events;
 using System;
@@ -20,11 +19,9 @@ namespace Canal.UserControls
 
         public event EventHandler<UsedFileTypesChangedEventArgs> UsedFileTypesChanged;
 
-        public FastColoredTextBox CodeBox { get { return codeBox; } }
-
         private readonly MainWindow _parent;
 
-        private readonly FileInfo _fileInfoControl;
+        private FileInfo _fileInfoControl;
 
         public FileControl(CobolFile file, MainWindow parent)
         {
@@ -45,11 +42,22 @@ namespace Canal.UserControls
                 codeBox.FunctionKeyPressed += HandleFunctionKeyInCodeBox;
 
                 searchBox.Text = Resources.SearchPlaceholder;
+            }
+            catch (Exception exception)
+            {
+                ErrorHandling.Exception(exception);
+                MessageBox.Show(Resources.ErrorMessage_FileControl_Constructor + exception.Message, Resources.Error, MessageBoxButtons.OK);
+            }
+        }
 
-                treeView.Nodes.Add(CobolFile.CobolTree.AsTreeNodes);
+        public void InitTabs()
+        {
+            try
+            {
+                treeView.Nodes.Add(CobolFile.CobolTree.GetAsTreeNodes());
                 treeView.ExpandAll();
 
-                performsTreeView.Nodes.Add(ReferenceUtil.GetPerformTree(file));
+                performsTreeView.Nodes.Add(ReferenceUtil.GetPerformTree(CobolFile));
                 performsTreeView.ExpandAll();
 
                 ShowProceduresTreeView(true);

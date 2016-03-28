@@ -41,7 +41,7 @@ namespace Canal.Utils
                 }
                 else if (currentVariable.Level < lastVariable.Level || (currentVariable.Level != 88 && lastVariable.Level == 88))
                 {
-                    while (currentVariable.Level <= lastVariable.Level)
+                    while (currentVariable.Level <= lastVariable.Level && lastVariable != null)
                         lastVariable = lastVariable.Parent;
 
                     currentVariable.Parent = lastVariable;
@@ -52,7 +52,8 @@ namespace Canal.Utils
                 else if (lastVariable.Level == currentVariable.Level)
                 {
                     currentVariable.Parent = lastVariable.Parent;
-                    lastVariable.Parent.Variables.Add(currentVariable);
+                    if (lastVariable.Parent != null)
+                        lastVariable.Parent.Variables.Add(currentVariable);
                     lastVariable = currentVariable;
                 }
             }

@@ -33,7 +33,8 @@
                 file.Text = file.Text.Insert(lineAfterCopy + 1, copyFile.Text + Environment.NewLine);
             }
 
-            file.RebuildTree();
+            var builder = new CobolTreeBuilder();
+            builder.Build(file);
         }
 
         public static TreeNode GetPerformTree(CobolFile file)

@@ -102,6 +102,7 @@
   <ItemGroup>
     <Compile Include="CobolFile.cs" />
     <Compile Include="CobolTree\CobolTree.cs" />
+    <Compile Include="CobolTree\CobolTreeBuilder.cs" />
     <Compile Include="CobolTree\CobolTreeNode.cs" />
     <Compile Include="CobolTree\DataDivision.cs" />
     <Compile Include="CobolTree\Division.cs" />

@@ -4,16 +4,16 @@
 
     public abstract class CobolTreeNode : TreeNode
     {
-        public CobolTreeNode()
+        protected CobolTreeNode()
         {
         }
 
-        public CobolTreeNode(string nodeText, int indexDataDivision)
+        protected CobolTreeNode(string nodeText, int indexDataDivision)
             : base(nodeText)
         {
             IndexInSource = indexDataDivision;
         }
 
-        public int IndexInSource { get; set; }
+        public int IndexInSource { get; private set; }
     }
 }
