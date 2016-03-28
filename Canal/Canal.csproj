@@ -136,10 +136,10 @@
       <DependentUpon>FileInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\ErrorHandling.cs" />
-    <Compile Include="TextViewer.cs">
+    <Compile Include="UserControls\TextViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TextViewer.Designer.cs">
+    <Compile Include="UserControls\TextViewer.Designer.cs">
       <DependentUpon>TextViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\WordInfo.cs">
@@ -152,17 +152,17 @@
     <Compile Include="Utils\Literal.cs" />
     <Compile Include="Utils\SourceCodePro.cs" />
     <Compile Include="Utils\TextUtil.cs" />
-    <Compile Include="CodeBox.cs">
+    <Compile Include="UserControls\CodeBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CodeBox.Designer.cs">
+    <Compile Include="UserControls\CodeBox.Designer.cs">
       <DependentUpon>CodeBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\Constants.cs" />
-    <Compile Include="FileControl.cs">
+    <Compile Include="UserControls\FileControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="FileControl.Designer.cs">
+    <Compile Include="UserControls\FileControl.Designer.cs">
       <DependentUpon>FileControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\FileReference.cs" />
@@ -178,7 +178,7 @@
     <Compile Include="Utils\ReferenceUtil.cs" />
     <Compile Include="Utils\TabUtil.cs" />
     <Compile Include="Utils\VariablesUtil.cs" />
-    <EmbeddedResource Include="FileControl.resx">
+    <EmbeddedResource Include="UserControls\FileControl.resx">
       <DependentUpon>FileControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
@@ -193,7 +193,7 @@
     <Content Include="Examples\RepWriteSumm.cbl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="TextViewer.resx">
+    <EmbeddedResource Include="UserControls\TextViewer.resx">
       <DependentUpon>TextViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\About.resx">

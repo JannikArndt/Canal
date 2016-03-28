@@ -1,4 +1,4 @@
-﻿namespace Canal
+﻿namespace Canal.UserControls
 {
     partial class CodeBox
     {
