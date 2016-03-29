@@ -1,4 +1,5 @@
 ﻿using Canal.Properties;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace Canal.Utils
@@ -98,7 +99,12 @@ namespace Canal.Utils
 
             Console.Write(@"Searching for Program " + programName);
 
-            var candidates = Files.Where(file => file.Key.Contains(programName)).Select(file => file.Value).ToList();
+            List<FileReference> candidates;
+
+            lock (Files)
+            {
+                candidates = Files.Where(file => file.Key.Contains(programName)).Select(file => file.Value).ToList();
+            }
 
             Console.WriteLine(candidates.Any() ? " => succeeded" : " => failed");
 
@@ -123,18 +129,20 @@ namespace Canal.Utils
                 if (folderPath == null)
                     return;
 
-                foreach (var fileSystemEntry in Directory.EnumerateFiles(folderPath, "*.*", SearchOption.AllDirectories)
-                    .Where(file => !new FileInfo(file).Attributes.HasFlag(FileAttributes.Hidden | FileAttributes.System)
-                            && file.IndexOf(@"\.", StringComparison.Ordinal) < 0))
+                lock (Files)
                 {
-                    if (!Files.ContainsKey(fileSystemEntry))
+                    foreach (var fileSystemEntry in Directory.EnumerateFiles(folderPath, "*.*", SearchOption.AllDirectories)
+                            .Where(file => !new FileInfo(file).Attributes.HasFlag(FileAttributes.Hidden | FileAttributes.System) && file.IndexOf(@"\.", StringComparison.Ordinal) < 0))
                     {
-                        var newRef = new FileReference(fileSystemEntry);
-                        Files.Add(fileSystemEntry, newRef);
-                        if (!DirectoriesAndFiles.ContainsKey(newRef.Directory))
-                            DirectoriesAndFiles.Add(newRef.Directory, new List<FileReference>());
+                        if (!Files.ContainsKey(fileSystemEntry))
+                        {
+                            var newRef = new FileReference(fileSystemEntry);
+                            Files.Add(fileSystemEntry, newRef);
+                            if (!DirectoriesAndFiles.ContainsKey(newRef.Directory))
+                                DirectoriesAndFiles.Add(newRef.Directory, new List<FileReference>());
 
-                        DirectoriesAndFiles[newRef.Directory].Add(newRef);
+                            DirectoriesAndFiles[newRef.Directory].Add(newRef);
+                        }
                     }
                 }
             }
@@ -173,8 +181,8 @@ namespace Canal.Utils
             // ReSharper disable once PossibleNullReferenceException Nope
             foreach (var dir in DirectoriesWithAllowedFiles.Keys.OrderBy(key => key))
             {
-                var foundFiles = DirectoriesAndFiles[dir]
-                    .Where(file => file.ProgramName.Contains(query))
+                var foundFiles = DirectoriesWithAllowedFiles[dir]
+                    .Where(file => CultureInfo.CurrentCulture.CompareInfo.IndexOf(file.ProgramName, query, CompareOptions.IgnoreCase) >= 0)
                     .Select(file => new TreeNode(file.ProgramName) { Tag = file }).ToArray();
 
                 if (foundFiles.Any())

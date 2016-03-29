@@ -67,6 +67,7 @@ namespace Canal.UserControls
             this.searchWithRegEx = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ResolveCopysButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.splitContainerRight = new System.Windows.Forms.SplitContainer();
             this.infoTabControl = new System.Windows.Forms.TabControl();
             this.infoTabPage = new System.Windows.Forms.TabPage();
@@ -74,13 +75,12 @@ namespace Canal.UserControls
             this.filesTabPage = new System.Windows.Forms.TabPage();
             this.filesTabToolStrip = new System.Windows.Forms.ToolStrip();
             this.filesTabSearchBox = new System.Windows.Forms.ToolStripTextBox();
-            this.filesTreeView = new System.Windows.Forms.TreeView();
-            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.fileTypeDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.showFileTypes_cob = new System.Windows.Forms.ToolStripMenuItem();
             this.showFileTypes_txt = new System.Windows.Forms.ToolStripMenuItem();
             this.showFileTypes_src = new System.Windows.Forms.ToolStripMenuItem();
             this.showFileTypes_custom = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.filesTreeView = new System.Windows.Forms.TreeView();
             this.structureTabControl.SuspendLayout();
             this.tocTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.loaderImageToc)).BeginInit();
@@ -510,6 +510,14 @@ namespace Canal.UserControls
             this.ResolveCopysButton.Text = "Resolve COPYs";
             this.ResolveCopysButton.Click += new System.EventHandler(this.ResolveCopysButton_Click);
             // 
+            // toolStripProgressBar
+            // 
+            this.toolStripProgressBar.Name = "toolStripProgressBar";
+            this.toolStripProgressBar.Size = new System.Drawing.Size(100, 22);
+            this.toolStripProgressBar.Step = 1;
+            this.toolStripProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.toolStripProgressBar.Visible = false;
+            // 
             // splitContainerRight
             // 
             this.splitContainerRight.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -576,7 +584,8 @@ namespace Canal.UserControls
             // 
             this.filesTabToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.filesTabToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.filesTabSearchBox});
+            this.filesTabSearchBox,
+            this.fileTypeDropDownButton});
             this.filesTabToolStrip.Location = new System.Drawing.Point(3, 3);
             this.filesTabToolStrip.Name = "filesTabToolStrip";
             this.filesTabToolStrip.Size = new System.Drawing.Size(200, 25);
@@ -592,32 +601,20 @@ namespace Canal.UserControls
             this.filesTabSearchBox.Leave += new System.EventHandler(this.searchBox_Leave);
             this.filesTabSearchBox.TextChanged += new System.EventHandler(this.filesTabSearchBox_TextChanged);
             // 
-            // filesTreeView
+            // fileTypeDropDownButton
             // 
-            this.filesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.filesTreeView.Location = new System.Drawing.Point(0, 31);
-            this.filesTreeView.Name = "filesTreeView";
-            this.filesTreeView.Size = new System.Drawing.Size(206, 523);
-            this.filesTreeView.TabIndex = 0;
-            this.filesTreeView.DoubleClick += new System.EventHandler(this.filesTreeView_DoubleClick);
-            this.filesTreeView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.filesTreeView_KeyUp);
-            // 
-            // toolStripDropDownButton1
-            // 
-            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileTypeDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.fileTypeDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showFileTypes_cob,
             this.showFileTypes_txt,
             this.showFileTypes_src,
             this.showFileTypes_custom});
-            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
-            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(29, 22);
-            this.toolStripDropDownButton1.Text = "File Types";
-            this.toolStripDropDownButton1.Click += new System.EventHandler(this.RefreshUsedFileTypes);
+            this.fileTypeDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("fileTypeDropDownButton.Image")));
+            this.fileTypeDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.fileTypeDropDownButton.Name = "fileTypeDropDownButton";
+            this.fileTypeDropDownButton.Size = new System.Drawing.Size(29, 22);
+            this.fileTypeDropDownButton.Text = "File Types";
+            this.fileTypeDropDownButton.Click += new System.EventHandler(this.RefreshUsedFileTypes);
             // 
             // showFileTypes_cob
             // 
@@ -651,13 +648,17 @@ namespace Canal.UserControls
             this.showFileTypes_custom.Size = new System.Drawing.Size(100, 23);
             this.showFileTypes_custom.TextChanged += new System.EventHandler(this.settings_sourceCodeFiles_Click);
             // 
-            // toolStripProgressBar
+            // filesTreeView
             // 
-            this.toolStripProgressBar.Name = "toolStripProgressBar";
-            this.toolStripProgressBar.Size = new System.Drawing.Size(100, 22);
-            this.toolStripProgressBar.Step = 1;
-            this.toolStripProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.toolStripProgressBar.Visible = false;
+            this.filesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.filesTreeView.Location = new System.Drawing.Point(0, 31);
+            this.filesTreeView.Name = "filesTreeView";
+            this.filesTreeView.Size = new System.Drawing.Size(206, 523);
+            this.filesTreeView.TabIndex = 0;
+            this.filesTreeView.DoubleClick += new System.EventHandler(this.filesTreeView_DoubleClick);
+            this.filesTreeView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.filesTreeView_KeyUp);
             // 
             // FileControl
             // 
@@ -748,7 +749,7 @@ namespace Canal.UserControls
         private System.Windows.Forms.ToolStrip filesTabToolStrip;
         private System.Windows.Forms.ToolStripTextBox filesTabSearchBox;
         private System.Windows.Forms.TreeView filesTreeView;
-        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripDropDownButton fileTypeDropDownButton;
         private System.Windows.Forms.ToolStripMenuItem showFileTypes_cob;
         private System.Windows.Forms.ToolStripMenuItem showFileTypes_txt;
         private System.Windows.Forms.ToolStripMenuItem showFileTypes_src;
