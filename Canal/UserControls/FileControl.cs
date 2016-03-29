@@ -84,6 +84,7 @@ namespace Canal.UserControls
                 _fileInfoControl = new FileInfo(CobolFile, _parent) { Dock = DockStyle.Fill };
                 infoTabPage.Controls.Add(_fileInfoControl);
 
+                FileUtil.ReduceDirectoriesToAllowedFiles();
                 filesTreeView.Nodes.AddRange(FileUtil.GetDirectoryStructure());
                 filesTreeView.ExpandAll();
                 filesTabSearchBox.Text = Resources.SearchPlaceholder;
@@ -462,6 +463,7 @@ namespace Canal.UserControls
         public void RefreshFileView()
         {
             var searchText = filesTabSearchBox.Text == Resources.SearchPlaceholder ? "" : filesTabSearchBox.Text;
+            FileUtil.ReduceDirectoriesToAllowedFiles();
             var nodes = FileUtil.GetDirectoryStructure(searchText);
             filesTreeView.Nodes.Clear();
             filesTreeView.Nodes.AddRange(nodes);

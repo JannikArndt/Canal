@@ -1,5 +1,4 @@
 ﻿using Canal.Properties;
-using System.Globalization;
 using System.Windows.Forms;
 
 namespace Canal.Utils
@@ -17,6 +16,10 @@ namespace Canal.Utils
 
         private static readonly Dictionary<string, List<FileReference>> DirectoriesAndFiles = new Dictionary<string, List<FileReference>>();
 
+        private static Dictionary<string, List<FileReference>> DirectoriesWithAllowedFiles = new Dictionary<string, List<FileReference>>();
+
+        private static List<string> _allowedEndings = new List<string>();
+
         /// <summary>
         /// Loads the given file. Uses internal cache for file contents.
         /// </summary>
@@ -29,24 +32,24 @@ namespace Canal.Utils
 
             try
             {
-            AnalyzeFolder(filename);
+                AnalyzeFolder(filename);
 
-            if (!Files.Any()) return null;
+                if (!Files.Any()) return null;
 
-            var reference = Files[filename];
+                var reference = Files[filename];
 
-            if (reference.CobolFile == null)
-            {
-                var lines = File.ReadAllText(filename);
+                if (reference.CobolFile == null)
+                {
+                    var lines = File.ReadAllText(filename);
 
                     reference.CobolFile = new CobolFile(lines, Path.GetFileNameWithoutExtension(filename))
                     {
                         FileReference = reference
                     };
-            }
+                }
 
-            return reference.CobolFile;
-        }
+                return reference.CobolFile;
+            }
             catch (Exception exception)
             {
                 ErrorHandling.Exception(exception);
@@ -113,24 +116,26 @@ namespace Canal.Utils
 
             try
             {
-            RecentFolders.Add(fileOrFolderPath);
+                RecentFolders.Add(fileOrFolderPath);
 
-            var folderPath = Path.GetDirectoryName(Path.GetDirectoryName(fileOrFolderPath));
+                var folderPath = Path.GetDirectoryName(Path.GetDirectoryName(fileOrFolderPath));
 
-            if (folderPath == null)
-                return;
+                if (folderPath == null)
+                    return;
 
-                foreach (var fileSystemEntry in Directory.EnumerateFiles(folderPath, "*.*", SearchOption.AllDirectories))
-            {
-                if (!Files.ContainsKey(fileSystemEntry))
+                foreach (var fileSystemEntry in Directory.EnumerateFiles(folderPath, "*.*", SearchOption.AllDirectories)
+                    .Where(file => !new FileInfo(file).Attributes.HasFlag(FileAttributes.Hidden | FileAttributes.System)
+                            && file.IndexOf(@"\.", StringComparison.Ordinal) < 0))
                 {
-                    var newRef = new FileReference(fileSystemEntry);
-                    Files.Add(fileSystemEntry, newRef);
-                    if (!DirectoriesAndFiles.ContainsKey(newRef.Directory))
-                        DirectoriesAndFiles.Add(newRef.Directory, new List<FileReference>());
+                    if (!Files.ContainsKey(fileSystemEntry))
+                    {
+                        var newRef = new FileReference(fileSystemEntry);
+                        Files.Add(fileSystemEntry, newRef);
+                        if (!DirectoriesAndFiles.ContainsKey(newRef.Directory))
+                            DirectoriesAndFiles.Add(newRef.Directory, new List<FileReference>());
 
-                    DirectoriesAndFiles[newRef.Directory].Add(newRef);
-                }
+                        DirectoriesAndFiles[newRef.Directory].Add(newRef);
+                    }
                 }
             }
             catch (Exception exception)
@@ -140,30 +145,48 @@ namespace Canal.Utils
             }
         }
 
+        public static void ReduceDirectoriesToAllowedFiles()
+        {
+            DirectoriesWithAllowedFiles = new Dictionary<string, List<FileReference>>();
+
+            _allowedEndings = new List<string>();
+            if (Settings.Default.FileTypeCob) _allowedEndings.AddRange(new List<string> { ".cob", ".cbl" });
+            if (Settings.Default.FileTypeTxt) _allowedEndings.Add(".txt");
+            if (Settings.Default.FileTypeCob) _allowedEndings.Add(".src");
+            if (!string.IsNullOrWhiteSpace(Settings.Default.FileTypeCustom)) _allowedEndings.Add(Settings.Default.FileTypeCustom);
+
+            foreach (var dir in DirectoriesAndFiles.Keys)
+            {
+                var tempDir = new List<FileReference>(DirectoriesAndFiles[dir].Where(file => file.FullPath.HasAllowedEnding()));
+                if (tempDir.Any())
+                    DirectoriesWithAllowedFiles.Add(dir, tempDir);
+            }
+        }
+
         public static TreeNode[] GetDirectoryStructure(string query = "")
         {
+            if (DirectoriesWithAllowedFiles == null || !DirectoriesWithAllowedFiles.Any())
+                ReduceDirectoriesToAllowedFiles();
+
             var result = new List<TreeNode>();
 
-            var allowedEndings = new List<string>();
-            if (Settings.Default.FileTypeCob) allowedEndings.AddRange(new List<string> { ".cob", ".cbl" });
-            if (Settings.Default.FileTypeTxt) allowedEndings.Add(".txt");
-            if (Settings.Default.FileTypeCob) allowedEndings.Add(".src");
-            if (!string.IsNullOrWhiteSpace(Settings.Default.FileTypeCustom)) allowedEndings.Add(Settings.Default.FileTypeCustom);
-
-            foreach (var dir in DirectoriesAndFiles.Keys.OrderBy(key => key))
+            // ReSharper disable once PossibleNullReferenceException Nope
+            foreach (var dir in DirectoriesWithAllowedFiles.Keys.OrderBy(key => key))
             {
-                    var foundFiles = DirectoriesAndFiles[dir]
-                        .Where(file => CultureInfo.CurrentCulture.CompareInfo.IndexOf(file.ProgramName, query, CompareOptions.IgnoreCase) >= 0)
-                    .Where(file => allowedEndings.Contains(file.FullPath.Substring(file.FullPath.Length - 4, 4).ToLowerInvariant()))
-                        .Select(file => new TreeNode(file.ProgramName) { Tag = file }).ToArray();
+                var foundFiles = DirectoriesAndFiles[dir]
+                    .Where(file => file.ProgramName.Contains(query))
+                    .Select(file => new TreeNode(file.ProgramName) { Tag = file }).ToArray();
 
-                    if (foundFiles.Any())
-                        result.Add(new TreeNode(dir, foundFiles));
-                }
+                if (foundFiles.Any())
+                    result.Add(new TreeNode(dir, foundFiles));
+            }
 
             return result.ToArray();
         }
+
+        private static bool HasAllowedEnding(this string text)
+        {
+            return _allowedEndings.Contains(text.Substring(text.Length - 4, 4).ToLowerInvariant());
+        }
     }
-
-
 }
