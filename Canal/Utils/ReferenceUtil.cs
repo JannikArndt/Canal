@@ -40,11 +40,14 @@ namespace Canal.Utils
                 file.Text = file.Text.Insert(lineAfterCopy + 1, copyFile.Text + Environment.NewLine);
 
                 if (ProgressChanged != null)
-                    ProgressChanged.Invoke(null, new ProgressChangedEventArgs(counter * 100 / matches.Count, null));
+                    ProgressChanged.Invoke(null, new ProgressChangedEventArgs(counter * 100 / (matches.Count + 3), null));
             }
 
             var builder = new CobolTreeBuilder();
             builder.Build(file);
+
+            if (ProgressChanged != null)
+                ProgressChanged.Invoke(null, new ProgressChangedEventArgs(90, null));
         }
 
         public static TreeNode GetPerformTree(CobolFile file)

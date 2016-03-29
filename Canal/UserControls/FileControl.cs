@@ -242,6 +242,8 @@ namespace Canal.UserControls
                 if (cobolFile != null)
                     codeBox.Text = cobolFile.Text;
 
+                toolStripProgressBar.Value = 100;
+
                 toolStripProgressBar.Visible = false;
 
                 ShowVariablesTreeView();
