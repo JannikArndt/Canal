@@ -100,24 +100,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CobolFile.cs" />
-    <Compile Include="CobolTree\CobolTree.cs" />
-    <Compile Include="CobolTree\CobolTreeBuilder.cs" />
-    <Compile Include="CobolTree\CobolTreeNode.cs" />
-    <Compile Include="CobolTree\DataDivision.cs" />
-    <Compile Include="CobolTree\Division.cs" />
-    <Compile Include="CobolTree\EnvironmentDivision.cs" />
-    <Compile Include="CobolTree\References\GoToReference.cs" />
-    <Compile Include="CobolTree\References\ProcedureReference.cs" />
-    <Compile Include="CobolTree\IdentificationDivision.cs" />
-    <Compile Include="CobolTree\LinkageSection.cs" />
-    <Compile Include="CobolTree\References\PerformReference.cs" />
-    <Compile Include="CobolTree\PerformType.cs" />
-    <Compile Include="CobolTree\ProcedureDivision.cs" />
-    <Compile Include="CobolTree\Procedure.cs" />
-    <Compile Include="CobolTree\Section.cs" />
-    <Compile Include="CobolTree\Variable.cs" />
-    <Compile Include="CobolTree\WorkingStorageSection.cs" />
     <Compile Include="Events\UsedFileTypesChangedEventArgs.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -136,6 +118,7 @@
     <Compile Include="UserControls\FileInfo.Designer.cs">
       <DependentUpon>FileInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils\CobolTreeBuilder.cs" />
     <Compile Include="Utils\ErrorHandling.cs" />
     <Compile Include="UserControls\TextViewer.cs">
       <SubType>Form</SubType>
@@ -149,8 +132,6 @@
     <Compile Include="UserControls\WordInfo.Designer.cs">
       <DependentUpon>WordInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utils\ExtensionMethods.cs" />
-    <Compile Include="Utils\Literal.cs" />
     <Compile Include="Utils\SourceCodePro.cs" />
     <Compile Include="Utils\TextUtil.cs" />
     <Compile Include="Utils\Constants.cs" />
@@ -160,7 +141,6 @@
     <Compile Include="UserControls\FileControl.Designer.cs">
       <DependentUpon>FileControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utils\FileReference.cs" />
     <Compile Include="Utils\FileUtil.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
@@ -250,6 +230,10 @@
       <Project>{6dd14a85-ccfc-4774-bd26-0f5772512319}</Project>
       <Name>FastColoredTextBox</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{86222556-3d40-4f67-b464-7983d6435fa6}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -282,7 +266,9 @@
       <DefaultIcon>bridge.ico</DefaultIcon>
     </FileAssociation>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="CobolTree\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

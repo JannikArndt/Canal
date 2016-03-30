@@ -1,10 +1,11 @@
-﻿using Canal.Utils;
+﻿using Model;
+using Model.References;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Canal.CobolTree
+namespace Canal.Utils
 {
     public class CobolTreeBuilder
     {
@@ -31,6 +32,8 @@ namespace Canal.CobolTree
                 ? new DataDivision(sourceCode.Substring(indexDataDivision, Math.Max(0, indexProcedureDivision - indexDataDivision)), indexDataDivision)
                 : new DataDivision("", 0);
 
+            BuildDataDivision(tree.DataDivision);
+
             tree.ProcedureDivision = indexProcedureDivision > 0
                 ? new ProcedureDivision(sourceCode.Substring(indexProcedureDivision, Math.Max(0, sourceCode.Length - indexProcedureDivision)), indexProcedureDivision)
                 : new ProcedureDivision("", 0);
@@ -41,10 +44,10 @@ namespace Canal.CobolTree
             // TODO extract from Procedure
             foreach (var procedure in tree.AllProcedures)
             {
-                procedure.AnalyzeVariables(tree.DataDivision.Variables);
-                procedure.AnalyzePerformReferences();
-                procedure.AnalyzeGoTos();
-                procedure.AnalyzeCalls();
+                AnalyzeVariables(procedure, tree.DataDivision.Variables);
+                AnalyzePerformReferences(procedure);
+                AnalyzeGoTos(procedure);
+                AnalyzeCalls(procedure);
             }
 
             // fix deeper references
@@ -61,6 +64,37 @@ namespace Canal.CobolTree
                 {"Name", file.Name },
                 {"Lines of Code", file.CobolTree.LinesOfCode.ToString() }
             };
+        }
+
+        private void BuildDataDivision(DataDivision dataDivision)
+        {
+            int indexWorkingStorageSection = Math.Max(0, dataDivision.OriginalSource.IndexOf("WORKING-STORAGE SECTION", StringComparison.Ordinal));
+            int indexLinkageSection = Math.Max(0, dataDivision.OriginalSource.IndexOf("LINKAGE SECTION", StringComparison.Ordinal));
+
+            dataDivision.WorkingStorageSection = new WorkingStorageSection(
+                dataDivision.OriginalSource.Substring(indexWorkingStorageSection, Math.Max(0, indexLinkageSection - indexWorkingStorageSection)),
+                dataDivision.IndexInSource + indexWorkingStorageSection);
+
+            BuildWorkingStorageSection(dataDivision.WorkingStorageSection);
+
+            dataDivision.LinkageSection = new LinkageSection(
+                dataDivision.OriginalSource.Substring(indexLinkageSection, dataDivision.OriginalSource.Length - indexLinkageSection),
+                dataDivision.IndexInSource + indexLinkageSection);
+
+            BuildLinkageSection(dataDivision.LinkageSection);
+
+            dataDivision.Nodes.Add(dataDivision.WorkingStorageSection);
+            dataDivision.Nodes.Add(dataDivision.LinkageSection);
+        }
+
+        private void BuildWorkingStorageSection(WorkingStorageSection workingStorageSection)
+        {
+            workingStorageSection.Variables = VariablesUtil.AnalyzeVariables(workingStorageSection.OriginalSource);
+        }
+
+        private void BuildLinkageSection(LinkageSection linkageSection)
+        {
+            linkageSection.Variables = VariablesUtil.AnalyzeVariables(linkageSection.OriginalSource);
         }
 
         private void BuildSections(ProcedureDivision procedureDivision)
@@ -132,5 +166,74 @@ namespace Canal.CobolTree
                 procedureDivision.Nodes.Add(section);
             }
         }
+
+        #region procedure
+
+        public void AnalyzeVariables(Procedure procedure, List<Variable> variablesInFile)
+        {
+            var foundTokens = VariablesUtil.GetIdentifierLiterals(procedure.OriginalSource);
+
+            foreach (Literal token in foundTokens)
+            {
+                Variable variable = variablesInFile.FindVariable(token.Name);
+
+                if (variable != null)
+                    if (procedure.Variables.ContainsKey(variable))
+                        procedure.Variables[variable] = procedure.Variables[variable].MergeUsages(token);
+                    else
+                        procedure.Variables.Add(variable, token.UsedAs);
+            }
+        }
+
+        public void AnalyzePerformReferences(Procedure procedure)
+        {
+            var performReferenceMatches = Regex.Matches(procedure.OriginalSource, Constants.Perform, RegexOptions.Compiled | RegexOptions.Multiline);
+
+            foreach (Match performMatch in performReferenceMatches)
+            {
+                string procedureName = performMatch.Groups[1].ToString().Trim();
+                if (procedure.PerformReferences.All(re => re.ReferencedProcedure != procedureName))
+                    procedure.PerformReferences.Add(new PerformReference(procedureName));
+            }
+        }
+
+        public void AnalyzeGoTos(Procedure procedure)
+        {
+            var gotoReferenceMatches = Regex.Matches(procedure.OriginalSource, Constants.GoTo, RegexOptions.Compiled | RegexOptions.Multiline);
+
+            foreach (Match goToMatch in gotoReferenceMatches)
+            {
+                string procedureName = goToMatch.Groups[1].ToString().Trim();
+                if (procedure.GoToReferences.All(re => re.ReferencedProcedure != procedureName))
+                    procedure.GoToReferences.Add(new GoToReference(procedureName));
+            }
+        }
+
+        public void AnalyzeCalls(Procedure procedure)
+        {
+            var referenceMatches = Regex.Matches(procedure.OriginalSource, Constants.Call, RegexOptions.Compiled | RegexOptions.Multiline);
+
+            foreach (Match match in referenceMatches)
+            {
+                string programName = match.Groups["literal"].ToString().Trim();
+
+                var fileRefs = FileUtil.GetFileReferences(programName);
+
+                if (fileRefs.Count > 1)
+                    Console.WriteLine(@"error: ambiguous name");
+
+                var fileRef = fileRefs.FirstOrDefault();
+
+                if (fileRef == null) continue;
+
+                fileRef.ReferencedIn.Add(procedure);
+
+                if (!procedure.CallReferences.Contains(fileRef))
+                    procedure.CallReferences.Add(fileRef);
+            }
+        }
+
+        #endregion
+
     }
 }

@@ -1,8 +1,8 @@
-﻿using System.ComponentModel;
+﻿using Model;
+using System.ComponentModel;
 
 namespace Canal.Utils
 {
-    using CobolTree;
     using System;
     using System.Linq;
     using System.Text.RegularExpressions;

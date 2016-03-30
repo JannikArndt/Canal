@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Canal", "Canal\Canal.csproj", "{1A1A95AB-0CFB-4F31-BF41-E012B80AB983}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -11,6 +11,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastColoredTextBox", "FastColoredTextBox\FastColoredTextBox.csproj", "{6DD14A85-CCFC-4774-BD26-0F5772512319}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Level88ToEnum", "88ToEnum\Level88ToEnum.csproj", "{903456C3-7292-4492-8C70-CDAAEA2E28FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{86222556-3D40-4F67-B464-7983D6435FA6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +32,10 @@ Global
 		{903456C3-7292-4492-8C70-CDAAEA2E28FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{903456C3-7292-4492-8C70-CDAAEA2E28FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{903456C3-7292-4492-8C70-CDAAEA2E28FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86222556-3D40-4F67-B464-7983D6435FA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86222556-3D40-4F67-B464-7983D6435FA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86222556-3D40-4F67-B464-7983D6435FA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86222556-3D40-4F67-B464-7983D6435FA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,6 @@
 ﻿using Canal.Properties;
+using Model;
+using Model.References;
 using System.Globalization;
 using System.Windows.Forms;
 

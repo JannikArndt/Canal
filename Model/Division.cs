@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Canal.CobolTree
+namespace Model
 {
     public abstract class Division : CobolTreeNode
     {

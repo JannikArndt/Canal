@@ -1,4 +1,4 @@
-﻿namespace Canal.CobolTree.References
+﻿namespace Model.References
 {
 
     public class PerformReference : ProcedureReference

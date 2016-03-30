@@ -1,9 +1,10 @@
-﻿using Canal.CobolTree;
-using Canal.Events;
+﻿using Canal.Events;
 using Canal.Properties;
 using Canal.Utils;
 using FastColoredTextBoxNS.Enums;
 using FastColoredTextBoxNS.Events;
+using Model;
+using Model.References;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Model;
+using System.Collections.Generic;
 
 namespace Canal.Utils
 {
-    using CobolTree;
     using System.Text.RegularExpressions;
 
     public static class VariablesUtil

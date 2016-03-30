@@ -1,5 +1,6 @@
 ﻿using Canal.Properties;
 using Canal.UserControls;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
