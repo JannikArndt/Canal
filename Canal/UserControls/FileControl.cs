@@ -188,11 +188,7 @@ namespace Canal.UserControls
 
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            var treeNode = treeView.SelectedNode as CobolTreeNode;
-            if (treeNode == null)
-                codeBox.DoRangeVisible(codeBox.GetRange(0, 0));
-            else
-                codeBox.FindNext(@"^.{7}" + treeNode.Text + @"(\.| +USING)", false, true, false, true);
+            codeBox.FindNext(@"^.{7}" + treeView.SelectedNode.Text + @"(\.| +USING| OF)", false, true, false, true);
         }
 
         private void performsTree_AfterSelect(object sender, TreeViewEventArgs e)
