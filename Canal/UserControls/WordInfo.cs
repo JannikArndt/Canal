@@ -7,15 +7,12 @@ namespace Canal.UserControls
 {
     public partial class WordInfo : UserControl
     {
-        public FileControl parent { get; set; }
-
         public WordInfo(string word, FileControl fileControl)
         {
             InitializeComponent();
-            parent = fileControl;
 
             // is the word a variable?
-            var variable = parent.CobolFile.Variables.FindVariable(word);
+            var variable = fileControl.CobolFile.Variables.FindVariable(word);
             if (variable != null)
             {
                 headingLabel.Text = word;
@@ -23,7 +20,7 @@ namespace Canal.UserControls
                 return;
             }
 
-            var procedure = parent.CobolFile.CobolTree.AllProcedures.FirstOrDefault(proc => proc.Name == word);
+            var procedure = fileControl.CobolFile.CobolTree.AllProcedures.FirstOrDefault(proc => proc.Name == word);
             if (procedure != null)
             {
                 headingLabel.Text = word;
@@ -55,13 +52,13 @@ namespace Canal.UserControls
         {
             // Get all vars to the root
             var currentVar = variable;
-            var node = new TreeNode(currentVar.Name, currentVar.Variables.Select(child => new TreeNode(child.Name)).ToArray());
+            var node = new TreeNode(currentVar.VariableName, currentVar.Variables.Select(child => new TreeNode(child.VariableName)).ToArray());
 
-            while (currentVar.Parent != null)
+            while (currentVar.ParentVariable != null)
             {
-                var newNode = new TreeNode(currentVar.Parent.Name, new[] { node });
+                var newNode = new TreeNode(currentVar.ParentVariable.VariableName, new[] { node });
                 node = newNode;
-                currentVar = currentVar.Parent;
+                currentVar = currentVar.ParentVariable;
             }
 
             variableTreeView.Nodes.Add(node);

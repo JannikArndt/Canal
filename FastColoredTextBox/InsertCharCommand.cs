@@ -1,5 +1,5 @@
-﻿using System;
-using FastColoredTextBoxNS.Enums;
+﻿using FastColoredTextBoxNS.Enums;
+using System;
 
 namespace FastColoredTextBoxNS
 {
@@ -15,9 +15,9 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="tb">Underlaying textbox</param>
+        /// <param name="ts">Underlaying textbox</param>
         /// <param name="c">Inserting char</param>
-        public InsertCharCommand(TextSource ts, char c): base(ts)
+        public InsertCharCommand(TextSource ts, char c) : base(ts)
         {
             this.c = c;
         }
@@ -179,11 +179,11 @@ namespace FastColoredTextBoxNS
         internal static void BreakLines(int iLine, int pos, TextSource ts)
         {
             Line newLine = ts.CreateLine();
-            for(int i=pos;i<ts[iLine].Count;i++)
+            for (int i = pos; i < ts[iLine].Count; i++)
                 newLine.Add(ts[iLine][i]);
             ts[iLine].RemoveRange(pos, ts[iLine].Count - pos);
             //
-            ts.InsertLine(iLine+1, newLine);
+            ts.InsertLine(iLine + 1, newLine);
         }
 
         public override UndoableCommand Clone()

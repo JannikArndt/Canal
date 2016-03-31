@@ -16,11 +16,6 @@ namespace Model.References
                 Directory = folder.TrimEnd(Path.DirectorySeparatorChar).Substring(folder.LastIndexOf(Path.DirectorySeparatorChar) + 1);
         }
 
-        public FileReference(string programName, string directory)
-        {
-            
-        }
-
         public string ProgramName { get; set; }
 
         public string Directory { get; set; }

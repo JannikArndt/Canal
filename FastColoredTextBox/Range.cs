@@ -1,8 +1,8 @@
-﻿using System;
+﻿using FastColoredTextBoxNS.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-using FastColoredTextBoxNS.Enums;
 
 namespace FastColoredTextBoxNS
 {
@@ -836,7 +836,7 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Sets folding markers
         /// </summary>
-        /// <param name="startEndFoldingPattern">Pattern for start and end folding line</param>
+        /// <param name="foldingPattern">Pattern for start and end folding line</param>
         public void SetFoldingMarkers(string foldingPattern, RegexOptions options)
         {
             foreach (var range in GetRanges(foldingPattern, options))

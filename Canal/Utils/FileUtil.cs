@@ -19,7 +19,7 @@ namespace Canal.Utils
 
         private static readonly Dictionary<string, List<FileReference>> DirectoriesAndFiles = new Dictionary<string, List<FileReference>>();
 
-        private static Dictionary<string, List<FileReference>> DirectoriesWithAllowedFiles = new Dictionary<string, List<FileReference>>();
+        private static Dictionary<string, List<FileReference>> _directoriesWithAllowedFiles = new Dictionary<string, List<FileReference>>();
 
         private static List<string> _allowedEndings = new List<string>();
 
@@ -180,7 +180,7 @@ namespace Canal.Utils
 
         public static void ReduceDirectoriesToAllowedFiles()
         {
-            DirectoriesWithAllowedFiles = new Dictionary<string, List<FileReference>>();
+            _directoriesWithAllowedFiles = new Dictionary<string, List<FileReference>>();
 
             _allowedEndings = new List<string>();
             if (Settings.Default.FileTypeCob) _allowedEndings.AddRange(new List<string> { ".cob", ".cbl" });
@@ -192,21 +192,21 @@ namespace Canal.Utils
             {
                 var tempDir = new List<FileReference>(DirectoriesAndFiles[dir].Where(file => file.FullPath.HasAllowedEnding()));
                 if (tempDir.Any())
-                    DirectoriesWithAllowedFiles.Add(dir, tempDir);
+                    _directoriesWithAllowedFiles.Add(dir, tempDir);
             }
         }
 
         public static TreeNode[] GetDirectoryStructure(string query = "")
         {
-            if (DirectoriesWithAllowedFiles == null || !DirectoriesWithAllowedFiles.Any())
+            if (_directoriesWithAllowedFiles == null || !_directoriesWithAllowedFiles.Any())
                 ReduceDirectoriesToAllowedFiles();
 
             var result = new List<TreeNode>();
 
             // ReSharper disable once PossibleNullReferenceException Nope
-            foreach (var dir in DirectoriesWithAllowedFiles.Keys.OrderBy(key => key))
+            foreach (var dir in _directoriesWithAllowedFiles.Keys.OrderBy(key => key))
             {
-                var foundFiles = DirectoriesWithAllowedFiles[dir]
+                var foundFiles = _directoriesWithAllowedFiles[dir]
                     .Where(file => CultureInfo.CurrentCulture.CompareInfo.IndexOf(file.ProgramName, query, CompareOptions.IgnoreCase) >= 0)
                     .Select(file => new TreeNode(file.ProgramName) { Tag = file }).ToArray();
 

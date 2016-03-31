@@ -7,36 +7,37 @@ namespace Model
 {
     public class Variable : TreeNode
     {
-        public int Level { get; set; }
+        public int VariableLevel { get; set; }
 
-        public string Name { get; set; }
+        public string VariableName { get; set; }
 
-        public string Code { get; set; }
+        // ReSharper disable once UnusedAutoPropertyAccessor.Local
+        private string Code { get; set; }
 
         public List<Variable> Variables { get; set; }
 
-        public Variable Parent { get; set; }
+        public Variable ParentVariable { get; set; }
 
         public Variable Root
         {
             get
             {
-                if (Parent == null) return null;
+                if (ParentVariable == null) return null;
 
-                var result = Parent;
-                while ((result.Level != 1 || result.Level != 77) && result.Parent != null)
-                    result = result.Parent;
+                var result = ParentVariable;
+                while ((result.VariableLevel != 1 || result.VariableLevel != 77) && result.ParentVariable != null)
+                    result = result.ParentVariable;
                 return result;
             }
         }
 
-        public Variable(int level, string name, string code, Variable parent)
-            : base(level.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0') + "  " + name)
+        public Variable(int variableLevel, string variableName, string code, Variable parentVariable)
+            : base(variableLevel.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0') + "  " + variableName)
         {
-            Level = level;
-            Name = name;
+            VariableLevel = variableLevel;
+            VariableName = variableName;
             Code = code;
-            Parent = parent;
+            ParentVariable = parentVariable;
             Variables = new List<Variable>();
         }
 
@@ -54,7 +55,7 @@ namespace Model
 
         public override string ToString()
         {
-            return string.Format("{0} {1}, Variables: {2}", Level, Name, Variables.Count);
+            return string.Format("{0} {1}, Variables: {2}", VariableLevel, VariableName, Variables.Count);
         }
     }
 }

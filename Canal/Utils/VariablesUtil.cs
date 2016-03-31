@@ -28,32 +28,32 @@ namespace Canal.Utils
                 var level = int.Parse(match.Groups["level"].Value);
                 var currentVariable = new Variable(level, match.Groups["token"].Value, match.Value, null);
 
-                if (lastVariable == null || currentVariable.Level == 1 || currentVariable.Level == 77)
+                if (lastVariable == null || currentVariable.VariableLevel == 1 || currentVariable.VariableLevel == 77)
                 {
                     result.Add(currentVariable);
                     lastVariable = currentVariable;
                 }
-                else if (currentVariable.Level > lastVariable.Level)
+                else if (currentVariable.VariableLevel > lastVariable.VariableLevel)
                 {
-                    currentVariable.Parent = lastVariable;
+                    currentVariable.ParentVariable = lastVariable;
                     lastVariable.Variables.Add(currentVariable);
                     lastVariable = currentVariable;
                 }
-                else if (currentVariable.Level < lastVariable.Level || (currentVariable.Level != 88 && lastVariable.Level == 88))
+                else if (currentVariable.VariableLevel < lastVariable.VariableLevel || (currentVariable.VariableLevel != 88 && lastVariable.VariableLevel == 88))
                 {
-                    while (currentVariable.Level <= lastVariable.Level && lastVariable != null)
-                        lastVariable = lastVariable.Parent;
+                    while (currentVariable.VariableLevel <= lastVariable.VariableLevel && lastVariable != null)
+                        lastVariable = lastVariable.ParentVariable;
 
-                    currentVariable.Parent = lastVariable;
+                    currentVariable.ParentVariable = lastVariable;
                     lastVariable.Variables.Add(currentVariable);
                     lastVariable = currentVariable;
 
                 }
-                else if (lastVariable.Level == currentVariable.Level)
+                else if (lastVariable.VariableLevel == currentVariable.VariableLevel)
                 {
-                    currentVariable.Parent = lastVariable.Parent;
-                    if (lastVariable.Parent != null)
-                        lastVariable.Parent.Variables.Add(currentVariable);
+                    currentVariable.ParentVariable = lastVariable.ParentVariable;
+                    if (lastVariable.ParentVariable != null)
+                        lastVariable.ParentVariable.Variables.Add(currentVariable);
                     lastVariable = currentVariable;
                 }
             }

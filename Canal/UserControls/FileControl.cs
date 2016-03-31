@@ -329,11 +329,11 @@ namespace Canal.UserControls
                             varDict.Add(root, new List<Variable> { variable });
                     }
 
-                    foreach (var key in varDict.Keys.OrderBy(r => r.Name))
+                    foreach (var key in varDict.Keys.OrderBy(r => r.VariableName))
                     {
-                        var rootVarNode = new TreeNode(key.Name);
+                        var rootVarNode = new TreeNode(key.VariableName);
                         foreach (var variable in varDict[key])
-                            rootVarNode.Nodes.Add(new TreeNode(variable.Level.ToString("D2") + "  " + variable.Name + " " + procedure.Variables[variable].ToShortString()));
+                            rootVarNode.Nodes.Add(new TreeNode(variable.VariableLevel.ToString("D2") + "  " + variable.VariableName + " " + procedure.Variables[variable].ToShortString()));
 
                         procNode.Nodes.Add(rootVarNode);
                     }

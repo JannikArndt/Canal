@@ -8,8 +8,6 @@ namespace Canal.UserControls
 {
     public partial class FileInfo : UserControl
     {
-        private readonly CobolFile _file;
-
         private readonly MainWindow _parent;
 
         public SplitterPanel VariableInfoPanel;
@@ -19,14 +17,13 @@ namespace Canal.UserControls
             InitializeComponent();
             VariableInfoPanel = splitContainer.Panel2;
 
-            _file = cobolFile;
             _parent = parent;
 
-            headingLabel.Text = _file.Name;
+            headingLabel.Text = cobolFile.Name;
 
-            infoDataGridView.DataSource = _file.Infos.ToArray();
+            infoDataGridView.DataSource = cobolFile.Infos.ToArray();
 
-            callReferencesListBox.DataSource = _file.CallReferences;
+            callReferencesListBox.DataSource = cobolFile.CallReferences;
 
         }
 

@@ -14,7 +14,7 @@ namespace Canal.Utils
         {
             foreach (var variable in list)
             {
-                var result = list.FirstOrDefault(v => v.Name == name);
+                var result = list.FirstOrDefault(v => v.VariableName == name);
 
                 if (result != null) return result;
 

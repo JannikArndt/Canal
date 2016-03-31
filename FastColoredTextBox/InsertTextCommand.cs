@@ -10,9 +10,9 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="tb">Underlaying textbox</param>
+        /// <param name="ts">Underlaying textbox</param>
         /// <param name="insertedText">Text for inserting</param>
-        public InsertTextCommand(TextSource ts, string insertedText): base(ts)
+        public InsertTextCommand(TextSource ts, string insertedText) : base(ts)
         {
             this.InsertedText = insertedText;
         }
@@ -46,7 +46,7 @@ namespace FastColoredTextBoxNS
             {
                 tb.Selection.BeginUpdate();
                 char cc = '\x0';
-                
+
                 if (ts.Count == 0)
                 {
                     InsertCharCommand.InsertLine(ts);
@@ -57,14 +57,15 @@ namespace FastColoredTextBoxNS
                 for (int i = 0; i < len; i++)
                 {
                     var c = insertedText[i];
-                    if(c == '\r' && (i >= len - 1 || insertedText[i + 1] != '\n'))
+                    if (c == '\r' && (i >= len - 1 || insertedText[i + 1] != '\n'))
                         InsertCharCommand.InsertChar('\n', ref cc, ts);
                     else
                         InsertCharCommand.InsertChar(c, ref cc, ts);
                 }
                 ts.NeedRecalc(new TextSource.TextChangedEventArgs(0, 1));
             }
-            finally {
+            finally
+            {
                 tb.Selection.EndUpdate();
             }
         }

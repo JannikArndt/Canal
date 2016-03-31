@@ -15,14 +15,14 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="tb">Underlaying textbox</param>
+        /// <param name="ts">Underlaying textbox</param>
         /// <param name="ranges">List of ranges for replace</param>
         /// <param name="insertedText">Text for inserting</param>
         public ReplaceTextCommand(TextSource ts, List<Range> ranges, string insertedText)
             : base(ts)
         {
             //sort ranges by place
-            ranges.Sort((r1, r2)=>
+            ranges.Sort((r1, r2) =>
             {
                 if (r1.Start.iLine == r2.Start.iLine)
                     return r1.Start.iChar.CompareTo(r2.Start.iChar);
@@ -45,7 +45,7 @@ namespace FastColoredTextBoxNS
             tb.BeginUpdate();
 
             tb.Selection.BeginUpdate();
-            for (int i = 0; i<ranges.Count; i++)
+            for (int i = 0; i < ranges.Count; i++)
             {
                 tb.Selection.Start = ranges[i].Start;
                 for (int j = 0; j < insertedText.Length; j++)
@@ -80,10 +80,10 @@ namespace FastColoredTextBoxNS
                 tb.Selection.End = ranges[i].End;
                 prevText.Add(tb.Selection.Text);
                 ClearSelected(ts);
-                if (insertedText  != "")
+                if (insertedText != "")
                     InsertTextCommand.InsertText(insertedText, ts);
             }
-            if(ranges.Count > 0)
+            if (ranges.Count > 0)
                 ts.OnTextChanged(ranges[0].Start.iLine, ranges[ranges.Count - 1].End.iLine);
             tb.EndUpdate();
             tb.Selection.EndUpdate();

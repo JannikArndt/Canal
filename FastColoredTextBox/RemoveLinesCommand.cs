@@ -13,9 +13,7 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="tb">Underlaying textbox</param>
-        /// <param name="ranges">List of ranges for replace</param>
-        /// <param name="insertedText">Text for inserting</param>
+        /// <param name="ts">Underlaying textbox</param>
         public RemoveLinesCommand(TextSource ts, List<int> iLines)
             : base(ts)
         {
@@ -41,7 +39,7 @@ namespace FastColoredTextBoxNS
             {
                 var iLine = iLines[i];
 
-                if(iLine < ts.Count)
+                if (iLine < ts.Count)
                     tb.Selection.Start = new Place(0, iLine);
                 else
                     tb.Selection.Start = new Place(ts[ts.Count - 1].Count, ts.Count - 1);
@@ -55,7 +53,7 @@ namespace FastColoredTextBoxNS
                     ts[iLine + 1].IsChanged = true;
                 else
                     ts[iLine - 1].IsChanged = true;
-                if(text.Trim() != string.Empty)
+                if (text.Trim() != string.Empty)
                     ts.OnTextChanged(iLine, iLine);
             }
             //tb.EndUpdate();
@@ -75,10 +73,10 @@ namespace FastColoredTextBoxNS
             ts.OnTextChanging();
 
             tb.Selection.BeginUpdate();
-            for(int i = iLines.Count - 1; i >= 0; i--)
+            for (int i = iLines.Count - 1; i >= 0; i--)
             {
                 var iLine = iLines[i];
-                
+
                 prevText.Add(ts[iLine].Text);//backward
                 ts.RemoveLine(iLine);
                 //ts.OnTextChanged(ranges[i].Start.iLine, ranges[i].End.iLine);

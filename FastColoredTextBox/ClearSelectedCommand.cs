@@ -12,8 +12,8 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Construstor
         /// </summary>
-        /// <param name="tb">Underlaying textbox</param>
-        public ClearSelectedCommand(TextSource ts): base(ts)
+        /// <param name="ts">Underlaying textbox</param>
+        public ClearSelectedCommand(TextSource ts) : base(ts)
         {
         }
 
