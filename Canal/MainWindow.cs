@@ -19,17 +19,23 @@ namespace Canal
     {
         private readonly TabUtil _tabUtil;
 
+        private string[] openFilesOnStartup;
+
         public MainWindow(string[] files = null)
         {
             InitializeComponent();
 
-            ErrorHandling.Start();
+            openFilesOnStartup = files;
 
             _tabUtil = new TabUtil(FileTabs, this);
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
             try
             {
                 var toOpen = new List<string>();
-                if (files != null) toOpen.AddRange(files);
+                if (openFilesOnStartup != null) toOpen.AddRange(openFilesOnStartup);
                 if (Settings.Default.LastOpened != null) toOpen.AddRange(Settings.Default.LastOpened.Cast<string>());
 
                 foreach (string filepath in new HashSet<string>(toOpen))
@@ -47,7 +53,6 @@ namespace Canal
             Settings.Default.LastOpened = new StringCollection();
             Settings.Default.LastOpened.AddRange(_tabUtil.GetOpenFiles().Select(file => file.FileReference.FullPath).ToArray());
             Settings.Default.Save();
-            ErrorHandling.End();
             base.OnClosing(e);
         }
 
