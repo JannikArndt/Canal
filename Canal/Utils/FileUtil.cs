@@ -37,27 +37,39 @@ namespace Canal.Utils
             {
                 AnalyzeFolder(filename);
 
-                if (!Files.Any()) return null;
+                FileReference reference;
 
-                var reference = Files[filename];
-
-                if (reference.CobolFile == null)
+                lock (Files)
                 {
-                    var lines = File.ReadAllText(filename);
-
-                    reference.CobolFile = new CobolFile(lines, Path.GetFileNameWithoutExtension(filename))
-                    {
-                        FileReference = reference
-                    };
+                    if (!Files.Any()) return null;
+                    reference = Files[filename];
                 }
 
-                return reference.CobolFile;
+                if (string.IsNullOrWhiteSpace(reference.FullPath))
+                    reference.FullPath = filename;
+
+                return Get(reference);
             }
             catch (Exception exception)
             {
                 ErrorHandling.Exception(exception);
                 throw new FileNotFoundException("File could not be loaded.", filename, exception);
             }
+        }
+
+        public static CobolFile Get(FileReference reference)
+        {
+            if (reference.CobolFile == null)
+            {
+                var lines = File.ReadAllText(reference.FullPath);
+
+                reference.CobolFile = new CobolFile(lines, Path.GetFileNameWithoutExtension(reference.FullPath))
+                {
+                    FileReference = reference
+                };
+            }
+
+            return reference.CobolFile;
         }
 
         /// <summary>
@@ -111,6 +123,17 @@ namespace Canal.Utils
             Console.WriteLine(candidates.Any() ? " => succeeded" : " => failed");
 
             return candidates;
+        }
+
+        public static FileReference GetFileReference(string programName, string folderName)
+        {
+            if (string.IsNullOrWhiteSpace(programName) || string.IsNullOrWhiteSpace(folderName))
+                return null;
+
+            lock (Files)
+            {
+                return Files.Where(file => file.Key.Contains(programName) && file.Key.Contains(folderName)).Select(file => file.Value).FirstOrDefault();
+            }
         }
 
         /// <summary>

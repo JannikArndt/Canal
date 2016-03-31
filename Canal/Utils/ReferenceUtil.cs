@@ -1,4 +1,6 @@
 ﻿using Model;
+using Model.References;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Canal.Utils
@@ -14,33 +16,25 @@ namespace Canal.Utils
 
         public void ResolveCopys(CobolFile file)
         {
-            var copyRegex = new Regex(
-                @"^[\d ]{7}COPY (?<program>[\w]+) +OF +(?<folder>[\w]+)\.",
-                RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
-
-            var matches = copyRegex.Matches(file.Text);
-            Console.WriteLine(@"Resolving {0} COPYs...", matches.Count);
+            var copyReferences = FindCopyReferences(file.Text).ToList();
 
             var counter = 0;
-
-            foreach (Match match in matches)
+            foreach (var copyReference in copyReferences)
             {
                 counter++;
-                var programName = match.Groups["program"].Value;
-                var folderName = match.Groups["folder"].Value;
-                Console.WriteLine(@"Resolving program {0} in folder {1}", programName, folderName);
+                Console.WriteLine(@"Resolving program {0} in folder {1}", copyReference.ProgramName, copyReference.Directory);
 
-                var copyFile = FileUtil.Get(programName, folderName);
+                var copyFile = FileUtil.Get(copyReference);
 
                 if (copyFile == null)
                     continue;
 
-                var updatedIndexOfCopy = file.Text.IndexOf(programName, match.Index - 1, StringComparison.Ordinal);
+                var updatedIndexOfCopy = file.Text.IndexOf(copyReference.ProgramName, StringComparison.Ordinal);
                 var lineAfterCopy = file.Text.IndexOf(Environment.NewLine, updatedIndexOfCopy, StringComparison.Ordinal);
                 file.Text = file.Text.Insert(lineAfterCopy + 1, copyFile.Text + Environment.NewLine);
 
                 if (ProgressChanged != null)
-                    ProgressChanged.Invoke(null, new ProgressChangedEventArgs(counter * 100 / (matches.Count + 3), null));
+                    ProgressChanged.Invoke(null, new ProgressChangedEventArgs(counter * 100 / (copyReferences.Count + 3), null));
             }
 
             var builder = new CobolTreeBuilder();
@@ -48,6 +42,19 @@ namespace Canal.Utils
 
             if (ProgressChanged != null)
                 ProgressChanged.Invoke(null, new ProgressChangedEventArgs(90, null));
+        }
+
+        public static IEnumerable<FileReference> FindCopyReferences(string text, bool textIsTrimmed = false)
+        {
+            var copyRegex = textIsTrimmed
+                ? new Regex(@"^[\d ]{7}COPY (?<program>[\w]+) +OF +(?<folder>[\w]+)\.", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline)
+                : new Regex(@"^ ?COPY (?<program>[\w]+) +OF +(?<folder>[\w]+)\.", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
+
+            var matches = copyRegex.Matches(text);
+            Console.WriteLine(@"Resolving {0} COPYs...", matches.Count);
+
+            return from Match match in matches
+                   select FileUtil.GetFileReference(match.Groups["program"].Value, match.Groups["folder"].Value);
         }
 
         public static TreeNode GetPerformTree(CobolFile file)

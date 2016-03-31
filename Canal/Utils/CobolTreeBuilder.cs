@@ -90,11 +90,13 @@ namespace Canal.Utils
         private void BuildWorkingStorageSection(WorkingStorageSection workingStorageSection)
         {
             workingStorageSection.Variables = VariablesUtil.AnalyzeVariables(workingStorageSection.OriginalSource);
+            workingStorageSection.CopyReferences = ReferenceUtil.FindCopyReferences(workingStorageSection.OriginalSource).ToList();
         }
 
         private void BuildLinkageSection(LinkageSection linkageSection)
         {
             linkageSection.Variables = VariablesUtil.AnalyzeVariables(linkageSection.OriginalSource);
+            linkageSection.CopyReferences = ReferenceUtil.FindCopyReferences(linkageSection.OriginalSource).ToList();
         }
 
         private void BuildSections(ProcedureDivision procedureDivision)
