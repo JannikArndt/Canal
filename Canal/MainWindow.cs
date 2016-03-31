@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -54,6 +55,12 @@ namespace Canal
         {
             if (_tabUtil.TryShowTab(filename))
                 return;
+
+            if (!File.Exists(filename))
+            {
+                MessageBox.Show(string.Format(Resources.File_Could_Not_Be_Found, filename), Resources.Error, MessageBoxButtons.OK);
+                return;
+            }
 
             Cursor = Cursors.WaitCursor;
 

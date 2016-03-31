@@ -106,6 +106,15 @@ namespace Canal.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The file {0} could not be found..
+        /// </summary>
+        internal static string File_Could_Not_Be_Found {
+            get {
+                return ResourceManager.GetString("File_Could_Not_Be_Found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Would you like to close this tab?.
         /// </summary>
         internal static string ReallyCloseThisTab {

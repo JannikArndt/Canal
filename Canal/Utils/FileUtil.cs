@@ -119,7 +119,7 @@ namespace Canal.Utils
         /// <param name="fileOrFolderPath">A path with or without filename.</param>
         private static void AnalyzeFolder(string fileOrFolderPath)
         {
-            if (RecentFolders.Contains(fileOrFolderPath))
+            if (RecentFolders.Contains(fileOrFolderPath) || !File.Exists(fileOrFolderPath))
                 return;
 
             try
