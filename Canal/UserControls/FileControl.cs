@@ -139,8 +139,20 @@ namespace Canal.UserControls
 
         private void seachBox_TextChanged(object sender, EventArgs e)
         {
-            if ((bool)searchBox.Tag)
+            if (!(bool)searchBox.Tag) return;
+
+            try
+            {
+                searchBox.BackColor = SystemColors.Window;
                 codeBox.FindNext(searchBox.Text, false, searchWithRegEx.Checked, false, true);
+
+            }
+            catch (Exception)
+            {
+                // aparently the only way to validate a regex
+                searchBox.BackColor = Color.PaleVioletRed;
+            }
+
         }
 
         private void searchBox_KeyDown(object sender, KeyEventArgs e)

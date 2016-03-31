@@ -487,9 +487,7 @@ namespace Canal.UserControls
             // 
             // searchWithRegEx
             // 
-            this.searchWithRegEx.Checked = true;
             this.searchWithRegEx.CheckOnClick = true;
-            this.searchWithRegEx.CheckState = System.Windows.Forms.CheckState.Checked;
             this.searchWithRegEx.Image = ((System.Drawing.Image)(resources.GetObject("searchWithRegEx.Image")));
             this.searchWithRegEx.ImageTransparentColor = System.Drawing.Color.Black;
             this.searchWithRegEx.Name = "searchWithRegEx";
