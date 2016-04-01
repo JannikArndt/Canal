@@ -1,18 +1,35 @@
-﻿namespace CodeGenerator.Resources
+﻿namespace <!NAMESPACE!>
 {
-    public interface IMapper
+    /// <summary>
+    /// Mapper from Byte Array to <!BUSINESSOBJECTNAME!> and back.
+    /// </summary>
+    public class <!BUSINESSOBJECTNAME!>Mapper : IMapper<<!BUSINESSOBJECTNAME!>>
     {
-        IBusinessObject Map(byte[] bytes);
-    }
-
-    public class MapperExample : IMapper
-    {
-        public IBusinessObject Map(byte[] bytes)
+        /// <summary>
+        /// Maps a byte array to a <!BUSINESSOBJECTNAME!>.
+        /// </summary>
+        /// <param name="bytes">A byte array</param>
+        /// <returns>A <!BUSINESSOBJECTNAME!></returns>
+        public <!BUSINESSOBJECTNAME!> Map(byte[] bytes)
         {
-            return new BusinessObjectExample
+            return new <!BUSINESSOBJECTNAME!>
             {
-                MyText = bytes.GetString(0, 10)
+<!MAPFROMCOBOL!>
             };
+        }
+
+        /// <summary>
+        /// Maps a business object to a byte array.
+        /// </summary>
+        /// <param name="<!BONAMEPARAMETER!>">A <!BUSINESSOBJECTNAME!></param>
+        /// <returns>A byte array</returns>
+        public byte[] Map(<!BUSINESSOBJECTNAME!> <!BONAMEPARAMETER!>)
+        {
+            var bytes = new byte[<!BYTEARRAYSIZE!>];
+
+<!MAPTOCOBOL!>
+
+            return bytes;
         }
     }
 }

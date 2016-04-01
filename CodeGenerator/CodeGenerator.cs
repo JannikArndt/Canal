@@ -1,5 +1,5 @@
 ﻿using FastColoredTextBoxNS.Enums;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
@@ -7,29 +7,29 @@ namespace CodeGenerator
 {
     public partial class CodeGeneratorMainWindow : Form
     {
-        public BindingList<GeneratorModel> Variables { get; set; }
+        private readonly GeneratorConfiguration _configuration = new GeneratorConfiguration();
 
         public CodeGeneratorMainWindow()
         {
             InitializeComponent();
 
+            FakeConfig();
+
             // Configuration Tab
 
-            Variables = new BindingList<GeneratorModel>();
-
-            Variables.Add(new GeneratorModel());
-
-            BindingSource bindingSource = new BindingSource(Variables, null);
+            BindingSource bindingSource = new BindingSource(_configuration.Variables, null);
 
             ConfigurationDataGridView.DataSource = bindingSource;
 
+            var generator = new Generator();
+
             // Business Object Tab
             BusinessObjectCodeBox.Language = Language.CSharp;
-            BusinessObjectCodeBox.Text = File.ReadAllText("Resources/BusinessObjectExample.cs");
+            BusinessObjectCodeBox.Text = generator.GenerateBusinessObject(_configuration);
 
             // Mapper Tab
             MapperCodeBox.Language = Language.CSharp;
-            MapperCodeBox.Text = File.ReadAllText("Resources/MapperExample.cs");
+            MapperCodeBox.Text = generator.GenerateMapper(_configuration);
 
             // Extensions Tab
             ExtensionsCodeBox.Language = Language.CSharp;
@@ -39,6 +39,18 @@ namespace CodeGenerator
             EnumsCodeBox.Language = Language.CSharp;
             EnumsCodeBox.Text = File.ReadAllText("Resources/EnumExample.cs");
 
+        }
+
+        private void FakeConfig()
+        {
+            _configuration.CobolFileName = "MyCobolFile";
+            _configuration.BusinessObjectName = "MyBusinessObject";
+            _configuration.Namespace = "Projects.MyNamespace";
+            _configuration.Variables = new List<GeneratorModel>
+            {
+                new GeneratorModel(true, "MY-TEXT", CobolVariableTypes.PicX, "MyText", GeneratedCodeTypes.String, string.Empty, "Some text"),
+                new GeneratorModel(true, "MY-NUMBER", CobolVariableTypes.PicS9, "MyNumber", GeneratedCodeTypes.Int, string.Empty, "Some number")
+                };
         }
     }
 }

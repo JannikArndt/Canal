@@ -24,5 +24,16 @@ namespace CodeGenerator
 
         [DisplayName("Comment")]
         public string Comment { get; set; }
+
+        public GeneratorModel(bool doMap, string cobolVariableName, CobolVariableTypes variableType, string propertyName, GeneratedCodeTypes generatedCodeType, string mapperName, string comment)
+        {
+            DoMap = doMap;
+            CobolVariableName = cobolVariableName;
+            VariableType = variableType;
+            PropertyName = propertyName;
+            GeneratedCodeType = generatedCodeType;
+            MapperName = mapperName;
+            Comment = comment;
+        }
     }
 }
