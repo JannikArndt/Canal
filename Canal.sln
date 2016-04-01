@@ -14,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Level88ToEnum", "88ToEnum\L
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{86222556-3D40-4F67-B464-7983D6435FA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpGenerator", "CSharpGenerator\CSharpGenerator.csproj", "{707323DF-CB27-44F4-A4B5-957C78A7E728}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeGenerator", "CodeGenerator\CodeGenerator.csproj", "{63E7EEB8-6BED-40A7-B1D1-5CC7DD077CDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,10 +38,10 @@ Global
 		{86222556-3D40-4F67-B464-7983D6435FA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86222556-3D40-4F67-B464-7983D6435FA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86222556-3D40-4F67-B464-7983D6435FA6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{707323DF-CB27-44F4-A4B5-957C78A7E728}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{707323DF-CB27-44F4-A4B5-957C78A7E728}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{707323DF-CB27-44F4-A4B5-957C78A7E728}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{707323DF-CB27-44F4-A4B5-957C78A7E728}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63E7EEB8-6BED-40A7-B1D1-5CC7DD077CDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63E7EEB8-6BED-40A7-B1D1-5CC7DD077CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63E7EEB8-6BED-40A7-B1D1-5CC7DD077CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63E7EEB8-6BED-40A7-B1D1-5CC7DD077CDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
