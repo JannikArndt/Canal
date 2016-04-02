@@ -11,6 +11,10 @@ namespace Model
 
         public string VariableName { get; set; }
 
+        public int Offset { get; set; }
+
+        public int Length { get; set; }
+
         // ReSharper disable once UnusedAutoPropertyAccessor.Local
         private string Code { get; set; }
 

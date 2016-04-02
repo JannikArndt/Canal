@@ -4,7 +4,7 @@ namespace CodeGenerator
 {
     public class GeneratorConfiguration
     {
-        public List<GeneratorModel> Variables { get; set; }
+        public List<IMappingProvider> Variables { get; set; }
 
         public string CobolFileName { get; set; }
 
