@@ -3,7 +3,6 @@ using Canal.UserControls;
 using Logging;
 using Model;
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -20,8 +19,6 @@ namespace Canal
     {
         private readonly TabUtil _tabUtil;
 
-        private readonly string[] _openFilesOnStartup;
-
         private ConsoleLogger _log = new ConsoleLogger();
 
         public MainWindow(string[] files = null)
@@ -30,27 +27,8 @@ namespace Canal
 
             Logger.Singleton.AddMsg(2, "Starting program");
 
-            _openFilesOnStartup = files;
-
             _tabUtil = new TabUtil(FileTabs, this);
-        }
-
-        protected override void OnShown(EventArgs e)
-        {
-            try
-            {
-                var toOpen = new List<string>();
-                if (_openFilesOnStartup != null) toOpen.AddRange(_openFilesOnStartup);
-                if (Settings.Default.LastOpened != null) toOpen.AddRange(Settings.Default.LastOpened.Cast<string>());
-
-                foreach (string filepath in new HashSet<string>(toOpen))
-                    OpenFile(filepath);
-            }
-            catch (Exception exception)
-            {
-                ErrorHandling.Exception(exception);
-                MessageBox.Show(Resources.ErrorMessage_MainWindow_OpenPrevious + exception.Message, Resources.Error, MessageBoxButtons.OK);
-            }
+            _tabUtil.ShowStartTab(files);
         }
 
         protected override void OnClosing(CancelEventArgs e)

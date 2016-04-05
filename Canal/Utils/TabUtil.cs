@@ -29,12 +29,23 @@ namespace Canal.Utils
 
         public IEnumerable<FileControl> GetFileControls()
         {
-            return (from TabPage tab in _tabControl.TabPages select (FileControl)tab.Controls.Find("FileControl", false)[0]);
+            var result = new List<FileControl>();
+
+            foreach (TabPage tabPage in _tabControl.TabPages)
+            {
+                var fileControl = tabPage.Controls.Find("FileControl", false).FirstOrDefault(foundTab => foundTab is FileControl) as FileControl;
+                if (fileControl != null)
+                    result.Add(fileControl);
+            }
+
+            return result;
         }
 
         public IEnumerable<CobolFile> GetOpenFiles()
         {
-            return GetFileControls().Select(fileControl => fileControl.CobolFile);
+            var fileControls = GetFileControls();
+
+            return fileControls == null || !fileControls.Any() ? new List<CobolFile>() : fileControls.Select(fileControl => fileControl.CobolFile);
         }
 
         public bool TryShowTab(string filepath)
@@ -43,7 +54,8 @@ namespace Canal.Utils
             {
                 foreach (TabPage tab in _tabControl.TabPages)
                 {
-                    var fileControl = tab.Controls.Find("FileControl", false)[0] as FileControl;
+                    var fileControl = tab.Controls.Find("FileControl", false).FirstOrDefault(foundTab => foundTab is FileControl) as FileControl;
+
 
                     if (fileControl != null && fileControl.CobolFile.FileReference.FullPath == filepath)
                     {
@@ -150,6 +162,17 @@ namespace Canal.Utils
         public FileControl CurrentFileControl
         {
             get { return (FileControl)_tabControl.Controls.Find("FileControl", false).FirstOrDefault(); }
+        }
+
+        public void ShowStartTab(string[] files)
+        {
+            Logger.Singleton.AddMsg(2, "Showing start tab");
+
+            var newTab = new TabPage("Start" + "        ");
+
+            newTab.Controls.Add(new FirstTabPage(files.ToList(), _parent));
+            _tabControl.Controls.Add(newTab);
+            _tabControl.SelectTab(newTab);
         }
     }
 }

@@ -124,6 +124,12 @@
     <Compile Include="UserControls\FileInfo.Designer.cs">
       <DependentUpon>FileInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\FirstTabPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\FirstTabPage.Designer.cs">
+      <DependentUpon>FirstTabPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils\CobolTreeBuilder.cs" />
     <Compile Include="Utils\ErrorHandling.cs" />
     <Compile Include="UserControls\TextViewer.cs">
@@ -177,6 +183,9 @@
     <Content Include="Examples\RepWriteSumm.cbl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="UserControls\FirstTabPage.resx">
+      <DependentUpon>FirstTabPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\TextViewer.resx">
       <DependentUpon>TextViewer.cs</DependentUpon>
     </EmbeddedResource>
@@ -200,6 +209,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Resources\ChangeLog.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\loader.gif" />
     <Content Include="UserControls\AboutText.rtf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
