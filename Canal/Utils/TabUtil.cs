@@ -1,6 +1,7 @@
 ﻿using Canal.Events;
 using Canal.Properties;
 using Canal.UserControls;
+using Logging;
 using Model;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,7 @@ namespace Canal.Utils
                     if (fileControl != null && fileControl.CobolFile.FileReference.FullPath == filepath)
                     {
                         _tabControl.SelectedTab = tab;
+                        Logger.Singleton.AddMsg(3, "Switching to tab {0}: {1}", tab.TabIndex, tab.Text);
                         return true;
                     }
                 }
@@ -87,6 +89,8 @@ namespace Canal.Utils
 
         public void AddTab(CobolFile file)
         {
+            Logger.Singleton.AddMsg(2, "Adding tab for file {0}", file.Name);
+
             var newTab = new TabPage(file.Name + "        ");
 
             var fileControl = new FileControl(file, _parent);
@@ -100,6 +104,8 @@ namespace Canal.Utils
 
         private void UsedFileTypesChanged(object sender, UsedFileTypesChangedEventArgs usedFileTypesChangedEventArgs)
         {
+            Logger.Singleton.AddMsg(2, "Used file types changed.");
+
             foreach (FileControl fileControl in GetFileControls())
             {
                 fileControl.RefreshUsedFileTypes(sender, usedFileTypesChangedEventArgs);
@@ -108,6 +114,8 @@ namespace Canal.Utils
 
         public bool CloseTab(int index = -1)
         {
+            Logger.Singleton.AddMsg(2, "Closing tab {0}.", index);
+
             var tabIndex = index < 0 ? _tabControl.SelectedIndex : index;
 
             if (MessageBox.Show(Resources.ReallyCloseThisTab, Resources.CloseTab, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -123,6 +131,8 @@ namespace Canal.Utils
 
         public bool CloseAllTabs()
         {
+            Logger.Singleton.AddMsg(2, "Closing all tabs.");
+
             for (int tabIndex = 0; tabIndex < _tabControl.TabCount; tabIndex++)
             {
                 if (!CloseTab(tabIndex))

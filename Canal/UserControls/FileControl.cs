@@ -3,6 +3,7 @@ using Canal.Properties;
 using Canal.Utils;
 using FastColoredTextBoxNS.Enums;
 using FastColoredTextBoxNS.Events;
+using Logging;
 using Model;
 using Model.References;
 using System;
@@ -129,6 +130,7 @@ namespace Canal.UserControls
 
         private void CodeBoxOnWordSelected(object sender, WordSelectedEventArgs eventArgs)
         {
+            Logger.Singleton.AddMsg(3, "Selected word {0}", eventArgs.Word);
             _fileInfoControl.VariableInfoPanel.Controls.Clear();
             _fileInfoControl.VariableInfoPanel.Controls.Add(new WordInfo(eventArgs.Word, this) { Dock = DockStyle.Fill });
         }

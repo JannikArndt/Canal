@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeGenerator", "CodeGenerator\CodeGenerator.csproj", "{63E7EEB8-6BED-40A7-B1D1-5CC7DD077CDA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Logging\Logging.csproj", "{ED3CFE5E-4805-49CA-A4C5-6EAF9CAB7F16}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 		{63E7EEB8-6BED-40A7-B1D1-5CC7DD077CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63E7EEB8-6BED-40A7-B1D1-5CC7DD077CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63E7EEB8-6BED-40A7-B1D1-5CC7DD077CDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED3CFE5E-4805-49CA-A4C5-6EAF9CAB7F16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED3CFE5E-4805-49CA-A4C5-6EAF9CAB7F16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED3CFE5E-4805-49CA-A4C5-6EAF9CAB7F16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED3CFE5E-4805-49CA-A4C5-6EAF9CAB7F16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

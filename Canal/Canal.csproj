@@ -101,6 +101,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Events\UsedFileTypesChangedEventArgs.cs" />
+    <Compile Include="Log.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Log.Designer.cs">
+      <DependentUpon>Log.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -153,6 +159,9 @@
     <Compile Include="Utils\ReferenceUtil.cs" />
     <Compile Include="Utils\TabUtil.cs" />
     <Compile Include="Utils\VariablesUtil.cs" />
+    <EmbeddedResource Include="Log.resx">
+      <DependentUpon>Log.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\FileControl.resx">
       <DependentUpon>FileControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -226,9 +235,17 @@
       <Project>{903456c3-7292-4492-8c70-cdaaea2e28fc}</Project>
       <Name>Level88ToEnum</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CodeGenerator\CodeGenerator.csproj">
+      <Project>{63e7eeb8-6bed-40a7-b1d1-5cc7dd077cda}</Project>
+      <Name>CodeGenerator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FastColoredTextBox\FastColoredTextBox.csproj">
       <Project>{6dd14a85-ccfc-4774-bd26-0f5772512319}</Project>
       <Name>FastColoredTextBox</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{ed3cfe5e-4805-49ca-a4c5-6eaf9cab7f16}</Project>
+      <Name>Logging</Name>
     </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{86222556-3d40-4f67-b464-7983d6435fa6}</Project>

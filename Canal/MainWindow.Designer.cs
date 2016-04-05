@@ -42,11 +42,12 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.level88ToEnumConverterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.FileTabs = new System.Windows.Forms.TabControl();
-            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.reportIssueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FileTabs = new System.Windows.Forms.TabControl();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.showLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -159,23 +160,10 @@
             this.level88ToEnumConverterToolStripMenuItem.Text = "Level 88 to Enum Converter";
             this.level88ToEnumConverterToolStripMenuItem.Click += new System.EventHandler(this.level88ToEnumConverterToolStripMenuItem_Click);
             // 
-            // FileTabs
-            // 
-            this.FileTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FileTabs.Location = new System.Drawing.Point(0, 24);
-            this.FileTabs.Margin = new System.Windows.Forms.Padding(2);
-            this.FileTabs.Name = "FileTabs";
-            this.FileTabs.SelectedIndex = 0;
-            this.FileTabs.Size = new System.Drawing.Size(1384, 738);
-            this.FileTabs.TabIndex = 1;
-            // 
-            // openFileDialog
-            // 
-            this.openFileDialog.FileName = "openFileDialog";
-            // 
             // helpToolStripMenuItem1
             // 
             this.helpToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showLogToolStripMenuItem,
             this.reportIssueToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
@@ -195,6 +183,27 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // FileTabs
+            // 
+            this.FileTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FileTabs.Location = new System.Drawing.Point(0, 24);
+            this.FileTabs.Margin = new System.Windows.Forms.Padding(2);
+            this.FileTabs.Name = "FileTabs";
+            this.FileTabs.SelectedIndex = 0;
+            this.FileTabs.Size = new System.Drawing.Size(1384, 738);
+            this.FileTabs.TabIndex = 1;
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.FileName = "openFileDialog";
+            // 
+            // showLogToolStripMenuItem
+            // 
+            this.showLogToolStripMenuItem.Name = "showLogToolStripMenuItem";
+            this.showLogToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.showLogToolStripMenuItem.Text = "Show Log";
+            this.showLogToolStripMenuItem.Click += new System.EventHandler(this.showLogToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -235,6 +244,7 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem reportIssueToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showLogToolStripMenuItem;
     }
 }
 

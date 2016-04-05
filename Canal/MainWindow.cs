@@ -1,5 +1,6 @@
 ﻿using Canal.Properties;
 using Canal.UserControls;
+using Logging;
 using Model;
 using System;
 using System.Collections.Generic;
@@ -21,9 +22,13 @@ namespace Canal
 
         private readonly string[] _openFilesOnStartup;
 
+        private ConsoleLogger _log = new ConsoleLogger();
+
         public MainWindow(string[] files = null)
         {
             InitializeComponent();
+
+            Logger.Singleton.AddMsg(2, "Starting program");
 
             _openFilesOnStartup = files;
 
@@ -50,6 +55,8 @@ namespace Canal
 
         protected override void OnClosing(CancelEventArgs e)
         {
+            Logger.Singleton.AddMsg(2, "Closing program");
+
             Settings.Default.LastOpened = new StringCollection();
             Settings.Default.LastOpened.AddRange(_tabUtil.GetOpenFiles().Select(file => file.FileReference.FullPath).ToArray());
             Settings.Default.Save();
@@ -58,11 +65,14 @@ namespace Canal
 
         public void OpenFile(string filename)
         {
+            Logger.Singleton.AddMsg(2, "Opening file {0}", filename);
+
             if (_tabUtil.TryShowTab(filename))
                 return;
 
             if (!File.Exists(filename))
             {
+                Logger.Singleton.AddMsg(1, "File could not be found: {0}, showing error message", filename);
                 MessageBox.Show(string.Format(Resources.File_Could_Not_Be_Found, filename), Resources.Error, MessageBoxButtons.OK);
                 return;
             }
@@ -76,6 +86,7 @@ namespace Canal
             }
             catch (Exception exception)
             {
+                Logger.Singleton.AddMsg(1, "Error {0}: {1}", exception.GetType(), exception.Message);
                 ErrorHandling.Exception(exception);
                 MessageBox.Show(Resources.ErrorMessage_MainWindow_ErrorLoadingFile + exception.Message, Resources.Error, MessageBoxButtons.OK);
             }
@@ -129,6 +140,12 @@ namespace Canal
         {
             var about = new About();
             about.Show();
+        }
+
+        private void showLogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var logWindow = new Log(ConsoleLogger.GetText());
+            logWindow.Show();
         }
     }
 }
