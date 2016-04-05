@@ -31,7 +31,7 @@ namespace Canal.Utils
 
                 var updatedIndexOfCopy = file.Text.IndexOf(copyReference.ProgramName, StringComparison.Ordinal);
                 var lineAfterCopy = file.Text.IndexOf(Environment.NewLine, updatedIndexOfCopy, StringComparison.Ordinal);
-                file.Text = file.Text.Insert(lineAfterCopy, copyFile.Text + Environment.NewLine);
+                file.Text = file.Text.Insert(lineAfterCopy + 1, copyFile.Text + Environment.NewLine);
 
                 if (ProgressChanged != null)
                     ProgressChanged.Invoke(null, new ProgressChangedEventArgs(counter * 100 / (copyReferences.Count + 3), null));
@@ -46,8 +46,8 @@ namespace Canal.Utils
 
         public static IEnumerable<FileReference> FindCopyReferences(string text, bool textIsTrimmed = false)
         {
-            var prefix = textIsTrimmed ? @"^ ?" : @"^[\d ]{7}";
-            var copyRegex = new Regex(prefix + @"COPY (?<program>[\w]+) +OF +(?<folder>[\w]+)\.", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            var prefix = textIsTrimmed ? @"^" : @"^[\d]{6}";
+            var copyRegex = new Regex(prefix + @" *COPY (?<program>[\w]+) +OF +(?<folder>[\w]+)\.", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
 
             var matches = copyRegex.Matches(text);
             Console.WriteLine(@"Resolving {0} COPYs...", matches.Count);
