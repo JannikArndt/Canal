@@ -131,6 +131,7 @@
       <DependentUpon>FirstTabPage.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\CobolTreeBuilder.cs" />
+    <Compile Include="Utils\CobolTreeException.cs" />
     <Compile Include="Utils\ErrorHandling.cs" />
     <Compile Include="UserControls\TextViewer.cs">
       <SubType>Form</SubType>

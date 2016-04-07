@@ -1,9 +1,9 @@
-﻿using Model;
-using Model.References;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Model;
+using Model.References;
 
 namespace Canal.Utils
 {
@@ -19,6 +19,15 @@ namespace Canal.Utils
             var indexEnvironmentDivision = sourceCode.IndexOf("ENVIRONMENT DIVISION", StringComparison.Ordinal);
             var indexDataDivision = sourceCode.IndexOf("DATA DIVISION", StringComparison.Ordinal);
             var indexProcedureDivision = sourceCode.IndexOf("PROCEDURE DIVISION", StringComparison.Ordinal);
+
+            if (indexIdentificationDivision < 0)
+                throw new CobolTreeException("Invalid source file: {0} could not be found. Try resolving COPY references of fixing the error in the source code", "IDENTIFICATION DIVISION");
+            if (indexEnvironmentDivision < 0)
+                throw new CobolTreeException("Invalid source file: {0} could not be found. Try resolving COPY references of fixing the error in the source code", "ENVIRONMENT DIVISION");
+            if (indexDataDivision < 0)
+                throw new CobolTreeException("Invalid source file: {0} could not be found. Try resolving COPY references of fixing the error in the source code", "DATA DIVISION");
+            if (indexProcedureDivision < 0)
+                throw new CobolTreeException("Invalid source file: {0} could not be found. Try resolving COPY references of fixing the error in the source code", "PROCEDURE DIVISION");
 
             tree.IdentificationDivision = indexIdentificationDivision > 0
                 ? new IdentificationDivision(sourceCode.Substring(indexProcedureDivision, Math.Max(0, indexEnvironmentDivision - indexIdentificationDivision)), indexIdentificationDivision)
