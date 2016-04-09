@@ -33,6 +33,8 @@ namespace Canal.Utils
 
         public static readonly string Call = @"CALL +""" + NamedLiteral + @""" +(USING (" + Literal + ",? ?)*)?"; // TODO multiline calls
 
+        public static readonly string Variable = @"^[ ]+(?<level>\d\d) +(?<token>[\w\d-]+)(?<type>.*)\.";
+
         public static readonly HashSet<string> CobolKeywords = new HashSet<string>
         {
             "ACCEPT",

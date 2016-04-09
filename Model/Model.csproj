@@ -53,6 +53,8 @@
     <Compile Include="LinkageSection.cs" />
     <Compile Include="Literal.cs" />
     <Compile Include="PerformType.cs" />
+    <Compile Include="Pictures\CompType.cs" />
+    <Compile Include="Pictures\Pic.cs" />
     <Compile Include="Procedure.cs" />
     <Compile Include="ProcedureDivision.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

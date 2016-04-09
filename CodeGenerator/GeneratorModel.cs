@@ -16,7 +16,10 @@ namespace CodeGenerator
         }
 
         [DisplayName("Variable Type")]
-        public CobolVariableTypes VariableType { get; set; }
+        public string VariableType
+        {
+            get { return Variable.Picture.GetType().Name; }
+        }
 
         public Variable Variable { get; set; }
 
@@ -36,15 +39,13 @@ namespace CodeGenerator
         /// Creates a new instance of the GeneratorModel class.
         /// </summary>
         /// <param name="variable"></param>
-        /// <param name="variableType"></param>
         /// <param name="propertyName"></param>
         /// <param name="generatedCodeType"></param>
         /// <param name="comment"></param>
-        public GeneratorModel(Variable variable, CobolVariableTypes variableType, string propertyName, GeneratedCodeTypes generatedCodeType, string comment = null)
+        public GeneratorModel(Variable variable, string propertyName, GeneratedCodeTypes generatedCodeType, string comment = null)
         {
             Variable = variable;
             DoMap = true;
-            VariableType = variableType;
             PropertyName = propertyName;
             GeneratedCodeType = generatedCodeType;
             MapperName = string.Empty;

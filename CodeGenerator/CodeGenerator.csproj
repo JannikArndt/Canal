@@ -53,7 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CobolVariableTypes.cs" />
     <Compile Include="CodeGenerator.cs">
       <SubType>Form</SubType>
     </Compile>

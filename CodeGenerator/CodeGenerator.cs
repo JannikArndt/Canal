@@ -1,5 +1,6 @@
 ﻿using FastColoredTextBoxNS.Enums;
 using Model;
+using Model.Pictures;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
@@ -49,8 +50,8 @@ namespace CodeGenerator
             _configuration.Namespace = "Projects.MyNamespace";
             _configuration.Variables = new List<IMappingProvider>
             {
-                new GeneratorModel(new Variable(1, "MY-TEXT", string.Empty, null), CobolVariableTypes.PicX, "MyText", GeneratedCodeTypes.String, "My String"),
-                new GeneratorModel(new Variable(1, "MY-NUMBER", string.Empty, null), CobolVariableTypes.PicS9, "MyNumber", GeneratedCodeTypes.Int, "My Number")
+                new GeneratorModel(new Variable(1, "MY-TEXT", new PicX(9), string.Empty, null), "MyText", GeneratedCodeTypes.String, "My String"),
+                new GeneratorModel(new Variable(1, "MY-NUMBER", new PicS9(2),  string.Empty, null), "MyNumber", GeneratedCodeTypes.Int, "My Number")
                 };
         }
     }

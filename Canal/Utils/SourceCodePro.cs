@@ -9,6 +9,8 @@ namespace Canal.Utils
         private static readonly PrivateFontCollection Pfc;
 
         public static readonly Font Regular;
+        public static readonly Font Bold;
+        public static readonly Font Italic;
         // public static readonly Font Black;
         // public static readonly Font ExtraLight;
         // public static readonly Font Light;
@@ -39,7 +41,9 @@ namespace Canal.Utils
             // Pfc.AddFontFile("Resources/SourceCodePro-SemiBold.ttf");
             // Pfc.AddFontFile("Resources/SourceCodePro-SemiBoldIt.ttf");
 
-            Regular = new Font(Pfc.Families[0], 10f, FontStyle.Regular | FontStyle.Bold | FontStyle.Italic);
+            Regular = new Font(Pfc.Families[0], 10f, FontStyle.Regular);
+            Bold = new Font(Pfc.Families[0], 10f, FontStyle.Bold);
+            Italic = new Font(Pfc.Families[0], 10f, FontStyle.Italic);
             // Light = new Font(Pfc.Families[1], 10f, FontStyle.Regular | FontStyle.Italic);
             // Medium = new Font(Pfc.Families[2], 10f, FontStyle.Bold | FontStyle.Italic);
             // Black = new Font(Pfc.Families[3], 10f, FontStyle.Bold | FontStyle.Italic);
