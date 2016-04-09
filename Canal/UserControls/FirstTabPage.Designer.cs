@@ -84,6 +84,7 @@
             // 
             // changeLogTextBox
             // 
+            this.changeLogTextBox.BackColor = System.Drawing.SystemColors.Window;
             this.changeLogTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.changeLogTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.changeLogTextBox.Location = new System.Drawing.Point(3, 16);
@@ -98,6 +99,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "FirstTabPage";

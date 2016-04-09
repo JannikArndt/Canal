@@ -3,11 +3,10 @@ using Canal.UserControls;
 using Logging;
 using Model;
 using System;
-using System.Collections.Specialized;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace Canal
@@ -19,6 +18,8 @@ namespace Canal
     {
         private readonly TabUtil _tabUtil;
 
+        private readonly string[] _openFilesOnStartup;
+
         private ConsoleLogger _log = new ConsoleLogger();
 
         public MainWindow(string[] files = null)
@@ -27,16 +28,32 @@ namespace Canal
 
             Logger.Singleton.AddMsg(2, "Starting program");
 
+            _openFilesOnStartup = files;
+
             _tabUtil = new TabUtil(FileTabs, this);
-            _tabUtil.ShowStartTab(files);
+            _tabUtil.ShowStartTab();
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            try
+            {
+                var toOpen = new List<string>();
+                if (_openFilesOnStartup != null) toOpen.AddRange(_openFilesOnStartup);
+
+                foreach (string filepath in new HashSet<string>(toOpen))
+                    OpenFile(filepath);
+            }
+            catch (Exception exception)
+            {
+                ErrorHandling.Exception(exception);
+                MessageBox.Show(Resources.ErrorMessage_MainWindow_OpenPrevious + exception.Message, Resources.Error, MessageBoxButtons.OK);
+            }
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
             Logger.Singleton.AddMsg(2, "Closing program");
-
-            Settings.Default.LastOpened = new StringCollection();
-            Settings.Default.LastOpened.AddRange(_tabUtil.GetOpenFiles().Select(file => file.FileReference.FullPath).ToArray());
             Settings.Default.Save();
             base.OnClosing(e);
         }
@@ -61,6 +78,7 @@ namespace Canal
             {
                 var file = FileUtil.Get(filename);
                 _tabUtil.AddTab(file);
+                Settings.Default.LastOpened.Add(filename);
             }
             catch (Exception exception)
             {

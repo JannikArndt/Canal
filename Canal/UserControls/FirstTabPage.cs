@@ -1,7 +1,7 @@
-﻿using Logging;
+﻿using Canal.Properties;
+using Logging;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Windows.Forms;
 
 namespace Canal.UserControls
@@ -10,22 +10,24 @@ namespace Canal.UserControls
     {
         private readonly MainWindow _parent;
 
-        private readonly List<string> _recentFilesList;
-
-        public FirstTabPage(List<string> recentFilesList, MainWindow parent)
+        public FirstTabPage(MainWindow parent)
         {
             InitializeComponent();
 
             _parent = parent;
 
-            _recentFilesList = recentFilesList;
-
             try
             {
-                foreach (var file in recentFilesList)
+                var hashSet = new HashSet<string>();
+                foreach (var file in Settings.Default.LastOpened)
+                {
+                    hashSet.Add(file);
+                }
+
+                foreach (var file in hashSet)
                     recentFilesListView.Items.Add(file);
 
-                changeLogTextBox.Text = File.ReadAllText("Resources/ChangeLog.txt");
+                changeLogTextBox.Text = Resources.ChangeLog;
             }
             catch (Exception exception)
             {
@@ -42,7 +44,7 @@ namespace Canal.UserControls
 
         private void OpenAllRecentFiles(object sender, EventArgs e)
         {
-            foreach (var file in _recentFilesList)
+            foreach (var file in Settings.Default.LastOpened)
                 _parent.OpenFile(file);
         }
     }

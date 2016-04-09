@@ -22,8 +22,7 @@ namespace Canal.Utils
         {
             _parent = parent;
             _tabControl = tabControl;
-            _tabControl.DrawMode = TabDrawMode.OwnerDrawFixed;
-            _tabControl.DrawItem += _tabControl_DrawItem;
+            _tabControl.DrawMode = TabDrawMode.Normal;
             _tabControl.MouseDown += TabControlOnMouseDown;
         }
 
@@ -43,9 +42,9 @@ namespace Canal.Utils
 
         public IEnumerable<CobolFile> GetOpenFiles()
         {
-            var fileControls = GetFileControls();
+            var fileControls = GetFileControls().ToList();
 
-            return fileControls == null || !fileControls.Any() ? new List<CobolFile>() : fileControls.Select(fileControl => fileControl.CobolFile);
+            return !fileControls.Any() ? new List<CobolFile>() : fileControls.Select(fileControl => fileControl.CobolFile);
         }
 
         public bool TryShowTab(string filepath)
@@ -89,21 +88,11 @@ namespace Canal.Utils
             }
         }
 
-        private void _tabControl_DrawItem(object sender, DrawItemEventArgs e)
-        {
-            //This code will render a "x" mark at the end of the Tab caption. 
-            Font xFont = new Font("Consolas", 10, FontStyle.Bold);
-
-            e.Graphics.DrawString("X", xFont, Brushes.Black, e.Bounds.Right - 15, e.Bounds.Top + 4);
-            e.Graphics.DrawString(_tabControl.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + 12, e.Bounds.Top + 4);
-            e.DrawFocusRectangle();
-        }
-
         public void AddTab(CobolFile file)
         {
             Logger.Singleton.AddMsg(2, "Adding tab for file {0}", file.Name);
 
-            var newTab = new TabPage(file.Name + "        ");
+            var newTab = new TabPage(file.Name + "     X");
 
             var fileControl = new FileControl(file, _parent);
 
@@ -132,9 +121,10 @@ namespace Canal.Utils
 
             if (MessageBox.Show(Resources.ReallyCloseThisTab, Resources.CloseTab, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                var fileControl = (FileControl)_tabControl.SelectedTab.Controls.Find("FileControl", false)[0];
+                var fileControl = (FileControl)_tabControl.SelectedTab.Controls.Find("FileControl", false).FirstOrDefault(tab => tab is FileControl);
                 // TODO dispose everything
-                fileControl.Dispose();
+                if (fileControl != null)
+                    fileControl.Dispose();
                 _tabControl.TabPages.RemoveAt(tabIndex);
                 return true;
             }
@@ -164,13 +154,13 @@ namespace Canal.Utils
             get { return (FileControl)_tabControl.Controls.Find("FileControl", false).FirstOrDefault(); }
         }
 
-        public void ShowStartTab(string[] files)
+        public void ShowStartTab()
         {
             Logger.Singleton.AddMsg(2, "Showing start tab");
 
-            var newTab = new TabPage("Start" + "        ");
-
-            newTab.Controls.Add(new FirstTabPage(files.ToList(), _parent));
+            var newTab = new TabPage("Start" + "     X");
+            var firstTabPage = new FirstTabPage(_parent) {Dock = DockStyle.Fill};
+            newTab.Controls.Add(firstTabPage);
             _tabControl.Controls.Add(newTab);
             _tabControl.SelectTab(newTab);
         }

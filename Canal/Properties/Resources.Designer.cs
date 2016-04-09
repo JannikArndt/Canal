@@ -61,6 +61,33 @@ namespace Canal.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to v1.8
+        ///- Fixed issue #8
+        ///- Added logging
+        ///- Added start screen
+        ///
+        ///v1.7.2
+        ///- Stability and performance improvements
+        ///
+        ///v1.7.1
+        ///- Bug fixes
+        ///
+        ///v1.7
+        ///- Added multithreading for analysis
+        ///
+        ///v1.6.4
+        ///- Stability improvements
+        ///
+        ///v1.6.3
+        ///- Made SourceCodePro the default font.
+        /// </summary>
+        internal static string ChangeLog {
+            get {
+                return ResourceManager.GetString("ChangeLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close Tab.
         /// </summary>
         internal static string CloseTab {
