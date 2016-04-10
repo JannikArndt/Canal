@@ -20,10 +20,10 @@ namespace Canal.Utils
 
             var result = new List<Variable>();
             var regex = new Regex(Constants.Variable, Constants.CompiledMultilineCaseInsensitive);
-
+            var preparedText = trimmedText.Replace("\t", " ");
             Variable lastVariable = null;
 
-            foreach (Match match in regex.Matches(trimmedText))
+            foreach (Match match in regex.Matches(preparedText))
             {
                 // Read properties from RegEx
                 var valLevel = int.Parse(match.Groups["level"].Value);
@@ -35,7 +35,13 @@ namespace Canal.Utils
                 var valOccurs = match.Groups["occurs"].Value;
 
                 // Create type definition ("PIC")
-                var picture = ParsePicture(valType, valComp, valValue);
+                IPic picture;
+                if (valLevel == 88)
+                    picture = new Pic88 { Value = valValue };
+                else if (string.IsNullOrWhiteSpace(valType))
+                    picture = new PicGroup();
+                else
+                    picture = ParsePicture(valType, valComp, valValue);
 
                 // Create Variable
                 var currentVariable = new Variable(valLevel, valLiteral, picture, match.Value, null)

@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace Model.References
 {
-    public class FileReference
+    public class FileReference : TreeNode
     {
-        public FileReference(string fileSystemEntry)
+        public FileReference(string fileSystemEntry) : base(Path.GetFileNameWithoutExtension(fileSystemEntry))
         {
             ReferencedIn = new List<Procedure>();
             FullPath = fileSystemEntry;

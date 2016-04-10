@@ -53,6 +53,11 @@ namespace Model
             }
         }
 
+        public Variable() : base()
+        {
+
+        }
+
         public Variable(int variableLevel, string variableName, IPic picture, string code, Variable parentVariable)
                 : base(variableLevel.ToString("D2") + "  " + variableName)
         {
@@ -62,6 +67,22 @@ namespace Model
             Code = code;
             ParentVariable = parentVariable;
             Variables = new List<Variable>();
+        }
+
+        public override object Clone()
+        {
+            var clone = (Variable)base.Clone();
+            clone.VariableLevel = VariableLevel;
+            clone.VariableName = VariableName;
+            clone.Picture = Picture;
+            clone.Variables = Variables;
+            clone.Length = Length;
+            clone.Occurs = Occurs;
+            clone.Offset = Offset;
+            clone.Redefines = Redefines;
+            clone.ParentVariable = ParentVariable;
+
+            return clone;
         }
 
         public void FillNodesWithVariables()

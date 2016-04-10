@@ -24,6 +24,9 @@ namespace Model.Pictures
         /// </summary>
         public static IPic Parse(string text)
         {
+            if (string.IsNullOrWhiteSpace(text))
+                return new Pic88();
+
             var picPartResolved = ResolveParenthesis(text);
 
             var indexOfComp = picPartResolved.IndexOf("COMP", StringComparison.Ordinal);
@@ -54,7 +57,7 @@ namespace Model.Pictures
 
             // PIC S99
             if (picPartResolved[0] == 'S' && picPartResolved.Skip(1).All(c => c == '9'))
-                return new PicS9(picPartResolved.Length);
+                return new PicS9(picPartResolved.Length - 1);
 
             Logger.Singleton.AddMsg(2, "Error parsing {0}", text);
             throw new Exception("Error parsing " + text);
@@ -80,6 +83,40 @@ namespace Model.Pictures
         }
 
 
+    }
+
+    public class PicGroup : IPic
+    {
+        private int _length = 0;
+        private string _value = "";
+        private CompType _compType = CompType.None;
+
+        public int Length
+        {
+            get { return _length; }
+            set { }
+        }
+
+        public string Value
+        {
+            get { return _value; }
+            set { }
+        }
+
+        public CompType CompType
+        {
+            get { return _compType; }
+            set { }
+        }
+
+        public PicGroup()
+        {
+        }
+
+        public override string ToString()
+        {
+            return string.Empty;
+        }
     }
 
     public class PicX : IPic

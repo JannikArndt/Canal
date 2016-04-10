@@ -118,12 +118,6 @@
     <Compile Include="UserControls\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\FileInfo.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\FileInfo.Designer.cs">
-      <DependentUpon>FileInfo.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\FirstTabPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -192,9 +186,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\About.resx">
       <DependentUpon>About.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\FileInfo.resx">
-      <DependentUpon>FileInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\WordInfo.resx">
       <DependentUpon>WordInfo.cs</DependentUpon>

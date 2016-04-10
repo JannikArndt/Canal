@@ -24,8 +24,6 @@ namespace Canal.UserControls
 
         private readonly MainWindow _parent;
 
-        private FileInfo _fileInfoControl;
-
         private BackgroundWorker _worker = new BackgroundWorker();
 
         public FileControl(CobolFile file, MainWindow parent)
@@ -70,25 +68,17 @@ namespace Canal.UserControls
             try
             {
                 tocTabPage.Controls.Remove(loaderImageToc);
-                infoTabPage.Controls.Remove(loaderImageInfoTab);
+                splitContainerRight.Panel2.Controls.Remove(loaderImageInfoTab);
 
-                treeView.Nodes.Add(CobolFile.CobolTree.GetAsTreeNodes());
-                treeView.ExpandAll();
-
-                performsTreeView.Nodes.Add(ReferenceUtil.GetPerformTree(CobolFile));
-                performsTreeView.ExpandAll();
+                ShowTocTreeView();
 
                 ShowProceduresTreeView(true);
 
                 ShowVariablesTreeView();
 
-                _fileInfoControl = new FileInfo(CobolFile, _parent) { Dock = DockStyle.Fill };
-                infoTabPage.Controls.Add(_fileInfoControl);
+                ShowWordInfo();
 
-                FileUtil.ReduceDirectoriesToAllowedFiles();
-                filesTreeView.Nodes.AddRange(FileUtil.GetDirectoryStructure());
-                filesTreeView.ExpandAll();
-                filesTabSearchBox.Text = Resources.SearchPlaceholder;
+                ShowFilesTreeView();
             }
             catch (Exception exception)
             {
@@ -97,10 +87,38 @@ namespace Canal.UserControls
             }
         }
 
+        private void ShowWordInfo(string word = "")
+        {
+            foreach (Control control in splitContainerRight.Panel2.Controls)
+            {
+                control.Dispose();
+            }
+
+            splitContainerRight.Panel2.Controls.Clear();
+            var fileInfoControl = new WordInfo(word, CobolFile, _parent) { Dock = DockStyle.Fill };
+            splitContainerRight.Panel2.Controls.Add(fileInfoControl);
+        }
+
+        private void ShowFilesTreeView()
+        {
+            FileUtil.ReduceDirectoriesToAllowedFiles();
+            filesTreeView.Nodes.AddRange(FileUtil.GetDirectoryStructure());
+            filesTreeView.ExpandAll();
+            filesTabSearchBox.Text = Resources.SearchPlaceholder;
+        }
+
         private void BuildCobolTree(object sender, DoWorkEventArgs doWorkEventArgs)
         {
-            var builder = new CobolTreeBuilder();
-            builder.Build(doWorkEventArgs.Argument as CobolFile);
+            try
+            {
+                var builder = new CobolTreeBuilder();
+                builder.Build(doWorkEventArgs.Argument as CobolFile);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(Resources.Error_CobolTree_could_not_be_built + exception.Message, Resources.Error, MessageBoxButtons.OK);
+                throw;
+            }
         }
 
         void IDisposable.Dispose()
@@ -130,8 +148,7 @@ namespace Canal.UserControls
         private void CodeBoxOnWordSelected(object sender, WordSelectedEventArgs eventArgs)
         {
             Logger.Singleton.AddMsg(3, "Selected word {0}", eventArgs.Word);
-            _fileInfoControl.VariableInfoPanel.Controls.Clear();
-            _fileInfoControl.VariableInfoPanel.Controls.Add(new WordInfo(eventArgs.Word, this) { Dock = DockStyle.Fill });
+            ShowWordInfo(eventArgs.Word);
         }
 
         #endregion
@@ -201,7 +218,7 @@ namespace Canal.UserControls
 
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            codeBox.FindNext(@"^.{7}" + treeView.SelectedNode.Text + @"(\.| +USING| OF)", false, true, false, true);
+            codeBox.FindNext(@"^.{7}" + tocTreeView.SelectedNode.Text + @"(\.| +USING| OF)", false, true, false, true);
         }
 
         private void performsTree_AfterSelect(object sender, TreeViewEventArgs e)
@@ -275,7 +292,7 @@ namespace Canal.UserControls
 
         private void ExportTocClick(object sender, EventArgs e)
         {
-            Clipboard.SetText(treeView.ToText());
+            Clipboard.SetText(tocTreeView.ToText());
         }
 
         private void CopyProceduresClick(object sender, EventArgs e)
@@ -290,6 +307,12 @@ namespace Canal.UserControls
         private void ShowVariablesTreeView()
         {
             variablesTreeView.Nodes.Clear();
+
+            if (CobolFile.CobolTree == null)
+            {
+                variablesTreeView.Nodes.Add(new TreeNode("Error: CobolTree could not be built.") { ForeColor = Color.Red });
+                return;
+            }
 
             var workingStorageSectionTreeNode = new TreeNode("Working-Storage Division");
 
@@ -311,9 +334,32 @@ namespace Canal.UserControls
             variablesTreeView.Nodes.Add(linkageSectionTreeNode);
         }
 
+        private void ShowTocTreeView()
+        {
+            tocTreeView.Nodes.Clear();
+
+            if (CobolFile.CobolTree == null)
+            {
+                tocTreeView.Nodes.Add(new TreeNode("Error: CobolTree could not be built.") { ForeColor = Color.Red });
+                return;
+            }
+
+            tocTreeView.Nodes.Add(CobolFile.CobolTree.GetAsTreeNodes());
+            tocTreeView.ExpandAll();
+
+            performsTreeView.Nodes.Add(ReferenceUtil.GetPerformTree(CobolFile));
+            performsTreeView.ExpandAll();
+        }
+
         private void ShowProceduresTreeView(bool showWarning = false)
         {
             proceduresTreeView.Nodes.Clear();
+
+            if (CobolFile.CobolTree == null)
+            {
+                proceduresTreeView.Nodes.Add(new TreeNode("Error: CobolTree could not be built.") { ForeColor = Color.Red });
+                return;
+            }
 
             if (showWarning)
                 proceduresTreeView.Nodes.Add(new TreeNode("Copy files aren't resolved yet, references may be incomplete!") { ForeColor = Color.Red });
@@ -358,12 +404,12 @@ namespace Canal.UserControls
 
         private void TocExpandAllButton_Click(object sender, EventArgs e)
         {
-            treeView.ExpandAll();
+            tocTreeView.ExpandAll();
         }
 
         private void TocCollapseAllButton_Click(object sender, EventArgs e)
         {
-            treeView.CollapseAll();
+            tocTreeView.CollapseAll();
         }
 
         private void proceduresExpandAllButton_Click(object sender, EventArgs e)

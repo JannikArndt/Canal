@@ -106,6 +106,15 @@ namespace Canal.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error: CobolTree could not be built: .
+        /// </summary>
+        internal static string Error_CobolTree_could_not_be_built {
+            get {
+                return ResourceManager.GetString("Error_CobolTree_could_not_be_built", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occured trying to display the file: .
         /// </summary>
         internal static string ErrorMessage_FileControl_Constructor {

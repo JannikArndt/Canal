@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="tocToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="loaderImageToc.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -202,9 +199,6 @@
   <metadata name="performsToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>240, 17</value>
   </metadata>
-  <metadata name="performsToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>240, 17</value>
-  </metadata>
   <data name="performsCopyButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -233,9 +227,6 @@
         YLIMYAieQ74BIM0wTJYBMENgbLIMQMYkGYAP09YAYjFUy9AHDAwALXVUItsXe+wAAAAASUVORK5CYII=
 </value>
   </data>
-  <metadata name="variablesToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>345, 17</value>
-  </metadata>
   <metadata name="variablesToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>345, 17</value>
   </metadata>
@@ -270,9 +261,6 @@
   <metadata name="proceduresToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>135, 17</value>
   </metadata>
-  <metadata name="proceduresToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>135, 17</value>
-  </metadata>
   <data name="proceduresCopyButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -299,6 +287,18 @@
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABISURBVDhPYxhc4Nu3b/+JxVAtqAAk4eTkRBDTx4AP7z9i
         YLIMYAieQ74BIM0wTJYBMENgbLIMQMYkGYAP09YAYjFUy9AHDAwALXVUItsXe+wAAAAASUVORK5CYII=
+</value>
+  </data>
+  <metadata name="filesTabToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>790, 17</value>
+  </metadata>
+  <data name="fileTypeDropDownButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC+SURBVDhPrZC9EcMgDEY9Gz0LeQD3Lp016OlZgipJ6zjh
+        aMl9CSIyPzZFdPcOBNJD9vC38N6HM2JpPVAghKgyTdO55EgATiVc8Fi3HV2SHgGXxLZf5AK+z0WFAAdA
+        ax2MMcE5F57ba9fcFFDzPM+pACBXSqX8UEDNt+v9U4gVOc75JE0BXSzLJUgpd8X4LKxdAoDXaQJgre2f
+        AGAKntMEnELAfyB/CefjOKacKAS5BCCnuxqx/Ru1AiKWNGIY3r8qDvjB/igdAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="codeBox.Hotkeys" xml:space="preserve">
@@ -391,19 +391,7 @@
         nQAGArBTt8R8mLuyPyEAOwAAAAAAAAAAAA==
 </value>
   </data>
-  <metadata name="filesTabToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="miniToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>648, 17</value>
   </metadata>
-  <metadata name="filesTabToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>648, 17</value>
-  </metadata>
-  <data name="fileTypeDropDownButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC+SURBVDhPrZC9EcMgDEY9Gz0LeQD3Lp016OlZgipJ6zjh
-        aMl9CSIyPzZFdPcOBNJD9vC38N6HM2JpPVAghKgyTdO55EgATiVc8Fi3HV2SHgGXxLZf5AK+z0WFAAdA
-        ax2MMcE5F57ba9fcFFDzPM+pACBXSqX8UEDNt+v9U4gVOc75JE0BXSzLJUgpd8X4LKxdAoDXaQJgre2f
-        AGAKntMEnELAfyB/CefjOKacKAS5BCCnuxqx/Ru1AiKWNGIY3r8qDvjB/igdAAAAAElFTkSuQmCC
-</value>
-  </data>
 </root>

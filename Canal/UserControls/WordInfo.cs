@@ -1,5 +1,7 @@
 ﻿using Canal.Utils;
 using Model;
+using Model.References;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -8,25 +10,59 @@ namespace Canal.UserControls
 {
     public partial class WordInfo : UserControl
     {
-        public WordInfo(string word, FileControl fileControl)
+        private readonly MainWindow _parent;
+
+        public WordInfo(string word, CobolFile cobolFile, MainWindow parent)
         {
             InitializeComponent();
+            _parent = parent;
 
             // is the word a variable?
-            var variable = fileControl.CobolFile.Variables.FindVariable(word);
+            var variable = cobolFile.Variables.FindVariable(word);
             if (variable != null)
             {
-                headingLabel.Text = word;
+                infoGroupBox.Text = "Selected Variable: " + word;
                 FillVariableTreeView(variable);
                 return;
             }
 
-            var procedure = fileControl.CobolFile.CobolTree.AllProcedures.FirstOrDefault(proc => proc.Name == word);
+            // is it a procedure?
+            var procedure = cobolFile.CobolTree.AllProcedures.FirstOrDefault(proc => proc.Name == word);
             if (procedure != null)
             {
-                headingLabel.Text = word;
+                infoGroupBox.Text = "Selected Procedure: " + word;
                 FillProcedureTreeView(procedure);
+                return;
             }
+
+            // else: show file infos
+            infoGroupBox.Text = "Program: " + cobolFile.Name;
+            FillCallTreeView(cobolFile.CallReferences);
+        }
+
+        private void FillCallTreeView(List<FileReference> callReferences)
+        {
+            var uniqueFolders = new HashSet<string>(callReferences.Select(cr => cr.Directory));
+
+            foreach (var folder in uniqueFolders)
+            {
+                var folderNode = new TreeNode(folder);
+                variableTreeView.Nodes.Add(folderNode);
+                var folder1 = folder;
+                foreach (var fileRef in callReferences.Where(cr => cr.Directory == folder1))
+                {
+                    folderNode.Nodes.Add(fileRef);
+                }
+            }
+
+            variableTreeView.ExpandAll();
+
+            variableTreeView.NodeMouseDoubleClick += (sender, args) =>
+            {
+                var fileRef = variableTreeView.SelectedNode as FileReference;
+                if (fileRef != null)
+                    _parent.OpenFile(fileRef.FullPath);
+            };
         }
 
         private void FillProcedureTreeView(Procedure procedure)
@@ -53,56 +89,77 @@ namespace Canal.UserControls
         {
             // Get all vars to the root
             var currentVar = variable;
-            var node = new TreeNode(currentVar.VariableDefinition, currentVar.Variables.Select(child => new TreeNode(child.VariableDefinition)).ToArray());
 
             while (currentVar.ParentVariable != null)
             {
-                var newNode = new TreeNode(currentVar.ParentVariable.VariableDefinition, new[] { node });
-                node = newNode;
+                currentVar.Nodes.Clear();
+                foreach (var vari in currentVar.Variables)
+                {
+                    currentVar.Nodes.Add(vari);
+                }
                 currentVar = currentVar.ParentVariable;
             }
 
             variableTreeView.DrawMode = TreeViewDrawMode.OwnerDrawText;
             variableTreeView.DrawNode += VariableTreeViewOnDrawNode;
-            variableTreeView.Nodes.Add(node);
+            variableTreeView.Nodes.Add((Variable)currentVar.Clone());
             variableTreeView.ExpandAll();
         }
 
         private void VariableTreeViewOnDrawNode(object sender, DrawTreeNodeEventArgs e)
         {
+            var variable = e.Node as Variable;
+            if (variable == null)
+                return;
+
             Color nodeColor = Color.DarkGray;
             if ((e.State & TreeNodeStates.Selected) != 0)
                 nodeColor = SystemColors.HighlightText;
 
-            var texts = e.Node.Text.Split('#');
-
             var levelWidth = 20;
-            var nameWidth = 140 - e.Node.Level * 20;
-            var picWidth = 80;
+            var nameWidth = 220 - e.Node.Level * 20;
+            var picWidth = 120;
 
             TextRenderer.DrawText(e.Graphics,
-                                  texts[0],
-                                  SourceCodePro.Regular,
+                                  variable.VariableLevel.ToString("D2"),
+                                  e.Node.NodeFont,
                                   new Rectangle(e.Bounds.X, e.Bounds.Y, levelWidth, e.Bounds.Height),
                                   nodeColor,
                                   Color.Empty,
                                   TextFormatFlags.VerticalCenter);
 
             TextRenderer.DrawText(e.Graphics,
-                                  texts[1],
-                                  SourceCodePro.Regular,
+                                  variable.VariableName,
+                                  e.Node.NodeFont,
                                   new Rectangle(e.Bounds.X + levelWidth, e.Bounds.Y, nameWidth, e.Bounds.Height),
                                   e.Node.ForeColor,
                                   Color.Empty,
                                   TextFormatFlags.VerticalCenter);
 
-            TextRenderer.DrawText(e.Graphics,
-                                  texts[2],
-                                  SourceCodePro.Regular,
-                                  new Rectangle(e.Bounds.X + levelWidth + nameWidth, e.Bounds.Y, picWidth, e.Bounds.Height),
-                                  nodeColor,
-                                  Color.Empty,
-                                  TextFormatFlags.VerticalCenter);
+            if (variable.Picture != null)
+                TextRenderer.DrawText(e.Graphics,
+                                      variable.Picture.ToString(),
+                                      e.Node.NodeFont,
+                                      new Rectangle(e.Bounds.X + levelWidth + nameWidth, e.Bounds.Y, picWidth, e.Bounds.Height),
+                                      nodeColor,
+                                      Color.Empty,
+                                      TextFormatFlags.VerticalCenter);
+        }
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            variableTreeView.Nodes.Clear();
+            variableTreeView.Dispose();
+
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

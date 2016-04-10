@@ -7,18 +7,6 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
 
         #region Component Designer generated code
 
@@ -28,45 +16,48 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.headingLabel = new System.Windows.Forms.Label();
             this.variableTreeView = new System.Windows.Forms.TreeView();
+            this.infoGroupBox = new System.Windows.Forms.GroupBox();
+            this.infoGroupBox.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // headingLabel
-            // 
-            this.headingLabel.AutoSize = true;
-            this.headingLabel.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.headingLabel.Location = new System.Drawing.Point(4, 4);
-            this.headingLabel.Name = "headingLabel";
-            this.headingLabel.Size = new System.Drawing.Size(0, 19);
-            this.headingLabel.TabIndex = 0;
             // 
             // variableTreeView
             // 
-            this.variableTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.variableTreeView.BackColor = System.Drawing.SystemColors.Control;
             this.variableTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.variableTreeView.Location = new System.Drawing.Point(0, 35);
+            this.variableTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.variableTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.variableTreeView.ItemHeight = 22;
+            this.variableTreeView.Location = new System.Drawing.Point(3, 16);
             this.variableTreeView.Name = "variableTreeView";
-            this.variableTreeView.Size = new System.Drawing.Size(294, 435);
+            this.variableTreeView.Size = new System.Drawing.Size(288, 454);
             this.variableTreeView.TabIndex = 1;
+            // 
+            // infoGroupBox
+            // 
+            this.infoGroupBox.Controls.Add(this.variableTreeView);
+            this.infoGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.infoGroupBox.Location = new System.Drawing.Point(0, 0);
+            this.infoGroupBox.Name = "infoGroupBox";
+            this.infoGroupBox.Size = new System.Drawing.Size(294, 473);
+            this.infoGroupBox.TabIndex = 2;
+            this.infoGroupBox.TabStop = false;
+            this.infoGroupBox.Text = "groupBox1";
             // 
             // WordInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.variableTreeView);
-            this.Controls.Add(this.headingLabel);
+            this.Controls.Add(this.infoGroupBox);
             this.Name = "WordInfo";
             this.Size = new System.Drawing.Size(294, 473);
+            this.infoGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label headingLabel;
         private System.Windows.Forms.TreeView variableTreeView;
+        private System.Windows.Forms.GroupBox infoGroupBox;
     }
 }
