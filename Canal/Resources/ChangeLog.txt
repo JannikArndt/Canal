@@ -1,4 +1,9 @@
-﻿v1.8
+﻿v1.9
+- Rebuild variable parsing
+- Remodeled Info-view
+- Various improvements
+
+v1.8
 - Fixed issue #8
 - Added logging
 - Added start screen
