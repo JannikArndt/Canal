@@ -423,6 +423,9 @@ namespace Canal.UserControls
         '\"',
         '\'',
         '\''};
+            this.codeBox.AutoIndent = false;
+            this.codeBox.AutoIndentChars = false;
+            this.codeBox.AutoIndentExistingLines = false;
             this.codeBox.AutoScrollMinSize = new System.Drawing.Size(25, 15);
             this.codeBox.BackBrush = null;
             this.codeBox.CharHeight = 15;
@@ -430,8 +433,10 @@ namespace Canal.UserControls
             this.codeBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.codeBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.codeBox.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.codeBox.HighlightingRangeType = FastColoredTextBoxNS.Enums.HighlightingRangeType.VisibleRange;
             this.codeBox.Hotkeys = resources.GetString("codeBox.Hotkeys");
             this.codeBox.IsReplaceMode = false;
+            this.codeBox.Language = FastColoredTextBoxNS.Enums.Language.Cobol;
             this.codeBox.Location = new System.Drawing.Point(0, 27);
             this.codeBox.Margin = new System.Windows.Forms.Padding(2);
             this.codeBox.Name = "codeBox";

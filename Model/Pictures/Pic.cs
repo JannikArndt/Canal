@@ -1,11 +1,20 @@
-﻿using System;
+﻿using Logging;
+using System;
 using System.Linq;
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
+// ReSharper disable MemberCanBeProtected.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace Model.Pictures
 {
     public interface IPic
     {
-        void ParseValue(string text);
+        int Length { get; set; }
+
+        string Value { get; set; }
+
+        CompType CompType { get; set; }
     }
 
     public static class Pic
@@ -17,28 +26,38 @@ namespace Model.Pictures
         {
             var picPartResolved = ResolveParenthesis(text);
 
-            CompType comp = CompType.None;
             var indexOfComp = picPartResolved.IndexOf("COMP", StringComparison.Ordinal);
             if (indexOfComp > 0)
             {
-                comp = ParseComp(picPartResolved.Substring(indexOfComp));
                 picPartResolved = picPartResolved.Substring(0, indexOfComp).TrimEnd();
             }
 
+            // PIC XXX
             if (picPartResolved.All(c => c == 'X'))
                 return new PicX(picPartResolved.Length);
 
-            if (picPartResolved.All(c => c == '9'))
-                return new Pic9(picPartResolved.Length, comp);
-
-            if (picPartResolved[0] == 'S' && picPartResolved.Skip(1).All(c => c == '9'))
-                return new PicS9(picPartResolved.Length, comp);
-
+            // contains V?
             var decimalPointIndex = picPartResolved.IndexOf('V');
-            if (picPartResolved[0] == 'S' && decimalPointIndex > 0)
-                return new PicS9V9(decimalPointIndex - 1, picPartResolved.Length - decimalPointIndex - 1, comp);
+            if (decimalPointIndex > -1)
+            {
+                // PIC S99V99
+                if (picPartResolved[0] == 'S')
+                    return new PicS9V9(decimalPointIndex - 1, picPartResolved.Length - decimalPointIndex - 1);
 
-            return null;
+                // PIC 9V99
+                return new Pic9V9(decimalPointIndex, picPartResolved.Length - decimalPointIndex - 1);
+            }
+
+            // PIC 99
+            if (picPartResolved.All(c => c == '9'))
+                return new Pic9(picPartResolved.Length);
+
+            // PIC S99
+            if (picPartResolved[0] == 'S' && picPartResolved.Skip(1).All(c => c == '9'))
+                return new PicS9(picPartResolved.Length);
+
+            Logger.Singleton.AddMsg(2, "Error parsing {0}", text);
+            throw new Exception("Error parsing " + text);
         }
 
         private static string ResolveParenthesis(string text)
@@ -60,33 +79,26 @@ namespace Model.Pictures
             return picPartResolved;
         }
 
-        private static CompType ParseComp(string text)
-        {
-            text = text.Trim();
-            if (!text.StartsWith("COMP")) return CompType.None;
-            if (text.EndsWith("P") || text.EndsWith("L")) return CompType.Comp;
-            if (text.EndsWith("1")) return CompType.Comp1;
-            if (text.EndsWith("2")) return CompType.Comp2;
-            if (text.EndsWith("3")) return CompType.Comp3;
-            if (text.EndsWith("4")) return CompType.Comp4;
-            return CompType.None;
-        }
+
     }
 
     public class PicX : IPic
     {
+        private string _value;
+
         public int Length { get; set; }
 
-        public string Value { get; set; }
+        public string Value
+        {
+            get { return _value; }
+            set { _value = value.StartsWith("SPACE") ? new string(' ', Length) : value.Trim('\"', '"', '\\'); }
+        }
+
+        public CompType CompType { get; set; }
 
         public PicX(int length)
         {
             Length = length;
-        }
-
-        public void ParseValue(string text)
-        {
-            Value = text.StartsWith("SPACE") ? new string(' ', Length) : text.Trim('\"', '"', '\\');
         }
 
         public override string ToString()
@@ -97,9 +109,9 @@ namespace Model.Pictures
 
     public class Pic9 : IPic
     {
-        public int Length { get; set; }
+        protected int? _value;
 
-        public int Value { get; set; }
+        public int Length { get; set; }
 
         public CompType CompType { get; set; }
 
@@ -109,9 +121,10 @@ namespace Model.Pictures
             CompType = comp;
         }
 
-        public void ParseValue(string text)
+        public string Value
         {
-            Value = text.StartsWith("ZERO") ? 0 : int.Parse(text);
+            get { return _value != null ? _value.ToString() : null; }
+            set { _value = string.IsNullOrWhiteSpace(value) ? (int?)null : value.StartsWith("ZERO") ? 0 : int.Parse(value); }
         }
 
         public override string ToString()
@@ -126,9 +139,10 @@ namespace Model.Pictures
         {
         }
 
-        public new void ParseValue(string text)
+        public new string Value
         {
-            Value = text.StartsWith("ZERO") ? 0 : int.Parse(text.Substring(1));
+            get { return base.Value; }
+            set { base.Value = value.Substring(1); }
         }
 
         public override string ToString()
@@ -137,23 +151,36 @@ namespace Model.Pictures
         }
     }
 
-    public class PicS9V9 : Pic9
+    public class Pic9V9 : Pic9
     {
+        private new decimal? _value;
+
         public int IntegersLength { get; set; }
 
         public int FractionsLength { get; set; }
 
-        public new decimal Value { get; set; }
+        public new string Value
+        {
+            get { return _value != null ? _value.ToString() : null; }
+            set { _value = string.IsNullOrWhiteSpace(value) ? (decimal?)null : value.StartsWith("ZERO") ? 0 : decimal.Parse(value); }
+        }
 
-        public PicS9V9(int integersLength, int fractionsLength, CompType comp = CompType.None) : base(integersLength + fractionsLength, comp)
+        public Pic9V9(int integersLength, int fractionsLength, CompType comp = CompType.None) : base(integersLength + fractionsLength, comp)
         {
             IntegersLength = integersLength;
             FractionsLength = fractionsLength;
         }
 
-        public new void ParseValue(string text)
+        public override string ToString()
         {
-            Value = text.StartsWith("ZERO") ? 0 : decimal.Parse(text);
+            return string.Format("PIC 9{0}V9{1}", IntegersLength > 1 ? "(" + IntegersLength + ")" : string.Empty, FractionsLength > 1 ? "(" + FractionsLength + ")" : string.Empty);
+        }
+    }
+
+    public class PicS9V9 : Pic9V9
+    {
+        public PicS9V9(int integersLength, int fractionsLength, CompType comp = CompType.None) : base(integersLength, fractionsLength, comp)
+        {
         }
 
         public override string ToString()
@@ -164,12 +191,9 @@ namespace Model.Pictures
 
     public class Pic88 : IPic
     {
+        public int Length { get; set; }
         public string Value { get; set; }
-
-        public void ParseValue(string text)
-        {
-            Value = text;
-        }
+        public CompType CompType { get; set; }
 
         public override string ToString()
         {

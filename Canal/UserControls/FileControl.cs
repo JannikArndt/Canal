@@ -42,9 +42,8 @@ namespace Canal.UserControls
                 // initialize FastColoredTextBox
                 codeBox.Font = SourceCodePro.Regular;
                 codeBox.Text = file.Text;
-                codeBox.Language = Language.Cobol;
-                codeBox.HighlightingRangeType = HighlightingRangeType.VisibleRange;
                 codeBox.SyntaxHighlighter.HighlightSyntax(Language.Cobol, codeBox.Range);
+
                 codeBox.KeyDown += searchBox_KeyDown;
                 codeBox.WordSelected += CodeBoxOnWordSelected;
                 codeBox.FunctionKeyPressed += HandleFunctionKeyInCodeBox;

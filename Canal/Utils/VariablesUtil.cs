@@ -25,11 +25,26 @@ namespace Canal.Utils
 
             foreach (Match match in regex.Matches(trimmedText))
             {
-                var level = int.Parse(match.Groups["level"].Value);
-                var varName = match.Groups["token"].Value;
-                var picture = ParsePicture(match.Groups["type"].Value);
-                var currentVariable = new Variable(level, varName, picture, match.Value, null);
+                // Read properties from RegEx
+                var valLevel = int.Parse(match.Groups["level"].Value);
+                var valLiteral = match.Groups["literal"].Value;
+                var valRedefines = match.Groups["redefines"].Value;
+                var valType = match.Groups["type"].Value;
+                var valComp = match.Groups["comp"].Value;
+                var valValue = match.Groups["value"].Value;
+                var valOccurs = match.Groups["occurs"].Value;
 
+                // Create type definition ("PIC")
+                var picture = ParsePicture(valType, valComp, valValue);
+
+                // Create Variable
+                var currentVariable = new Variable(valLevel, valLiteral, picture, match.Value, null)
+                {
+                    Redefines = valRedefines,
+                    Occurs = valOccurs
+                };
+
+                // Create references between variables
                 if (lastVariable == null || currentVariable.VariableLevel == 1 || currentVariable.VariableLevel == 77)
                 {
                     result.Add(currentVariable);
@@ -63,43 +78,18 @@ namespace Canal.Utils
             return result;
         }
 
-        private static IPic ParsePicture(string pictureText)
+        private static IPic ParsePicture(string type, string comp, string value)
         {
-            var trimmedText = pictureText.Trim().ToUpperInvariant();
-            string picPart = string.Empty;
-            string valuePart = string.Empty;
-
             try
             {
-                // 1. extract pic and value parts: PIC X(03) VALUE "foo" => picPart = "X(03)", valuePart = ""foo""
-                var indexOfPic = trimmedText.IndexOf("PIC", StringComparison.Ordinal);
-                var indexOfValue = trimmedText.IndexOf("VALUE", StringComparison.Ordinal);
-
-                if (indexOfValue < 0)
-                {
-                    if (indexOfPic < 0)
-                        return null; // error condition
-                    picPart = trimmedText.Substring(indexOfPic + 3).TrimStart();
-                }
-                else
-                {
-                    if (indexOfPic > -1)
-                        picPart = trimmedText.Substring(indexOfPic + 3, indexOfValue - 1).Trim();
-                    valuePart = trimmedText.Substring(indexOfValue + 5).TrimStart();
-                }
-
-                // 2. parse picPart: X(03) => XXX => new PicX(3), S9(2).99 => S99.99
-                var result = !string.IsNullOrWhiteSpace(picPart) ? Pic.Parse(picPart) : new Pic88();
-
-                // 3. parse valuePart: SPACES, ZEROS, "FOO", 42, 1.34
-                if (!string.IsNullOrWhiteSpace(valuePart))
-                    result.ParseValue(valuePart);
-
+                IPic result = Pic.Parse(type) ?? new Pic88();
+                result.CompType = Comp.Parse(comp);
+                result.Value = value;
                 return result;
             }
             catch (Exception exception)
             {
-                Logger.Singleton.AddMsg(1, "Error parsing picture text \"{0}\": {1}: {2}", pictureText, exception.GetType().Name, exception.Message);
+                Logger.Singleton.AddMsg(1, "Error parsing picture text \"{0}\": {1}: {2}", type, exception.GetType().Name, exception.Message);
                 return null;
             }
         }

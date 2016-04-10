@@ -1,6 +1,12 @@
 ﻿using Model.Pictures;
 using System.Collections.Generic;
 using System.Windows.Forms;
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Local
+// ReSharper disable UseStringInterpolation
+// ReSharper disable ConvertPropertyToExpressionBody
 
 namespace Model
 {
@@ -10,13 +16,9 @@ namespace Model
 
         public string VariableName { get; set; }
 
-        public string VariableDefinition
-        {
-            get
-            {
-                return string.Format("{0}#{1}#{2}", VariableLevel.ToString("D2"), VariableName, Picture);
-            }
-        }
+        public string Redefines { get; set; }
+
+        public string Occurs { get; set; }
 
         public int Offset { get; set; }
 
@@ -24,12 +26,19 @@ namespace Model
 
         public IPic Picture { get; set; }
 
-        // ReSharper disable once UnusedAutoPropertyAccessor.Local
         private string Code { get; set; }
 
         public List<Variable> Variables { get; set; }
 
         public Variable ParentVariable { get; set; }
+
+        public string VariableDefinition
+        {
+            get
+            {
+                return string.Format("{0}#{1}#{2}", VariableLevel.ToString("D2"), VariableName, Picture);
+            }
+        }
 
         public Variable Root
         {

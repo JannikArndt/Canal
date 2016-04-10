@@ -7,6 +7,7 @@ namespace Canal.Utils
     {
         public static readonly string Literal = @"([\w\d-()]+)";
         public static readonly string NamedLiteral = @"(?<literal>[\w\d-()]+)";
+        public static readonly string OptSpaces = @" *";
 
         public static readonly string Or = @"|";
 
@@ -33,7 +34,17 @@ namespace Canal.Utils
 
         public static readonly string Call = @"CALL +""" + NamedLiteral + @""" +(USING (" + Literal + ",? ?)*)?"; // TODO multiline calls
 
-        public static readonly string Variable = @"^[ ]+(?<level>\d\d) +(?<token>[\w\d-]+)(?<type>.*)\.";
+        private static readonly string VarLevel = @"^[ ]+(?<level>\d\d)";
+
+        private static readonly string VarRedefines = @"(REDEFINES (?<redefines>[\w\d-()]+) +)?";
+
+        private static readonly string VarPicture = @"(PIC(TURE)? (IS )?(?<type>(X|9|S|V|\(\d+\))+) *(?<comp>COMP(UTATIONAL)?(-\d)?)?)?";
+
+        private static readonly string VarValue = @"((VALUE(S)?) (IS |ARE )?(?<value>(""[^ ""]+"" | (\d *\.)?\d+|SPACE(S)?|ZERO(E)?(S)?|(HIGH-|LOW-)VALUES| THROUGH | THRU |, *)*))?";
+
+        private static readonly string VarOccurs = @"(OCCURS (?<occurs>\d+))?";
+
+        public static readonly string Variable = VarLevel + OptSpaces + NamedLiteral + OptSpaces + VarRedefines + OptSpaces + VarPicture + OptSpaces + VarValue + OptSpaces + VarOccurs + OptSpaces + @"\.";
 
         public static readonly HashSet<string> CobolKeywords = new HashSet<string>
         {

@@ -66,6 +66,12 @@
     <Compile Include="Variable.cs" />
     <Compile Include="WorkingStorageSection.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{ED3CFE5E-4805-49CA-A4C5-6EAF9CAB7F16}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
