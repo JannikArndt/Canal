@@ -24,24 +24,41 @@ namespace Canal.Utils
             var counter = 0;
             foreach (var copyReference in copyReferences)
             {
-                counter++;
-                Logger.Singleton.AddMsg(3, "Resolving program {0} in folder {1}", copyReference.ProgramName, copyReference.Directory);
+                try
+                {
+                    counter++;
+                    Logger.Singleton.AddMsg(3, "Resolving program {0} in folder {1}", copyReference.ProgramName, copyReference.Directory);
 
-                var copyFile = FileUtil.Get(copyReference);
+                    var copyFile = FileUtil.Get(copyReference);
 
-                if (copyFile == null)
-                    continue;
+                    if (copyFile == null)
+                        continue;
 
-                var updatedIndexOfCopy = file.Text.IndexOf(copyReference.ProgramName, StringComparison.Ordinal);
-                var lineAfterCopy = file.Text.IndexOf(Environment.NewLine, updatedIndexOfCopy, StringComparison.Ordinal);
-                file.Text = file.Text.Insert(lineAfterCopy + 1, copyFile.Text + Environment.NewLine);
+                    var updatedIndexOfCopy = file.Text.IndexOf(copyReference.ProgramName, StringComparison.Ordinal);
+                    var lineAfterCopy = file.Text.IndexOf(Environment.NewLine, updatedIndexOfCopy, StringComparison.Ordinal);
+                    file.Text = file.Text.Insert(lineAfterCopy + 1, copyFile.Text + Environment.NewLine);
 
-                if (ProgressChanged != null)
-                    ProgressChanged.Invoke(null, new ProgressChangedEventArgs(counter * 100 / (copyReferences.Count + 3), null));
+                    if (ProgressChanged != null)
+                        ProgressChanged.Invoke(null, new ProgressChangedEventArgs(counter * 100 / (copyReferences.Count + 3), null));
+                }
+                catch (Exception exception)
+                {
+                    Logger.Singleton.AddMsg(1, "Error resolving program {0} in folder {1}: {2}", copyReference.ProgramName, copyReference.Directory, exception.Message);
+                    var updatedIndexOfCopy = file.Text.IndexOf(copyReference.ProgramName, StringComparison.Ordinal);
+                    var lineAfterCopy = file.Text.IndexOf(Environment.NewLine, updatedIndexOfCopy, StringComparison.Ordinal);
+                    file.Text = file.Text.Insert(lineAfterCopy + 1, "ERROR RESOLVING COPY BOOK: " + exception.Message + Environment.NewLine);
+                }
             }
 
-            var builder = new CobolTreeBuilder();
-            builder.Build(file);
+            try
+            {
+                var builder = new CobolTreeBuilder();
+                builder.Build(file);
+            }
+            catch (Exception exception)
+            {
+                Logger.Singleton.AddMsg(1, "Error building cobol tree: {0}", exception.Message);
+            }
 
             if (ProgressChanged != null)
                 ProgressChanged.Invoke(null, new ProgressChangedEventArgs(90, null));

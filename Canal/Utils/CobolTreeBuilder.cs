@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using Logging;
+using Model;
 using Model.References;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,15 @@ namespace Canal.Utils
             var indexDataDivision = sourceCode.IndexOf("DATA DIVISION", StringComparison.Ordinal);
             var indexProcedureDivision = sourceCode.IndexOf("PROCEDURE DIVISION", StringComparison.Ordinal);
 
+            if (indexIdentificationDivision < 0)
+                Logger.Singleton.AddMsg(1, "Identification division not found.");
+            if (indexEnvironmentDivision < 0)
+                Logger.Singleton.AddMsg(1, "Environment division not found.");
+            if (indexDataDivision < 0)
+                Logger.Singleton.AddMsg(1, "Data division not found.");
+            if (indexProcedureDivision < 0)
+                Logger.Singleton.AddMsg(1, "Procedure division not found.");
+
             tree.IdentificationDivision = indexIdentificationDivision > 0
                 ? new IdentificationDivision(sourceCode.Substring(indexProcedureDivision, Math.Max(0, indexEnvironmentDivision - indexIdentificationDivision)), indexIdentificationDivision)
                 : new IdentificationDivision("", 0);
@@ -31,6 +41,15 @@ namespace Canal.Utils
             tree.DataDivision = indexDataDivision > 0
                 ? new DataDivision(sourceCode.Substring(indexDataDivision, Math.Max(0, indexProcedureDivision - indexDataDivision)), indexDataDivision)
                 : new DataDivision("", 0);
+
+            // if there are no divisions, everything goes into the data division
+
+            if (indexIdentificationDivision < 0 && indexEnvironmentDivision < 0 && indexDataDivision < 0 &&
+                indexProcedureDivision < 0)
+            {
+                Logger.Singleton.AddMsg(1, "No divisions found => everything goes into the data division, hoping this is a record.");
+                tree.DataDivision = new DataDivision(sourceCode, 0);
+            }
 
             BuildDataDivision(tree.DataDivision);
 
