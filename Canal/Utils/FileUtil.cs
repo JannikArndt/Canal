@@ -45,8 +45,8 @@ namespace Canal.Utils
                     reference = Files[filename];
                 }
 
-                if (string.IsNullOrWhiteSpace(reference.FullPath))
-                    reference.FullPath = filename;
+                if (string.IsNullOrWhiteSpace(reference.FilePath))
+                    reference.FilePath = filename;
 
                 return Get(reference);
             }
@@ -61,9 +61,9 @@ namespace Canal.Utils
         {
             if (reference.CobolFile == null)
             {
-                var lines = File.ReadAllText(reference.FullPath);
+                var lines = File.ReadAllText(reference.FilePath);
 
-                reference.CobolFile = new CobolFile(lines, Path.GetFileNameWithoutExtension(reference.FullPath))
+                reference.CobolFile = new CobolFile(lines, Path.GetFileNameWithoutExtension(reference.FilePath))
                 {
                     FileReference = reference
                 };
@@ -190,7 +190,7 @@ namespace Canal.Utils
 
             foreach (var dir in DirectoriesAndFiles.Keys)
             {
-                var tempDir = new List<FileReference>(DirectoriesAndFiles[dir].Where(file => file.FullPath.HasAllowedEnding()));
+                var tempDir = new List<FileReference>(DirectoriesAndFiles[dir].Where(file => file.FilePath.HasAllowedEnding()));
                 if (tempDir.Any())
                     _directoriesWithAllowedFiles.Add(dir, tempDir);
             }

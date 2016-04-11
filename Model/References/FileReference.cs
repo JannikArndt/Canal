@@ -10,7 +10,7 @@ namespace Model.References
         public FileReference(string fileSystemEntry) : base(Path.GetFileNameWithoutExtension(fileSystemEntry))
         {
             ReferencedIn = new List<Procedure>();
-            FullPath = fileSystemEntry;
+            FilePath = fileSystemEntry;
             ProgramName = Path.GetFileNameWithoutExtension(fileSystemEntry);
             var folder = Path.GetDirectoryName(fileSystemEntry);
             if (folder != null)
@@ -21,7 +21,7 @@ namespace Model.References
 
         public string Directory { get; set; }
 
-        public string FullPath { get; set; }
+        public string FilePath { get; set; }
 
         public CobolFile CobolFile { get; set; }
 

@@ -476,13 +476,13 @@ namespace Canal.UserControls
             if (filesTreeView.SelectedNode == null || filesTreeView.SelectedNode.Tag == null)
                 return;
 
-            _parent.OpenFile(((FileReference)filesTreeView.SelectedNode.Tag).FullPath);
+            _parent.OpenFile(((FileReference)filesTreeView.SelectedNode.Tag).FilePath);
         }
 
         private void filesTreeView_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
-                _parent.OpenFile(((FileReference)filesTreeView.SelectedNode.Tag).FullPath);
+                _parent.OpenFile(((FileReference)filesTreeView.SelectedNode.Tag).FilePath);
         }
 
         private void settings_sourceCodeFiles_Click(object sender, EventArgs e)

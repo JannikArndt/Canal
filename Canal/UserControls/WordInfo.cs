@@ -61,7 +61,7 @@ namespace Canal.UserControls
             {
                 var fileRef = variableTreeView.SelectedNode as FileReference;
                 if (fileRef != null)
-                    _parent.OpenFile(fileRef.FullPath);
+                    _parent.OpenFile(fileRef.FilePath);
             };
         }
 

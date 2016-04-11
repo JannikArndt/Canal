@@ -56,7 +56,7 @@ namespace Canal.Utils
                     var fileControl = tab.Controls.Find("FileControl", false).FirstOrDefault(foundTab => foundTab is FileControl) as FileControl;
 
 
-                    if (fileControl != null && fileControl.CobolFile.FileReference.FullPath == filepath)
+                    if (fileControl != null && fileControl.CobolFile.FileReference.FilePath == filepath)
                     {
                         _tabControl.SelectedTab = tab;
                         Logger.Singleton.AddMsg(3, "Switching to tab {0}: {1}", tab.TabIndex, tab.Text);
