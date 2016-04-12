@@ -10,9 +10,9 @@ namespace Canal.UserControls
 {
     public partial class WordInfo : UserControl
     {
-        private readonly MainWindow _parent;
+        private readonly FileControl _parent;
 
-        public WordInfo(string word, CobolFile cobolFile, MainWindow parent)
+        public WordInfo(string word, CobolFile cobolFile, FileControl parent)
         {
             InitializeComponent();
             _parent = parent;
@@ -61,7 +61,7 @@ namespace Canal.UserControls
             {
                 var fileRef = variableTreeView.SelectedNode as FileReference;
                 if (fileRef != null)
-                    _parent.OpenFile(fileRef.FilePath);
+                    _parent.MainWindow.OpenFile(fileRef.FilePath);
             };
         }
 
@@ -90,20 +90,46 @@ namespace Canal.UserControls
             // Get all vars to the root
             var currentVar = variable;
 
-            while (currentVar.ParentVariable != null)
+            if (currentVar.ParentVariable != null)
             {
-                currentVar.Nodes.Clear();
+                // Add siblings without their children (which unfortunately deletes own children)
+                currentVar.ParentVariable.Nodes.Clear();
+                foreach (var vari in currentVar.ParentVariable.Variables)
+                {
+                    vari.Nodes.Clear();
+                    currentVar.ParentVariable.Nodes.Add(vari);
+                }
+
+                // re-add own children
                 foreach (var vari in currentVar.Variables)
                 {
                     currentVar.Nodes.Add(vari);
                 }
+
+                // continue with parent
+                currentVar = currentVar.ParentVariable;
+            }
+
+            // now add only grandparents, not their siblings or children
+            while (currentVar.ParentVariable != null)
+            {
+                currentVar.ParentVariable.Nodes.Clear();
+                currentVar.ParentVariable.Nodes.Add(currentVar);
                 currentVar = currentVar.ParentVariable;
             }
 
             variableTreeView.DrawMode = TreeViewDrawMode.OwnerDrawText;
             variableTreeView.DrawNode += VariableTreeViewOnDrawNode;
             variableTreeView.Nodes.Add((Variable)currentVar.Clone());
+
             variableTreeView.ExpandAll();
+
+            variableTreeView.NodeMouseDoubleClick += (sender, args) =>
+            {
+                var vari = variableTreeView.SelectedNode as Variable;
+                if (vari != null)
+                    _parent.FindInCodeBox(vari.VariableName, false, false, false, true);
+            };
         }
 
         private void VariableTreeViewOnDrawNode(object sender, DrawTreeNodeEventArgs e)
@@ -112,36 +138,35 @@ namespace Canal.UserControls
             if (variable == null)
                 return;
 
-            Color nodeColor = Color.DarkGray;
-            if ((e.State & TreeNodeStates.Selected) != 0)
-                nodeColor = SystemColors.HighlightText;
-
             var levelWidth = 20;
-            var nameWidth = 220 - e.Node.Level * 20;
-            var picWidth = 120;
+            var nameWidth = 280 - e.Node.Level * 20;
+            var picWidth = 160;
 
+            // Level
             TextRenderer.DrawText(e.Graphics,
                                   variable.VariableLevel.ToString("D2"),
                                   e.Node.NodeFont,
                                   new Rectangle(e.Bounds.X, e.Bounds.Y, levelWidth, e.Bounds.Height),
-                                  nodeColor,
+                                  Color.DarkGray,
                                   Color.Empty,
                                   TextFormatFlags.VerticalCenter);
 
+            // Name
             TextRenderer.DrawText(e.Graphics,
                                   variable.VariableName,
                                   e.Node.NodeFont,
                                   new Rectangle(e.Bounds.X + levelWidth, e.Bounds.Y, nameWidth, e.Bounds.Height),
-                                  e.Node.ForeColor,
+                                  (e.State & TreeNodeStates.Selected) != 0 ? SystemColors.HighlightText : e.Node.ForeColor,
                                   Color.Empty,
                                   TextFormatFlags.VerticalCenter);
 
+            // PIC
             if (variable.Picture != null)
                 TextRenderer.DrawText(e.Graphics,
                                       variable.Picture.ToString(),
                                       e.Node.NodeFont,
                                       new Rectangle(e.Bounds.X + levelWidth + nameWidth, e.Bounds.Y, picWidth, e.Bounds.Height),
-                                      nodeColor,
+                                      Color.DarkGray,
                                       Color.Empty,
                                       TextFormatFlags.VerticalCenter);
         }

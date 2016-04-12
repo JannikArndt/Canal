@@ -22,7 +22,7 @@ namespace Canal.UserControls
 
         public event EventHandler<UsedFileTypesChangedEventArgs> UsedFileTypesChanged;
 
-        private readonly MainWindow _parent;
+        public MainWindow MainWindow { get; set; }
 
         private BackgroundWorker _worker = new BackgroundWorker();
 
@@ -34,7 +34,7 @@ namespace Canal.UserControls
 
             try
             {
-                _parent = parent;
+                MainWindow = parent;
                 CobolFile = file;
 
                 // initialize FastColoredTextBox
@@ -61,6 +61,16 @@ namespace Canal.UserControls
                 ErrorHandling.Exception(exception);
                 MessageBox.Show(Resources.ErrorMessage_FileControl_Constructor + exception.Message, Resources.Error, MessageBoxButtons.OK);
             }
+        }
+
+        public string GetText()
+        {
+            return codeBox.Text;
+        }
+
+        public string ExportToHtml()
+        {
+            return codeBox.Html;
         }
 
         private void InitTabs()
@@ -95,7 +105,7 @@ namespace Canal.UserControls
             }
 
             splitContainerRight.Panel2.Controls.Clear();
-            var fileInfoControl = new WordInfo(word, CobolFile, _parent) { Dock = DockStyle.Fill };
+            var fileInfoControl = new WordInfo(word, CobolFile, this) { Dock = DockStyle.Fill };
             splitContainerRight.Panel2.Controls.Add(fileInfoControl);
         }
 
@@ -246,6 +256,11 @@ namespace Canal.UserControls
                 codeBox.DoRangeVisible(codeBox.GetRange(0, 0));
             else if (!Regex.IsMatch(treeNode.Text, @"^\d\d"))
                 codeBox.FindNext(@"^.{7}" + treeNode.Text + @"(\.| +USING)", false, true, false, true);
+        }
+
+        public void FindInCodeBox(string pattern, bool matchCase, bool regex, bool wholeWord, bool firstSearch = false)
+        {
+            codeBox.FindNext(pattern, matchCase, regex, wholeWord, firstSearch);
         }
 
         #endregion
@@ -476,13 +491,13 @@ namespace Canal.UserControls
             if (filesTreeView.SelectedNode == null || filesTreeView.SelectedNode.Tag == null)
                 return;
 
-            _parent.OpenFile(((FileReference)filesTreeView.SelectedNode.Tag).FilePath);
+            MainWindow.OpenFile(((FileReference)filesTreeView.SelectedNode.Tag).FilePath);
         }
 
         private void filesTreeView_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
-                _parent.OpenFile(((FileReference)filesTreeView.SelectedNode.Tag).FilePath);
+                MainWindow.OpenFile(((FileReference)filesTreeView.SelectedNode.Tag).FilePath);
         }
 
         private void settings_sourceCodeFiles_Click(object sender, EventArgs e)
@@ -527,5 +542,18 @@ namespace Canal.UserControls
         }
 
         #endregion
+
+        private void navigateBackward_Click(object sender, EventArgs e)
+        {
+            codeBox.NavigateBackward();
+            navigateForwardButton.Enabled = true;
+        }
+
+        private void navigateForwardButton_Click(object sender, EventArgs e)
+        {
+            var success = codeBox.NavigateForward();
+            if (!success)
+                navigateForwardButton.Enabled = false;
+        }
     }
 }

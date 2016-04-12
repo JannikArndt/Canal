@@ -1,4 +1,5 @@
 ﻿using Canal.Properties;
+using Logging;
 using Model;
 using Model.References;
 using System.Globalization;
@@ -31,8 +32,10 @@ namespace Canal.Utils
         public static CobolFile Get(string filename)
         {
             if (string.IsNullOrWhiteSpace(filename))
+            {
+                Logger.Warning("Trying to load file with empty filename.");
                 return null;
-
+            }
             try
             {
                 AnalyzeFolder(filename);
@@ -41,12 +44,24 @@ namespace Canal.Utils
 
                 lock (Files)
                 {
-                    if (!Files.Any()) return null;
+                    if (!Files.Any())
+                    {
+                        Logger.Error("Files-Dictionary is empty, file {0} not found.", filename);
+                        return null;
+                    }
+                    if (!Files.ContainsKey(filename))
+                    {
+                        Logger.Error("Files-Dictionary is missing entry {0}.", filename);
+                        return null;
+                    }
                     reference = Files[filename];
                 }
 
                 if (string.IsNullOrWhiteSpace(reference.FilePath))
+                {
+                    Logger.Warning("FileReference is missing file path, adding {0}.", filename);
                     reference.FilePath = filename;
+                }
 
                 return Get(reference);
             }
@@ -142,13 +157,16 @@ namespace Canal.Utils
         /// <param name="fileOrFolderPath">A path with or without filename.</param>
         private static void AnalyzeFolder(string fileOrFolderPath)
         {
-            if (RecentFolders.Contains(fileOrFolderPath) || !File.Exists(fileOrFolderPath))
+            if (RecentFolders.Contains(fileOrFolderPath))
                 return;
+
+            if (!File.Exists(fileOrFolderPath))
+            {
+                Logger.Error("Trying to analyze non-existent file or folder {0}.", fileOrFolderPath);
+            }
 
             try
             {
-                RecentFolders.Add(fileOrFolderPath);
-
                 var folderPath = Path.GetDirectoryName(Path.GetDirectoryName(fileOrFolderPath));
 
                 if (folderPath == null)
@@ -156,7 +174,7 @@ namespace Canal.Utils
 
                 lock (Files)
                 {
-                    foreach (var fileSystemEntry in Directory.EnumerateFiles(folderPath, "*.*", SearchOption.AllDirectories)
+                    foreach (var fileSystemEntry in GetDirectoryFiles(folderPath, "*.*", SearchOption.AllDirectories)
                             .Where(file => !new FileInfo(file).Attributes.HasFlag(FileAttributes.Hidden | FileAttributes.System) && file.IndexOf(@"\.", StringComparison.Ordinal) < 0))
                     {
                         if (!Files.ContainsKey(fileSystemEntry))
@@ -170,12 +188,48 @@ namespace Canal.Utils
                         }
                     }
                 }
+                RecentFolders.Add(fileOrFolderPath);
             }
             catch (Exception exception)
             {
-                ErrorHandling.Exception(exception);
+                Logger.Error("Error analyzing file/folder {0}: {1}", fileOrFolderPath, exception.Message);
                 throw new FileNotFoundException("Error analyzing file/folder.", fileOrFolderPath, exception);
             }
+        }
+
+        /// <summary>
+        /// A safe way to get all the files in a directory and sub directory without crashing on UnauthorizedException or PathTooLongException
+        /// from http://stackoverflow.com/a/20719754
+        /// </summary>
+        /// <param name="rootPath">Starting directory</param>
+        /// <param name="patternMatch">Filename pattern match</param>
+        /// <param name="searchOption">Search subdirectories or only top level directory for files</param>
+        /// <returns>List of files</returns>
+        private static IEnumerable<string> GetDirectoryFiles(string rootPath, string patternMatch, SearchOption searchOption)
+        {
+            var foundFiles = Enumerable.Empty<string>();
+
+            if (searchOption == SearchOption.AllDirectories)
+            {
+                try
+                {
+                    IEnumerable<string> subDirs = Directory.EnumerateDirectories(rootPath);
+                    foreach (string dir in subDirs)
+                    {
+                        foundFiles = foundFiles.Concat(GetDirectoryFiles(dir, patternMatch, searchOption)); // Add files in subdirectories recursively to the list
+                    }
+                }
+                catch (UnauthorizedAccessException) { }
+                catch (PathTooLongException) { }
+            }
+
+            try
+            {
+                foundFiles = foundFiles.Concat(Directory.EnumerateFiles(rootPath, patternMatch)); // Add files from the current directory
+            }
+            catch (UnauthorizedAccessException) { }
+
+            return foundFiles;
         }
 
         public static void ReduceDirectoriesToAllowedFiles()

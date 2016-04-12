@@ -47,6 +47,11 @@ namespace Canal.Utils
             return !fileControls.Any() ? new List<CobolFile>() : fileControls.Select(fileControl => fileControl.CobolFile);
         }
 
+        public void SetTabName(string text)
+        {
+            _tabControl.SelectedTab.Text = text;
+        }
+
         public bool TryShowTab(string filepath)
         {
             try
@@ -144,14 +149,9 @@ namespace Canal.Utils
             return true;
         }
 
-        public TabPage GetCurrentTabPage()
-        {
-            return _tabControl.SelectedTab;
-        }
-
         public FileControl CurrentFileControl
         {
-            get { return (FileControl)_tabControl.Controls.Find("FileControl", false).FirstOrDefault(); }
+            get { return (_tabControl.SelectedTab == null) ? null : (FileControl)_tabControl.SelectedTab.Controls.Find("FileControl", false).FirstOrDefault(); }
         }
 
         public void ShowStartTab()

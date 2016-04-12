@@ -80,6 +80,9 @@ namespace Canal.UserControls
             this.splitContainerRight = new System.Windows.Forms.SplitContainer();
             this.loaderImageInfoTab = new System.Windows.Forms.PictureBox();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
+            this.navigateBackward = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.navigateForwardButton = new System.Windows.Forms.ToolStripButton();
             this.structureTabControl.SuspendLayout();
             this.tocTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.loaderImageToc)).BeginInit();
@@ -564,6 +567,9 @@ namespace Canal.UserControls
             // 
             this.codeViewToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.codeViewToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.navigateBackward,
+            this.navigateForwardButton,
+            this.toolStripSeparator2,
             this.searchBox,
             this.searchWithRegEx,
             this.toolStripSeparator1,
@@ -655,6 +661,34 @@ namespace Canal.UserControls
             this.miniToolStrip.Name = "miniToolStrip";
             this.miniToolStrip.Size = new System.Drawing.Size(200, 25);
             this.miniToolStrip.TabIndex = 1;
+            // 
+            // navigateBackward
+            // 
+            this.navigateBackward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.navigateBackward.Image = ((System.Drawing.Image)(resources.GetObject("navigateBackward.Image")));
+            this.navigateBackward.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.navigateBackward.Name = "navigateBackward";
+            this.navigateBackward.Size = new System.Drawing.Size(23, 22);
+            this.navigateBackward.Text = "toolStripButton1";
+            this.navigateBackward.ToolTipText = "Navigate Backward (Ctrl + -)";
+            this.navigateBackward.Click += new System.EventHandler(this.navigateBackward_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // navigateForwardButton
+            // 
+            this.navigateForwardButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.navigateForwardButton.Enabled = false;
+            this.navigateForwardButton.Image = ((System.Drawing.Image)(resources.GetObject("navigateForwardButton.Image")));
+            this.navigateForwardButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.navigateForwardButton.Name = "navigateForwardButton";
+            this.navigateForwardButton.Size = new System.Drawing.Size(23, 22);
+            this.navigateForwardButton.Text = "toolStripButton1";
+            this.navigateForwardButton.ToolTipText = "Navigate Forward (Ctrl + Shift + -)";
+            this.navigateForwardButton.Click += new System.EventHandler(this.navigateForwardButton_Click);
             // 
             // FileControl
             // 
@@ -750,5 +784,8 @@ namespace Canal.UserControls
         private ToolStrip miniToolStrip;
         private PictureBox loaderImageInfoTab;
         private PictureBox loaderImageToc;
+        private ToolStripButton navigateBackward;
+        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripButton navigateForwardButton;
     }
 }

@@ -2,6 +2,7 @@
 using Canal.UserControls;
 using Logging;
 using Model;
+using Model.References;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -140,6 +141,68 @@ namespace Canal
         {
             var logWindow = new Log();
             logWindow.Show();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_tabUtil.CurrentFileControl == null || _tabUtil.CurrentFileControl.CobolFile == null)
+                return;
+
+            var currentFileRef = _tabUtil.CurrentFileControl.CobolFile.FileReference;
+            if (currentFileRef == null)
+            {
+                saveAsToolStripMenuItem_Click(sender, e);
+                return;
+            }
+
+            File.WriteAllText(currentFileRef.FilePath, _tabUtil.CurrentFileControl.GetText());
+
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_tabUtil.CurrentFileControl == null || _tabUtil.CurrentFileControl.CobolFile == null)
+                return;
+
+            var currentFileRef = _tabUtil.CurrentFileControl.CobolFile.FileReference;
+            if (currentFileRef != null)
+            {
+                saveFileDialog.InitialDirectory = currentFileRef.Directory;
+                saveFileDialog.FileName = currentFileRef.ProgramName;
+            }
+
+            saveFileDialog.Filter = @"COBOL File|*.cob|COBOL Copy Book|*.cbl|Text File|*.txt";
+
+            var dialogResult = saveFileDialog.ShowDialog();
+
+            if (dialogResult == DialogResult.OK)
+            {
+                File.WriteAllText(saveFileDialog.FileName, _tabUtil.CurrentFileControl.GetText());
+                _tabUtil.CurrentFileControl.CobolFile.FileReference = new FileReference(saveFileDialog.FileName);
+                _tabUtil.SetTabName(_tabUtil.CurrentFileControl.CobolFile.FileReference.ProgramName);
+            }
+        }
+
+        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_tabUtil.CurrentFileControl == null || _tabUtil.CurrentFileControl.CobolFile == null)
+                return;
+
+            var currentFileRef = _tabUtil.CurrentFileControl.CobolFile.FileReference;
+            if (currentFileRef != null)
+            {
+                saveFileDialog.InitialDirectory = currentFileRef.Directory;
+                saveFileDialog.FileName = currentFileRef.ProgramName + ".html";
+            }
+
+            saveFileDialog.Filter = @"HTML File|*.html";
+
+            var dialogResult = saveFileDialog.ShowDialog();
+
+            if (dialogResult == DialogResult.OK)
+            {
+                File.WriteAllText(saveFileDialog.FileName, _tabUtil.CurrentFileControl.ExportToHtml());
+            }
         }
     }
 }
