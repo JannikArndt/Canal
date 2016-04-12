@@ -59,7 +59,7 @@ namespace Canal.Utils
                     if (fileControl != null && fileControl.CobolFile.FileReference.FilePath == filepath)
                     {
                         _tabControl.SelectedTab = tab;
-                        Logger.Singleton.AddMsg(3, "Switching to tab {0}: {1}", tab.TabIndex, tab.Text);
+                        Logger.Info("Switching to tab {0}: {1}", tab.TabIndex, tab.Text);
                         return true;
                     }
                 }
@@ -90,7 +90,7 @@ namespace Canal.Utils
 
         public void AddTab(CobolFile file)
         {
-            Logger.Singleton.AddMsg(2, "Adding tab for file {0}", file.Name);
+            Logger.Info("Adding tab for file {0}", file.Name);
 
             var newTab = new TabPage(file.Name + "     X");
 
@@ -105,7 +105,7 @@ namespace Canal.Utils
 
         private void UsedFileTypesChanged(object sender, UsedFileTypesChangedEventArgs usedFileTypesChangedEventArgs)
         {
-            Logger.Singleton.AddMsg(2, "Used file types changed.");
+            Logger.Info("Used file types changed.");
 
             foreach (FileControl fileControl in GetFileControls())
             {
@@ -115,7 +115,7 @@ namespace Canal.Utils
 
         public bool CloseTab(int index = -1)
         {
-            Logger.Singleton.AddMsg(2, "Closing tab {0}.", index);
+            Logger.Info("Closing tab {0}.", index);
 
             var tabIndex = index < 0 ? _tabControl.SelectedIndex : index;
 
@@ -133,7 +133,7 @@ namespace Canal.Utils
 
         public bool CloseAllTabs()
         {
-            Logger.Singleton.AddMsg(2, "Closing all tabs.");
+            Logger.Info("Closing all tabs.");
 
             for (int tabIndex = 0; tabIndex < _tabControl.TabCount; tabIndex++)
             {
@@ -156,10 +156,10 @@ namespace Canal.Utils
 
         public void ShowStartTab()
         {
-            Logger.Singleton.AddMsg(2, "Showing start tab");
+            Logger.Info("Showing start tab");
 
             var newTab = new TabPage("Start" + "     X");
-            var firstTabPage = new FirstTabPage(_parent) {Dock = DockStyle.Fill};
+            var firstTabPage = new FirstTabPage(_parent) { Dock = DockStyle.Fill };
             newTab.Controls.Add(firstTabPage);
             _tabControl.Controls.Add(newTab);
             _tabControl.SelectTab(newTab);

@@ -160,4 +160,7 @@
   <data name="Error_CobolTree_could_not_be_built" xml:space="preserve">
     <value>Error: CobolTree could not be built: </value>
   </data>
+  <data name="ErrorWithMessage" xml:space="preserve">
+    <value>Error: {0}</value>
+  </data>
 </root>

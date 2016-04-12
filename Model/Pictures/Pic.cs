@@ -59,7 +59,7 @@ namespace Model.Pictures
             if (picPartResolved[0] == 'S' && picPartResolved.Skip(1).All(c => c == '9'))
                 return new PicS9(picPartResolved.Length - 1);
 
-            Logger.Singleton.AddMsg(2, "Error parsing {0}", text);
+            Logger.Error("Error parsing {0}", text);
             throw new Exception("Error parsing " + text);
         }
 

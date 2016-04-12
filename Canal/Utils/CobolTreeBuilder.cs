@@ -22,13 +22,13 @@ namespace Canal.Utils
             var indexProcedureDivision = sourceCode.IndexOf("PROCEDURE DIVISION", StringComparison.Ordinal);
 
             if (indexIdentificationDivision < 0)
-                Logger.Singleton.AddMsg(1, "Identification division not found.");
+                Logger.Warning("Identification division not found.");
             if (indexEnvironmentDivision < 0)
-                Logger.Singleton.AddMsg(1, "Environment division not found.");
+                Logger.Warning("Environment division not found.");
             if (indexDataDivision < 0)
-                Logger.Singleton.AddMsg(1, "Data division not found.");
+                Logger.Warning("Data division not found.");
             if (indexProcedureDivision < 0)
-                Logger.Singleton.AddMsg(1, "Procedure division not found.");
+                Logger.Warning("Procedure division not found.");
 
             tree.IdentificationDivision = indexIdentificationDivision > 0
                 ? new IdentificationDivision(sourceCode.Substring(indexProcedureDivision, Math.Max(0, indexEnvironmentDivision - indexIdentificationDivision)), indexIdentificationDivision)
@@ -47,7 +47,7 @@ namespace Canal.Utils
             if (indexIdentificationDivision < 0 && indexEnvironmentDivision < 0 && indexDataDivision < 0 &&
                 indexProcedureDivision < 0)
             {
-                Logger.Singleton.AddMsg(1, "No divisions found => everything goes into the data division, hoping this is a record.");
+                Logger.Info("No divisions found => everything goes into the data division, hoping this is a record.");
                 tree.DataDivision = new DataDivision(sourceCode, 0);
             }
 

@@ -95,7 +95,7 @@ namespace Canal.Utils
             }
             catch (Exception exception)
             {
-                Logger.Singleton.AddMsg(1, "Error parsing picture text \"{0}\": {1}: {2}", type, exception.GetType().Name, exception.Message);
+                Logger.Error("Error parsing picture text \"{0}\": {1}: {2}", type, exception.GetType().Name, exception.Message);
                 return null;
             }
         }

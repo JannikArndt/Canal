@@ -61,7 +61,12 @@ namespace Canal.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to v1.8
+        ///   Looks up a localized string similar to v1.9
+        ///- Rebuild variable parsing
+        ///- Remodeled Info-view
+        ///- Various improvements
+        ///
+        ///v1.8
         ///- Fixed issue #8
         ///- Added logging
         ///- Added start screen
@@ -138,6 +143,15 @@ namespace Canal.Properties {
         internal static string ErrorMessage_MainWindow_OpenPrevious {
             get {
                 return ResourceManager.GetString("ErrorMessage_MainWindow_OpenPrevious", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: {0}.
+        /// </summary>
+        internal static string ErrorWithMessage {
+            get {
+                return ResourceManager.GetString("ErrorWithMessage", resourceCulture);
             }
         }
         

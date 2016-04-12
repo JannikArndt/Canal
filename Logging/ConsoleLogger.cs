@@ -1,26 +1,15 @@
-﻿using Logging;
-using System;
-using System.Collections.Generic;
+﻿using System;
 
-namespace Canal.Utils
+namespace Logging
 {
     public class ConsoleLogger
     {
-        private static List<string> _logList = new List<string>();
-
         static ConsoleLogger()
         {
             Logger.Singleton.Log += (sender, msg) =>
             {
-                var text = string.Format("{0}:\t{1}", msg.Priority.ToString(), msg.Message);
-                _logList.Add(text);
-                Console.WriteLine(text);
+                Console.WriteLine("{0}:\t{1}", msg.Level.ToString(), msg.Message);
             };
-        }
-
-        public static string GetText()
-        {
-            return string.Join(Environment.NewLine, _logList);
         }
     }
 }

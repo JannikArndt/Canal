@@ -147,7 +147,7 @@ namespace Canal.UserControls
 
         private void CodeBoxOnWordSelected(object sender, WordSelectedEventArgs eventArgs)
         {
-            Logger.Singleton.AddMsg(3, "Selected word {0}", eventArgs.Word);
+            Logger.Info("Selected word {0}", eventArgs.Word);
             ShowWordInfo(eventArgs.Word);
         }
 
