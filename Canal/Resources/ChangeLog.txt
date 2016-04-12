@@ -1,4 +1,11 @@
-﻿v1.9
+﻿v1.10
+- added save functionality
+- added export to html functionality
+- improved variable info view
+- you can now double click on a variable to find it in the source
+- added navigate backward/forward buttons
+
+v1.9
 - Rebuild variable parsing
 - Remodeled Info-view
 - Various improvements
