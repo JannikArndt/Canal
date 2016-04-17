@@ -1,4 +1,5 @@
-﻿using Canal.Properties;
+﻿using Canal.Events;
+using Canal.Properties;
 using Logging;
 using Model;
 using Model.References;
