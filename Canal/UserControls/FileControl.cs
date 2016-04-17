@@ -22,7 +22,7 @@ namespace Canal.UserControls
 
         public event EventHandler<UsedFileTypesChangedEventArgs> UsedFileTypesChanged;
 
-        public MainWindow MainWindow { get; set; }
+        public MainWindow MainWindow { get; private set; }
 
         private BackgroundWorker _worker = new BackgroundWorker();
 

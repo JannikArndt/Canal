@@ -2,6 +2,7 @@
 using Logging;
 using Model;
 using Model.References;
+using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
 
@@ -14,6 +15,8 @@ namespace Canal.Utils
 
     public static class FileUtil
     {
+        public static event EventHandler<FileCacheChangedEventArgs> FileCacheChanged;
+
         private static readonly List<string> RecentFolders = new List<string>();
 
         private static readonly Dictionary<string, FileReference> Files = new Dictionary<string, FileReference>();
@@ -23,6 +26,8 @@ namespace Canal.Utils
         private static Dictionary<string, List<FileReference>> _directoriesWithAllowedFiles = new Dictionary<string, List<FileReference>>();
 
         private static List<string> _allowedEndings = new List<string>();
+
+        private static readonly BackgroundWorker FileCacheWorker = new BackgroundWorker();
 
         /// <summary>
         /// Loads the given file. Uses internal cache for file contents.
@@ -38,32 +43,28 @@ namespace Canal.Utils
             }
             try
             {
-                AnalyzeFolder(filename);
-
-                FileReference reference;
-
                 lock (Files)
                 {
-                    if (!Files.Any())
+                    if (Files.ContainsKey(filename))
                     {
-                        Logger.Error("Files-Dictionary is empty, file {0} not found.", filename);
-                        return null;
+                        Logger.Info("Loading file from cache: {0}.", filename);
+                        return Get(Files[filename]);
                     }
-                    if (!Files.ContainsKey(filename))
+
+                    Logger.Info("File {0} is not in cache. Loading from disk and triggering background analysis.", filename);
+
+                    FileCacheWorker.DoWork += AnalyzeFolder;
+                    FileCacheWorker.RunWorkerCompleted += (sender, args) =>
                     {
-                        Logger.Error("Files-Dictionary is missing entry {0}.", filename);
-                        return null;
-                    }
-                    reference = Files[filename];
-                }
+                        Logger.Info("Completed background filesystem analysis. Cache built.");
+                        if (FileCacheChanged != null) FileCacheChanged(sender, new FileCacheChangedEventArgs());
+                    };
+                    FileCacheWorker.RunWorkerAsync(filename);
 
-                if (string.IsNullOrWhiteSpace(reference.FilePath))
-                {
-                    Logger.Warning("FileReference is missing file path, adding {0}.", filename);
-                    reference.FilePath = filename;
+                    var newRef = new FileReference(filename);
+                    Files.Add(filename, newRef);
+                    return Get(newRef);
                 }
-
-                return Get(reference);
             }
             catch (Exception exception)
             {
@@ -74,51 +75,16 @@ namespace Canal.Utils
 
         public static CobolFile Get(FileReference reference)
         {
-            if (reference.CobolFile == null)
-            {
-                var lines = File.ReadAllText(reference.FilePath);
+            if (reference.CobolFile != null) return reference.CobolFile;
 
-                reference.CobolFile = new CobolFile(lines, Path.GetFileNameWithoutExtension(reference.FilePath))
-                {
-                    FileReference = reference
-                };
-            }
+            var lines = File.ReadAllText(reference.FilePath);
+
+            reference.CobolFile = new CobolFile(lines, Path.GetFileNameWithoutExtension(reference.FilePath))
+            {
+                FileReference = reference
+            };
 
             return reference.CobolFile;
-        }
-
-        /// <summary>
-        /// Searches all know directories for a file- and folder-match and returns the first match.
-        /// If the folder is not found, but the program name has exactly one match, that program is returned.
-        /// Uses an internal cache for directory-contents and previously loaded file contents.
-        /// </summary>
-        /// <param name="programName">The name of a program, without extension.</param>
-        /// <param name="folderName">The name of a directory, no full path required.</param>
-        /// <returns>A CobolFile with the file contents as Text.</returns>
-        public static CobolFile Get(string programName, string folderName)
-        {
-            if (string.IsNullOrWhiteSpace(programName))
-                return null;
-
-            Console.Write(@"Searching for Program " + programName + @" in folder " + folderName);
-
-            var candidate = Files.Keys.FirstOrDefault(key => key.Contains(programName) && key.Contains(folderName));
-
-            if (candidate == null && Files.Keys.Count(key => key.Contains(programName)) == 1)
-                candidate = Files.Keys.FirstOrDefault(key => key.Contains(programName));
-
-            if (candidate == null)
-            {
-                foreach (var knownFolder in RecentFolders)
-                {
-                    AnalyzeFolder(Path.GetDirectoryName(knownFolder));
-                    return Get(programName, folderName);
-                }
-            }
-
-            Console.WriteLine(candidate != null ? " => succeeded" : " => failed");
-
-            return Get(candidate);
         }
 
         public static List<FileReference> GetFileReferences(string programName)
@@ -154,9 +120,12 @@ namespace Canal.Utils
         /// <summary>
         /// Creates a cache of all subfolders and files in the current directory.
         /// </summary>
-        /// <param name="fileOrFolderPath">A path with or without filename.</param>
-        private static void AnalyzeFolder(string fileOrFolderPath)
+        /// <param name="sender"></param>
+        /// <param name="doWorkEventArgs">An event containing the path as argument</param>
+        private static void AnalyzeFolder(object sender, DoWorkEventArgs doWorkEventArgs)
         {
+            var fileOrFolderPath = doWorkEventArgs.Argument.ToString();
+
             if (RecentFolders.Contains(fileOrFolderPath))
                 return;
 
@@ -174,18 +143,13 @@ namespace Canal.Utils
 
                 lock (Files)
                 {
-                    foreach (var fileSystemEntry in GetDirectoryFiles(folderPath, "*.*", SearchOption.AllDirectories)
-                            .Where(file => !new FileInfo(file).Attributes.HasFlag(FileAttributes.Hidden | FileAttributes.System) && file.IndexOf(@"\.", StringComparison.Ordinal) < 0))
+                    foreach (var newRef in GetRelevantFileNames(folderPath))
                     {
-                        if (!Files.ContainsKey(fileSystemEntry))
-                        {
-                            var newRef = new FileReference(fileSystemEntry);
-                            Files.Add(fileSystemEntry, newRef);
-                            if (!DirectoriesAndFiles.ContainsKey(newRef.Directory))
-                                DirectoriesAndFiles.Add(newRef.Directory, new List<FileReference>());
+                        Files.Add(newRef.FilePath, newRef);
+                        if (!DirectoriesAndFiles.ContainsKey(newRef.Directory))
+                            DirectoriesAndFiles.Add(newRef.Directory, new List<FileReference>());
 
-                            DirectoriesAndFiles[newRef.Directory].Add(newRef);
-                        }
+                        DirectoriesAndFiles[newRef.Directory].Add(newRef);
                     }
                 }
                 RecentFolders.Add(fileOrFolderPath);
@@ -197,31 +161,39 @@ namespace Canal.Utils
             }
         }
 
+        private static IEnumerable<FileReference> GetRelevantFileNames(string path)
+        {
+            return GetDirectoryFiles(path, "*.*")
+                .Where(file =>
+                        !new FileInfo(file).Attributes.HasFlag(FileAttributes.Hidden | FileAttributes.System) &&
+                        file.IndexOf(@"\.", StringComparison.Ordinal) < 0 &&
+                        !Files.ContainsKey(file))
+                        .Select(file => new FileReference(file));
+        }
+
         /// <summary>
         /// A safe way to get all the files in a directory and sub directory without crashing on UnauthorizedException or PathTooLongException
         /// from http://stackoverflow.com/a/20719754
         /// </summary>
         /// <param name="rootPath">Starting directory</param>
         /// <param name="patternMatch">Filename pattern match</param>
-        /// <param name="searchOption">Search subdirectories or only top level directory for files</param>
         /// <returns>List of files</returns>
-        private static IEnumerable<string> GetDirectoryFiles(string rootPath, string patternMatch, SearchOption searchOption)
+        private static IEnumerable<string> GetDirectoryFiles(string rootPath, string patternMatch)
         {
+            // ReSharper disable PossibleMultipleEnumeration
+
             var foundFiles = Enumerable.Empty<string>();
 
-            if (searchOption == SearchOption.AllDirectories)
+            try
             {
-                try
+                IEnumerable<string> subDirs = Directory.EnumerateDirectories(rootPath);
+                foreach (string dir in subDirs)
                 {
-                    IEnumerable<string> subDirs = Directory.EnumerateDirectories(rootPath);
-                    foreach (string dir in subDirs)
-                    {
-                        foundFiles = foundFiles.Concat(GetDirectoryFiles(dir, patternMatch, searchOption)); // Add files in subdirectories recursively to the list
-                    }
+                    foundFiles = foundFiles.Concat(GetDirectoryFiles(dir, patternMatch)); // Add files in subdirectories recursively to the list
                 }
-                catch (UnauthorizedAccessException) { }
-                catch (PathTooLongException) { }
             }
+            catch (UnauthorizedAccessException) { }
+            catch (PathTooLongException) { }
 
             try
             {

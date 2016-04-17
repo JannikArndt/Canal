@@ -26,25 +26,12 @@ namespace Canal.Utils
             _tabControl.MouseDown += TabControlOnMouseDown;
         }
 
-        public IEnumerable<FileControl> GetFileControls()
+        private IEnumerable<FileControl> GetFileControls()
         {
-            var result = new List<FileControl>();
-
-            foreach (TabPage tabPage in _tabControl.TabPages)
-            {
-                var fileControl = tabPage.Controls.Find("FileControl", false).FirstOrDefault(foundTab => foundTab is FileControl) as FileControl;
-                if (fileControl != null)
-                    result.Add(fileControl);
-            }
-
-            return result;
-        }
-
-        public IEnumerable<CobolFile> GetOpenFiles()
-        {
-            var fileControls = GetFileControls().ToList();
-
-            return !fileControls.Any() ? new List<CobolFile>() : fileControls.Select(fileControl => fileControl.CobolFile);
+            return (from TabPage tabPage in _tabControl.TabPages
+                    select tabPage.Controls.Find("FileControl", false)
+                    .FirstOrDefault(foundTab => foundTab is FileControl))
+                    .OfType<FileControl>().ToList();
         }
 
         public void SetTabName(string text)
@@ -56,20 +43,17 @@ namespace Canal.Utils
         {
             try
             {
-                foreach (TabPage tab in _tabControl.TabPages)
+                foreach (var tab in from TabPage tab in _tabControl.TabPages
+                                    let fileControl = tab.Controls.Find("FileControl", false)
+                                    .FirstOrDefault(foundTab => foundTab is FileControl) as FileControl
+                                    where fileControl != null && fileControl.CobolFile.FileReference.FilePath == filepath
+                                    select tab)
                 {
-                    var fileControl = tab.Controls.Find("FileControl", false).FirstOrDefault(foundTab => foundTab is FileControl) as FileControl;
-
-
-                    if (fileControl != null && fileControl.CobolFile.FileReference.FilePath == filepath)
-                    {
-                        _tabControl.SelectedTab = tab;
-                        Logger.Info("Switching to tab {0}: {1}", tab.TabIndex, tab.Text);
-                        return true;
-                    }
+                    _tabControl.SelectedTab = tab;
+                    Logger.Info("Switching to tab {0}: {1}", tab.TabIndex, tab.Text);
+                    return true;
                 }
                 return false;
-
             }
             catch (Exception exception)
             {
@@ -102,17 +86,28 @@ namespace Canal.Utils
             var fileControl = new FileControl(file, _parent);
 
             fileControl.UsedFileTypesChanged += UsedFileTypesChanged;
+            FileUtil.FileCacheChanged += RefreshFileView;
 
             newTab.Controls.Add(fileControl);
             _tabControl.Controls.Add(newTab);
             _tabControl.SelectTab(newTab);
         }
 
+        private void RefreshFileView(object sender, FileCacheChangedEventArgs fileCacheChangedEventArgs)
+        {
+            Logger.Info("Refreshing files view.");
+
+            foreach (var fileControl in GetFileControls())
+            {
+                fileControl.RefreshFileView();
+            }
+        }
+
         private void UsedFileTypesChanged(object sender, UsedFileTypesChangedEventArgs usedFileTypesChangedEventArgs)
         {
             Logger.Info("Used file types changed.");
 
-            foreach (FileControl fileControl in GetFileControls())
+            foreach (var fileControl in GetFileControls())
             {
                 fileControl.RefreshUsedFileTypes(sender, usedFileTypesChangedEventArgs);
             }

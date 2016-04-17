@@ -139,6 +139,7 @@
     <Compile Include="UserControls\WordInfo.Designer.cs">
       <DependentUpon>WordInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils\FileCacheChangedEventArgs.cs" />
     <Compile Include="Utils\SourceCodePro.cs" />
     <Compile Include="Utils\TextUtil.cs" />
     <Compile Include="Utils\Constants.cs" />

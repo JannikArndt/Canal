@@ -17,10 +17,19 @@ namespace Model.References
                 Directory = folder.TrimEnd(Path.DirectorySeparatorChar).Substring(folder.LastIndexOf(Path.DirectorySeparatorChar) + 1);
         }
 
+        /// <summary>
+        /// Filename without extension
+        /// </summary>
         public string ProgramName { get; set; }
 
+        /// <summary>
+        /// Name of leaf-directory
+        /// </summary>
         public string Directory { get; set; }
 
+        /// <summary>
+        /// Full path
+        /// </summary>
         public string FilePath { get; set; }
 
         public CobolFile CobolFile { get; set; }
