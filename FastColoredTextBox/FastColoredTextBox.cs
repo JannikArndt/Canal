@@ -1352,6 +1352,21 @@ namespace FastColoredTextBoxNS
         }
 
         /// <summary>
+        /// Sets the text highlighting only the first 100 lines, the rest is done in background thread
+        /// </summary>
+        /// <param name="text"></param>
+        public void SetTextAsync(string text)
+        {
+            HighlightingRangeType = HighlightingRangeType.First100Lines;
+            Text = text;
+            HighlightingRangeType = HighlightingRangeType.ChangedRange;
+
+            var highlightWorker = new BackgroundWorker();
+            highlightWorker.DoWork += delegate { SyntaxHighlighter.HighlightSyntax(Language, Range); };
+            highlightWorker.RunWorkerAsync();
+        }
+
+        /// <summary>
         /// Text of control
         /// </summary>
         [Browsable(true)]
@@ -7226,10 +7241,15 @@ namespace FastColoredTextBoxNS
                 case HighlightingRangeType.AllTextRange:
                     range = Range;
                     break;
+                case HighlightingRangeType.First100Lines:
+                    range = new Range(Range.tb, args.ChangedRange.Start,
+                        new Place(args.ChangedRange.End.iChar, Math.Min(args.ChangedRange.End.iLine, args.ChangedRange.Start.iLine + 100)));
+                    break;
                 default:
                     range = args.ChangedRange;
                     break;
             }
+
 
             if (SyntaxHighlighter != null)
             {

@@ -31,7 +31,7 @@ namespace Canal.Utils
                 Logger.Warning("Procedure division not found.");
 
             tree.IdentificationDivision = indexIdentificationDivision > 0
-                ? new IdentificationDivision(sourceCode.Substring(indexProcedureDivision, Math.Max(0, indexEnvironmentDivision - indexIdentificationDivision)), indexIdentificationDivision)
+                ? new IdentificationDivision(sourceCode.Substring(indexIdentificationDivision, Math.Max(0, indexEnvironmentDivision - indexIdentificationDivision)), indexIdentificationDivision)
                 : new IdentificationDivision("", 0);
 
             tree.EnvironmentDivision = indexEnvironmentDivision > 0

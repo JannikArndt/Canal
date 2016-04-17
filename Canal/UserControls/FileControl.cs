@@ -1,7 +1,6 @@
 ﻿using Canal.Events;
 using Canal.Properties;
 using Canal.Utils;
-using FastColoredTextBoxNS.Enums;
 using FastColoredTextBoxNS.Events;
 using Logging;
 using Model;
@@ -37,14 +36,13 @@ namespace Canal.UserControls
                 MainWindow = parent;
                 CobolFile = file;
 
+
                 // initialize FastColoredTextBox
                 codeBox.Font = SourceCodePro.Regular;
-                codeBox.Text = file.Text;
-                codeBox.SyntaxHighlighter.HighlightSyntax(Language.Cobol, codeBox.Range);
-
                 codeBox.KeyDown += searchBox_KeyDown;
                 codeBox.WordSelected += CodeBoxOnWordSelected;
                 codeBox.FunctionKeyPressed += HandleFunctionKeyInCodeBox;
+                codeBox.SetTextAsync(CobolFile.Text);
 
                 searchBox.Text = Resources.SearchPlaceholder;
 
@@ -79,6 +77,8 @@ namespace Canal.UserControls
                 splitContainerRight.Panel2.Controls.Remove(loaderImageInfoTab);
 
                 ShowTocTreeView();
+
+                ShowPerformsTreeView();
 
                 ShowProceduresTreeView(true);
 
@@ -145,8 +145,6 @@ namespace Canal.UserControls
                     return;
                 case Keys.Escape:
                     searchBox.Tag = false;
-                    // codeBox.Selection = new Range(codeBox, Place.Empty, Place.Empty);
-                    // codeBox.Invalidate();
                     searchBox.Text = string.Empty;
                     searchBox.Tag = true;
                     return;
@@ -287,6 +285,8 @@ namespace Canal.UserControls
 
         private void ResolveCopysButton_Click(object sender, EventArgs e)
         {
+            ResolveCopysButton.Enabled = false;
+
             var backgroundWorker = new BackgroundWorker();
 
             backgroundWorker.DoWork += (o, args) =>
@@ -299,9 +299,10 @@ namespace Canal.UserControls
 
             backgroundWorker.RunWorkerCompleted += (o, args) =>
             {
-                var cobolFile = args.Result as CobolFile;
-                if (cobolFile != null)
-                    codeBox.Text = cobolFile.Text;
+                CobolFile = args.Result as CobolFile;
+                if (CobolFile == null) return;
+
+                codeBox.SetTextAsync(CobolFile.Text);
 
                 toolStripProgressBar.Value = 100;
 
@@ -309,10 +310,6 @@ namespace Canal.UserControls
 
                 // Build the CobolTree in the CobolFile which contains all analysis information
                 _cobolTreeWorker.RunWorkerAsync(CobolFile);
-
-                //ShowVariablesTreeView();
-                //ShowProceduresTreeView();
-                ResolveCopysButton.Enabled = false;
             };
 
             Cursor = Cursors.WaitCursor;
@@ -382,9 +379,33 @@ namespace Canal.UserControls
 
             tocTreeView.Nodes.Add(CobolFile.CobolTree.GetAsTreeNodes());
             tocTreeView.ExpandAll();
+        }
 
-            performsTreeView.Nodes.Add(ReferenceUtil.GetPerformTree(CobolFile));
-            performsTreeView.ExpandAll();
+        private void ShowPerformsTreeView()
+        {
+            performsTreeView.Nodes.Clear();
+
+            if (CobolFile.CobolTree == null)
+            {
+                performsTreeView.Nodes.Add(new TreeNode("Error: CobolTree could not be built.") { ForeColor = Color.Red });
+                return;
+            }
+
+            var performTreeWorker = new BackgroundWorker();
+
+            performTreeWorker.DoWork += delegate (object sender, DoWorkEventArgs args)
+            {
+                args.Result = ReferenceUtil.GetPerformTree(CobolFile);
+            };
+
+            performTreeWorker.RunWorkerCompleted += delegate (object sender, RunWorkerCompletedEventArgs args)
+            {
+                performsTabPage.Controls.Remove(loaderImagePerforms);
+                performsTreeView.Nodes.Add((TreeNode)args.Result);
+            };
+
+            performTreeWorker.RunWorkerAsync();
+
         }
 
         private void ShowProceduresTreeView(bool showWarning = false)

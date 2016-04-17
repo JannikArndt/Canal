@@ -18,6 +18,11 @@ namespace FastColoredTextBoxNS.Enums
         /// <summary>
         /// Highlight all (visible and invisible) text. Lowest performance.
         /// </summary>
-        AllTextRange
+        AllTextRange,
+
+        /// <summary>
+        /// Highlights only first 100 lines, rest must be triggered manually.
+        /// </summary>
+        First100Lines
     }
 }

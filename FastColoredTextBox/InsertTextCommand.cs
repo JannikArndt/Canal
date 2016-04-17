@@ -62,7 +62,7 @@ namespace FastColoredTextBoxNS
                     else
                         InsertCharCommand.InsertChar(c, ref cc, ts);
                 }
-                ts.NeedRecalc(new TextSource.TextChangedEventArgs(0, 1));
+                // ts.NeedRecalc(new TextSource.TextChangedEventArgs(0, 1));
             }
             finally
             {

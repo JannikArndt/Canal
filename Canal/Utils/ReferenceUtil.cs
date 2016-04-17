@@ -108,12 +108,18 @@ namespace Canal.Utils
             return topNode;
         }
 
-        private static void FindPerformsRecursively(TreeNode topNode, Procedure procedure)
+        private static void FindPerformsRecursively(TreeNode topNode, Procedure procedure, int depth = 5)
         {
             Logger.Info("Finding performs recursively for node {0}", topNode.Text);
 
             if (procedure == null)
                 return;
+
+            if (depth == 0)
+            {
+                topNode.Nodes.Add("Max. recursive depth reached.");
+                return;
+            }
 
             var tempNode = topNode.Parent;
 
@@ -130,7 +136,7 @@ namespace Canal.Utils
             {
                 var newNode = new TreeNode(performReference.ReferencedProcedure);
                 topNode.Nodes.Add(newNode);
-                FindPerformsRecursively(newNode, performReference.Procedure);
+                FindPerformsRecursively(newNode, performReference.Procedure, depth - 1);
             }
         }
     }
