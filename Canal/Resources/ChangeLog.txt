@@ -1,4 +1,12 @@
-﻿v1.10
+﻿v1.11
+- opening a file is now 30x faster!
+- sped up file loading, caching is now in background thread
+- moved more analysis into background threads
+- moved syntax highlighting into background thread
+- improved logging
+- stability improvements (try-catch)
+
+v1.10
 - added save functionality
 - added export to html functionality
 - improved variable info view
