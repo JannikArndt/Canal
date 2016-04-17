@@ -57,7 +57,7 @@ namespace Canal.Utils
             }
             catch (Exception exception)
             {
-                ErrorHandling.Exception(exception);
+                Logger.Error("Error trying to show tab {0}: {1}.", filepath, exception.Message);
                 return false;
             }
         }

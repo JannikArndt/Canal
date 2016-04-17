@@ -1,5 +1,4 @@
-﻿using Canal.Utils;
-using Logging;
+﻿using Logging;
 using System;
 using System.Windows.Forms;
 
@@ -24,7 +23,9 @@ namespace Canal
             }
             catch (Exception exception)
             {
-                ErrorHandling.Exception(exception);
+                Logger.Error("Error in application {0}: {1}", exception.GetType(), exception.Message);
+                MessageBox.Show(string.Format("An error occured: {0}.\n\nStack Trace:\n{1}", exception.Message,
+                    exception.StackTrace));
             }
         }
     }

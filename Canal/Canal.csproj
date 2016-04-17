@@ -83,21 +83,10 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Mixpanel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7ea54850ac7adc26, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mixpanel.1.2.6\lib\net40-client\Mixpanel.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Events\UsedFileTypesChangedEventArgs.cs" />
@@ -126,7 +115,6 @@
     </Compile>
     <Compile Include="Utils\CobolTreeBuilder.cs" />
     <Compile Include="Utils\CobolTreeException.cs" />
-    <Compile Include="Utils\ErrorHandling.cs" />
     <Compile Include="UserControls\TextViewer.cs">
       <SubType>Form</SubType>
     </Compile>

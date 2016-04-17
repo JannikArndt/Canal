@@ -76,7 +76,7 @@ namespace Canal.Utils
             }
             catch (Exception exception)
             {
-                ErrorHandling.Exception(exception);
+                Logger.Error("Error loading file {0}: {1}.", filename, exception.Message);
                 throw new FileNotFoundException("File could not be loaded.", filename, exception);
             }
         }

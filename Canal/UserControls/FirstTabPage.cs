@@ -2,6 +2,7 @@
 using Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Canal.UserControls
@@ -27,12 +28,14 @@ namespace Canal.UserControls
                 foreach (var file in hashSet)
                     recentFilesListView.Items.Add(file);
 
+                if (hashSet.Any())
+                    openAllButton.Enabled = true;
+
                 changeLogTextBox.Text = Resources.ChangeLog;
             }
             catch (Exception exception)
             {
                 Logger.Error("Error on startup (FirstTabPage) {0}: {1}", exception.GetType(), exception.Message);
-                MessageBox.Show(string.Format(Resources.ErrorWithMessage, exception.Message), Resources.Error, MessageBoxButtons.OK);
             }
         }
 

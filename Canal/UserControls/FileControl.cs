@@ -24,7 +24,7 @@ namespace Canal.UserControls
 
         public MainWindow MainWindow { get; private set; }
 
-        private BackgroundWorker _worker = new BackgroundWorker();
+        private readonly BackgroundWorker _cobolTreeWorker = new BackgroundWorker();
 
         public FileControl(CobolFile file, MainWindow parent)
         {
@@ -48,17 +48,15 @@ namespace Canal.UserControls
 
                 searchBox.Text = Resources.SearchPlaceholder;
 
-                _worker.DoWork += BuildCobolTree;
-
+                _cobolTreeWorker.DoWork += BuildCobolTree;
                 // Display the analysis info in side tabs
-                _worker.RunWorkerCompleted += (sender, args) => InitTabs();
-
+                _cobolTreeWorker.RunWorkerCompleted += (sender, args) => InitTabs();
                 // Build the CobolTree in the CobolFile which contains all analysis information
-                _worker.RunWorkerAsync(file);
+                _cobolTreeWorker.RunWorkerAsync(CobolFile);
             }
             catch (Exception exception)
             {
-                ErrorHandling.Exception(exception);
+                Logger.Error("Error initializing file control for CobolFile {0}: {1}", file.Name, exception.Message);
                 MessageBox.Show(Resources.ErrorMessage_FileControl_Constructor + exception.Message, Resources.Error, MessageBoxButtons.OK);
             }
         }
@@ -92,7 +90,7 @@ namespace Canal.UserControls
             }
             catch (Exception exception)
             {
-                ErrorHandling.Exception(exception);
+                Logger.Error("Error initializing tabs for CobolFile {0}: {1}", CobolFile.Name, exception.Message);
                 MessageBox.Show(Resources.ErrorMessage_FileControl_Constructor + exception.Message, Resources.Error, MessageBoxButtons.OK);
             }
         }
@@ -133,7 +131,7 @@ namespace Canal.UserControls
 
         void IDisposable.Dispose()
         {
-            _worker.Dispose();
+            _cobolTreeWorker.Dispose();
         }
 
         #region Code Box Events
@@ -157,46 +155,66 @@ namespace Canal.UserControls
 
         private void CodeBoxOnWordSelected(object sender, WordSelectedEventArgs eventArgs)
         {
-            Logger.Info("Selected word {0}", eventArgs.Word);
-            ShowWordInfo(eventArgs.Word);
+            try
+            {
+                Logger.Info("Selected word {0}", eventArgs.Word);
+                ShowWordInfo(eventArgs.Word);
+            }
+            catch (Exception exception)
+            {
+                Logger.Error("Error trying to show selected word {0}: {1}.", eventArgs.Word, exception.Message);
+            }
         }
 
         #endregion
 
         #region Search Box
 
-        private void seachBox_TextChanged(object sender, EventArgs e)
+        private void TrySearch(bool firstSearch)
         {
             if (!(bool)searchBox.Tag) return;
 
             try
             {
                 searchBox.BackColor = SystemColors.Window;
-                codeBox.FindNext(searchBox.Text, false, searchWithRegEx.Checked, false, true);
+                codeBox.FindNext(searchBox.Text, false, searchWithRegEx.Checked, false, firstSearch);
 
             }
-            catch (Exception)
+            catch (ArgumentException)
             {
                 // aparently the only way to validate a regex
                 searchBox.BackColor = Color.PaleVioletRed;
             }
+            catch (Exception exception)
+            {
+                Logger.Error("Error trying to search for {0}: {1}.", searchBox.Text, exception.GetType());
+            }
+        }
 
+        private void seachBox_TextChanged(object sender, EventArgs e)
+        {
+            TrySearch(true);
         }
 
         private void searchBox_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.KeyCode)
+            try
             {
-                case Keys.F3:
-                    codeBox.FindNext(searchBox.Text, false, searchWithRegEx.Checked, false);
-                    return;
-                case Keys.Escape:
-                    searchBox.Tag = false;
-                    // codeBox.Selection = new Range(codeBox, Place.Empty, Place.Empty);
-                    // codeBox.Invalidate();
-                    searchBox.Text = string.Empty;
-                    searchBox.Tag = true;
-                    return;
+                switch (e.KeyCode)
+                {
+                    case Keys.F3:
+                        TrySearch(false);
+                        return;
+                    case Keys.Escape:
+                        searchBox.Tag = false;
+                        searchBox.Text = string.Empty;
+                        searchBox.Tag = true;
+                        return;
+                }
+            }
+            catch (Exception exception)
+            {
+                Logger.Error("Error processing key event {0} with KeyCode {1}: {2}.", e.ToString(), e.KeyCode, exception.Message);
             }
         }
 
@@ -269,17 +287,17 @@ namespace Canal.UserControls
 
         private void ResolveCopysButton_Click(object sender, EventArgs e)
         {
-            _worker = new BackgroundWorker();
+            var backgroundWorker = new BackgroundWorker();
 
-            _worker.DoWork += (o, args) =>
+            backgroundWorker.DoWork += (o, args) =>
             {
                 var refUtil = new ReferenceUtil();
-                refUtil.ProgressChanged += (sender1, eventArgs) => _worker.ReportProgress(eventArgs.ProgressPercentage);
+                refUtil.ProgressChanged += (sender1, eventArgs) => backgroundWorker.ReportProgress(eventArgs.ProgressPercentage);
                 refUtil.ResolveCopys(CobolFile);
                 args.Result = CobolFile;
             };
 
-            _worker.RunWorkerCompleted += (o, args) =>
+            backgroundWorker.RunWorkerCompleted += (o, args) =>
             {
                 var cobolFile = args.Result as CobolFile;
                 if (cobolFile != null)
@@ -289,8 +307,11 @@ namespace Canal.UserControls
 
                 toolStripProgressBar.Visible = false;
 
-                ShowVariablesTreeView();
-                ShowProceduresTreeView();
+                // Build the CobolTree in the CobolFile which contains all analysis information
+                _cobolTreeWorker.RunWorkerAsync(CobolFile);
+
+                //ShowVariablesTreeView();
+                //ShowProceduresTreeView();
                 ResolveCopysButton.Enabled = false;
             };
 
@@ -298,9 +319,9 @@ namespace Canal.UserControls
 
             toolStripProgressBar.Visible = true;
 
-            _worker.WorkerReportsProgress = true;
-            _worker.ProgressChanged += (o, args) => toolStripProgressBar.Value = args.ProgressPercentage;
-            _worker.RunWorkerAsync();
+            backgroundWorker.WorkerReportsProgress = true;
+            backgroundWorker.ProgressChanged += (o, args) => toolStripProgressBar.Value = args.ProgressPercentage;
+            backgroundWorker.RunWorkerAsync();
 
             Cursor = Cursors.Default;
         }

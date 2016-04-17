@@ -1,5 +1,6 @@
 ﻿using Logging;
 using System;
+using System.Globalization;
 using System.Linq;
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
@@ -22,8 +23,10 @@ namespace Model.Pictures
         /// <summary>
         /// Parses a text containing a PIC-definition: "X(03)" => "XXX" => new PicX(3), "S9(2).99" => "S99.99" => new PicS9V9(2,2)
         /// </summary>
-        public static IPic Parse(string text)
+        public static IPic Parse(string textIn)
         {
+            var text = textIn.ToUpperInvariant();
+
             if (string.IsNullOrWhiteSpace(text))
                 return new Pic88();
 
@@ -109,10 +112,6 @@ namespace Model.Pictures
             set { }
         }
 
-        public PicGroup()
-        {
-        }
-
         public override string ToString()
         {
             return string.Empty;
@@ -146,7 +145,7 @@ namespace Model.Pictures
 
     public class Pic9 : IPic
     {
-        protected int? _value;
+        private int? _value;
 
         public int Length { get; set; }
 
@@ -158,7 +157,7 @@ namespace Model.Pictures
             CompType = comp;
         }
 
-        public string Value
+        public virtual string Value
         {
             get { return _value != null ? _value.ToString() : null; }
             set { _value = string.IsNullOrWhiteSpace(value) ? (int?)null : value.StartsWith("ZERO") ? 0 : int.Parse(value); }
@@ -176,10 +175,10 @@ namespace Model.Pictures
         {
         }
 
-        public new string Value
+        public override string Value
         {
             get { return base.Value; }
-            set { base.Value = value.Substring(1); }
+            set { base.Value = value.Length > 1 ? value.Substring(1) : value; }
         }
 
         public override string ToString()
@@ -190,16 +189,16 @@ namespace Model.Pictures
 
     public class Pic9V9 : Pic9
     {
-        private new decimal? _value;
+        private decimal? _value;
 
         public int IntegersLength { get; set; }
 
         public int FractionsLength { get; set; }
 
-        public new string Value
+        public override string Value
         {
             get { return _value != null ? _value.ToString() : null; }
-            set { _value = string.IsNullOrWhiteSpace(value) ? (decimal?)null : value.StartsWith("ZERO") ? 0 : decimal.Parse(value); }
+            set { _value = string.IsNullOrWhiteSpace(value) ? (decimal?)null : value.StartsWith("ZERO") ? 0 : decimal.Parse(value, CultureInfo.InvariantCulture); }
         }
 
         public Pic9V9(int integersLength, int fractionsLength, CompType comp = CompType.None) : base(integersLength + fractionsLength, comp)

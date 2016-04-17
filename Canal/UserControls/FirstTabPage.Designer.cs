@@ -50,6 +50,7 @@
             // 
             // openAllButton
             // 
+            this.openAllButton.Enabled = false;
             this.openAllButton.Location = new System.Drawing.Point(7, 347);
             this.openAllButton.Name = "openAllButton";
             this.openAllButton.Size = new System.Drawing.Size(75, 23);
