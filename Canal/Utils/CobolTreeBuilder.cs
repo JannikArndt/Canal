@@ -238,7 +238,7 @@ namespace Canal.Utils
             {
                 string programName = match.Groups["literal"].ToString().Trim();
 
-                var fileRefs = FileUtil.GetFileReferences(programName);
+                var fileRefs = FileUtil.Instance.GetFileReferences(programName);
 
                 if (fileRefs.Count > 1)
                     Console.WriteLine(@"error: ambiguous name");

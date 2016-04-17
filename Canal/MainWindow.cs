@@ -75,7 +75,7 @@ namespace Canal
 
             try
             {
-                var file = FileUtil.Get(filename);
+                var file = FileUtil.Instance.Get(filename);
                 _tabUtil.AddTab(file);
                 Settings.Default.LastOpened.Add(filename);
             }

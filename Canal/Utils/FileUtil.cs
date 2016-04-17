@@ -13,28 +13,35 @@ namespace Canal.Utils
     using System.IO;
     using System.Linq;
 
-    public static class FileUtil
+    public class FileUtil
     {
-        public static event EventHandler<FileCacheChangedEventArgs> FileCacheChanged;
+        private static FileUtil _instance;
 
-        private static readonly List<string> RecentFolders = new List<string>();
+        public static FileUtil Instance
+        {
+            get { return _instance ?? (_instance = new FileUtil()); }
+        }
 
-        private static readonly Dictionary<string, FileReference> Files = new Dictionary<string, FileReference>();
+        public event EventHandler<FileCacheChangedEventArgs> FileCacheChanged;
 
-        private static readonly Dictionary<string, List<FileReference>> DirectoriesAndFiles = new Dictionary<string, List<FileReference>>();
+        private readonly List<string> _recentFolders = new List<string>();
 
-        private static Dictionary<string, List<FileReference>> _directoriesWithAllowedFiles = new Dictionary<string, List<FileReference>>();
+        private readonly Dictionary<string, FileReference> _files = new Dictionary<string, FileReference>();
 
-        private static List<string> _allowedEndings = new List<string>();
+        private readonly Dictionary<string, List<FileReference>> _directoriesAndFiles = new Dictionary<string, List<FileReference>>();
 
-        private static readonly BackgroundWorker FileCacheWorker = new BackgroundWorker();
+        private Dictionary<string, List<FileReference>> _directoriesWithAllowedFiles = new Dictionary<string, List<FileReference>>();
+
+        private List<string> _allowedEndings = new List<string>();
+
+        private readonly BackgroundWorker _fileCacheWorker = new BackgroundWorker();
 
         /// <summary>
         /// Loads the given file. Uses internal cache for file contents.
         /// </summary>
         /// <param name="filename">An exact filepath.</param>
         /// <returns>A CobolFile with the file contents as Text.</returns>
-        public static CobolFile Get(string filename)
+        public CobolFile Get(string filename)
         {
             if (string.IsNullOrWhiteSpace(filename))
             {
@@ -43,26 +50,26 @@ namespace Canal.Utils
             }
             try
             {
-                lock (Files)
+                lock (_files)
                 {
-                    if (Files.ContainsKey(filename))
+                    if (_files.ContainsKey(filename))
                     {
                         Logger.Info("Loading file from cache: {0}.", filename);
-                        return Get(Files[filename]);
+                        return Get(_files[filename]);
                     }
 
                     Logger.Info("File {0} is not in cache. Loading from disk and triggering background analysis.", filename);
 
-                    FileCacheWorker.DoWork += AnalyzeFolder;
-                    FileCacheWorker.RunWorkerCompleted += (sender, args) =>
+                    _fileCacheWorker.DoWork += AnalyzeFolder;
+                    _fileCacheWorker.RunWorkerCompleted += (sender, args) =>
                     {
                         Logger.Info("Completed background filesystem analysis. Cache built.");
                         if (FileCacheChanged != null) FileCacheChanged(sender, new FileCacheChangedEventArgs());
                     };
-                    FileCacheWorker.RunWorkerAsync(filename);
+                    _fileCacheWorker.RunWorkerAsync(filename);
 
                     var newRef = new FileReference(filename);
-                    Files.Add(filename, newRef);
+                    _files.Add(filename, newRef);
                     return Get(newRef);
                 }
             }
@@ -73,7 +80,7 @@ namespace Canal.Utils
             }
         }
 
-        public static CobolFile Get(FileReference reference)
+        public CobolFile Get(FileReference reference)
         {
             if (reference.CobolFile != null) return reference.CobolFile;
 
@@ -87,7 +94,7 @@ namespace Canal.Utils
             return reference.CobolFile;
         }
 
-        public static List<FileReference> GetFileReferences(string programName)
+        public List<FileReference> GetFileReferences(string programName)
         {
             if (string.IsNullOrWhiteSpace(programName))
                 return null;
@@ -96,9 +103,9 @@ namespace Canal.Utils
 
             List<FileReference> candidates;
 
-            lock (Files)
+            lock (_files)
             {
-                candidates = Files.Where(file => file.Key.Contains(programName)).Select(file => file.Value).ToList();
+                candidates = _files.Where(file => file.Key.Contains(programName)).Select(file => file.Value).ToList();
             }
 
             Console.WriteLine(candidates.Any() ? " => succeeded" : " => failed");
@@ -106,14 +113,14 @@ namespace Canal.Utils
             return candidates;
         }
 
-        public static FileReference GetFileReference(string programName, string folderName)
+        public FileReference GetFileReference(string programName, string folderName)
         {
             if (string.IsNullOrWhiteSpace(programName) || string.IsNullOrWhiteSpace(folderName))
                 return null;
 
-            lock (Files)
+            lock (_files)
             {
-                return Files.Where(file => file.Key.Contains(programName) && file.Key.Contains(folderName)).Select(file => file.Value).FirstOrDefault();
+                return _files.Where(file => file.Key.Contains(programName) && file.Key.Contains(folderName)).Select(file => file.Value).FirstOrDefault();
             }
         }
 
@@ -122,11 +129,11 @@ namespace Canal.Utils
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="doWorkEventArgs">An event containing the path as argument</param>
-        private static void AnalyzeFolder(object sender, DoWorkEventArgs doWorkEventArgs)
+        private void AnalyzeFolder(object sender, DoWorkEventArgs doWorkEventArgs)
         {
             var fileOrFolderPath = doWorkEventArgs.Argument.ToString();
 
-            if (RecentFolders.Contains(fileOrFolderPath))
+            if (_recentFolders.Contains(fileOrFolderPath))
                 return;
 
             if (!File.Exists(fileOrFolderPath))
@@ -141,18 +148,18 @@ namespace Canal.Utils
                 if (folderPath == null)
                     return;
 
-                lock (Files)
+                lock (_files)
                 {
                     foreach (var newRef in GetRelevantFileNames(folderPath))
                     {
-                        Files.Add(newRef.FilePath, newRef);
-                        if (!DirectoriesAndFiles.ContainsKey(newRef.Directory))
-                            DirectoriesAndFiles.Add(newRef.Directory, new List<FileReference>());
+                        _files.Add(newRef.FilePath, newRef);
+                        if (!_directoriesAndFiles.ContainsKey(newRef.Directory))
+                            _directoriesAndFiles.Add(newRef.Directory, new List<FileReference>());
 
-                        DirectoriesAndFiles[newRef.Directory].Add(newRef);
+                        _directoriesAndFiles[newRef.Directory].Add(newRef);
                     }
                 }
-                RecentFolders.Add(fileOrFolderPath);
+                _recentFolders.Add(fileOrFolderPath);
             }
             catch (Exception exception)
             {
@@ -161,13 +168,13 @@ namespace Canal.Utils
             }
         }
 
-        private static IEnumerable<FileReference> GetRelevantFileNames(string path)
+        private IEnumerable<FileReference> GetRelevantFileNames(string path)
         {
             return GetDirectoryFiles(path, "*.*")
                 .Where(file =>
                         !new FileInfo(file).Attributes.HasFlag(FileAttributes.Hidden | FileAttributes.System) &&
                         file.IndexOf(@"\.", StringComparison.Ordinal) < 0 &&
-                        !Files.ContainsKey(file))
+                        !_files.ContainsKey(file))
                         .Select(file => new FileReference(file));
         }
 
@@ -178,7 +185,7 @@ namespace Canal.Utils
         /// <param name="rootPath">Starting directory</param>
         /// <param name="patternMatch">Filename pattern match</param>
         /// <returns>List of files</returns>
-        private static IEnumerable<string> GetDirectoryFiles(string rootPath, string patternMatch)
+        private IEnumerable<string> GetDirectoryFiles(string rootPath, string patternMatch)
         {
             // ReSharper disable PossibleMultipleEnumeration
 
@@ -204,7 +211,7 @@ namespace Canal.Utils
             return foundFiles;
         }
 
-        public static void ReduceDirectoriesToAllowedFiles()
+        public void ReduceDirectoriesToAllowedFiles()
         {
             _directoriesWithAllowedFiles = new Dictionary<string, List<FileReference>>();
 
@@ -214,15 +221,15 @@ namespace Canal.Utils
             if (Settings.Default.FileTypeCob) _allowedEndings.Add(".src");
             if (!string.IsNullOrWhiteSpace(Settings.Default.FileTypeCustom)) _allowedEndings.Add(Settings.Default.FileTypeCustom);
 
-            foreach (var dir in DirectoriesAndFiles.Keys)
+            foreach (var dir in _directoriesAndFiles.Keys)
             {
-                var tempDir = new List<FileReference>(DirectoriesAndFiles[dir].Where(file => file.FilePath.HasAllowedEnding()));
+                var tempDir = new List<FileReference>(_directoriesAndFiles[dir].Where(file => HasAllowedEnding(file.FilePath)));
                 if (tempDir.Any())
                     _directoriesWithAllowedFiles.Add(dir, tempDir);
             }
         }
 
-        public static TreeNode[] GetDirectoryStructure(string query = "")
+        public TreeNode[] GetDirectoryStructure(string query = "")
         {
             if (_directoriesWithAllowedFiles == null || !_directoriesWithAllowedFiles.Any())
                 ReduceDirectoriesToAllowedFiles();
@@ -243,7 +250,7 @@ namespace Canal.Utils
             return result.ToArray();
         }
 
-        private static bool HasAllowedEnding(this string text)
+        private bool HasAllowedEnding(string text)
         {
             return _allowedEndings.Contains(text.Substring(text.Length - 4, 4).ToLowerInvariant());
         }

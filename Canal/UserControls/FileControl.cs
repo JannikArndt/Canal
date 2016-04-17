@@ -111,8 +111,8 @@ namespace Canal.UserControls
 
         private void ShowFilesTreeView()
         {
-            FileUtil.ReduceDirectoriesToAllowedFiles();
-            filesTreeView.Nodes.AddRange(FileUtil.GetDirectoryStructure());
+            FileUtil.Instance.ReduceDirectoriesToAllowedFiles();
+            filesTreeView.Nodes.AddRange(FileUtil.Instance.GetDirectoryStructure());
             filesTreeView.ExpandAll();
             filesTabSearchBox.Text = Resources.SearchPlaceholder;
         }
@@ -476,7 +476,7 @@ namespace Canal.UserControls
             if (((ToolStripTextBox)sender).Text == Resources.SearchPlaceholder)
                 return;
             filesTreeView.Nodes.Clear();
-            filesTreeView.Nodes.AddRange(FileUtil.GetDirectoryStructure(((ToolStripTextBox)sender).Text));
+            filesTreeView.Nodes.AddRange(FileUtil.Instance.GetDirectoryStructure(((ToolStripTextBox)sender).Text));
             filesTreeView.ExpandAll();
 
             if (filesTreeView.Nodes.Count == 1 && filesTreeView.Nodes[0].Nodes.Count == 1)
@@ -534,8 +534,8 @@ namespace Canal.UserControls
         public void RefreshFileView()
         {
             var searchText = filesTabSearchBox.Text == Resources.SearchPlaceholder ? "" : filesTabSearchBox.Text;
-            FileUtil.ReduceDirectoriesToAllowedFiles();
-            var nodes = FileUtil.GetDirectoryStructure(searchText);
+            FileUtil.Instance.ReduceDirectoriesToAllowedFiles();
+            var nodes = FileUtil.Instance.GetDirectoryStructure(searchText);
             filesTreeView.Nodes.Clear();
             filesTreeView.Nodes.AddRange(nodes);
             filesTreeView.ExpandAll();

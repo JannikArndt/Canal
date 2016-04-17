@@ -29,7 +29,7 @@ namespace Canal.Utils
                     counter++;
                     Logger.Info("Resolving program {0} in folder {1}", copyReference.ProgramName, copyReference.Directory);
 
-                    var copyFile = FileUtil.Get(copyReference);
+                    var copyFile = FileUtil.Instance.Get(copyReference);
 
                     if (copyFile == null)
                         continue;
@@ -75,7 +75,7 @@ namespace Canal.Utils
             Logger.Info("Resolving {0} COPYs...", matches.Count);
 
             return from Match match in matches
-                   select FileUtil.GetFileReference(match.Groups["program"].Value, match.Groups["folder"].Value);
+                   select FileUtil.Instance.GetFileReference(match.Groups["program"].Value, match.Groups["folder"].Value);
         }
 
         public static TreeNode GetPerformTree(CobolFile file)

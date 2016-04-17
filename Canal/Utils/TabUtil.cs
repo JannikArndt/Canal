@@ -86,7 +86,7 @@ namespace Canal.Utils
             var fileControl = new FileControl(file, _parent);
 
             fileControl.UsedFileTypesChanged += UsedFileTypesChanged;
-            FileUtil.FileCacheChanged += RefreshFileView;
+            FileUtil.Instance.FileCacheChanged += RefreshFileView;
 
             newTab.Controls.Add(fileControl);
             _tabControl.Controls.Add(newTab);
