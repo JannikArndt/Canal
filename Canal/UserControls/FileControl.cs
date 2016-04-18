@@ -39,9 +39,8 @@ namespace Canal.UserControls
 
                 // initialize FastColoredTextBox
                 codeBox.Font = SourceCodePro.Regular;
-                codeBox.KeyDown += searchBox_KeyDown;
+                codeBox.KeyDown += HandleKeyDown;
                 codeBox.WordSelected += CodeBoxOnWordSelected;
-                codeBox.FunctionKeyPressed += HandleFunctionKeyInCodeBox;
                 codeBox.SetTextAsync(CobolFile.Text);
 
                 searchBox.Text = Resources.SearchPlaceholder;
@@ -134,26 +133,19 @@ namespace Canal.UserControls
             _cobolTreeWorker.Dispose();
         }
 
-        #region Code Box Events
-
-        private void HandleFunctionKeyInCodeBox(object sender, FunctionKeyPressedEventArgs functionKeyPressedEventArgs)
-        {
-            HandleKeyPress(functionKeyPressedEventArgs.Key);
-        }
-
-        private void HandleKeyPress(KeyEventArgs key)
+        private void HandleKeyDown(object sender, KeyEventArgs e)
         {
             try
             {
-                if (key.Shift)
-                    switch (key.KeyCode)
+                if (e.Shift)
+                    switch (e.KeyCode)
                     {
                         case Keys.F3:
                             TrySearch(false, true);
                             return;
                     }
                 else
-                    switch (key.KeyCode)
+                    switch (e.KeyCode)
                     {
                         case Keys.F3:
                             TrySearch(false);
@@ -167,9 +159,11 @@ namespace Canal.UserControls
             }
             catch (Exception exception)
             {
-                Logger.Error("Error processing key event {0} with KeyCode {1}: {2}.", key.ToString(), key.KeyCode, exception.Message);
+                Logger.Error("Error processing key event {0} with KeyCode {1}: {2}.", e.ToString(), e.KeyCode, exception.Message);
             }
         }
+
+        #region Code Box Events
 
         private void CodeBoxOnWordSelected(object sender, WordSelectedEventArgs eventArgs)
         {
@@ -212,11 +206,6 @@ namespace Canal.UserControls
         private void seachBox_TextChanged(object sender, EventArgs e)
         {
             TrySearch(true);
-        }
-
-        private void searchBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            HandleKeyPress(e);
         }
 
         private void searchBox_Enter(object sender, EventArgs e)

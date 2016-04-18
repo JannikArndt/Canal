@@ -634,7 +634,7 @@ namespace Canal.UserControls
             this.searchBox.Text = "Search...";
             this.searchBox.Enter += new System.EventHandler(this.searchBox_Enter);
             this.searchBox.Leave += new System.EventHandler(this.searchBox_Leave);
-            this.searchBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchBox_KeyDown);
+            this.searchBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.HandleKeyDown);
             this.searchBox.TextChanged += new System.EventHandler(this.seachBox_TextChanged);
             // 
             // searchWithRegEx
