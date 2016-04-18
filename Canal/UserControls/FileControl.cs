@@ -138,16 +138,36 @@ namespace Canal.UserControls
 
         private void HandleFunctionKeyInCodeBox(object sender, FunctionKeyPressedEventArgs functionKeyPressedEventArgs)
         {
-            switch (functionKeyPressedEventArgs.Key.KeyCode)
+            HandleKeyPress(functionKeyPressedEventArgs.Key);
+        }
+
+        private void HandleKeyPress(KeyEventArgs key)
+        {
+            try
             {
-                case Keys.F3:
-                    codeBox.FindNext(searchBox.Text, false, searchWithRegEx.Checked, false);
-                    return;
-                case Keys.Escape:
-                    searchBox.Tag = false;
-                    searchBox.Text = string.Empty;
-                    searchBox.Tag = true;
-                    return;
+                if (key.Shift)
+                    switch (key.KeyCode)
+                    {
+                        case Keys.F3:
+                            TrySearch(false, true);
+                            return;
+                    }
+                else
+                    switch (key.KeyCode)
+                    {
+                        case Keys.F3:
+                            TrySearch(false);
+                            return;
+                        case Keys.Escape:
+                            searchBox.Tag = false;
+                            searchBox.Text = string.Empty;
+                            searchBox.Tag = true;
+                            return;
+                    }
+            }
+            catch (Exception exception)
+            {
+                Logger.Error("Error processing key event {0} with KeyCode {1}: {2}.", key.ToString(), key.KeyCode, exception.Message);
             }
         }
 
@@ -168,14 +188,14 @@ namespace Canal.UserControls
 
         #region Search Box
 
-        private void TrySearch(bool firstSearch)
+        private void TrySearch(bool firstSearch, bool reverse = false)
         {
             if (!(bool)searchBox.Tag) return;
 
             try
             {
                 searchBox.BackColor = SystemColors.Window;
-                codeBox.FindNext(searchBox.Text, false, searchWithRegEx.Checked, false, firstSearch);
+                codeBox.FindNext(searchBox.Text, false, searchWithRegEx.Checked, false, firstSearch, reverse);
 
             }
             catch (ArgumentException)
@@ -196,24 +216,7 @@ namespace Canal.UserControls
 
         private void searchBox_KeyDown(object sender, KeyEventArgs e)
         {
-            try
-            {
-                switch (e.KeyCode)
-                {
-                    case Keys.F3:
-                        TrySearch(false);
-                        return;
-                    case Keys.Escape:
-                        searchBox.Tag = false;
-                        searchBox.Text = string.Empty;
-                        searchBox.Tag = true;
-                        return;
-                }
-            }
-            catch (Exception exception)
-            {
-                Logger.Error("Error processing key event {0} with KeyCode {1}: {2}.", e.ToString(), e.KeyCode, exception.Message);
-            }
+            HandleKeyPress(e);
         }
 
         private void searchBox_Enter(object sender, EventArgs e)
@@ -596,6 +599,16 @@ namespace Canal.UserControls
             var success = codeBox.NavigateForward();
             if (!success)
                 navigateForwardButton.Enabled = false;
+        }
+
+        private void findNextButton_Click(object sender, EventArgs e)
+        {
+            TrySearch(false);
+        }
+
+        private void findPreviousButton_Click(object sender, EventArgs e)
+        {
+            TrySearch(false, true);
         }
     }
 }

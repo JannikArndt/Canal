@@ -43,6 +43,7 @@ namespace Canal.UserControls
             this.TocCollapseAllButton = new System.Windows.Forms.ToolStripButton();
             this.TocExpandAllButton = new System.Windows.Forms.ToolStripButton();
             this.performsTabPage = new System.Windows.Forms.TabPage();
+            this.loaderImagePerforms = new System.Windows.Forms.PictureBox();
             this.performsToolStrip = new System.Windows.Forms.ToolStrip();
             this.performsCopyButton = new System.Windows.Forms.ToolStripButton();
             this.performsCollapseAllButton = new System.Windows.Forms.ToolStripButton();
@@ -83,12 +84,14 @@ namespace Canal.UserControls
             this.splitContainerRight = new System.Windows.Forms.SplitContainer();
             this.loaderImageInfoTab = new System.Windows.Forms.PictureBox();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
-            this.loaderImagePerforms = new System.Windows.Forms.PictureBox();
+            this.findPreviousButton = new System.Windows.Forms.ToolStripButton();
+            this.findNextButton = new System.Windows.Forms.ToolStripButton();
             this.structureTabControl.SuspendLayout();
             this.tocTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.loaderImageToc)).BeginInit();
             this.tocToolStrip.SuspendLayout();
             this.performsTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.loaderImagePerforms)).BeginInit();
             this.performsToolStrip.SuspendLayout();
             this.variablesTabPage.SuspendLayout();
             this.variablesToolStrip.SuspendLayout();
@@ -107,7 +110,6 @@ namespace Canal.UserControls
             this.splitContainerRight.Panel2.SuspendLayout();
             this.splitContainerRight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.loaderImageInfoTab)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.loaderImagePerforms)).BeginInit();
             this.SuspendLayout();
             // 
             // tocTreeView
@@ -218,6 +220,17 @@ namespace Canal.UserControls
             this.performsTabPage.TabIndex = 1;
             this.performsTabPage.Text = "Performs";
             this.performsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // loaderImagePerforms
+            // 
+            this.loaderImagePerforms.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.loaderImagePerforms.Image = ((System.Drawing.Image)(resources.GetObject("loaderImagePerforms.Image")));
+            this.loaderImagePerforms.Location = new System.Drawing.Point(3, 28);
+            this.loaderImagePerforms.Name = "loaderImagePerforms";
+            this.loaderImagePerforms.Size = new System.Drawing.Size(364, 264);
+            this.loaderImagePerforms.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.loaderImagePerforms.TabIndex = 4;
+            this.loaderImagePerforms.TabStop = false;
             // 
             // performsToolStrip
             // 
@@ -574,6 +587,8 @@ namespace Canal.UserControls
             this.navigateForwardButton,
             this.toolStripSeparator2,
             this.searchBox,
+            this.findPreviousButton,
+            this.findNextButton,
             this.searchWithRegEx,
             this.toolStripSeparator1,
             this.ResolveCopysButton,
@@ -693,16 +708,25 @@ namespace Canal.UserControls
             this.miniToolStrip.Size = new System.Drawing.Size(200, 25);
             this.miniToolStrip.TabIndex = 1;
             // 
-            // loaderImagePerforms
+            // findPreviousButton
             // 
-            this.loaderImagePerforms.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.loaderImagePerforms.Image = ((System.Drawing.Image)(resources.GetObject("loaderImagePerforms.Image")));
-            this.loaderImagePerforms.Location = new System.Drawing.Point(3, 28);
-            this.loaderImagePerforms.Name = "loaderImagePerforms";
-            this.loaderImagePerforms.Size = new System.Drawing.Size(364, 264);
-            this.loaderImagePerforms.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.loaderImagePerforms.TabIndex = 4;
-            this.loaderImagePerforms.TabStop = false;
+            this.findPreviousButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.findPreviousButton.Image = ((System.Drawing.Image)(resources.GetObject("findPreviousButton.Image")));
+            this.findPreviousButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.findPreviousButton.Name = "findPreviousButton";
+            this.findPreviousButton.Size = new System.Drawing.Size(23, 22);
+            this.findPreviousButton.Text = "Find Previous (Shift + F3)";
+            this.findPreviousButton.Click += new System.EventHandler(this.findPreviousButton_Click);
+            // 
+            // findNextButton
+            // 
+            this.findNextButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.findNextButton.Image = ((System.Drawing.Image)(resources.GetObject("findNextButton.Image")));
+            this.findNextButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.findNextButton.Name = "findNextButton";
+            this.findNextButton.Size = new System.Drawing.Size(23, 22);
+            this.findNextButton.Text = "Find Next (F3)";
+            this.findNextButton.Click += new System.EventHandler(this.findNextButton_Click);
             // 
             // FileControl
             // 
@@ -720,6 +744,7 @@ namespace Canal.UserControls
             this.tocToolStrip.PerformLayout();
             this.performsTabPage.ResumeLayout(false);
             this.performsTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.loaderImagePerforms)).EndInit();
             this.performsToolStrip.ResumeLayout(false);
             this.performsToolStrip.PerformLayout();
             this.variablesTabPage.ResumeLayout(false);
@@ -747,7 +772,6 @@ namespace Canal.UserControls
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerRight)).EndInit();
             this.splitContainerRight.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.loaderImageInfoTab)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.loaderImagePerforms)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -803,5 +827,7 @@ namespace Canal.UserControls
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripButton navigateForwardButton;
         private PictureBox loaderImagePerforms;
+        private ToolStripButton findPreviousButton;
+        private ToolStripButton findNextButton;
     }
 }

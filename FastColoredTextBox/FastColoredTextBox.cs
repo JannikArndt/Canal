@@ -2385,7 +2385,7 @@ namespace FastColoredTextBoxNS
             return i;
         }
 
-        public void FindNext(string pattern, bool matchCase, bool regex, bool wholeWord, bool firstSearch = false)
+        public void FindNext(string pattern, bool matchCase, bool regex, bool wholeWord, bool firstSearch = false, bool reverse = false)
         {
             RegexOptions opt = matchCase ? RegexOptions.None : RegexOptions.IgnoreCase;
             if (!regex)
@@ -2393,9 +2393,16 @@ namespace FastColoredTextBoxNS
             if (wholeWord)
                 pattern = "\\b" + pattern + "\\b";
             //
-            Range searchRange = firstSearch ? new Range(this, Range.Start, Range.End) : new Range(this, Selection.End, Range.End);
+            Range searchRange;
+            if (reverse)
+                searchRange = firstSearch ? new Range(this, Range.Start, Range.End) : new Range(this, Range.Start, Selection.Start);
+            else
+                searchRange = firstSearch ? new Range(this, Range.Start, Range.End) : new Range(this, Selection.End, Range.End);
 
             var results = searchRange.GetRangesByLines(pattern, opt | RegexOptions.Compiled).ToList();
+            if (reverse)
+                results.Reverse();
+
             foreach (var r in results)
             {
                 Selection = r;
@@ -2405,7 +2412,7 @@ namespace FastColoredTextBoxNS
             }
 
             if (!results.Any() && !firstSearch)
-                FindNext(pattern, matchCase, regex, wholeWord, true);
+                FindNext(pattern, matchCase, regex, wholeWord, true, reverse);
         }
 
         /// <summary>
