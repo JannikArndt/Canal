@@ -42,13 +42,18 @@
     <Compile Include="DataDivision.cs" />
     <Compile Include="Division.cs" />
     <Compile Include="EnvironmentDivision.cs" />
-    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="IdentificationDivision.cs" />
     <Compile Include="LinkageSection.cs" />
-    <Compile Include="Literal.cs" />
     <Compile Include="PerformType.cs" />
     <Compile Include="Pictures\CompType.cs" />
-    <Compile Include="Pictures\Pic.cs" />
+    <Compile Include="Pictures\IPic.cs" />
+    <Compile Include="Pictures\PicGroup.cs" />
+    <Compile Include="Pictures\Pic88.cs" />
+    <Compile Include="Pictures\Pic9.cs" />
+    <Compile Include="Pictures\Pic9V9.cs" />
+    <Compile Include="Pictures\PicS9.cs" />
+    <Compile Include="Pictures\PicS9V9.cs" />
+    <Compile Include="Pictures\PicX.cs" />
     <Compile Include="Procedure.cs" />
     <Compile Include="ProcedureDivision.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -57,6 +62,7 @@
     <Compile Include="References\PerformReference.cs" />
     <Compile Include="References\ProcedureReference.cs" />
     <Compile Include="Section.cs" />
+    <Compile Include="UsedAs.cs" />
     <Compile Include="Variable.cs" />
     <Compile Include="WorkingStorageSection.cs" />
   </ItemGroup>
@@ -65,6 +71,9 @@
       <Project>{ED3CFE5E-4805-49CA-A4C5-6EAF9CAB7F16}</Project>
       <Name>Logging</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ModelClasses.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

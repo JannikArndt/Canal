@@ -114,7 +114,6 @@
       <DependentUpon>FirstTabPage.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\CobolTreeBuilder.cs" />
-    <Compile Include="Utils\CobolTreeException.cs" />
     <Compile Include="UserControls\TextViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -128,6 +127,10 @@
       <DependentUpon>WordInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\FileCacheChangedEventArgs.cs" />
+    <Compile Include="Utils\CompParser.cs" />
+    <Compile Include="Utils\ExtensionMethods.cs" />
+    <Compile Include="Utils\Literal.cs" />
+    <Compile Include="Utils\PicParser.cs" />
     <Compile Include="Utils\SourceCodePro.cs" />
     <Compile Include="Utils\TextUtil.cs" />
     <Compile Include="Utils\Constants.cs" />
@@ -179,6 +182,7 @@
     <EmbeddedResource Include="UserControls\WordInfo.resx">
       <DependentUpon>WordInfo.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">

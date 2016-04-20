@@ -1,12 +1,12 @@
-﻿using System;
-
-namespace Logging
+﻿namespace Logging
 {
+    using System;
+
     public class LoggerEventArgs : EventArgs
     {
-        public LoggingLevel Level { get; }
+        public LoggingLevel Level { get; private set; }
 
-        public string Message { get; }
+        public string Message { get; private set; }
 
         public LoggerEventArgs(LoggingLevel level, string message)
         {

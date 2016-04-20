@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Model
+﻿namespace Model
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public abstract class Division : CobolTreeNode
     {
         public string OriginalSource { get; private set; }
@@ -12,7 +12,8 @@ namespace Model
 
         public int LinesOfCode { get { return Lines.Count; } }
 
-        protected Division(string sourceCode, string nodeName, int indexDataDivision) : base(nodeName, indexDataDivision)
+        protected Division(string sourceCode, string nodeName, int indexDataDivision)
+            : base(nodeName, indexDataDivision)
         {
             OriginalSource = sourceCode;
 

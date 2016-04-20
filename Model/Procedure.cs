@@ -1,11 +1,11 @@
-﻿using Canal.Utils;
-using Model.References;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Model
+﻿namespace Model
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Model.References;
+
     public class Procedure : CobolTreeNode
     {
         public new string Name { get; set; }
@@ -18,8 +18,6 @@ namespace Model
 
         public List<GoToReference> GoToReferences { get; set; }
 
-        public List<ProcedureReference> References { get { return PerformReferences.Concat<ProcedureReference>(GoToReferences).ToList(); } }
-
         public List<PerformReference> IsReferencedBy { get; set; }
 
         public List<FileReference> CallReferences { get; set; }
@@ -28,9 +26,15 @@ namespace Model
 
         public Dictionary<Variable, UsedAs> Variables { get; set; }
 
-        private readonly List<string> _lines;
+        private readonly List<string> lines;
 
-        public int LinesOfCode { get { return _lines.Count; } }
+        public int LinesOfCode
+        {
+            get
+            {
+                return this.lines.Count;
+            }
+        }
 
         public Procedure()
         {
@@ -41,7 +45,7 @@ namespace Model
         {
             OriginalSource = text;
 
-            _lines = text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+            this.lines = text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
         }
 
         protected Procedure(string name, int indexInSourceCode)

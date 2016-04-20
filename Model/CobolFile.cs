@@ -1,5 +1,5 @@
-﻿using Model.References;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Model.References;
 
 namespace Model
 {
@@ -12,8 +12,6 @@ namespace Model
         public FileReference FileReference { get; set; }
 
         public Dictionary<string, string> Infos { get; set; }
-
-        public List<Variable> Variables { get { return CobolTree == null ? new List<Variable>() : CobolTree.Variables; } }
 
         public List<FileReference> CallReferences { get { return CobolTree == null ? new List<FileReference>() : CobolTree.CallReferences; } }
 

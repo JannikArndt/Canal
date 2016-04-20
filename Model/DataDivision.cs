@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace Model
+﻿namespace Model
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class DataDivision : Division
     {
         public List<Variable> Variables

@@ -1,10 +1,10 @@
-﻿using Canal.Utils;
-using Model;
-using Model.References;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Canal.Utils;
+using Model;
+using Model.References;
 
 namespace Canal.UserControls
 {
@@ -18,7 +18,7 @@ namespace Canal.UserControls
             _parent = parent;
 
             // is the word a variable?
-            var variable = cobolFile.Variables.FindVariable(word);
+            var variable = cobolFile.CobolTree.DataDivision.Variables.FindVariable(word);
             if (variable != null)
             {
                 infoGroupBox.Text = "Selected Variable: " + word;

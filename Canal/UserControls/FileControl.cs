@@ -1,29 +1,27 @@
-﻿using Canal.Events;
-using Canal.Properties;
-using Canal.Utils;
-using FastColoredTextBoxNS.Events;
-using Logging;
-using Model;
-using Model.References;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
-
-namespace Canal.UserControls
+﻿namespace Canal.UserControls
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using System.Windows.Forms;
+
+    using Canal.Events;
+    using Canal.Properties;
+    using Canal.Utils;
+
+    using FastColoredTextBoxNS.Events;
+
+    using Logging;
+
+    using Model;
+    using Model.References;
+
     public sealed partial class FileControl : UserControl, IDisposable
     {
-        public CobolFile CobolFile { get; private set; }
-
-        public event EventHandler<UsedFileTypesChangedEventArgs> UsedFileTypesChanged;
-
-        public MainWindow MainWindow { get; private set; }
-
-        private readonly BackgroundWorker _cobolTreeWorker = new BackgroundWorker();
+        private readonly BackgroundWorker cobolTreeWorker = new BackgroundWorker();
 
         public FileControl(CobolFile file, MainWindow parent)
         {
@@ -36,7 +34,6 @@ namespace Canal.UserControls
                 MainWindow = parent;
                 CobolFile = file;
 
-
                 // initialize FastColoredTextBox
                 codeBox.Font = SourceCodePro.Regular;
                 codeBox.KeyDown += HandleKeyDown;
@@ -45,11 +42,13 @@ namespace Canal.UserControls
 
                 searchBox.Text = Resources.SearchPlaceholder;
 
-                _cobolTreeWorker.DoWork += BuildCobolTree;
+                this.cobolTreeWorker.DoWork += BuildCobolTree;
+
                 // Display the analysis info in side tabs
-                _cobolTreeWorker.RunWorkerCompleted += (sender, args) => InitTabs();
+                this.cobolTreeWorker.RunWorkerCompleted += (sender, args) => InitTabs();
+
                 // Build the CobolTree in the CobolFile which contains all analysis information
-                _cobolTreeWorker.RunWorkerAsync(CobolFile);
+                this.cobolTreeWorker.RunWorkerAsync(CobolFile);
             }
             catch (Exception exception)
             {
@@ -57,6 +56,12 @@ namespace Canal.UserControls
                 MessageBox.Show(Resources.ErrorMessage_FileControl_Constructor + exception.Message, Resources.Error, MessageBoxButtons.OK);
             }
         }
+
+        public event EventHandler<UsedFileTypesChangedEventArgs> UsedFileTypesChanged;
+
+        public CobolFile CobolFile { get; private set; }
+
+        public MainWindow MainWindow { get; private set; }
 
         public string GetText()
         {
@@ -66,6 +71,44 @@ namespace Canal.UserControls
         public string ExportToHtml()
         {
             return codeBox.Html;
+        }
+
+        public void FindInCodeBox(string pattern, bool matchCase, bool regex, bool wholeWord, bool firstSearch = false)
+        {
+            codeBox.FindNext(pattern, matchCase, regex, wholeWord, firstSearch);
+        }
+
+        /// <summary>
+        /// Updates the DropDownButton in the Files-tab with the settings stored in Settings.Default.FileType* and refreshes the Files-tab
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void RefreshUsedFileTypes(object sender, EventArgs e)
+        {
+            showFileTypes_cob.Checked = Settings.Default.FileTypeCob;
+            showFileTypes_txt.Checked = Settings.Default.FileTypeTxt;
+            showFileTypes_src.Checked = Settings.Default.FileTypeSrc;
+            showFileTypes_custom.Text = Settings.Default.FileTypeCustom;
+
+            RefreshFileView();
+        }
+
+        /// <summary>
+        /// Refreshes the Files-tab
+        /// </summary>
+        public void RefreshFileView()
+        {
+            var searchText = filesTabSearchBox.Text == Resources.SearchPlaceholder ? "" : filesTabSearchBox.Text;
+            FileUtil.Instance.ReduceDirectoriesToAllowedFiles();
+            var nodes = FileUtil.Instance.GetDirectoryStructure(searchText);
+            filesTreeView.Nodes.Clear();
+            filesTreeView.Nodes.AddRange(nodes);
+            filesTreeView.ExpandAll();
+        }
+
+        void IDisposable.Dispose()
+        {
+            this.cobolTreeWorker.Dispose();
         }
 
         private void InitTabs()
@@ -128,11 +171,6 @@ namespace Canal.UserControls
             }
         }
 
-        void IDisposable.Dispose()
-        {
-            _cobolTreeWorker.Dispose();
-        }
-
         private void HandleKeyDown(object sender, KeyEventArgs e)
         {
             try
@@ -190,7 +228,6 @@ namespace Canal.UserControls
             {
                 searchBox.BackColor = SystemColors.Window;
                 codeBox.FindNext(searchBox.Text, false, searchWithRegEx.Checked, false, firstSearch, reverse);
-
             }
             catch (ArgumentException)
             {
@@ -203,12 +240,12 @@ namespace Canal.UserControls
             }
         }
 
-        private void seachBox_TextChanged(object sender, EventArgs e)
+        private void SeachBoxTextChanged(object sender, EventArgs e)
         {
             TrySearch(true);
         }
 
-        private void searchBox_Enter(object sender, EventArgs e)
+        private void SearchBoxEnter(object sender, EventArgs e)
         {
             var box = (ToolStripTextBox)sender;
             if (box.Text == Resources.SearchPlaceholder)
@@ -219,7 +256,7 @@ namespace Canal.UserControls
             }
         }
 
-        private void searchBox_Leave(object sender, EventArgs e)
+        private void SearchBoxLeave(object sender, EventArgs e)
         {
             var box = (ToolStripTextBox)sender;
             if (string.IsNullOrWhiteSpace(box.Text))
@@ -234,12 +271,12 @@ namespace Canal.UserControls
 
         #region Tree View Selects
 
-        private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
+        private void TreeViewAfterSelect(object sender, TreeViewEventArgs e)
         {
             codeBox.FindNext(@"^.{7}" + tocTreeView.SelectedNode.Text + @"(\.| +USING| OF)", false, true, false, true);
         }
 
-        private void performsTree_AfterSelect(object sender, TreeViewEventArgs e)
+        private void PerformsTreeAfterSelect(object sender, TreeViewEventArgs e)
         {
             var treeNode = performsTreeView.SelectedNode;
             if (treeNode == null)
@@ -248,7 +285,7 @@ namespace Canal.UserControls
                 codeBox.FindNext(@"^.{7}" + treeNode.Text + @"(\.| +USING)", false, true, false, true);
         }
 
-        private void variablesTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        private void VariablesTreeViewAfterSelect(object sender, TreeViewEventArgs e)
         {
             var treeNode = variablesTreeView.SelectedNode as Variable;
             if (treeNode == null)
@@ -257,7 +294,7 @@ namespace Canal.UserControls
                 codeBox.FindNext(treeNode.Text, false, false, false, true);
         }
 
-        private void proceduresTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        private void ProceduresTreeViewAfterSelect(object sender, TreeViewEventArgs e)
         {
             var treeNode = proceduresTreeView.SelectedNode;
             if (treeNode == null)
@@ -266,16 +303,11 @@ namespace Canal.UserControls
                 codeBox.FindNext(@"^.{7}" + treeNode.Text + @"(\.| +USING)", false, true, false, true);
         }
 
-        public void FindInCodeBox(string pattern, bool matchCase, bool regex, bool wholeWord, bool firstSearch = false)
-        {
-            codeBox.FindNext(pattern, matchCase, regex, wholeWord, firstSearch);
-        }
-
         #endregion
 
         #region Button Clicks
 
-        private void ResolveCopysButton_Click(object sender, EventArgs e)
+        private void ResolveCopysButtonClick(object sender, EventArgs e)
         {
             ResolveCopysButton.Enabled = false;
 
@@ -301,7 +333,7 @@ namespace Canal.UserControls
                 toolStripProgressBar.Visible = false;
 
                 // Build the CobolTree in the CobolFile which contains all analysis information
-                _cobolTreeWorker.RunWorkerAsync(CobolFile);
+                this.cobolTreeWorker.RunWorkerAsync(CobolFile);
             };
 
             Cursor = Cursors.WaitCursor;
@@ -385,19 +417,18 @@ namespace Canal.UserControls
 
             var performTreeWorker = new BackgroundWorker();
 
-            performTreeWorker.DoWork += delegate (object sender, DoWorkEventArgs args)
+            performTreeWorker.DoWork += delegate(object sender, DoWorkEventArgs args)
             {
                 args.Result = ReferenceUtil.GetPerformTree(CobolFile);
             };
 
-            performTreeWorker.RunWorkerCompleted += delegate (object sender, RunWorkerCompletedEventArgs args)
+            performTreeWorker.RunWorkerCompleted += delegate(object sender, RunWorkerCompletedEventArgs args)
             {
                 performsTabPage.Controls.Remove(loaderImagePerforms);
                 performsTreeView.Nodes.Add((TreeNode)args.Result);
             };
 
             performTreeWorker.RunWorkerAsync();
-
         }
 
         private void ShowProceduresTreeView(bool showWarning = false)
@@ -451,52 +482,52 @@ namespace Canal.UserControls
 
         #region Expand and Collapse Buttons
 
-        private void TocExpandAllButton_Click(object sender, EventArgs e)
+        private void TocExpandAllButtonClick(object sender, EventArgs e)
         {
             tocTreeView.ExpandAll();
         }
 
-        private void TocCollapseAllButton_Click(object sender, EventArgs e)
+        private void TocCollapseAllButtonClick(object sender, EventArgs e)
         {
             tocTreeView.CollapseAll();
         }
 
-        private void proceduresExpandAllButton_Click(object sender, EventArgs e)
+        private void ProceduresExpandAllButtonClick(object sender, EventArgs e)
         {
             proceduresTreeView.ExpandAll();
         }
 
-        private void proceduresCollapseAllButton_Click(object sender, EventArgs e)
+        private void ProceduresCollapseAllButtonClick(object sender, EventArgs e)
         {
             proceduresTreeView.CollapseAll();
         }
 
-        private void variablesCopyButton_Click(object sender, EventArgs e)
+        private void VariablesCopyButtonClick(object sender, EventArgs e)
         {
             Clipboard.SetText(variablesTreeView.ToText());
         }
 
-        private void variablesExpandAllButton_Click(object sender, EventArgs e)
+        private void VariablesExpandAllButtonClick(object sender, EventArgs e)
         {
             variablesTreeView.ExpandAll();
         }
 
-        private void variablesCollapseAllButton_Click(object sender, EventArgs e)
+        private void VariablesCollapseAllButtonClick(object sender, EventArgs e)
         {
             variablesTreeView.CollapseAll();
         }
 
-        private void performsCopyButton_Click(object sender, EventArgs e)
+        private void PerformsCopyButtonClick(object sender, EventArgs e)
         {
             Clipboard.SetText(proceduresTreeView.ToText());
         }
 
-        private void performsExpandAllButton_Click(object sender, EventArgs e)
+        private void PerformsExpandAllButtonClick(object sender, EventArgs e)
         {
             performsTreeView.ExpandAll();
         }
 
-        private void performsCollapseAllButton_Click(object sender, EventArgs e)
+        private void PerformsCollapseAllButtonClick(object sender, EventArgs e)
         {
             performsTreeView.CollapseAll();
         }
@@ -505,7 +536,7 @@ namespace Canal.UserControls
 
         #region Files Tree
 
-        private void filesTabSearchBox_TextChanged(object sender, EventArgs e)
+        private void FilesTabSearchBoxTextChanged(object sender, EventArgs e)
         {
             if (((ToolStripTextBox)sender).Text == Resources.SearchPlaceholder)
                 return;
@@ -520,7 +551,7 @@ namespace Canal.UserControls
             }
         }
 
-        private void filesTreeView_DoubleClick(object sender, EventArgs e)
+        private void FilesTreeViewDoubleClick(object sender, EventArgs e)
         {
             if (filesTreeView.SelectedNode == null || filesTreeView.SelectedNode.Tag == null)
                 return;
@@ -528,13 +559,13 @@ namespace Canal.UserControls
             MainWindow.OpenFile(((FileReference)filesTreeView.SelectedNode.Tag).FilePath);
         }
 
-        private void filesTreeView_KeyUp(object sender, KeyEventArgs e)
+        private void FilesTreeViewKeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
                 MainWindow.OpenFile(((FileReference)filesTreeView.SelectedNode.Tag).FilePath);
         }
 
-        private void settings_sourceCodeFiles_Click(object sender, EventArgs e)
+        private void SettingsSourceCodeFilesClick(object sender, EventArgs e)
         {
             Settings.Default.FileTypeCob = showFileTypes_cob.Checked;
             Settings.Default.FileTypeTxt = showFileTypes_txt.Checked;
@@ -547,55 +578,27 @@ namespace Canal.UserControls
             RefreshFileView();
         }
 
-        /// <summary>
-        /// Updates the DropDownButton in the Files-tab with the settings stored in Settings.Default.FileType* and refreshes the Files-tab
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void RefreshUsedFileTypes(object sender, EventArgs e)
-        {
-            showFileTypes_cob.Checked = Settings.Default.FileTypeCob;
-            showFileTypes_txt.Checked = Settings.Default.FileTypeTxt;
-            showFileTypes_src.Checked = Settings.Default.FileTypeSrc;
-            showFileTypes_custom.Text = Settings.Default.FileTypeCustom;
-
-            RefreshFileView();
-        }
-
-        /// <summary>
-        /// Refreshes the Files-tab
-        /// </summary>
-        public void RefreshFileView()
-        {
-            var searchText = filesTabSearchBox.Text == Resources.SearchPlaceholder ? "" : filesTabSearchBox.Text;
-            FileUtil.Instance.ReduceDirectoriesToAllowedFiles();
-            var nodes = FileUtil.Instance.GetDirectoryStructure(searchText);
-            filesTreeView.Nodes.Clear();
-            filesTreeView.Nodes.AddRange(nodes);
-            filesTreeView.ExpandAll();
-        }
-
         #endregion
 
-        private void navigateBackward_Click(object sender, EventArgs e)
+        private void NavigateBackwardClick(object sender, EventArgs e)
         {
             codeBox.NavigateBackward();
             navigateForwardButton.Enabled = true;
         }
 
-        private void navigateForwardButton_Click(object sender, EventArgs e)
+        private void NavigateForwardButtonClick(object sender, EventArgs e)
         {
             var success = codeBox.NavigateForward();
             if (!success)
                 navigateForwardButton.Enabled = false;
         }
 
-        private void findNextButton_Click(object sender, EventArgs e)
+        private void FindNextButtonClick(object sender, EventArgs e)
         {
             TrySearch(false);
         }
 
-        private void findPreviousButton_Click(object sender, EventArgs e)
+        private void FindPreviousButtonClick(object sender, EventArgs e)
         {
             TrySearch(false, true);
         }

@@ -1,24 +1,29 @@
-﻿using Model.References;
-using System.Collections.Generic;
-
-namespace Model
+﻿namespace Model
 {
+    using System.Collections.Generic;
+
+    using Model.References;
+
     public class LinkageSection : CobolTreeNode
     {
-        private List<FileReference> _copyReferences = new List<FileReference>();
+        private List<FileReference> copyReferences = new List<FileReference>();
 
         public List<Variable> Variables { get; set; }
 
         public List<FileReference> CopyReferences
         {
-            get { return _copyReferences; }
+            get
+            {
+                return this.copyReferences;
+            }
             set
             {
                 foreach (var fileReference in value)
                 {
                     Nodes.Add("COPY " + fileReference.ProgramName);
                 }
-                _copyReferences = value;
+
+                this.copyReferences = value;
             }
         }
 

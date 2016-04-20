@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace Model
+﻿namespace Model
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class Section : Procedure
     {
         public List<Procedure> Procedures { get; private set; }

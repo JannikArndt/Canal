@@ -1,8 +1,8 @@
-﻿using Logging;
+﻿using System;
+using System.Collections.Generic;
+using Logging;
 using Model;
 using Model.Pictures;
-using System;
-using System.Collections.Generic;
 
 namespace Canal.Utils
 {
@@ -88,8 +88,8 @@ namespace Canal.Utils
         {
             try
             {
-                IPic result = Pic.Parse(type) ?? new Pic88();
-                result.CompType = Comp.Parse(comp);
+                IPic result = PicParser.Instance.Parse(type) ?? new Pic88();
+                result.CompType = CompParser.Instance.Parse(comp);
                 result.Value = value;
                 return result;
             }

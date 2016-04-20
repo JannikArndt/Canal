@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Model
+﻿namespace Model
 {
+    using System.Collections.Generic;
+
     public class ProcedureDivision : Division
     {
         public List<Section> Sections { get; private set; }

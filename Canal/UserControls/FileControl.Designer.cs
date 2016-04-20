@@ -1,5 +1,5 @@
-﻿using FastColoredTextBoxNS;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using FastColoredTextBoxNS;
 
 namespace Canal.UserControls
 {
@@ -114,8 +114,8 @@ namespace Canal.UserControls
             // 
             // tocTreeView
             // 
-            this.tocTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.tocTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tocTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tocTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -125,7 +125,7 @@ namespace Canal.UserControls
             this.tocTreeView.Name = "tocTreeView";
             this.tocTreeView.Size = new System.Drawing.Size(364, 262);
             this.tocTreeView.TabIndex = 1;
-            this.tocTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
+            this.tocTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewAfterSelect);
             // 
             // structureTabControl
             // 
@@ -196,7 +196,7 @@ namespace Canal.UserControls
             this.TocCollapseAllButton.Name = "TocCollapseAllButton";
             this.TocCollapseAllButton.Size = new System.Drawing.Size(23, 22);
             this.TocCollapseAllButton.Text = "Collapse All";
-            this.TocCollapseAllButton.Click += new System.EventHandler(this.TocCollapseAllButton_Click);
+            this.TocCollapseAllButton.Click += new System.EventHandler(this.TocCollapseAllButtonClick);
             // 
             // TocExpandAllButton
             // 
@@ -206,7 +206,7 @@ namespace Canal.UserControls
             this.TocExpandAllButton.Name = "TocExpandAllButton";
             this.TocExpandAllButton.Size = new System.Drawing.Size(23, 22);
             this.TocExpandAllButton.Text = "Expand all";
-            this.TocExpandAllButton.Click += new System.EventHandler(this.TocExpandAllButton_Click);
+            this.TocExpandAllButton.Click += new System.EventHandler(this.TocExpandAllButtonClick);
             // 
             // performsTabPage
             // 
@@ -253,7 +253,7 @@ namespace Canal.UserControls
             this.performsCopyButton.Name = "performsCopyButton";
             this.performsCopyButton.Size = new System.Drawing.Size(23, 22);
             this.performsCopyButton.Text = "Copy";
-            this.performsCopyButton.Click += new System.EventHandler(this.performsCopyButton_Click);
+            this.performsCopyButton.Click += new System.EventHandler(this.PerformsCopyButtonClick);
             // 
             // performsCollapseAllButton
             // 
@@ -263,7 +263,7 @@ namespace Canal.UserControls
             this.performsCollapseAllButton.Name = "performsCollapseAllButton";
             this.performsCollapseAllButton.Size = new System.Drawing.Size(23, 22);
             this.performsCollapseAllButton.Text = "Collapse All";
-            this.performsCollapseAllButton.Click += new System.EventHandler(this.performsCollapseAllButton_Click);
+            this.performsCollapseAllButton.Click += new System.EventHandler(this.PerformsCollapseAllButtonClick);
             // 
             // performsExpandAllButton
             // 
@@ -273,12 +273,12 @@ namespace Canal.UserControls
             this.performsExpandAllButton.Name = "performsExpandAllButton";
             this.performsExpandAllButton.Size = new System.Drawing.Size(23, 22);
             this.performsExpandAllButton.Text = "Expand all";
-            this.performsExpandAllButton.Click += new System.EventHandler(this.performsExpandAllButton_Click);
+            this.performsExpandAllButton.Click += new System.EventHandler(this.PerformsExpandAllButtonClick);
             // 
             // performsTreeView
             // 
-            this.performsTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.performsTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.performsTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.performsTreeView.ItemHeight = 22;
@@ -286,7 +286,7 @@ namespace Canal.UserControls
             this.performsTreeView.Name = "performsTreeView";
             this.performsTreeView.Size = new System.Drawing.Size(364, 261);
             this.performsTreeView.TabIndex = 0;
-            this.performsTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.performsTree_AfterSelect);
+            this.performsTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.PerformsTreeAfterSelect);
             // 
             // variablesTabPage
             // 
@@ -321,7 +321,7 @@ namespace Canal.UserControls
             this.variablesCopyButton.Name = "variablesCopyButton";
             this.variablesCopyButton.Size = new System.Drawing.Size(23, 22);
             this.variablesCopyButton.Text = "Copy";
-            this.variablesCopyButton.Click += new System.EventHandler(this.variablesCopyButton_Click);
+            this.variablesCopyButton.Click += new System.EventHandler(this.VariablesCopyButtonClick);
             // 
             // variablesCollapseAllButton
             // 
@@ -331,7 +331,7 @@ namespace Canal.UserControls
             this.variablesCollapseAllButton.Name = "variablesCollapseAllButton";
             this.variablesCollapseAllButton.Size = new System.Drawing.Size(23, 22);
             this.variablesCollapseAllButton.Text = "Collapse All";
-            this.variablesCollapseAllButton.Click += new System.EventHandler(this.variablesCollapseAllButton_Click);
+            this.variablesCollapseAllButton.Click += new System.EventHandler(this.VariablesCollapseAllButtonClick);
             // 
             // variablesExpandAllButton
             // 
@@ -341,12 +341,12 @@ namespace Canal.UserControls
             this.variablesExpandAllButton.Name = "variablesExpandAllButton";
             this.variablesExpandAllButton.Size = new System.Drawing.Size(23, 22);
             this.variablesExpandAllButton.Text = "Expand all";
-            this.variablesExpandAllButton.Click += new System.EventHandler(this.variablesExpandAllButton_Click);
+            this.variablesExpandAllButton.Click += new System.EventHandler(this.VariablesExpandAllButtonClick);
             // 
             // variablesTreeView
             // 
-            this.variablesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.variablesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.variablesTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.variablesTreeView.ItemHeight = 18;
@@ -354,7 +354,7 @@ namespace Canal.UserControls
             this.variablesTreeView.Name = "variablesTreeView";
             this.variablesTreeView.Size = new System.Drawing.Size(364, 261);
             this.variablesTreeView.TabIndex = 0;
-            this.variablesTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.variablesTreeView_AfterSelect);
+            this.variablesTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.VariablesTreeViewAfterSelect);
             // 
             // proceduresTabPage
             // 
@@ -399,7 +399,7 @@ namespace Canal.UserControls
             this.proceduresCollapseAllButton.Name = "proceduresCollapseAllButton";
             this.proceduresCollapseAllButton.Size = new System.Drawing.Size(23, 22);
             this.proceduresCollapseAllButton.Text = "Collapse All";
-            this.proceduresCollapseAllButton.Click += new System.EventHandler(this.proceduresCollapseAllButton_Click);
+            this.proceduresCollapseAllButton.Click += new System.EventHandler(this.ProceduresCollapseAllButtonClick);
             // 
             // proceduresExpandAllButton
             // 
@@ -409,12 +409,12 @@ namespace Canal.UserControls
             this.proceduresExpandAllButton.Name = "proceduresExpandAllButton";
             this.proceduresExpandAllButton.Size = new System.Drawing.Size(23, 22);
             this.proceduresExpandAllButton.Text = "Expand all";
-            this.proceduresExpandAllButton.Click += new System.EventHandler(this.proceduresExpandAllButton_Click);
+            this.proceduresExpandAllButton.Click += new System.EventHandler(this.ProceduresExpandAllButtonClick);
             // 
             // proceduresTreeView
             // 
-            this.proceduresTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.proceduresTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.proceduresTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.proceduresTreeView.ItemHeight = 22;
@@ -422,7 +422,7 @@ namespace Canal.UserControls
             this.proceduresTreeView.Name = "proceduresTreeView";
             this.proceduresTreeView.Size = new System.Drawing.Size(364, 261);
             this.proceduresTreeView.TabIndex = 0;
-            this.proceduresTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.proceduresTreeView_AfterSelect);
+            this.proceduresTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.ProceduresTreeViewAfterSelect);
             // 
             // filesTabPage
             // 
@@ -453,9 +453,9 @@ namespace Canal.UserControls
             this.filesTabSearchBox.Name = "filesTabSearchBox";
             this.filesTabSearchBox.Size = new System.Drawing.Size(100, 25);
             this.filesTabSearchBox.Text = "Search Files...";
-            this.filesTabSearchBox.Enter += new System.EventHandler(this.searchBox_Enter);
-            this.filesTabSearchBox.Leave += new System.EventHandler(this.searchBox_Leave);
-            this.filesTabSearchBox.TextChanged += new System.EventHandler(this.filesTabSearchBox_TextChanged);
+            this.filesTabSearchBox.Enter += new System.EventHandler(this.SearchBoxEnter);
+            this.filesTabSearchBox.Leave += new System.EventHandler(this.SearchBoxLeave);
+            this.filesTabSearchBox.TextChanged += new System.EventHandler(this.FilesTabSearchBoxTextChanged);
             // 
             // fileTypeDropDownButton
             // 
@@ -480,7 +480,7 @@ namespace Canal.UserControls
             this.showFileTypes_cob.Name = "showFileTypes_cob";
             this.showFileTypes_cob.Size = new System.Drawing.Size(160, 22);
             this.showFileTypes_cob.Text = "*.cob/*.cbl";
-            this.showFileTypes_cob.Click += new System.EventHandler(this.settings_sourceCodeFiles_Click);
+            this.showFileTypes_cob.Click += new System.EventHandler(this.SettingsSourceCodeFilesClick);
             // 
             // showFileTypes_txt
             // 
@@ -488,7 +488,7 @@ namespace Canal.UserControls
             this.showFileTypes_txt.Name = "showFileTypes_txt";
             this.showFileTypes_txt.Size = new System.Drawing.Size(160, 22);
             this.showFileTypes_txt.Text = "*.txt";
-            this.showFileTypes_txt.Click += new System.EventHandler(this.settings_sourceCodeFiles_Click);
+            this.showFileTypes_txt.Click += new System.EventHandler(this.SettingsSourceCodeFilesClick);
             // 
             // showFileTypes_src
             // 
@@ -496,7 +496,7 @@ namespace Canal.UserControls
             this.showFileTypes_src.Name = "showFileTypes_src";
             this.showFileTypes_src.Size = new System.Drawing.Size(160, 22);
             this.showFileTypes_src.Text = "*.src";
-            this.showFileTypes_src.Click += new System.EventHandler(this.settings_sourceCodeFiles_Click);
+            this.showFileTypes_src.Click += new System.EventHandler(this.SettingsSourceCodeFilesClick);
             // 
             // showFileTypes_custom
             // 
@@ -505,20 +505,20 @@ namespace Canal.UserControls
             // 
             // filesTreeView
             // 
-            this.filesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.filesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.filesTreeView.Location = new System.Drawing.Point(0, 31);
             this.filesTreeView.Name = "filesTreeView";
             this.filesTreeView.Size = new System.Drawing.Size(370, 261);
             this.filesTreeView.TabIndex = 0;
-            this.filesTreeView.DoubleClick += new System.EventHandler(this.filesTreeView_DoubleClick);
-            this.filesTreeView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.filesTreeView_KeyUp);
+            this.filesTreeView.DoubleClick += new System.EventHandler(this.FilesTreeViewDoubleClick);
+            this.filesTreeView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FilesTreeViewKeyUp);
             // 
             // codeBox
             // 
-            this.codeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.codeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.codeBox.AutoCompleteBracketsList = new char[] {
         '(',
@@ -608,7 +608,7 @@ namespace Canal.UserControls
             this.navigateBackward.Size = new System.Drawing.Size(23, 22);
             this.navigateBackward.Text = "toolStripButton1";
             this.navigateBackward.ToolTipText = "Navigate Backward (Ctrl + -)";
-            this.navigateBackward.Click += new System.EventHandler(this.navigateBackward_Click);
+            this.navigateBackward.Click += new System.EventHandler(this.NavigateBackwardClick);
             // 
             // navigateForwardButton
             // 
@@ -620,7 +620,7 @@ namespace Canal.UserControls
             this.navigateForwardButton.Size = new System.Drawing.Size(23, 22);
             this.navigateForwardButton.Text = "toolStripButton1";
             this.navigateForwardButton.ToolTipText = "Navigate Forward (Ctrl + Shift + -)";
-            this.navigateForwardButton.Click += new System.EventHandler(this.navigateForwardButton_Click);
+            this.navigateForwardButton.Click += new System.EventHandler(this.NavigateForwardButtonClick);
             // 
             // toolStripSeparator2
             // 
@@ -632,10 +632,10 @@ namespace Canal.UserControls
             this.searchBox.Name = "searchBox";
             this.searchBox.Size = new System.Drawing.Size(200, 25);
             this.searchBox.Text = "Search...";
-            this.searchBox.Enter += new System.EventHandler(this.searchBox_Enter);
-            this.searchBox.Leave += new System.EventHandler(this.searchBox_Leave);
+            this.searchBox.Enter += new System.EventHandler(this.SearchBoxEnter);
+            this.searchBox.Leave += new System.EventHandler(this.SearchBoxLeave);
             this.searchBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.HandleKeyDown);
-            this.searchBox.TextChanged += new System.EventHandler(this.seachBox_TextChanged);
+            this.searchBox.TextChanged += new System.EventHandler(this.SeachBoxTextChanged);
             // 
             // searchWithRegEx
             // 
@@ -658,7 +658,7 @@ namespace Canal.UserControls
             this.ResolveCopysButton.Name = "ResolveCopysButton";
             this.ResolveCopysButton.Size = new System.Drawing.Size(106, 22);
             this.ResolveCopysButton.Text = "Resolve COPYs";
-            this.ResolveCopysButton.Click += new System.EventHandler(this.ResolveCopysButton_Click);
+            this.ResolveCopysButton.Click += new System.EventHandler(this.ResolveCopysButtonClick);
             // 
             // toolStripProgressBar
             // 
@@ -716,7 +716,7 @@ namespace Canal.UserControls
             this.findPreviousButton.Name = "findPreviousButton";
             this.findPreviousButton.Size = new System.Drawing.Size(23, 22);
             this.findPreviousButton.Text = "Find Previous (Shift + F3)";
-            this.findPreviousButton.Click += new System.EventHandler(this.findPreviousButton_Click);
+            this.findPreviousButton.Click += new System.EventHandler(this.FindPreviousButtonClick);
             // 
             // findNextButton
             // 
@@ -726,7 +726,7 @@ namespace Canal.UserControls
             this.findNextButton.Name = "findNextButton";
             this.findNextButton.Size = new System.Drawing.Size(23, 22);
             this.findNextButton.Text = "Find Next (F3)";
-            this.findNextButton.Click += new System.EventHandler(this.findNextButton_Click);
+            this.findNextButton.Click += new System.EventHandler(this.FindNextButtonClick);
             // 
             // FileControl
             // 

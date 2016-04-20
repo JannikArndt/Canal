@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Logging
+﻿namespace Logging
 {
+    using System;
+    using System.Collections.Generic;
+
     public class Logger
     {
-        private readonly List<LoggerEventArgs> _logList = new List<LoggerEventArgs>();
+        private readonly List<LoggerEventArgs> logList = new List<LoggerEventArgs>();
 
         static Logger()
         {
@@ -16,7 +16,9 @@ namespace Logging
         {
         }
 
-        public static Logger Singleton { get; }
+        public event EventHandler<LoggerEventArgs> Log;
+
+        public static Logger Singleton { get; private set; }
 
         public static void Info(string msg, params object[] arguments)
         {
@@ -33,12 +35,15 @@ namespace Logging
             Singleton.AddMsg(LoggingLevel.Error, msg, arguments);
         }
 
-        public event EventHandler<LoggerEventArgs> Log;
+        public List<LoggerEventArgs> GetEvents()
+        {
+            return this.logList;
+        }
 
         private void AddMsg(LoggingLevel level, string msg)
         {
             var evt = new LoggerEventArgs(level, msg);
-            _logList.Add(evt);
+            this.logList.Add(evt);
 
             var l = Log; // Keep reference
             if (l != null)
@@ -48,16 +53,6 @@ namespace Logging
         private void AddMsg(LoggingLevel level, string msg, params object[] arguments)
         {
             AddMsg(level, string.Format(msg, arguments));
-        }
-
-        public string GetText()
-        {
-            return string.Join(Environment.NewLine, _logList);
-        }
-
-        public List<LoggerEventArgs> GetEvents()
-        {
-            return _logList;
         }
     }
 }

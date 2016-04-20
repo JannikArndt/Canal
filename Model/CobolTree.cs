@@ -1,7 +1,7 @@
-﻿using Model.References;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Model.References;
 
 namespace Model
 {
@@ -24,8 +24,6 @@ namespace Model
         }
 
         public List<Division> Divisions { get { return new List<Division> { IdentificationDivision, EnvironmentDivision, DataDivision, ProcedureDivision }; } }
-
-        public List<Variable> Variables { get { return DataDivision.Variables; } }
 
         public List<FileReference> CallReferences
         {

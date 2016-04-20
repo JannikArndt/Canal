@@ -1,13 +1,16 @@
-﻿using Logging;
-using Model;
-using Model.References;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-
-namespace Canal.Utils
+﻿namespace Canal.Utils
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+
+    using Logging;
+
+    using Model;
+    using Model.References;
+
     public class CobolTreeBuilder
     {
         public void Build(CobolFile file)
@@ -43,7 +46,6 @@ namespace Canal.Utils
                 : new DataDivision("", 0);
 
             // if there are no divisions, everything goes into the data division
-
             if (indexIdentificationDivision < 0 && indexEnvironmentDivision < 0 && indexDataDivision < 0 &&
                 indexProcedureDivision < 0)
             {
@@ -81,7 +83,7 @@ namespace Canal.Utils
             file.Infos = new Dictionary<string, string>
             {
                 {"Name", file.Name },
-                {"Lines of Code", file.CobolTree.LinesOfCode.ToString() }
+                {"Lines of Code", file.CobolTree.LinesOfCode.ToString(CultureInfo.InvariantCulture) }
             };
         }
 
@@ -255,6 +257,5 @@ namespace Canal.Utils
         }
 
         #endregion
-
     }
 }

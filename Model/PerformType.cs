@@ -1,5 +1,4 @@
-﻿
-namespace Model
+﻿namespace Model
 {
     public enum PerformType
     {

@@ -1,15 +1,10 @@
-﻿using Model.Pictures;
-using System.Collections.Generic;
-using System.Windows.Forms;
-// ReSharper disable MemberCanBePrivate.Global
-// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
-// ReSharper disable UnusedAutoPropertyAccessor.Global
-// ReSharper disable UnusedAutoPropertyAccessor.Local
-// ReSharper disable UseStringInterpolation
-// ReSharper disable ConvertPropertyToExpressionBody
-
-namespace Model
+﻿namespace Model
 {
+    using System.Collections.Generic;
+    using System.Windows.Forms;
+
+    using Model.Pictures;
+
     public class Variable : TreeNode
     {
         public int VariableLevel { get; set; }
@@ -53,13 +48,12 @@ namespace Model
             }
         }
 
-        public Variable() : base()
+        public Variable()
         {
-
         }
 
         public Variable(int variableLevel, string variableName, IPic picture, string code, Variable parentVariable)
-                : base(variableLevel.ToString("D2") + "  " + variableName)
+            : base(variableLevel.ToString("D2") + "  " + variableName)
         {
             VariableLevel = variableLevel;
             VariableName = variableName;
