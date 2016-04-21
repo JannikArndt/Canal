@@ -3,9 +3,15 @@
     using System;
     using System.Text;
 
-    public static class TextUtil
+    public class TextUtil
     {
-        public static string TrimAllLines(string text)
+        public static readonly TextUtil Instance = new TextUtil();
+
+        private TextUtil()
+        {
+        }
+
+        public string TrimAllLines(string text)
         {
             var lines = text.Split(new[] { Environment.NewLine, "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries);
 

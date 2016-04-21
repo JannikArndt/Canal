@@ -1,5 +1,6 @@
 ﻿namespace Model.References
 {
+    using Model.Enums;
 
     public class PerformReference : ProcedureReference
     {

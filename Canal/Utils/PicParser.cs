@@ -15,6 +15,32 @@
         {
         }
 
+        public IPic ParsePicture(string type, string comp, string value, int valLevel)
+        {
+            try
+            {
+                IPic result;
+
+                if (valLevel == 88)
+                    result = new Pic88 { Value = value };
+                else if (string.IsNullOrWhiteSpace(type))
+                    result = new PicGroup();
+                else
+                {
+                    result = this.ParsePicType(type) ?? new Pic88();
+                    result.CompType = CompParser.Instance.Parse(comp);
+                    result.Value = value;
+                }
+
+                return result;
+            }
+            catch (Exception exception)
+            {
+                Logger.Error("Error parsing picture text \"{0}\": {1}: {2}", type, exception.GetType().Name, exception.Message);
+                return null;
+            }
+        }
+
         /// <summary>
         /// Parses a text containing a PIC-definition: "X(03)" =&gt; "XXX" =&gt; new PicX(3), "S9(2).99" =&gt; "S99.99" =&gt; new PicS9V9(2,2)
         /// </summary>
@@ -24,7 +50,7 @@
         /// <returns>
         /// A class implementing IPic
         /// </returns>
-        public IPic Parse(string textIn)
+        private IPic ParsePicType(string textIn)
         {
             var text = textIn.ToUpperInvariant();
 

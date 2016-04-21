@@ -1,6 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.Pictures;
-using System.Collections.Generic;
 
 namespace Tests
 {
@@ -12,7 +12,7 @@ namespace Tests
         {
             const string input = " 01 FOO-1-BAR.       ";
 
-            var actual = Canal.Utils.VariablesUtil.AnalyzeVariables(input);
+            var actual = Canal.Utils.VariablesUtil.Instance.AnalyzeVariables(input);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual(typeof(PicGroup), actual[0].Picture.GetType());
@@ -44,7 +44,7 @@ namespace Tests
 
             foreach (var s in strings)
             {
-                var actual = Canal.Utils.VariablesUtil.AnalyzeVariables(s);
+                var actual = Canal.Utils.VariablesUtil.Instance.AnalyzeVariables(s);
 
                 Assert.AreEqual(1, actual.Count, s);
             }
@@ -55,7 +55,7 @@ namespace Tests
         {
             const string input = " 01 FOO-1-BAR PIC X VALUE \"asdjh\".       ";
 
-            var actual = Canal.Utils.VariablesUtil.AnalyzeVariables(input);
+            var actual = Canal.Utils.VariablesUtil.Instance.AnalyzeVariables(input);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual("FOO-1-BAR", actual[0].VariableName);
@@ -66,7 +66,7 @@ namespace Tests
         {
             const string input = " 01 FOO-1-BAR PIC X(04) VALUE SPACES.     ";
 
-            var actual = Canal.Utils.VariablesUtil.AnalyzeVariables(input);
+            var actual = Canal.Utils.VariablesUtil.Instance.AnalyzeVariables(input);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual("FOO-1-BAR", actual[0].VariableName);
@@ -77,7 +77,7 @@ namespace Tests
         {
             const string input = " 01 FOO-1-BAR PIC 9 VALUE 3.";
 
-            var actual = Canal.Utils.VariablesUtil.AnalyzeVariables(input);
+            var actual = Canal.Utils.VariablesUtil.Instance.AnalyzeVariables(input);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual("FOO-1-BAR", actual[0].VariableName);
@@ -88,7 +88,7 @@ namespace Tests
         {
             const string input = " 01 FOO-1-BAR PIC S9V99 VALUE 2.43.";
 
-            var actual = Canal.Utils.VariablesUtil.AnalyzeVariables(input);
+            var actual = Canal.Utils.VariablesUtil.Instance.AnalyzeVariables(input);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual("FOO-1-BAR", actual[0].VariableName);
@@ -114,7 +114,7 @@ namespace Tests
 
             foreach (var s in strings)
             {
-                var actual = Canal.Utils.VariablesUtil.AnalyzeVariables(s);
+                var actual = Canal.Utils.VariablesUtil.Instance.AnalyzeVariables(s);
 
                 Assert.AreEqual(1, actual.Count, s);
             }
@@ -125,7 +125,7 @@ namespace Tests
         {
             const string input = " 01 FOO-1-BAR PIC 999 OCCURS 20.";
 
-            var actual = Canal.Utils.VariablesUtil.AnalyzeVariables(input);
+            var actual = Canal.Utils.VariablesUtil.Instance.AnalyzeVariables(input);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual("FOO-1-BAR", actual[0].VariableName);
@@ -136,7 +136,7 @@ namespace Tests
         {
             const string input = " 03 FOO-2-BAR REDEFINES FOO-1-BAR PIC 9.";
 
-            var actual = Canal.Utils.VariablesUtil.AnalyzeVariables(input);
+            var actual = Canal.Utils.VariablesUtil.Instance.AnalyzeVariables(input);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual("FOO-1-BAR", actual[0].Redefines);
@@ -148,7 +148,7 @@ namespace Tests
         {
             const string input = " 88 FOO-1-BAR VALUE 1.";
 
-            var actual = Canal.Utils.VariablesUtil.AnalyzeVariables(input);
+            var actual = Canal.Utils.VariablesUtil.Instance.AnalyzeVariables(input);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual(typeof(Pic88), actual[0].Picture.GetType());
@@ -161,7 +161,7 @@ namespace Tests
         {
             const string input = " 88 FOO-1-BAR VALUE \"foo\".                     ";
 
-            var actual = Canal.Utils.VariablesUtil.AnalyzeVariables(input);
+            var actual = Canal.Utils.VariablesUtil.Instance.AnalyzeVariables(input);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual(typeof(Pic88), actual[0].Picture.GetType());
@@ -174,7 +174,7 @@ namespace Tests
         {
             const string input = " 88 FOO-1-BAR VALUE \" \".";
 
-            var actual = Canal.Utils.VariablesUtil.AnalyzeVariables(input);
+            var actual = Canal.Utils.VariablesUtil.Instance.AnalyzeVariables(input);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual(typeof(Pic88), actual[0].Picture.GetType());
@@ -187,7 +187,7 @@ namespace Tests
         {
             const string input = " 88  FOO-1-BAR VALUE \" \"   THRU \"2\".";
 
-            var actual = Canal.Utils.VariablesUtil.AnalyzeVariables(input);
+            var actual = Canal.Utils.VariablesUtil.Instance.AnalyzeVariables(input);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual(typeof(Pic88), actual[0].Picture.GetType());
@@ -226,7 +226,7 @@ namespace Tests
 
             foreach (var s in strings)
             {
-                var actual = Canal.Utils.VariablesUtil.AnalyzeVariables(s);
+                var actual = Canal.Utils.VariablesUtil.Instance.AnalyzeVariables(s);
 
                 Assert.AreEqual(1, actual.Count, s);
             }

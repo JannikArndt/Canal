@@ -33,8 +33,6 @@ namespace Model
             }
         }
 
-        public int LinesOfCode { get { return Divisions.Sum(div => div.LinesOfCode); } }
-
         private readonly string _name;
 
         public CobolTree(string name)

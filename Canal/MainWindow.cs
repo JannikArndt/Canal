@@ -1,25 +1,28 @@
-﻿using Canal.Properties;
-using Canal.UserControls;
-using Logging;
-using Model;
-using Model.References;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Windows.Forms;
-
-namespace Canal
+﻿namespace Canal
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Windows.Forms;
+
+    using Canal.Properties;
+    using Canal.UserControls;
+    using Canal.Utils;
+
     using Level88ToEnum;
-    using Utils;
+
+    using Logging;
+
+    using Model;
+    using Model.References;
 
     public partial class MainWindow : Form
     {
-        private readonly TabUtil _tabUtil;
+        private readonly TabUtil tabUtil;
 
-        private readonly string[] _openFilesOnStartup;
+        private readonly string[] openFilesOnStartup;
 
         public MainWindow(string[] files = null)
         {
@@ -27,10 +30,10 @@ namespace Canal
 
             Logger.Info("Starting program");
 
-            _openFilesOnStartup = files;
+            this.openFilesOnStartup = files;
 
-            _tabUtil = new TabUtil(FileTabs, this);
-            _tabUtil.ShowStartTab();
+            this.tabUtil = new TabUtil(FileTabs, this);
+            this.tabUtil.ShowStartTab();
         }
 
         protected override void OnShown(EventArgs e)
@@ -38,7 +41,7 @@ namespace Canal
             try
             {
                 var toOpen = new List<string>();
-                if (_openFilesOnStartup != null) toOpen.AddRange(_openFilesOnStartup);
+                if (this.openFilesOnStartup != null) toOpen.AddRange(this.openFilesOnStartup);
 
                 foreach (string filepath in new HashSet<string>(toOpen))
                     OpenFile(filepath);
@@ -46,7 +49,7 @@ namespace Canal
             catch (Exception exception)
             {
                 Logger.Error("Error trying to open files on startup {0}: {1}.",
-                    _openFilesOnStartup == null ? "_openFilesOnStartup is null" : string.Join(", ", _openFilesOnStartup),
+                    this.openFilesOnStartup == null ? "_openFilesOnStartup is null" : string.Join(", ", this.openFilesOnStartup),
                     exception.Message);
                 MessageBox.Show(Resources.ErrorMessage_MainWindow_OpenPrevious + exception.Message, Resources.Error, MessageBoxButtons.OK);
             }
@@ -63,7 +66,7 @@ namespace Canal
         {
             Logger.Info("Opening file {0}", filename);
 
-            if (_tabUtil.TryShowTab(filename))
+            if (this.tabUtil.TryShowTab(filename))
                 return;
 
             if (!File.Exists(filename))
@@ -78,7 +81,7 @@ namespace Canal
             try
             {
                 var file = FileUtil.Instance.Get(filename);
-                _tabUtil.AddTab(file);
+                this.tabUtil.AddTab(file);
                 Settings.Default.LastOpened.Add(filename);
             }
             catch (Exception exception)
@@ -92,7 +95,7 @@ namespace Canal
             }
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenToolStripMenuItemClick(object sender, EventArgs e)
         {
             openFileDialog.Filter = @"COBOL Files|*.cob;*.cbl;*.txt;.src";
             openFileDialog.FileName = "";
@@ -105,67 +108,66 @@ namespace Canal
             }
         }
 
-        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CloseToolStripMenuItemClick(object sender, EventArgs e)
         {
-            _tabUtil.CloseTab();
+            this.tabUtil.CloseTab();
         }
 
-        private void level88ToEnumConverterToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Level88ToEnumConverterToolStripMenuItemClick(object sender, EventArgs e)
         {
             var converterWindow = new Level88ToEnum();
             converterWindow.Show();
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItemClick(object sender, EventArgs e)
         {
-            if (_tabUtil.CloseAllTabs())
+            if (this.tabUtil.CloseAllTabs())
                 Close();
         }
 
-        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        private void NewToolStripMenuItemClick(object sender, EventArgs e)
         {
-            _tabUtil.AddTab(new CobolFile("", "New File"));
+            this.tabUtil.AddTab(new CobolFile("", "New File"));
         }
 
-        private void reportIssueToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ReportIssueToolStripMenuItemClick(object sender, EventArgs e)
         {
             Process.Start("https://github.com/JannikArndt/Canal/issues/new");
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AboutToolStripMenuItemClick(object sender, EventArgs e)
         {
             var about = new About();
             about.Show();
         }
 
-        private void showLogToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ShowLogToolStripMenuItemClick(object sender, EventArgs e)
         {
             var logWindow = new Log();
             logWindow.Show();
         }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveToolStripMenuItemClick(object sender, EventArgs e)
         {
-            if (_tabUtil.CurrentFileControl == null || _tabUtil.CurrentFileControl.CobolFile == null)
+            if (this.tabUtil.CurrentFileControl == null || this.tabUtil.CurrentFileControl.CobolFile == null)
                 return;
 
-            var currentFileRef = _tabUtil.CurrentFileControl.CobolFile.FileReference;
+            var currentFileRef = this.tabUtil.CurrentFileControl.CobolFile.FileReference;
             if (currentFileRef == null)
             {
-                saveAsToolStripMenuItem_Click(sender, e);
+                this.SaveAsToolStripMenuItemClick(sender, e);
                 return;
             }
 
-            File.WriteAllText(currentFileRef.FilePath, _tabUtil.CurrentFileControl.GetText());
-
+            File.WriteAllText(currentFileRef.FilePath, this.tabUtil.CurrentFileControl.GetText());
         }
 
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveAsToolStripMenuItemClick(object sender, EventArgs e)
         {
-            if (_tabUtil.CurrentFileControl == null || _tabUtil.CurrentFileControl.CobolFile == null)
+            if (this.tabUtil.CurrentFileControl == null || this.tabUtil.CurrentFileControl.CobolFile == null)
                 return;
 
-            var currentFileRef = _tabUtil.CurrentFileControl.CobolFile.FileReference;
+            var currentFileRef = this.tabUtil.CurrentFileControl.CobolFile.FileReference;
             if (currentFileRef != null)
             {
                 saveFileDialog.InitialDirectory = currentFileRef.Directory;
@@ -178,18 +180,18 @@ namespace Canal
 
             if (dialogResult == DialogResult.OK)
             {
-                File.WriteAllText(saveFileDialog.FileName, _tabUtil.CurrentFileControl.GetText());
-                _tabUtil.CurrentFileControl.CobolFile.FileReference = new FileReference(saveFileDialog.FileName);
-                _tabUtil.SetTabName(_tabUtil.CurrentFileControl.CobolFile.FileReference.ProgramName);
+                File.WriteAllText(saveFileDialog.FileName, this.tabUtil.CurrentFileControl.GetText());
+                this.tabUtil.CurrentFileControl.CobolFile.FileReference = new FileReference(saveFileDialog.FileName);
+                this.tabUtil.SetTabName(this.tabUtil.CurrentFileControl.CobolFile.FileReference.ProgramName);
             }
         }
 
-        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExportToolStripMenuItemClick(object sender, EventArgs e)
         {
-            if (_tabUtil.CurrentFileControl == null || _tabUtil.CurrentFileControl.CobolFile == null)
+            if (this.tabUtil.CurrentFileControl == null || this.tabUtil.CurrentFileControl.CobolFile == null)
                 return;
 
-            var currentFileRef = _tabUtil.CurrentFileControl.CobolFile.FileReference;
+            var currentFileRef = this.tabUtil.CurrentFileControl.CobolFile.FileReference;
             if (currentFileRef != null)
             {
                 saveFileDialog.InitialDirectory = currentFileRef.Directory;
@@ -202,7 +204,7 @@ namespace Canal
 
             if (dialogResult == DialogResult.OK)
             {
-                File.WriteAllText(saveFileDialog.FileName, _tabUtil.CurrentFileControl.ExportToHtml());
+                File.WriteAllText(saveFileDialog.FileName, this.tabUtil.CurrentFileControl.ExportToHtml());
             }
         }
     }

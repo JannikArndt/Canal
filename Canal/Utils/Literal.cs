@@ -1,6 +1,7 @@
 ﻿namespace Canal.Utils
 {
     using Model;
+    using Model.Enums;
 
     public class Literal
     {

@@ -1,23 +1,19 @@
 ﻿namespace Model
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
+    /// <summary>
+    /// Abstract class for Identification/Environment/Data/Procedure Division
+    /// </summary>
     public abstract class Division : CobolTreeNode
     {
-        public string OriginalSource { get; private set; }
-
-        protected readonly List<string> Lines;
-
-        public int LinesOfCode { get { return Lines.Count; } }
-
         protected Division(string sourceCode, string nodeName, int indexDataDivision)
             : base(nodeName, indexDataDivision)
         {
             OriginalSource = sourceCode;
-
-            Lines = sourceCode.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
         }
+
+        /// <summary>
+        /// Original source code of this division
+        /// </summary>
+        public string OriginalSource { get; private set; }
     }
 }

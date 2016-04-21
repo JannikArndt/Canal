@@ -7,6 +7,7 @@
     using System.Windows.Forms;
 
     using Model;
+    using Model.Enums;
 
     public static class ExtensionMethods
     {

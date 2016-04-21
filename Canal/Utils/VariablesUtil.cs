@@ -1,22 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using Logging;
-using Model;
-using Model.Pictures;
-
-namespace Canal.Utils
+﻿namespace Canal.Utils
 {
+    using System.Collections.Generic;
     using System.Text.RegularExpressions;
 
-    public static class VariablesUtil
+    using Model;
+    using Model.Enums;
+
+    public class VariablesUtil
     {
-        public static List<Variable> AnalyzeVariables(string trimmedText)
+        public static readonly VariablesUtil Instance = new VariablesUtil();
+
+        private VariablesUtil()
+        {
+        }
+
+        public List<Variable> AnalyzeVariables(string trimmedText)
         {
             // FILLER; REDEFINES; OCCURS; SPACES; 66
-            // 	[ "USAGE" [ "IS" ] ] ( "BINARY" | "COMP" | "COMP-1" | "COMP-2" | "COMP-3" | "COMP-4" | "COMPUTATIONAL" | "COMPUTATIONAL-1" | "COMPUTATIONAL-2" | "COMPUTATIONAL-3" | "COMPUTATIONAL-4" | "DISPLAY" | "DISPLAY-1" | "INDEX" | "PACKED-DECIMAL" | "POINTER" )
+            // [ "USAGE" [ "IS" ] ] ( "BINARY" | "COMP" | "COMP-1" | "COMP-2" | "COMP-3" | "COMP-4" | "COMPUTATIONAL" | "COMPUTATIONAL-1" | "COMPUTATIONAL-2" | "COMPUTATIONAL-3" | "COMPUTATIONAL-4" | "DISPLAY" | "DISPLAY-1" | "INDEX" | "PACKED-DECIMAL" | "POINTER" )
             // ( "VALUE" [ "IS" ] | "VALUES" [ "ARE" ] ) { literal [ ( "THROUGH" | "THRU" ) literal ] }+
             // "RENAMES" qualified-data-name [ ( "THROUGH" | "THRU" ) qualified-data-name ]
-
 
             var result = new List<Variable>();
             var regex = new Regex(Constants.Variable, Constants.CompiledMultilineCaseInsensitive);
@@ -35,13 +38,7 @@ namespace Canal.Utils
                 var valOccurs = match.Groups["occurs"].Value;
 
                 // Create type definition ("PIC")
-                IPic picture;
-                if (valLevel == 88)
-                    picture = new Pic88 { Value = valValue };
-                else if (string.IsNullOrWhiteSpace(valType))
-                    picture = new PicGroup();
-                else
-                    picture = ParsePicture(valType, valComp, valValue);
+                var picture = PicParser.Instance.ParsePicture(valType, valComp, valValue, valLevel);
 
                 // Create Variable
                 var currentVariable = new Variable(valLevel, valLiteral, picture, match.Value, null)
@@ -70,7 +67,6 @@ namespace Canal.Utils
                     currentVariable.ParentVariable = lastVariable;
                     lastVariable.Variables.Add(currentVariable);
                     lastVariable = currentVariable;
-
                 }
                 else if (lastVariable.VariableLevel == currentVariable.VariableLevel)
                 {
@@ -84,23 +80,7 @@ namespace Canal.Utils
             return result;
         }
 
-        private static IPic ParsePicture(string type, string comp, string value)
-        {
-            try
-            {
-                IPic result = PicParser.Instance.Parse(type) ?? new Pic88();
-                result.CompType = CompParser.Instance.Parse(comp);
-                result.Value = value;
-                return result;
-            }
-            catch (Exception exception)
-            {
-                Logger.Error("Error parsing picture text \"{0}\": {1}: {2}", type, exception.GetType().Name, exception.Message);
-                return null;
-            }
-        }
-
-        public static List<Literal> GetIdentifierLiterals(string text)
+        public IEnumerable<Literal> GetIdentifierLiterals(string text)
         {
             var result = new List<Literal>();
             var regex = new Regex(Constants.LiteralWithInputOutput, Constants.CompiledMultilineCaseInsensitive); // @" (?<token>[\w\d-]+)[\., ]"

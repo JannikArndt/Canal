@@ -44,7 +44,7 @@
     <Compile Include="EnvironmentDivision.cs" />
     <Compile Include="IdentificationDivision.cs" />
     <Compile Include="LinkageSection.cs" />
-    <Compile Include="PerformType.cs" />
+    <Compile Include="Enums\PerformType.cs" />
     <Compile Include="Pictures\CompType.cs" />
     <Compile Include="Pictures\IPic.cs" />
     <Compile Include="Pictures\PicGroup.cs" />
@@ -62,7 +62,7 @@
     <Compile Include="References\PerformReference.cs" />
     <Compile Include="References\ProcedureReference.cs" />
     <Compile Include="Section.cs" />
-    <Compile Include="UsedAs.cs" />
+    <Compile Include="Enums\UsedAs.cs" />
     <Compile Include="Variable.cs" />
     <Compile Include="WorkingStorageSection.cs" />
   </ItemGroup>

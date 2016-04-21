@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
     using System.Text.RegularExpressions;
 
@@ -17,7 +16,7 @@
         {
             var tree = new CobolTree(file.Name);
 
-            var sourceCode = TextUtil.TrimAllLines(file.Text);
+            var sourceCode = TextUtil.Instance.TrimAllLines(file.Text);
 
             var indexIdentificationDivision = sourceCode.IndexOf("IDENTIFICATION DIVISION", StringComparison.Ordinal);
             var indexEnvironmentDivision = sourceCode.IndexOf("ENVIRONMENT DIVISION", StringComparison.Ordinal);
@@ -82,8 +81,7 @@
             // Add infos
             file.Infos = new Dictionary<string, string>
             {
-                {"Name", file.Name },
-                {"Lines of Code", file.CobolTree.LinesOfCode.ToString(CultureInfo.InvariantCulture) }
+                {"Name", file.Name }
             };
         }
 
@@ -110,13 +108,13 @@
 
         private void BuildWorkingStorageSection(WorkingStorageSection workingStorageSection)
         {
-            workingStorageSection.Variables = VariablesUtil.AnalyzeVariables(workingStorageSection.OriginalSource);
+            workingStorageSection.Variables = VariablesUtil.Instance.AnalyzeVariables(workingStorageSection.OriginalSource);
             workingStorageSection.CopyReferences = ReferenceUtil.FindCopyReferences(workingStorageSection.OriginalSource, true).ToList();
         }
 
         private void BuildLinkageSection(LinkageSection linkageSection)
         {
-            linkageSection.Variables = VariablesUtil.AnalyzeVariables(linkageSection.OriginalSource);
+            linkageSection.Variables = VariablesUtil.Instance.AnalyzeVariables(linkageSection.OriginalSource);
             linkageSection.CopyReferences = ReferenceUtil.FindCopyReferences(linkageSection.OriginalSource, true).ToList();
         }
 
@@ -194,7 +192,7 @@
 
         public void AnalyzeVariables(Procedure procedure, List<Variable> variablesInFile)
         {
-            var foundTokens = VariablesUtil.GetIdentifierLiterals(procedure.OriginalSource);
+            var foundTokens = VariablesUtil.Instance.GetIdentifierLiterals(procedure.OriginalSource);
 
             foreach (Literal token in foundTokens)
             {
