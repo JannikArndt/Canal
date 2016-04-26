@@ -1,0 +1,15 @@
+*.suo
+*.pdb
+*.config
+88ToEnum/*
+Canal/*
+CodeGenerator/*
+CSharpGenerator/*
+FastColoredTextBox/*
+Level88ToEnum/*
+Logging/*
+Model/*
+packages/*
+Publish/*
+TestResults/*
+Tests/*

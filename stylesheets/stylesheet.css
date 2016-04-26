@@ -14,7 +14,9 @@ a {
   text-decoration: none; }
   a:hover {
     text-decoration: underline; }
-
+li{
+	margin-top: 10px;
+}
 .btn {
   display: inline-block;
   margin-bottom: 1rem;
