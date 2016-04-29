@@ -1,9 +1,10 @@
-﻿namespace Model
+﻿using Model.References;
+
+namespace Model
 {
+    using Model.Pictures;
     using System.Collections.Generic;
     using System.Windows.Forms;
-
-    using Model.Pictures;
 
     public class Variable : TreeNode
     {
@@ -26,6 +27,8 @@
         public List<Variable> Variables { get; set; }
 
         public Variable ParentVariable { get; set; }
+
+        public FileReference CopyReference { get; set; }
 
         public string VariableDefinition
         {

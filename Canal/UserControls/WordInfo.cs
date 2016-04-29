@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Canal.Utils;
+using Model;
+using Model.References;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using Canal.Utils;
-using Model;
-using Model.References;
 
 namespace Canal.UserControls
 {
@@ -123,6 +123,12 @@ namespace Canal.UserControls
             variableTreeView.Nodes.Add((Variable)currentVar.Clone());
 
             variableTreeView.ExpandAll();
+
+            if (currentVar.CopyReference != null)
+            {
+                gotoFileButton.Visible = true;
+                gotoFileButton.Click += (sender, args) => _parent.MainWindow.OpenFile(currentVar.CopyReference.FilePath);
+            }
 
             variableTreeView.NodeMouseDoubleClick += (sender, args) =>
             {

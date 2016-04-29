@@ -18,6 +18,7 @@
         {
             this.variableTreeView = new System.Windows.Forms.TreeView();
             this.infoGroupBox = new System.Windows.Forms.GroupBox();
+            this.gotoFileButton = new System.Windows.Forms.Button();
             this.infoGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -35,6 +36,7 @@
             // 
             // infoGroupBox
             // 
+            this.infoGroupBox.Controls.Add(this.gotoFileButton);
             this.infoGroupBox.Controls.Add(this.variableTreeView);
             this.infoGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.infoGroupBox.Location = new System.Drawing.Point(0, 0);
@@ -43,6 +45,17 @@
             this.infoGroupBox.TabIndex = 2;
             this.infoGroupBox.TabStop = false;
             this.infoGroupBox.Text = "groupBox1";
+            // 
+            // gotoFileButton
+            // 
+            this.gotoFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.gotoFileButton.Location = new System.Drawing.Point(178, 19);
+            this.gotoFileButton.Name = "gotoFileButton";
+            this.gotoFileButton.Size = new System.Drawing.Size(110, 23);
+            this.gotoFileButton.TabIndex = 2;
+            this.gotoFileButton.Text = "Open Copybook";
+            this.gotoFileButton.UseVisualStyleBackColor = true;
+            this.gotoFileButton.Visible = false;
             // 
             // WordInfo
             // 
@@ -59,5 +72,6 @@
         #endregion
         private System.Windows.Forms.TreeView variableTreeView;
         private System.Windows.Forms.GroupBox infoGroupBox;
+        private System.Windows.Forms.Button gotoFileButton;
     }
 }

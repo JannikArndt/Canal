@@ -1,10 +1,11 @@
-﻿namespace Canal.Utils
-{
-    using System.Collections.Generic;
-    using System.Text.RegularExpressions;
+﻿using System;
 
+namespace Canal.Utils
+{
     using Model;
     using Model.Enums;
+    using System.Collections.Generic;
+    using System.Text.RegularExpressions;
 
     public class VariablesUtil
     {
@@ -46,6 +47,16 @@
                     Redefines = valRedefines,
                     Occurs = valOccurs
                 };
+
+                if (valLevel == 1)
+                {
+                    var lastLineBreak = preparedText.LastIndexOf(Environment.NewLine, match.Index, StringComparison.Ordinal);
+                    if (lastLineBreak < 0)
+                        break;
+                    var secondLastLineBreak = preparedText.LastIndexOf(Environment.NewLine, lastLineBreak - 1, StringComparison.Ordinal);
+                    var copyMatch = new Regex(Constants.Copy, RegexOptions.IgnoreCase).Match(preparedText.Substring(secondLastLineBreak, lastLineBreak - secondLastLineBreak));
+                    currentVariable.CopyReference = FileUtil.Instance.GetFileReference(copyMatch.Groups["program"].Value, copyMatch.Groups["folder"].Value);
+                }
 
                 // Create references between variables
                 if (lastVariable == null || currentVariable.VariableLevel == 1 || currentVariable.VariableLevel == 77)
