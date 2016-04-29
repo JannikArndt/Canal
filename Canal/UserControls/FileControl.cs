@@ -1,27 +1,24 @@
-﻿namespace Canal.UserControls
+﻿using Canal.Events;
+using Canal.Properties;
+using Canal.Utils;
+using FastColoredTextBoxNS.Events;
+using Logging;
+using Model;
+using Model.References;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
+
+namespace Canal.UserControls
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Drawing;
-    using System.Linq;
-    using System.Text.RegularExpressions;
-    using System.Windows.Forms;
-
-    using Canal.Events;
-    using Canal.Properties;
-    using Canal.Utils;
-
-    using FastColoredTextBoxNS.Events;
-
-    using Logging;
-
-    using Model;
-    using Model.References;
-
     public sealed partial class FileControl : UserControl, IDisposable
     {
-        private readonly BackgroundWorker cobolTreeWorker = new BackgroundWorker();
+        private readonly BackgroundWorker _cobolTreeWorker = new BackgroundWorker();
 
         public FileControl(CobolFile file, MainWindow parent)
         {
@@ -36,19 +33,26 @@
 
                 // initialize FastColoredTextBox
                 codeBox.Font = SourceCodePro.Regular;
+                codeBox.SetTextAsync(CobolFile.Text);
+
                 codeBox.KeyDown += HandleKeyDown;
                 codeBox.WordSelected += CodeBoxOnWordSelected;
-                codeBox.SetTextAsync(CobolFile.Text);
+                codeBox.TextChanged += (sender, args) =>
+                {
+                    if (!UnsavedChanges && SavedVersionChanged != null)
+                        SavedVersionChanged(sender, args);
+                    UnsavedChanges = true;
+                };
 
                 searchBox.Text = Resources.SearchPlaceholder;
 
-                this.cobolTreeWorker.DoWork += BuildCobolTree;
+                _cobolTreeWorker.DoWork += BuildCobolTree;
 
                 // Display the analysis info in side tabs
-                this.cobolTreeWorker.RunWorkerCompleted += (sender, args) => InitTabs();
+                _cobolTreeWorker.RunWorkerCompleted += (sender, args) => InitTabs();
 
                 // Build the CobolTree in the CobolFile which contains all analysis information
-                this.cobolTreeWorker.RunWorkerAsync(CobolFile);
+                _cobolTreeWorker.RunWorkerAsync(CobolFile);
             }
             catch (Exception exception)
             {
@@ -59,18 +63,41 @@
 
         public event EventHandler<UsedFileTypesChangedEventArgs> UsedFileTypesChanged;
 
+        /// <summary>
+        /// Event is thrown the first time the text is changed after it is loaded or saved.
+        /// </summary>
+        public event EventHandler<TextChangedEventArgs> SavedVersionChanged;
+
+        public event EventHandler<FileSystemEventArgs> FileSaved;
+
+        /// <summary>
+        /// Shows if there are unsaved changes in the text.
+        /// </summary>
+        public bool UnsavedChanges { get; private set; }
+
         public CobolFile CobolFile { get; private set; }
 
         public MainWindow MainWindow { get; private set; }
 
-        public string GetText()
+        public bool HasFileReference()
         {
-            return codeBox.Text;
+            return CobolFile.FileReference != null;
         }
 
         public string ExportToHtml()
         {
             return codeBox.Html;
+        }
+
+        public void Save(string filename = "")
+        {
+            if (!string.IsNullOrWhiteSpace(filename))
+                CobolFile.FileReference = new FileReference(filename);
+
+            File.WriteAllText(CobolFile.FileReference.FilePath, codeBox.Text);
+            UnsavedChanges = false;
+            if (FileSaved != null)
+                FileSaved(this, new FileSystemEventArgs(WatcherChangeTypes.Changed, CobolFile.FileReference.Directory, CobolFile.FileReference.ProgramName));
         }
 
         public void FindInCodeBox(string pattern, bool matchCase, bool regex, bool wholeWord, bool firstSearch = false)
@@ -108,7 +135,7 @@
 
         void IDisposable.Dispose()
         {
-            this.cobolTreeWorker.Dispose();
+            _cobolTreeWorker.Dispose();
         }
 
         private void InitTabs()
@@ -151,6 +178,8 @@
 
         private void ShowFilesTreeView()
         {
+            if (IsDisposed) return;
+
             FileUtil.Instance.ReduceDirectoriesToAllowedFiles();
             filesTreeView.Nodes.AddRange(FileUtil.Instance.GetDirectoryStructure());
             filesTreeView.ExpandAll();
@@ -333,7 +362,7 @@
                 toolStripProgressBar.Visible = false;
 
                 // Build the CobolTree in the CobolFile which contains all analysis information
-                this.cobolTreeWorker.RunWorkerAsync(CobolFile);
+                _cobolTreeWorker.RunWorkerAsync(CobolFile);
             };
 
             Cursor = Cursors.WaitCursor;
@@ -417,12 +446,12 @@
 
             var performTreeWorker = new BackgroundWorker();
 
-            performTreeWorker.DoWork += delegate(object sender, DoWorkEventArgs args)
+            performTreeWorker.DoWork += delegate (object sender, DoWorkEventArgs args)
             {
                 args.Result = ReferenceUtil.GetPerformTree(CobolFile);
             };
 
-            performTreeWorker.RunWorkerCompleted += delegate(object sender, RunWorkerCompletedEventArgs args)
+            performTreeWorker.RunWorkerCompleted += delegate (object sender, RunWorkerCompletedEventArgs args)
             {
                 performsTabPage.Controls.Remove(loaderImagePerforms);
                 performsTreeView.Nodes.Add((TreeNode)args.Result);

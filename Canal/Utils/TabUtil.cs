@@ -86,6 +86,8 @@ namespace Canal.Utils
             var fileControl = new FileControl(file, _parent);
 
             fileControl.UsedFileTypesChanged += UsedFileTypesChanged;
+            fileControl.SavedVersionChanged += (sender, args) => SetTabName(@"* " + newTab.Text);
+            fileControl.FileSaved += (sender, args) => SetTabName(newTab.Text.TrimStart('*', ' '));
             FileUtil.Instance.FileCacheChanged += RefreshFileView;
 
             newTab.Controls.Add(fileControl);
@@ -119,12 +121,14 @@ namespace Canal.Utils
 
             var tabIndex = index < 0 ? _tabControl.SelectedIndex : index;
 
-            if (MessageBox.Show(Resources.ReallyCloseThisTab, Resources.CloseTab, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            var fileControl = (FileControl)_tabControl.SelectedTab.Controls.Find("FileControl", false).FirstOrDefault(tab => tab is FileControl);
+
+            if (fileControl == null)
+                return true;
+            if (!fileControl.UnsavedChanges || MessageBox.Show(Resources.ReallyCloseThisTab, Resources.CloseTab, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                var fileControl = (FileControl)_tabControl.SelectedTab.Controls.Find("FileControl", false).FirstOrDefault(tab => tab is FileControl);
                 // TODO dispose everything
-                if (fileControl != null)
-                    fileControl.Dispose();
+                fileControl.Dispose();
                 _tabControl.TabPages.RemoveAt(tabIndex);
                 return true;
             }

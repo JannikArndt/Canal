@@ -61,30 +61,23 @@ namespace Canal.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to v1.9
-        ///- Rebuild variable parsing
-        ///- Remodeled Info-view
-        ///- Various improvements
+        ///   Looks up a localized string similar to v1.11
+        ///- opening a file is now 30x faster!
+        ///- sped up file loading, caching is now in background thread
+        ///- moved more analysis into background threads
+        ///- moved syntax highlighting into background thread
+        ///- improved logging
+        ///- stability improvements (try-catch)
         ///
-        ///v1.8
-        ///- Fixed issue #8
-        ///- Added logging
-        ///- Added start screen
+        ///v1.10
+        ///- added save functionality
+        ///- added export to html functionality
+        ///- improved variable info view
+        ///- you can now double click on a variable to find it in the source
+        ///- added navigate backward/forward buttons
         ///
-        ///v1.7.2
-        ///- Stability and performance improvements
-        ///
-        ///v1.7.1
-        ///- Bug fixes
-        ///
-        ///v1.7
-        ///- Added multithreading for analysis
-        ///
-        ///v1.6.4
-        ///- Stability improvements
-        ///
-        ///v1.6.3
-        ///- Made SourceCodePro the default font.
+        ///v1.9
+        ///- Rebuild variable parsing [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ChangeLog {
             get {
@@ -165,7 +158,7 @@ namespace Canal.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Would you like to close this tab?.
+        ///   Looks up a localized string similar to There are unsaved changes. Would you like to close this tab anyway?.
         /// </summary>
         internal static string ReallyCloseThisTab {
             get {

@@ -1,22 +1,17 @@
 ﻿namespace Canal
 {
+    using Canal.Properties;
+    using Canal.UserControls;
+    using Canal.Utils;
+    using Level88ToEnum;
+    using Logging;
+    using Model;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Diagnostics;
     using System.IO;
     using System.Windows.Forms;
-
-    using Canal.Properties;
-    using Canal.UserControls;
-    using Canal.Utils;
-
-    using Level88ToEnum;
-
-    using Logging;
-
-    using Model;
-    using Model.References;
 
     public partial class MainWindow : Form
     {
@@ -152,14 +147,10 @@
             if (this.tabUtil.CurrentFileControl == null || this.tabUtil.CurrentFileControl.CobolFile == null)
                 return;
 
-            var currentFileRef = this.tabUtil.CurrentFileControl.CobolFile.FileReference;
-            if (currentFileRef == null)
-            {
-                this.SaveAsToolStripMenuItemClick(sender, e);
-                return;
-            }
-
-            File.WriteAllText(currentFileRef.FilePath, this.tabUtil.CurrentFileControl.GetText());
+            if (tabUtil.CurrentFileControl.HasFileReference())
+                tabUtil.CurrentFileControl.Save();
+            else
+                SaveAsToolStripMenuItemClick(sender, e);
         }
 
         private void SaveAsToolStripMenuItemClick(object sender, EventArgs e)
@@ -180,8 +171,7 @@
 
             if (dialogResult == DialogResult.OK)
             {
-                File.WriteAllText(saveFileDialog.FileName, this.tabUtil.CurrentFileControl.GetText());
-                this.tabUtil.CurrentFileControl.CobolFile.FileReference = new FileReference(saveFileDialog.FileName);
+                tabUtil.CurrentFileControl.Save(saveFileDialog.FileName);
                 this.tabUtil.SetTabName(this.tabUtil.CurrentFileControl.CobolFile.FileReference.ProgramName);
             }
         }

@@ -121,7 +121,7 @@
     <value>Search...</value>
   </data>
   <data name="ReallyCloseThisTab" xml:space="preserve">
-    <value>Would you like to close this tab?</value>
+    <value>There are unsaved changes. Would you like to close this tab anyway?</value>
   </data>
   <data name="CloseTab" xml:space="preserve">
     <value>Close Tab</value>
