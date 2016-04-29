@@ -1,4 +1,12 @@
-﻿v1.11
+﻿v1.12
+- Improved search
+- Fixed error where search would skip elements
+- Copy resolving is now parallel
+- Already resolved Copys are commented out to prevent multiple resolvings
+- Unsaved changes are marked with an asterisk
+- Added "Open Copybook"-Button in Variable-view if the level-01-variable is from a copybook
+
+v1.11
 - opening a file is now 30x faster!
 - sped up file loading, caching is now in background thread
 - moved more analysis into background threads
