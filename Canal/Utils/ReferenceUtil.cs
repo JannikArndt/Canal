@@ -3,6 +3,7 @@ using Model;
 using Model.References;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text;
 
 namespace Canal.Utils
 {
@@ -19,10 +20,10 @@ namespace Canal.Utils
         {
             Logger.Info("Start resolving copys for file {0}", file.Name);
 
-            var copyReferences = FindCopyReferences(file.Text).ToList();
+            var copyReferences = FindCopyReferences(file.Text);
 
             var counter = 0;
-            foreach (var copyReference in copyReferences)
+            foreach (var copyReference in copyReferences.AsParallel())
             {
                 try
                 {
@@ -34,12 +35,29 @@ namespace Canal.Utils
                     if (copyFile == null)
                         continue;
 
-                    var updatedIndexOfCopy = file.Text.IndexOf(copyReference.ProgramName, StringComparison.Ordinal);
-                    var lineAfterCopy = file.Text.IndexOf(Environment.NewLine, updatedIndexOfCopy, StringComparison.Ordinal);
-                    file.Text = file.Text.Insert(lineAfterCopy + 1, copyFile.Text + Environment.NewLine);
+                    lock (file.Text)
+                    {
+                        var newText = new StringBuilder();
+
+                        // Index of "COPY" in text might have changed, since other copys were resolved
+                        var copyRegex = new Regex(@"^.{6} +COPY +" + copyReference.ProgramName, RegexOptions.IgnoreCase | RegexOptions.Multiline);
+                        var updatedIndexOfCopy = copyRegex.Match(file.Text).Index;
+
+                        var lineBeforeCopy = file.Text.LastIndexOf(Environment.NewLine, updatedIndexOfCopy, StringComparison.Ordinal);
+                        var lineAfterCopy = file.Text.IndexOf(Environment.NewLine, updatedIndexOfCopy, StringComparison.Ordinal);
+
+                        newText.Append(file.Text.Substring(0, lineBeforeCopy + 8));
+                        newText.Append("*"); // Comment out COPY
+                        newText.Append(file.Text.Substring(lineBeforeCopy + 8, lineAfterCopy - (lineBeforeCopy + 8)).TrimEnd());
+                        newText.AppendLine("  *> COPY resolved by Canal");
+                        newText.Append(copyFile.Text + Environment.NewLine);
+                        newText.Append(file.Text.Substring(lineAfterCopy));
+
+                        file.Text = newText.ToString();
+                    }
 
                     if (ProgressChanged != null)
-                        ProgressChanged.Invoke(null, new ProgressChangedEventArgs(counter * 100 / (copyReferences.Count + 3), null));
+                        ProgressChanged.Invoke(null, new ProgressChangedEventArgs(counter * 100 / (copyReferences.Count() + 3), null));
                 }
                 catch (Exception exception)
                 {
@@ -68,13 +86,13 @@ namespace Canal.Utils
         {
             Logger.Info("Finding copy references...");
 
-            var prefix = textIsTrimmed ? @"^" : @"^[\d]{6}";
-            var copyRegex = new Regex(prefix + @" *COPY (?<program>[\w]+) +OF +(?<folder>[\w]+)\.", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            var prefix = textIsTrimmed ? @"^" : @"^.{6}";
+            var copyRegex = new Regex(prefix + Constants.Copy, RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
 
             var matches = copyRegex.Matches(text);
             Logger.Info("Resolving {0} COPYs...", matches.Count);
 
-            return from Match match in matches
+            return from Match match in matches.AsParallel()
                    select FileUtil.Instance.GetFileReference(match.Groups["program"].Value, match.Groups["folder"].Value);
         }
 

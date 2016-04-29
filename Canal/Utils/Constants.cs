@@ -34,6 +34,8 @@ namespace Canal.Utils
 
         public static readonly string Call = @"CALL +""" + NamedLiteral + @""" +(USING (" + Literal + ",? ?)*)?"; // TODO multiline calls
 
+        public static readonly string Copy = @" *COPY (?<program>[\w]+) +OF +(?<folder>[\w]+)\.";
+
         private static readonly string VarLevel = @"^[ ]+(?<level>\d\d)";
 
         private static readonly string VarRedefines = @"(REDEFINES (?<redefines>[\w\d-()]+) +)?";
