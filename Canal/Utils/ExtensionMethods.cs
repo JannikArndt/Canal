@@ -1,13 +1,12 @@
 ﻿namespace Canal.Utils
 {
+    using Model;
+    using Model.Enums;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Windows.Forms;
-
-    using Model;
-    using Model.Enums;
 
     public static class ExtensionMethods
     {
@@ -84,6 +83,11 @@
                     return UsedAs.Output;
 
             return UsedAs.Unknown;
+        }
+
+        public static bool IsDigit(this Keys key)
+        {
+            return key >= Keys.D0 && key <= Keys.D9;
         }
     }
 }

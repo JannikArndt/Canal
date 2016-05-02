@@ -174,5 +174,24 @@ namespace Canal.Utils
             _tabControl.Controls.Add(newTab);
             _tabControl.SelectTab(newTab);
         }
+
+        public void ShowNextTab()
+        {
+            _tabControl.SelectTab((_tabControl.SelectedIndex + 1) % _tabControl.TabCount);
+        }
+
+        public void ShowPreviousTab()
+        {
+            // since c# does not _really_ implement modulo...
+            var index = (_tabControl.SelectedIndex - 1) % _tabControl.TabCount;
+
+            _tabControl.SelectTab(index < 0 ? index + _tabControl.TabCount : index);
+        }
+
+        public void TryShowTab(int index)
+        {
+            if (index < _tabControl.TabCount)
+                _tabControl.SelectTab(index);
+        }
     }
 }

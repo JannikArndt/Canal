@@ -57,6 +57,71 @@
             base.OnClosing(e);
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Control | Keys.Tab))
+            {
+                tabUtil.ShowNextTab();
+                return true;
+            }
+            if (keyData == (Keys.Control | Keys.Shift | Keys.Tab))
+            {
+                tabUtil.ShowPreviousTab();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D1))
+            {
+                tabUtil.TryShowTab(1);
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D2))
+            {
+                tabUtil.TryShowTab(2);
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D3))
+            {
+                tabUtil.TryShowTab(3);
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D4))
+            {
+                tabUtil.TryShowTab(4);
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D5))
+            {
+                tabUtil.TryShowTab(5);
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D6))
+            {
+                tabUtil.TryShowTab(6);
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D7))
+            {
+                tabUtil.TryShowTab(7);
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D8))
+            {
+                tabUtil.TryShowTab(8);
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D9))
+            {
+                tabUtil.TryShowTab(9);
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D0))
+            {
+                tabUtil.TryShowTab(0);
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         public void OpenFile(string filename)
         {
             Logger.Info("Opening file {0}", filename);
