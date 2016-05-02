@@ -124,7 +124,18 @@ namespace Canal.Utils
             var fileControl = (FileControl)_tabControl.SelectedTab.Controls.Find("FileControl", false).FirstOrDefault(tab => tab is FileControl);
 
             if (fileControl == null)
+            {
+                try
+                {
+                    _tabControl.TabPages.RemoveAt(index);
+                }
+                catch (Exception exception)
+                {
+                    Logger.Warning("Tried to close tab at index {0}, failed: {1}.", index, exception.Message);
+                }
                 return true;
+            }
+
             if (!fileControl.UnsavedChanges || MessageBox.Show(Resources.ReallyCloseThisTab, Resources.CloseTab, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 // TODO dispose everything
