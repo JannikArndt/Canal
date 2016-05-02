@@ -1,4 +1,11 @@
-﻿v1.12
+﻿v1.13
+- "Open Copybook" now also works if copybook starts with comment
+- "Resolve COPYs" can be executed multiple times
+- Ctrl + Tab and Ctrl + Shift + Tab circle through tabs
+- Alt + 1 to 9 selects tab directly
+- Fixes #9: Start tab can now be closed.
+
+v1.12
 - Improved search
 - Fixed error where search would skip elements
 - Copy resolving is now parallel
