@@ -340,6 +340,8 @@ namespace Canal.UserControls
         {
             ResolveCopysButton.Enabled = false;
 
+            CobolFile.Text = codeBox.Text;
+
             var backgroundWorker = new BackgroundWorker();
 
             backgroundWorker.DoWork += (o, args) =>
@@ -372,6 +374,8 @@ namespace Canal.UserControls
             backgroundWorker.WorkerReportsProgress = true;
             backgroundWorker.ProgressChanged += (o, args) => toolStripProgressBar.Value = args.ProgressPercentage;
             backgroundWorker.RunWorkerAsync();
+
+            ResolveCopysButton.Enabled = true;
 
             Cursor = Cursors.Default;
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodeGenerator;
+using System;
 
 namespace Canal.Utils
 {
@@ -50,12 +51,18 @@ namespace Canal.Utils
 
                 if (valLevel == 1)
                 {
-                    var lastLineBreak = preparedText.LastIndexOf(Environment.NewLine, match.Index, StringComparison.Ordinal);
-                    if (lastLineBreak < 0)
-                        break;
-                    var secondLastLineBreak = preparedText.LastIndexOf(Environment.NewLine, lastLineBreak - 1, StringComparison.Ordinal);
-                    var copyMatch = new Regex(Constants.Copy, RegexOptions.IgnoreCase).Match(preparedText.Substring(secondLastLineBreak, lastLineBreak - secondLastLineBreak));
-                    currentVariable.CopyReference = FileUtil.Instance.GetFileReference(copyMatch.Groups["program"].Value, copyMatch.Groups["folder"].Value);
+                    var lastCopy = preparedText.LastIndexOf("COPY", match.Index, StringComparison.Ordinal);
+
+                    if (lastCopy > -1)
+                    {
+                        var lastCopyLine = preparedText.GetIndexOfCurrentLineStart(lastCopy);
+                        var copyMatch =
+                            new Regex(Constants.Copy, RegexOptions.IgnoreCase).Match(
+                                preparedText.Substring(lastCopyLine, match.Index - lastCopyLine));
+                        currentVariable.CopyReference =
+                            FileUtil.Instance.GetFileReference(copyMatch.Groups["program"].Value,
+                                copyMatch.Groups["folder"].Value);
+                    }
                 }
 
                 // Create references between variables

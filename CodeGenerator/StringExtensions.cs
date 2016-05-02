@@ -65,5 +65,39 @@ namespace CodeGenerator
 
             return string.Format(provider, rewrittenFormat, values.ToArray());
         }
+
+        public static int GetIndexOfCurrentLineStart(this string text, int index)
+        {
+            // if index is line break => go backwards to first actual character
+            while (text[index] == '\n' || text[index] == '\r')
+            {
+                index--;
+            }
+
+            // look for last line break
+            while (index > -1)
+            {
+                if (text[index] == '\n' || text[index] == '\r')
+                {
+                    return index + 1;
+                }
+                index--;
+            }
+
+            // else this is the first line
+            return 0;
+        }
+
+        public static int GetIndexOfPreviousLineStart(this string text, int index)
+        {
+            var startOfCurrentLine = text.GetIndexOfCurrentLineStart(index);
+            return startOfCurrentLine == 0 ? 0 : text.GetIndexOfCurrentLineStart(startOfCurrentLine - 1);
+        }
+
+        public static bool IsCommentLine(this string text, int index)
+        {
+            var startOfLine = text.GetIndexOfCurrentLineStart(index);
+            return text[startOfLine + 6] == '*' || (text[startOfLine + 6] == '/' && text[startOfLine + 7] == '*');
+        }
     }
 }
