@@ -131,7 +131,7 @@ namespace Canal.UserControls
             if (currentVar.CopyReference != null)
             {
                 gotoFileButton.Visible = true;
-                gotoFileButton.Click += (sender, args) => _parent.MainWindow.OpenFile(currentVar.CopyReference.FilePath);
+                gotoFileButton.Click += (sender, args) => _parent.MainWindow.OpenFile(currentVar.CopyReference.FilePath, variable);
             }
 
             variableTreeView.NodeMouseDoubleClick += (sender, args) =>

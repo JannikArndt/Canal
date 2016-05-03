@@ -134,11 +134,11 @@
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        public void OpenFile(string filename)
+        public void OpenFile(string filename, Variable currentVar = null)
         {
             Logger.Info("Opening file {0}", filename);
 
-            if (_tabUtil.TryShowTab(filename))
+            if (_tabUtil.TryShowTab(filename, currentVar))
                 return;
 
             if (!File.Exists(filename))
@@ -154,6 +154,8 @@
             {
                 var file = FileUtil.Instance.Get(filename);
                 _tabUtil.AddTab(file);
+                if (currentVar != null)
+                    _tabUtil.CurrentFileControl.FindInCodeBox(currentVar.VariableName, false, false, false, true);
                 Settings.Default.LastOpened.Add(filename);
             }
             catch (Exception exception)

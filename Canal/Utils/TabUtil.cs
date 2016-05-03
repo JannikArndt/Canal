@@ -39,7 +39,7 @@ namespace Canal.Utils
             _tabControl.SelectedTab.Text = text;
         }
 
-        public bool TryShowTab(string filepath)
+        public bool TryShowTab(string filepath, Variable currentVar = null)
         {
             try
             {
@@ -51,6 +51,8 @@ namespace Canal.Utils
                 {
                     _tabControl.SelectedTab = tab;
                     Logger.Info("Switching to tab {0}: {1}", tab.TabIndex, tab.Text);
+                    if (currentVar != null)
+                        CurrentFileControl.FindInCodeBox(currentVar.VariableName, false, false, false, true);
                     return true;
                 }
                 return false;
