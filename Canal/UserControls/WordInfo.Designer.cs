@@ -19,6 +19,7 @@
             this.variableTreeView = new System.Windows.Forms.TreeView();
             this.infoGroupBox = new System.Windows.Forms.GroupBox();
             this.gotoFileButton = new System.Windows.Forms.Button();
+            this.infoLabel = new System.Windows.Forms.Label();
             this.infoGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -36,6 +37,7 @@
             // 
             // infoGroupBox
             // 
+            this.infoGroupBox.Controls.Add(this.infoLabel);
             this.infoGroupBox.Controls.Add(this.gotoFileButton);
             this.infoGroupBox.Controls.Add(this.variableTreeView);
             this.infoGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -57,6 +59,17 @@
             this.gotoFileButton.UseVisualStyleBackColor = true;
             this.gotoFileButton.Visible = false;
             // 
+            // infoLabel
+            // 
+            this.infoLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.infoLabel.AutoSize = true;
+            this.infoLabel.Location = new System.Drawing.Point(34, 422);
+            this.infoLabel.Name = "infoLabel";
+            this.infoLabel.Size = new System.Drawing.Size(222, 13);
+            this.infoLabel.TabIndex = 3;
+            this.infoLabel.Text = "Double-click anything to get more information.";
+            // 
             // WordInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -65,6 +78,7 @@
             this.Name = "WordInfo";
             this.Size = new System.Drawing.Size(294, 473);
             this.infoGroupBox.ResumeLayout(false);
+            this.infoGroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -73,5 +87,6 @@
         private System.Windows.Forms.TreeView variableTreeView;
         private System.Windows.Forms.GroupBox infoGroupBox;
         private System.Windows.Forms.Button gotoFileButton;
+        private System.Windows.Forms.Label infoLabel;
     }
 }

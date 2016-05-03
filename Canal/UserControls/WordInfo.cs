@@ -22,6 +22,7 @@ namespace Canal.UserControls
             var variable = cobolFile.CobolTree.DataDivision.Variables.FindVariable(word);
             if (variable != null)
             {
+                infoLabel.Visible = false;
                 infoGroupBox.Text = Resources.SelectedVariable + word;
                 FillVariableTreeView(variable);
                 return;
@@ -31,12 +32,14 @@ namespace Canal.UserControls
             var procedure = cobolFile.CobolTree.AllProcedures.FirstOrDefault(proc => proc.Name == word);
             if (procedure != null)
             {
+                infoLabel.Visible = false;
                 infoGroupBox.Text = Resources.SelectedProcedure + word;
                 FillProcedureTreeView(procedure);
                 return;
             }
 
             // else: show file infos
+            infoLabel.Visible = true;
             infoGroupBox.Text = Resources.SelectedProgram + cobolFile.Name;
             FillCallTreeView(cobolFile.CallReferences);
         }
