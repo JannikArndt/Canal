@@ -1,4 +1,10 @@
-﻿v1.13
+﻿v1.14
+- Opening a copy book from WordInfo now jumps to the variable definition
+- Unsaved changes now prevent accidential closing of program
+- Fixed syntax highlighting of reserved words in variable names
+- Fixed variable parsing: PIC -9 is now recognized
+
+v1.13
 - "Open Copybook" now also works if copybook starts with comment
 - "Resolve COPYs" can be executed multiple times
 - Ctrl + Tab and Ctrl + Shift + Tab circle through tabs
