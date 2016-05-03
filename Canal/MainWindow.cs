@@ -119,6 +119,12 @@
                 _tabUtil.TryShowTab(0);
                 return true;
             }
+            if (keyData == Keys.F1)
+            {
+                var logWindow = new Log();
+                logWindow.Show();
+                return true;
+            }
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
@@ -261,6 +267,16 @@
             {
                 File.WriteAllText(saveFileDialog.FileName, _tabUtil.CurrentFileControl.ExportToHtml());
             }
+        }
+
+        private void nextTabToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _tabUtil.ShowNextTab();
+        }
+
+        private void previousTabToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _tabUtil.ShowPreviousTab();
         }
     }
 }
