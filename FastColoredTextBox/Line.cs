@@ -43,7 +43,7 @@ namespace FastColoredTextBoxNS
 
         internal Line(int uid)
         {
-            this.UniqueId = uid;
+            UniqueId = uid;
             chars = new List<Char>();
         }
 

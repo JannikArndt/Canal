@@ -12,20 +12,20 @@
 
         public Pic9(int length, CompType comp = CompType.None, bool negative = false)
         {
-            this.Length = length;
-            this.CompType = comp;
+            Length = length;
+            CompType = comp;
             Negative = negative;
         }
 
         public virtual string Value
         {
-            get { return this.value != null ? this.value.ToString() : null; }
+            get { return value != null ? value.ToString() : null; }
             set { this.value = string.IsNullOrWhiteSpace(value) ? (int?)null : value.StartsWith("ZERO") ? 0 : int.Parse(value); }
         }
 
         public override string ToString()
         {
-            return string.Format("PIC {0}9{1}", Negative ? "-" : "", this.Length > 1 ? "(" + this.Length + ")" : string.Empty);
+            return string.Format("PIC {0}9{1}", Negative ? "-" : "", Length > 1 ? "(" + Length + ")" : string.Empty);
         }
     }
 }

@@ -8,7 +8,7 @@
 
         public override string ToString()
         {
-            return string.Format("VALUE {0}", this.Value);
+            return string.Format("VALUE {0}", Value);
         }
     }
 }

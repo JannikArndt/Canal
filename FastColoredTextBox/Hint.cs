@@ -97,9 +97,9 @@ namespace FastColoredTextBoxNS
 
         private Hint(Range range, Control innerControl, string text, bool inline, bool dock)
         {
-            this.Range = range;
-            this.Inline = inline;
-            this.InnerControl = innerControl;
+            Range = range;
+            Inline = inline;
+            InnerControl = innerControl;
 
             Init();
 

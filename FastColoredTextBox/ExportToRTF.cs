@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using FastColoredTextBoxNS.Enums;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
-using FastColoredTextBoxNS.Enums;
 
 namespace FastColoredTextBoxNS
 {
@@ -38,7 +38,7 @@ namespace FastColoredTextBoxNS
 
         public string GetRtf(Range r)
         {
-            this.tb = r.tb;
+            tb = r.tb;
             var styles = new Dictionary<StyleIndex, object>();
             var sb = new StringBuilder();
             var tempSB = new StringBuilder();

@@ -8,20 +8,20 @@ namespace Model.Pictures
 
         public string Value
         {
-            get { return this.value; }
-            set { this.value = value.StartsWith("SPACE") ? new string(' ', this.Length) : value.Trim('\"', '"', '\\'); }
+            get { return value; }
+            set { this.value = value.StartsWith("SPACE") ? new string(' ', Length) : value.Trim('\"', '"', '\\'); }
         }
 
         public CompType CompType { get; set; }
 
         public PicX(int length)
         {
-            this.Length = length;
+            Length = length;
         }
 
         public override string ToString()
         {
-            return string.Format("PIC X{0}", this.Length > 1 ? "(" + this.Length + ")" : string.Empty);
+            return string.Format("PIC X{0}", Length > 1 ? "(" + Length + ")" : string.Empty);
         }
     }
 }

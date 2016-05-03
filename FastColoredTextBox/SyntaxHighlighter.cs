@@ -657,7 +657,7 @@ namespace FastColoredTextBoxNS
                     TypesStyle = BrownStyle;
                     break;
                 case Language.Cobol:
-                    this.SetCobolStyle();
+                    SetCobolStyle();
                     break;
             }
         }

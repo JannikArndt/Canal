@@ -11,9 +11,9 @@ namespace FastColoredTextBoxNS.Events
 
         public WordWrapNeededEventArgs(List<int> cutOffPositions, bool imeAllowed, Line line)
         {
-            this.CutOffPositions = cutOffPositions;
-            this.ImeAllowed = imeAllowed;
-            this.Line = line;
+            CutOffPositions = cutOffPositions;
+            ImeAllowed = imeAllowed;
+            Line = line;
         }
     }
 }

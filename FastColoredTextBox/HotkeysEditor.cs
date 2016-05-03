@@ -8,7 +8,7 @@ namespace FastColoredTextBoxNS
 {
     internal class HotkeysEditor : UITypeEditor
     {
-        public override UITypeEditorEditStyle GetEditStyle(System.ComponentModel.ITypeDescriptorContext context)
+        public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
         {
             return UITypeEditorEditStyle.Modal;
         }

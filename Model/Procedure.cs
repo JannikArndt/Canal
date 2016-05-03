@@ -1,12 +1,11 @@
-﻿namespace Model
+﻿using Model.Enums;
+using Model.References;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Model
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using Model.Enums;
-    using Model.References;
-
     public class Procedure : CobolTreeNode
     {
         public new string Name { get; set; }
@@ -33,7 +32,7 @@
         {
             get
             {
-                return this.lines.Count;
+                return lines.Count;
             }
         }
 
@@ -46,7 +45,7 @@
         {
             OriginalSource = text;
 
-            this.lines = text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+            lines = text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
         }
 
         protected Procedure(string name, int indexInSourceCode)

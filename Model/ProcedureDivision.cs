@@ -1,7 +1,7 @@
-﻿namespace Model
-{
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
+namespace Model
+{
     public class ProcedureDivision : Division
     {
         public List<Section> Sections { get; private set; }

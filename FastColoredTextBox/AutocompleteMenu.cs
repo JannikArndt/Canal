@@ -92,7 +92,7 @@ namespace FastColoredTextBoxNS
             set { listView.Font = value; }
         }
 
-        new internal void OnOpening(CancelEventArgs args)
+        internal new void OnOpening(CancelEventArgs args)
         {
             if (Opening != null)
                 Opening(this, args);
@@ -107,7 +107,7 @@ namespace FastColoredTextBoxNS
         internal void CalcSize()
         {
             host.Size = listView.Size;
-            Size = new System.Drawing.Size(listView.Size.Width + 4, listView.Size.Height + 4);
+            Size = new Size(listView.Size.Width + 4, listView.Size.Height + 4);
         }
 
         public virtual void OnSelecting()

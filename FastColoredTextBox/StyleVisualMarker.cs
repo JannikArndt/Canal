@@ -9,7 +9,7 @@ namespace FastColoredTextBoxNS
         public StyleVisualMarker(Rectangle rectangle, Style style)
             : base(rectangle)
         {
-            this.Style = style;
+            Style = style;
         }
     }
 }

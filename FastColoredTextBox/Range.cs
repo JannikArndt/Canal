@@ -122,7 +122,7 @@ namespace FastColoredTextBoxNS
             if (ColumnSelectionMode)
                 return GetIntersectionWith_ColumnSelectionMode(range);
 
-            Range r1 = this.Clone();
+            Range r1 = Clone();
             Range r2 = range.Clone();
             r1.Normalize();
             r2.Normalize();
@@ -140,7 +140,7 @@ namespace FastColoredTextBoxNS
         /// <returns></returns>
         public Range GetUnionWith(Range range)
         {
-            Range r1 = this.Clone();
+            Range r1 = Clone();
             Range r2 = range.Clone();
             r1.Normalize();
             r2.Normalize();
@@ -874,7 +874,7 @@ namespace FastColoredTextBoxNS
             //
             foreach (Match m in regex.Matches(text))
             {
-                Range r = new Range(this.tb);
+                Range r = new Range(tb);
                 //try get 'range' group, otherwise use group 0
                 Group group = m.Groups["range"];
                 if (!group.Success)
@@ -984,7 +984,7 @@ namespace FastColoredTextBoxNS
 
             foreach (Match m in matches)
             {
-                Range r = new Range(this.tb);
+                Range r = new Range(tb);
                 //try get 'range' group, otherwise use group 0
                 Group group = m.Groups["range"];
                 if (!group.Success)
@@ -1278,7 +1278,7 @@ namespace FastColoredTextBoxNS
                 return;
             }
 
-            Range range = this.Clone();//to OnSelectionChanged disable
+            Range range = Clone();//to OnSelectionChanged disable
             bool wasSpace = false;
             while (IsSpaceChar(range.CharBeforeStart))
             {
@@ -1293,8 +1293,8 @@ namespace FastColoredTextBoxNS
             }
             if (!wasIdentifier && (!wasSpace || range.CharBeforeStart != '\n'))
                 range.GoLeft(shift);
-            this.Start = range.Start;
-            this.End = range.End;
+            Start = range.Start;
+            End = range.End;
 
             if (tb.LineInfos[Start.iLine].VisibleState != VisibleState.Visible)
                 GoRight(shift);
@@ -1310,7 +1310,7 @@ namespace FastColoredTextBoxNS
                 return;
             }
 
-            Range range = this.Clone();//to OnSelectionChanged disable
+            Range range = Clone();//to OnSelectionChanged disable
 
             bool wasNewLine = false;
 
@@ -1346,8 +1346,8 @@ namespace FastColoredTextBoxNS
                         range.GoRight(shift);
             }
 
-            this.Start = range.Start;
-            this.End = range.End;
+            Start = range.Start;
+            End = range.End;
 
             if (tb.LineInfos[Start.iLine].VisibleState != VisibleState.Visible)
                 GoLeft(shift);
@@ -1543,14 +1543,14 @@ namespace FastColoredTextBoxNS
         {
             if (backward)
             {
-                var r = new Range(this.tb, startPlace, startPlace);
+                var r = new Range(tb, startPlace, startPlace);
                 while (r.GoLeft() && r.start >= Start)
                 {
                     if (r.Start.iChar < tb[r.Start.iLine].Count)
                         yield return r.Start;
                 }
 
-                r = new Range(this.tb, End, End);
+                r = new Range(tb, End, End);
                 while (r.GoLeft() && r.start >= startPlace)
                 {
                     if (r.Start.iChar < tb[r.Start.iLine].Count)
@@ -1559,7 +1559,7 @@ namespace FastColoredTextBoxNS
             }
             else
             {
-                var r = new Range(this.tb, startPlace, startPlace);
+                var r = new Range(tb, startPlace, startPlace);
                 if (startPlace < End)
                     do
                     {
@@ -1567,7 +1567,7 @@ namespace FastColoredTextBoxNS
                             yield return r.Start;
                     } while (r.GoRight());
 
-                r = new Range(this.tb, Start, Start);
+                r = new Range(tb, Start, Start);
                 if (r.Start < startPlace)
                     do
                     {

@@ -17,9 +17,9 @@ namespace FastColoredTextBoxNS
 
         public TextStyle(Brush foreBrush, Brush backgroundBrush, FontStyle fontStyle)
         {
-            this.ForeBrush = foreBrush;
-            this.BackgroundBrush = backgroundBrush;
-            this.FontStyle = fontStyle;
+            ForeBrush = foreBrush;
+            BackgroundBrush = backgroundBrush;
+            FontStyle = fontStyle;
             stringFormat = new StringFormat(StringFormatFlags.MeasureTrailingSpaces);
         }
 

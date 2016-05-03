@@ -13,9 +13,9 @@ namespace FastColoredTextBoxNS
 
         public LineNeededEventArgs(string sourceLineText, int displayedLineIndex)
         {
-            this.SourceLineText = sourceLineText;
-            this.DisplayedLineIndex = displayedLineIndex;
-            this.DisplayedLineText = sourceLineText;
+            SourceLineText = sourceLineText;
+            DisplayedLineIndex = displayedLineIndex;
+            DisplayedLineText = sourceLineText;
         }
     }
 }

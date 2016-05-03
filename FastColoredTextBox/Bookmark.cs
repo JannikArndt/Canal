@@ -34,9 +34,9 @@ namespace FastColoredTextBoxNS
 
         public Bookmark(FastColoredTextBox tb, string name, int lineIndex)
         {
-            this.TB = tb;
-            this.Name = name;
-            this.LineIndex = lineIndex;
+            TB = tb;
+            Name = name;
+            LineIndex = lineIndex;
             Color = tb.BookmarkColor;
         }
 

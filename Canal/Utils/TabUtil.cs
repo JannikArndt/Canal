@@ -161,7 +161,7 @@ namespace Canal.Utils
 
         public FileControl CurrentFileControl
         {
-            get { return (_tabControl.SelectedTab == null) ? null : (FileControl)_tabControl.SelectedTab.Controls.Find("FileControl", false).FirstOrDefault(); }
+            get { return _tabControl.SelectedTab == null ? null : (FileControl)_tabControl.SelectedTab.Controls.Find("FileControl", false).FirstOrDefault(); }
         }
 
         public void ShowStartTab()

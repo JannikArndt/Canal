@@ -163,4 +163,13 @@
   <data name="ErrorWithMessage" xml:space="preserve">
     <value>Error: {0}</value>
   </data>
+  <data name="SelectedVariable" xml:space="preserve">
+    <value>Selected Variable: </value>
+  </data>
+  <data name="SelectedProcedure" xml:space="preserve">
+    <value>Selected Procedure: </value>
+  </data>
+  <data name="SelectedProgram" xml:space="preserve">
+    <value>Program: </value>
+  </data>
 </root>

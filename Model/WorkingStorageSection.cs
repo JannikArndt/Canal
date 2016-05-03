@@ -1,12 +1,11 @@
-﻿namespace Model
+﻿using Model.References;
+using System.Collections.Generic;
+
+namespace Model
 {
-    using System.Collections.Generic;
-
-    using Model.References;
-
     public class WorkingStorageSection : CobolTreeNode
     {
-        private List<FileReference> copyReferences = new List<FileReference>();
+        private List<FileReference> _copyReferences = new List<FileReference>();
 
         public List<Variable> Variables { get; set; }
 
@@ -14,7 +13,7 @@
         {
             get
             {
-                return this.copyReferences;
+                return _copyReferences;
             }
             set
             {
@@ -23,7 +22,7 @@
                     Nodes.Add("COPY " + fileReference.ProgramName);
                 }
 
-                this.copyReferences = value;
+                _copyReferences = value;
             }
         }
 

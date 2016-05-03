@@ -2,53 +2,50 @@
 
 namespace Level88ToEnum
 {
+    using Properties;
     using System;
     using System.Collections.Generic;
     using System.Windows.Forms;
-
-    using FastColoredTextBoxNS;
-
-    using global::Level88ToEnum.Properties;
 
 
     public partial class Level88ToEnum : Form
     {
         public Level88ToEnum()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             // Inputs
-            this.cobolLevel88Input.TextChanged += (sender, args) => this.CreateOutput();
+            cobolLevel88Input.TextChanged += (sender, args) => CreateOutput();
 
-            this.csharpNamesInput.TextChanged += (sender, args) => this.CreateOutput();
+            csharpNamesInput.TextChanged += (sender, args) => CreateOutput();
 
-            this.commentsInput.TextChanged += (sender, args) => this.CreateOutput();
+            commentsInput.TextChanged += (sender, args) => CreateOutput();
 
             // Outputs
-            this.csharpEnumOutput.Language = Language.CSharp;
-            this.csharpEnumOutput.HighlightingRangeType = HighlightingRangeType.VisibleRange;
-            this.csharpEnumOutput.SyntaxHighlighter.HighlightSyntax(Language.CSharp, this.csharpEnumOutput.Range);
+            csharpEnumOutput.Language = Language.CSharp;
+            csharpEnumOutput.HighlightingRangeType = HighlightingRangeType.VisibleRange;
+            csharpEnumOutput.SyntaxHighlighter.HighlightSyntax(Language.CSharp, csharpEnumOutput.Range);
 
-            this.csharpEnumMapperOutput.Language = Language.CSharp;
-            this.csharpEnumMapperOutput.HighlightingRangeType = HighlightingRangeType.VisibleRange;
-            this.csharpEnumMapperOutput.SyntaxHighlighter.HighlightSyntax(Language.CSharp, this.csharpEnumMapperOutput.Range);
+            csharpEnumMapperOutput.Language = Language.CSharp;
+            csharpEnumMapperOutput.HighlightingRangeType = HighlightingRangeType.VisibleRange;
+            csharpEnumMapperOutput.SyntaxHighlighter.HighlightSyntax(Language.CSharp, csharpEnumMapperOutput.Range);
 
-            this.namespaceEnumInput.Text = Settings.Default.NamespaceEnum;
-            this.namespaceMapperInput.Text = Settings.Default.NamespaceMapper;
+            namespaceEnumInput.Text = Settings.Default.NamespaceEnum;
+            namespaceMapperInput.Text = Settings.Default.NamespaceMapper;
         }
 
         private void CreateOutput()
         {
-            var inputCobol = this.cobolLevel88Input.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-            var inputCsharp = this.csharpNamesInput.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-            var inputComments = this.commentsInput.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            var inputCobol = cobolLevel88Input.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            var inputCsharp = csharpNamesInput.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            var inputComments = commentsInput.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
-            var enumName = string.IsNullOrWhiteSpace(this.settingsName.Text) ? "NewEnum" : this.settingsName.Text;
-            var enumNamespace = string.IsNullOrWhiteSpace(this.namespaceEnumInput.Text) ? "Solution.Project.Enums" : this.namespaceEnumInput.Text;
-            var mapperNamespace = string.IsNullOrWhiteSpace(this.namespaceMapperInput.Text) ? "Solution.Project.Mappers" : this.namespaceMapperInput.Text;
+            var enumName = string.IsNullOrWhiteSpace(settingsName.Text) ? "NewEnum" : settingsName.Text;
+            var enumNamespace = string.IsNullOrWhiteSpace(namespaceEnumInput.Text) ? "Solution.Project.Enums" : namespaceEnumInput.Text;
+            var mapperNamespace = string.IsNullOrWhiteSpace(namespaceMapperInput.Text) ? "Solution.Project.Mappers" : namespaceMapperInput.Text;
 
-            this.csharpEnumOutput.Text = this.CreateEnum(enumName, enumNamespace, inputCobol, inputCsharp, inputComments);
-            this.csharpEnumMapperOutput.Text = this.CreateMapper(enumName, mapperNamespace, enumNamespace, inputCobol, inputCsharp, inputComments);
+            csharpEnumOutput.Text = CreateEnum(enumName, enumNamespace, inputCobol, inputCsharp, inputComments);
+            csharpEnumMapperOutput.Text = CreateMapper(enumName, mapperNamespace, enumNamespace, inputCobol, inputCsharp, inputComments);
         }
 
         private string CreateEnum(string name, string enumNamespace, IList<string> inputCobol, IList<string> inputCsharp, IList<string> inputComments)
@@ -128,10 +125,10 @@ namespace Level88ToEnum
 
         private void settingsChanged(object sender, EventArgs e)
         {
-            Settings.Default.NamespaceEnum = this.namespaceEnumInput.Text;
-            Settings.Default.NamespaceMapper = this.namespaceMapperInput.Text;
+            Settings.Default.NamespaceEnum = namespaceEnumInput.Text;
+            Settings.Default.NamespaceMapper = namespaceMapperInput.Text;
             Settings.Default.Save();
-            this.CreateOutput();
+            CreateOutput();
         }
     }
 }

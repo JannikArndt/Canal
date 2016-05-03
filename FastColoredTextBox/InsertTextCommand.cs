@@ -14,7 +14,7 @@ namespace FastColoredTextBoxNS
         /// <param name="insertedText">Text for inserting</param>
         public InsertTextCommand(TextSource ts, string insertedText) : base(ts)
         {
-            this.InsertedText = insertedText;
+            InsertedText = insertedText;
         }
 
         /// <summary>

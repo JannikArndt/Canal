@@ -1,3 +1,4 @@
+using FastColoredTextBoxNS.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -5,11 +6,10 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using FastColoredTextBoxNS.Enums;
 
 namespace FastColoredTextBoxNS
 {
-    [System.ComponentModel.ToolboxItem(false)]
+    [ToolboxItem(false)]
     public class AutocompleteListView : UserControl
     {
         public event EventHandler FocussedItemIndexChanged;
@@ -28,7 +28,7 @@ namespace FastColoredTextBoxNS
         int oldItemCount = 0;
         FastColoredTextBox tb;
         internal ToolTip toolTip = new ToolTip();
-        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+        Timer timer = new Timer();
 
         internal bool AllowTabKey { get; set; }
         public ImageList ImageList { get; set; }
@@ -68,7 +68,7 @@ namespace FastColoredTextBoxNS
         internal AutocompleteListView(FastColoredTextBox tb)
         {
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint, true);
-            base.Font = new Font(FontFamily.GenericSansSerif, 9);
+            Font = new Font(FontFamily.GenericSansSerif, 9);
             visibleItems = new List<AutocompleteItem>();
             VerticalScroll.SmallChange = ItemHeight;
             MaximumSize = new Size(Size.Width, 180);
@@ -97,15 +97,15 @@ namespace FastColoredTextBoxNS
             tb.LostFocus += (o, e) =>
             {
                 if (Menu != null && !Menu.IsDisposed)
-                    if (!Menu.Focused) 
+                    if (!Menu.Focused)
                         SafetyClose();
             };
 
             tb.Scroll += delegate { SafetyClose(); };
 
-            this.VisibleChanged += (o, e) =>
+            VisibleChanged += (o, e) =>
             {
-                if (this.Visible)
+                if (Visible)
                     DoSelectedVisible();
             };
         }
@@ -136,7 +136,7 @@ namespace FastColoredTextBoxNS
             DoAutocomplete(false);
         }
 
-        void ResetTimer(System.Windows.Forms.Timer timer)
+        void ResetTimer(Timer timer)
         {
             timer.Stop();
             timer.Start();
@@ -168,7 +168,7 @@ namespace FastColoredTextBoxNS
             Point point = tb.PlaceToPoint(fragment.End);
             point.Offset(2, tb.CharHeight);
             //
-            if (forced || (text.Length >= Menu.MinFragmentLength 
+            if (forced || (text.Length >= Menu.MinFragmentLength
                            && tb.Selection.IsEmpty /*pops up only if selected range is empty*/
                            && (tb.Selection.Start > fragment.Start || text.Length == 0/*pops up only if caret is after first letter*/)))
             {
@@ -179,7 +179,7 @@ namespace FastColoredTextBoxNS
                 {
                     item.Parent = Menu;
                     CompareResult res = item.Compare(text);
-                    if(res != CompareResult.Hidden)
+                    if (res != CompareResult.Hidden)
                         visibleItems.Add(item);
                     if (res == CompareResult.VisibleAndSelected && !foundSelected)
                     {
@@ -202,7 +202,7 @@ namespace FastColoredTextBoxNS
                 {
                     CancelEventArgs args = new CancelEventArgs();
                     Menu.OnOpening(args);
-                    if(!args.Cancel)
+                    if (!args.Cancel)
                         Menu.Show(tb, point);
                 }
                 else
@@ -229,22 +229,22 @@ namespace FastColoredTextBoxNS
                     needClose = true;
                 else
                     if (!Menu.Fragment.Contains(tb.Selection.Start))
+                {
+                    if (tb.Selection.Start.iLine == Menu.Fragment.End.iLine && tb.Selection.Start.iChar == Menu.Fragment.End.iChar + 1)
                     {
-                        if (tb.Selection.Start.iLine == Menu.Fragment.End.iLine && tb.Selection.Start.iChar == Menu.Fragment.End.iChar + 1)
-                        {
-                            //user press key at end of fragment
-                            char c = tb.Selection.CharBeforeStart;
-                            if (!Regex.IsMatch(c.ToString(), Menu.SearchPattern))//check char
-                                needClose = true;
-                        }
-                        else
+                        //user press key at end of fragment
+                        char c = tb.Selection.CharBeforeStart;
+                        if (!Regex.IsMatch(c.ToString(), Menu.SearchPattern))//check char
                             needClose = true;
                     }
+                    else
+                        needClose = true;
+                }
 
                 if (needClose)
                     Menu.Close();
             }
-            
+
         }
 
         void tb_KeyDown(object sender, KeyEventArgs e)
@@ -300,7 +300,7 @@ namespace FastColoredTextBoxNS
 
                 var item = visibleItems[i];
 
-                if(item.BackColor != Color.Transparent)
+                if (item.BackColor != Color.Transparent)
                     using (var brush = new SolidBrush(item.BackColor))
                         e.Graphics.FillRectangle(brush, 1, y, ClientSize.Width - 1 - 1, itemHeight - 1);
 
@@ -316,7 +316,7 @@ namespace FastColoredTextBoxNS
                     }
 
                 if (i == hoveredItemIndex)
-                    using(var pen = new Pen(HoveredColor))
+                    using (var pen = new Pen(HoveredColor))
                         e.Graphics.DrawRectangle(pen, leftPadding, y, ClientSize.Width - 1 - leftPadding, itemHeight - 1);
 
                 using (var brush = new SolidBrush(item.ForeColor != Color.Transparent ? item.ForeColor : ForeColor))
@@ -334,7 +334,7 @@ namespace FastColoredTextBoxNS
         {
             base.OnMouseClick(e);
 
-            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            if (e.Button == MouseButtons.Left)
             {
                 FocussedItemIndex = PointToItemIndex(e.Location);
                 DoSelectedVisible();
@@ -432,7 +432,7 @@ namespace FastColoredTextBoxNS
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             ProcessKey(keyData, Keys.None);
-            
+
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
@@ -504,7 +504,7 @@ namespace FastColoredTextBoxNS
                 return;
             }
 
-            IWin32Window window = this.Parent ?? this;
+            IWin32Window window = Parent ?? this;
             Point location = new Point((window == this ? Width : Right) + 3, 0);
 
             if (string.IsNullOrEmpty(text))

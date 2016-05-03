@@ -1,7 +1,7 @@
-﻿namespace Model.References
-{
-    using Model.Enums;
+﻿using Model.Enums;
 
+namespace Model.References
+{
     public class PerformReference : ProcedureReference
     {
         public PerformReference(string referencedProcedure) : base(referencedProcedure)

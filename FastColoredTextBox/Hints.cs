@@ -22,9 +22,9 @@ namespace FastColoredTextBoxNS
             tb.VisibleRangeChanged += OnTextBoxVisibleRangeChanged;
         }
 
-        protected virtual void OnTextBoxKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        protected virtual void OnTextBoxKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == System.Windows.Forms.Keys.Escape && e.Modifiers == System.Windows.Forms.Keys.None)
+            if (e.KeyCode == Keys.Escape && e.Modifiers == Keys.None)
                 Clear();
         }
 

@@ -15,7 +15,7 @@
 
         public override string ToString()
         {
-            return string.Format("PIC S9{0}", this.Length > 1 ? "(" + this.Length + ")" : string.Empty);
+            return string.Format("PIC S9{0}", Length > 1 ? "(" + Length + ")" : string.Empty);
         }
     }
 }

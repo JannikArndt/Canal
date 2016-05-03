@@ -25,7 +25,7 @@
                     result = new PicGroup();
                 else
                 {
-                    result = this.ParsePicType(type) ?? new Pic88();
+                    result = ParsePicType(type) ?? new Pic88();
                     result.CompType = CompParser.Instance.Parse(comp);
                     result.Value = value;
                 }
@@ -55,7 +55,7 @@
             if (string.IsNullOrWhiteSpace(text))
                 return new Pic88();
 
-            var picPartResolved = this.ResolveParenthesis(text);
+            var picPartResolved = ResolveParenthesis(text);
 
             var indexOfComp = picPartResolved.IndexOf("COMP", StringComparison.Ordinal);
             if (indexOfComp > 0)

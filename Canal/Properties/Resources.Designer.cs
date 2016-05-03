@@ -61,23 +61,20 @@ namespace Canal.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to v1.11
-        ///- opening a file is now 30x faster!
-        ///- sped up file loading, caching is now in background thread
-        ///- moved more analysis into background threads
-        ///- moved syntax highlighting into background thread
-        ///- improved logging
-        ///- stability improvements (try-catch)
+        ///   Looks up a localized string similar to v1.13
+        ///- &quot;Open Copybook&quot; now also works if copybook starts with comment
+        ///- &quot;Resolve COPYs&quot; can be executed multiple times
+        ///- Ctrl + Tab and Ctrl + Shift + Tab circle through tabs
+        ///- Alt + 1 to 9 selects tab directly
+        ///- Fixes #9: Start tab can now be closed.
         ///
-        ///v1.10
-        ///- added save functionality
-        ///- added export to html functionality
-        ///- improved variable info view
-        ///- you can now double click on a variable to find it in the source
-        ///- added navigate backward/forward buttons
-        ///
-        ///v1.9
-        ///- Rebuild variable parsing [rest of string was truncated]&quot;;.
+        ///v1.12
+        ///- Improved search
+        ///- Fixed error where search would skip elements
+        ///- Copy resolving is now parallel
+        ///- Already resolved Copys are commented out to prevent multiple resolvings
+        ///- Unsaved changes are marked with an asterisk
+        ///- Added &quot;Open Copyboo [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ChangeLog {
             get {
@@ -172,6 +169,33 @@ namespace Canal.Properties {
         internal static string SearchPlaceholder {
             get {
                 return ResourceManager.GetString("SearchPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected Procedure: .
+        /// </summary>
+        internal static string SelectedProcedure {
+            get {
+                return ResourceManager.GetString("SelectedProcedure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Program: .
+        /// </summary>
+        internal static string SelectedProgram {
+            get {
+                return ResourceManager.GetString("SelectedProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected Variable: .
+        /// </summary>
+        internal static string SelectedVariable {
+            get {
+                return ResourceManager.GetString("SelectedVariable", resourceCulture);
             }
         }
         

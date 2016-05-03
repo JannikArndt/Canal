@@ -55,7 +55,7 @@ namespace CodeGenerator
                 Group formatGroup = m.Groups["format"];
                 Group endGroup = m.Groups["end"];
 
-                values.Add((propertyGroup.Value == "0")
+                values.Add(propertyGroup.Value == "0"
                   ? source
                   : DataBinder.Eval(source, propertyGroup.Value));
 

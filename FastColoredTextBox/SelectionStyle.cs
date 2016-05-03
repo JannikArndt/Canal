@@ -19,8 +19,8 @@ namespace FastColoredTextBoxNS
 
         public SelectionStyle(Brush backgroundBrush, Brush foregroundBrush = null)
         {
-            this.BackgroundBrush = backgroundBrush;
-            this.ForegroundBrush = foregroundBrush;
+            BackgroundBrush = backgroundBrush;
+            ForegroundBrush = foregroundBrush;
         }
 
         public override void Draw(Graphics gr, Point position, Range range)

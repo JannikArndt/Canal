@@ -12,7 +12,7 @@ namespace FastColoredTextBoxNS
 
         public MarkerStyle(Brush backgroundBrush)
         {
-            this.BackgroundBrush = backgroundBrush;
+            BackgroundBrush = backgroundBrush;
             IsExportable = true;
         }
 

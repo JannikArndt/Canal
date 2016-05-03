@@ -18,10 +18,10 @@ namespace FastColoredTextBoxNS
 
         public LinePushedEventArgs(string sourceLineText, int displayedLineIndex, string displayedLineText)
         {
-            this.SourceLineText = sourceLineText;
-            this.DisplayedLineIndex = displayedLineIndex;
-            this.DisplayedLineText = displayedLineText;
-            this.SavedText = displayedLineText;
+            SourceLineText = sourceLineText;
+            DisplayedLineIndex = displayedLineIndex;
+            DisplayedLineText = displayedLineText;
+            SavedText = displayedLineText;
         }
     }
 }

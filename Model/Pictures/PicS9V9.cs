@@ -9,7 +9,7 @@
 
         public override string ToString()
         {
-            return string.Format("PIC S9{0}V9{1}", this.IntegersLength > 1 ? "(" + this.IntegersLength + ")" : string.Empty, this.FractionsLength > 1 ? "(" + this.FractionsLength + ")" : string.Empty);
+            return string.Format("PIC S9{0}V9{1}", IntegersLength > 1 ? "(" + IntegersLength + ")" : string.Empty, FractionsLength > 1 ? "(" + FractionsLength + ")" : string.Empty);
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using System.Text;
-using System.Drawing;
+﻿using FastColoredTextBoxNS.Enums;
 using System.Collections.Generic;
-using FastColoredTextBoxNS.Enums;
+using System.Drawing;
+using System.Text;
 
 namespace FastColoredTextBoxNS
 {
@@ -55,10 +55,10 @@ namespace FastColoredTextBoxNS
             sel.SelectAll();
             return GetHtml(sel);
         }
-        
+
         public string GetHtml(Range r)
         {
-            this.tb = r.tb;
+            tb = r.tb;
             Dictionary<StyleIndex, object> styles = new Dictionary<StyleIndex, object>();
             StringBuilder sb = new StringBuilder();
             StringBuilder tempSB = new StringBuilder();
@@ -153,24 +153,24 @@ namespace FastColoredTextBoxNS
             for (int i = 0; i < tb.Styles.Length; i++)
             {
                 if (tb.Styles[i] != null && ((int)styleIndex & mask) != 0)
-                if (tb.Styles[i].IsExportable)
-                {
-                    var style = tb.Styles[i];
-                    styles.Add(style);
+                    if (tb.Styles[i].IsExportable)
+                    {
+                        var style = tb.Styles[i];
+                        styles.Add(style);
 
-                    bool isTextStyle = style is TextStyle;
-                    if (isTextStyle)
-                        if (!hasTextStyle || tb.AllowSeveralTextStyleDrawing)
-                        {
-                            hasTextStyle = true;
-                            textStyle = style as TextStyle;
-                        }
-                }
+                        bool isTextStyle = style is TextStyle;
+                        if (isTextStyle)
+                            if (!hasTextStyle || tb.AllowSeveralTextStyleDrawing)
+                            {
+                                hasTextStyle = true;
+                                textStyle = style as TextStyle;
+                            }
+                    }
                 mask = mask << 1;
             }
             //add TextStyle css
             string result = "";
-            
+
             if (!hasTextStyle)
             {
                 //draw by default renderer
@@ -181,17 +181,17 @@ namespace FastColoredTextBoxNS
                 result = textStyle.GetCSS();
             }
             //add no TextStyle css
-            foreach(var style in styles)
-//            if (style != textStyle)
-            if(!(style is TextStyle))
-                result += style.GetCSS();
+            foreach (var style in styles)
+                //            if (style != textStyle)
+                if (!(style is TextStyle))
+                    result += style.GetCSS();
 
             return result;
         }
 
         public static string GetColorAsString(Color color)
         {
-            if(color==Color.Transparent)
+            if (color == Color.Transparent)
                 return "";
             return string.Format("#{0:x2}{1:x2}{2:x2}", color.R, color.G, color.B);
         }
@@ -207,13 +207,13 @@ namespace FastColoredTextBoxNS
             if (tempSB.Length == 0)
                 return;
             if (UseStyleTag)
-                sb.AppendFormat("<font class=fctb{0}>{1}</font>", GetStyleName(currentStyle), tempSB.ToString());
+                sb.AppendFormat("<font class=fctb{0}>{1}</font>", GetStyleName(currentStyle), tempSB);
             else
             {
                 string css = GetCss(currentStyle);
-                if(css!="")
+                if (css != "")
                     sb.AppendFormat("<font style=\"{0}\">", css);
-                sb.Append(tempSB.ToString());
+                sb.Append(tempSB);
                 if (css != "")
                     sb.Append("</font>");
             }

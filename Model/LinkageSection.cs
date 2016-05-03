@@ -1,9 +1,8 @@
-﻿namespace Model
+﻿using Model.References;
+using System.Collections.Generic;
+
+namespace Model
 {
-    using System.Collections.Generic;
-
-    using Model.References;
-
     public class LinkageSection : CobolTreeNode
     {
         private List<FileReference> copyReferences = new List<FileReference>();
@@ -14,7 +13,7 @@
         {
             get
             {
-                return this.copyReferences;
+                return copyReferences;
             }
             set
             {
@@ -23,7 +22,7 @@
                     Nodes.Add("COPY " + fileReference.ProgramName);
                 }
 
-                this.copyReferences = value;
+                copyReferences = value;
             }
         }
 

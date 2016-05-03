@@ -1,4 +1,5 @@
-﻿using Canal.Utils;
+﻿using Canal.Properties;
+using Canal.Utils;
 using Model;
 using Model.References;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace Canal.UserControls
             var variable = cobolFile.CobolTree.DataDivision.Variables.FindVariable(word);
             if (variable != null)
             {
-                infoGroupBox.Text = "Selected Variable: " + word;
+                infoGroupBox.Text = Resources.SelectedVariable + word;
                 FillVariableTreeView(variable);
                 return;
             }
@@ -30,13 +31,13 @@ namespace Canal.UserControls
             var procedure = cobolFile.CobolTree.AllProcedures.FirstOrDefault(proc => proc.Name == word);
             if (procedure != null)
             {
-                infoGroupBox.Text = "Selected Procedure: " + word;
+                infoGroupBox.Text = Resources.SelectedProcedure + word;
                 FillProcedureTreeView(procedure);
                 return;
             }
 
             // else: show file infos
-            infoGroupBox.Text = "Program: " + cobolFile.Name;
+            infoGroupBox.Text = Resources.SelectedProgram + cobolFile.Name;
             FillCallTreeView(cobolFile.CallReferences);
         }
 

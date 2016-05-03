@@ -1,11 +1,10 @@
-﻿using Model.References;
+﻿using Model.Pictures;
+using Model.References;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace Model
 {
-    using Model.Pictures;
-    using System.Collections.Generic;
-    using System.Windows.Forms;
-
     public class Variable : TreeNode
     {
         public int VariableLevel { get; set; }
