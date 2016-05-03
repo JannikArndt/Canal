@@ -52,6 +52,12 @@
 
         protected override void OnClosing(CancelEventArgs e)
         {
+            if (!_tabUtil.CloseAllTabs())
+            {
+                e.Cancel = true;
+                return;
+            }
+
             Logger.Info("Closing program");
             Settings.Default.Save();
             base.OnClosing(e);
