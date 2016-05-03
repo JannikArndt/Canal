@@ -40,7 +40,7 @@ namespace Canal.Utils
 
         private static readonly string VarRedefines = @"(REDEFINES (?<redefines>[\w\d-()]+) +)?";
 
-        private static readonly string VarPicture = @"(PIC(TURE)? (IS )?(?<type>(X|9|S|V|\(\d+\))+) *(?<comp>COMP(UTATIONAL)?(-\d)?)?)?";
+        private static readonly string VarPicture = @"(PIC(TURE)? (IS )?(?<type>(X|9|S|V|-|\(\d+\))+) *(?<comp>COMP(UTATIONAL)?(-\d)?)?)?";
 
         private static readonly string VarValue = @"((VALUE(S)?) (IS |ARE )?(?<value>(""[^""]+""|(\d*\.)?\d+|SPACE(S)?|ZERO(E)?(S)?|(HIGH-|LOW-)VALUES| +THROUGH +| +THRU +|, *)*))?";
 

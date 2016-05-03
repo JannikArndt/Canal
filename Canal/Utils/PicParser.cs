@@ -1,11 +1,9 @@
 ﻿namespace Canal.Utils
 {
+    using Logging;
+    using Model.Pictures;
     using System;
     using System.Linq;
-
-    using Logging;
-
-    using Model.Pictures;
 
     public class PicParser
     {
@@ -84,6 +82,10 @@
             // PIC 99
             if (picPartResolved.All(c => c == '9'))
                 return new Pic9(picPartResolved.Length);
+
+            // PIC -99
+            if (picPartResolved[0] == '-' && picPartResolved.Skip(1).All(c => c == '9'))
+                return new Pic9(picPartResolved.Length - 1, CompType.None, true);
 
             // PIC S99
             if (picPartResolved[0] == 'S' && picPartResolved.Skip(1).All(c => c == '9'))
