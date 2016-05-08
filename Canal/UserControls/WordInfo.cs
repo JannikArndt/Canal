@@ -1,5 +1,4 @@
 ﻿using Canal.Properties;
-using Canal.Utils;
 using Model;
 using Model.References;
 using System.Collections.Generic;
@@ -18,24 +17,29 @@ namespace Canal.UserControls
             InitializeComponent();
             _parent = parent;
 
-            // is the word a variable?
-            var variable = cobolFile.CobolTree.DataDivision.Variables.FindVariable(word);
-            if (variable != null)
-            {
-                infoLabel.Visible = false;
-                infoGroupBox.Text = Resources.SelectedVariable + word;
-                FillVariableTreeView(variable);
+            if (cobolFile == null)
                 return;
-            }
 
-            // is it a procedure?
-            var procedure = cobolFile.CobolTree.AllProcedures.FirstOrDefault(proc => proc.Name == word);
-            if (procedure != null)
+            if (cobolFile.CobolTree != null)
             {
-                infoLabel.Visible = false;
-                infoGroupBox.Text = Resources.SelectedProcedure + word;
-                FillProcedureTreeView(procedure);
-                return;
+                // is the word a variable?
+                if (cobolFile.Variables.ContainsKey(word))
+                {
+                    infoLabel.Visible = false;
+                    infoGroupBox.Text = Resources.SelectedVariable + word;
+                    FillVariableTreeView(cobolFile.Variables[word]);
+                    return;
+                }
+
+                // is it a procedure?
+                var procedure = cobolFile.CobolTree.AllProcedures.FirstOrDefault(proc => proc.Name == word);
+                if (procedure != null)
+                {
+                    infoLabel.Visible = false;
+                    infoGroupBox.Text = Resources.SelectedProcedure + word;
+                    FillProcedureTreeView(procedure);
+                    return;
+                }
             }
 
             // else: show file infos

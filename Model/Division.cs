@@ -5,15 +5,10 @@
     /// </summary>
     public abstract class Division : CobolTreeNode
     {
-        protected Division(string sourceCode, string nodeName, int indexDataDivision)
-            : base(nodeName, indexDataDivision)
+        protected Division(CobolFile cobolFile, string nodeName)
+            : base(cobolFile, nodeName)
         {
-            OriginalSource = sourceCode;
-        }
 
-        /// <summary>
-        /// Original source code of this division
-        /// </summary>
-        public string OriginalSource { get; private set; }
+        }
     }
 }

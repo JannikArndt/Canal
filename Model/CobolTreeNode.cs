@@ -4,16 +4,25 @@ namespace Model
 {
     public abstract class CobolTreeNode : TreeNode
     {
-        protected CobolTreeNode()
-        {
-        }
+        protected CobolFile ParentCobolFile { get; }
 
-        protected CobolTreeNode(string nodeText, int indexDataDivision)
+        protected abstract int StartIndex { get; }
+        protected abstract int EndIndex { get; }
+
+        public int Length { get { return EndIndex - StartIndex; } }
+
+        protected CobolTreeNode(CobolFile cobolFile, string nodeText)
             : base(nodeText)
         {
-            IndexInSource = indexDataDivision;
+            ParentCobolFile = cobolFile;
         }
 
-        public int IndexInSource { get; private set; }
+        public string GetCode()
+        {
+            if (StartIndex < 0 || EndIndex < 0)
+                return string.Empty;
+
+            return ParentCobolFile.Text.Substring(StartIndex, EndIndex - StartIndex);
+        }
     }
 }

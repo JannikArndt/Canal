@@ -16,10 +16,8 @@ using System.Windows.Forms;
 
 namespace Canal.UserControls
 {
-    public sealed partial class FileControl : UserControl, IDisposable
+    public sealed partial class FileControl : UserControl
     {
-        private readonly BackgroundWorker _cobolTreeWorker = new BackgroundWorker();
-
         public FileControl(string filename, MainWindow parent)
         {
             InitializeComponent();
@@ -30,7 +28,12 @@ namespace Canal.UserControls
             {
                 MainWindow = parent;
 
-                CobolFile = CobolFileBuilder.Instance.Build(filename);
+                CobolFile = new CobolFileBuilder().Build(filename);
+
+                var worker = new BackgroundWorker();
+                worker.DoWork += new Analyzer().AnalyzeFile;
+                worker.RunWorkerCompleted += InitTabs;
+                worker.RunWorkerAsync(CobolFile);
 
                 // initialize FastColoredTextBox
                 codeBox.Font = SourceCodePro.Regular;
@@ -46,14 +49,6 @@ namespace Canal.UserControls
                 };
 
                 searchBox.Text = Resources.SearchPlaceholder;
-
-                _cobolTreeWorker.DoWork += BuildCobolTree;
-
-                // Display the analysis info in side tabs
-                _cobolTreeWorker.RunWorkerCompleted += (sender, args) => InitTabs();
-
-                // Build the CobolTree in the CobolFile which contains all analysis information
-                _cobolTreeWorker.RunWorkerAsync(CobolFile);
             }
             catch (Exception exception)
             {
@@ -134,12 +129,7 @@ namespace Canal.UserControls
             filesTreeView.ExpandAll();
         }
 
-        void IDisposable.Dispose()
-        {
-            _cobolTreeWorker.Dispose();
-        }
-
-        private void InitTabs()
+        private void InitTabs(object sender, RunWorkerCompletedEventArgs runWorkerCompletedEventArgs)
         {
             try
             {
@@ -150,7 +140,7 @@ namespace Canal.UserControls
 
                 ShowPerformsTreeView();
 
-                ShowProceduresTreeView(true);
+                ShowProceduresTreeView();
 
                 ShowVariablesTreeView();
 
@@ -185,20 +175,6 @@ namespace Canal.UserControls
             filesTreeView.Nodes.AddRange(FileUtil.Instance.GetDirectoryStructure());
             filesTreeView.ExpandAll();
             filesTabSearchBox.Text = Resources.SearchPlaceholder;
-        }
-
-        private void BuildCobolTree(object sender, DoWorkEventArgs doWorkEventArgs)
-        {
-            try
-            {
-                var builder = new CobolTreeBuilder();
-                builder.Build(doWorkEventArgs.Argument as CobolFile);
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(Resources.Error_CobolTree_could_not_be_built + exception.Message, Resources.Error, MessageBoxButtons.OK);
-                throw;
-            }
         }
 
         private void HandleKeyDown(object sender, KeyEventArgs e)
@@ -343,6 +319,8 @@ namespace Canal.UserControls
 
             CobolFile.Text = codeBox.Text;
 
+            // TODO
+
             var backgroundWorker = new BackgroundWorker();
 
             backgroundWorker.DoWork += (o, args) =>
@@ -364,7 +342,7 @@ namespace Canal.UserControls
                 toolStripProgressBar.Visible = false;
 
                 // Build the CobolTree in the CobolFile which contains all analysis information
-                _cobolTreeWorker.RunWorkerAsync(CobolFile);
+                // _cobolTreeWorker.RunWorkerAsync(CobolFile);
             };
 
             Cursor = Cursors.WaitCursor;
@@ -404,17 +382,17 @@ namespace Canal.UserControls
                 return;
             }
 
-            var workingStorageSectionTreeNode = new TreeNode("Working-Storage Division");
+            var workingStorageSectionTreeNode = new TreeNode("Local");
 
-            foreach (var variable in CobolFile.CobolTree.DataDivision.WorkingStorageSection.Variables)
+            foreach (var variable in CobolFile.Variables.Values.Where(vari => vari.VariableLevel == 1 && vari.CopyReference.CobolFile == CobolFile))
             {
                 variable.FillNodesWithVariables();
                 workingStorageSectionTreeNode.Nodes.Add(variable);
             }
 
-            var linkageSectionTreeNode = new TreeNode("Linkage Division");
+            var linkageSectionTreeNode = new TreeNode("From Records");
 
-            foreach (var variable in CobolFile.CobolTree.DataDivision.LinkageSection.Variables)
+            foreach (var variable in CobolFile.Variables.Values.Where(vari => vari.VariableLevel == 1 && vari.CopyReference.CobolFile != CobolFile))
             {
                 variable.FillNodesWithVariables();
                 linkageSectionTreeNode.Nodes.Add(variable);
@@ -464,7 +442,7 @@ namespace Canal.UserControls
             performTreeWorker.RunWorkerAsync();
         }
 
-        private void ShowProceduresTreeView(bool showWarning = false)
+        private void ShowProceduresTreeView()
         {
             proceduresTreeView.Nodes.Clear();
 
@@ -473,9 +451,6 @@ namespace Canal.UserControls
                 proceduresTreeView.Nodes.Add(new TreeNode("Error: CobolTree could not be built.") { ForeColor = Color.Red });
                 return;
             }
-
-            if (showWarning)
-                proceduresTreeView.Nodes.Add(new TreeNode("Copy files aren't resolved yet, references may be incomplete!") { ForeColor = Color.Red });
 
             foreach (var section in CobolFile.CobolTree.ProcedureDivision.Sections)
             {

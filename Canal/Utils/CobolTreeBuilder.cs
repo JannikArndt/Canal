@@ -1,68 +1,41 @@
 ﻿namespace Canal.Utils
 {
-    using Logging;
     using Model;
     using Model.References;
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
 
     public class CobolTreeBuilder
     {
-        public void Build(CobolFile file)
+        public CobolTree Build(CobolFile file)
         {
             var tree = new CobolTree(file.Name);
 
-            var sourceCode = TextUtil.Instance.TrimAllLines(file.Text);
+            if (!file.DivisionsAndSection.AllDivisionsFound())
+                return tree;
 
-            var indexIdentificationDivision = sourceCode.IndexOf("IDENTIFICATION DIVISION", StringComparison.Ordinal);
-            var indexEnvironmentDivision = sourceCode.IndexOf("ENVIRONMENT DIVISION", StringComparison.Ordinal);
-            var indexDataDivision = sourceCode.IndexOf("DATA DIVISION", StringComparison.Ordinal);
-            var indexProcedureDivision = sourceCode.IndexOf("PROCEDURE DIVISION", StringComparison.Ordinal);
+            // IDENTIFICATION DIVISION
+            tree.IdentificationDivision = new IdentificationDivision(file);
 
-            if (indexIdentificationDivision < 0)
-                Logger.Warning("Identification division not found.");
-            if (indexEnvironmentDivision < 0)
-                Logger.Warning("Environment division not found.");
-            if (indexDataDivision < 0)
-                Logger.Warning("Data division not found.");
-            if (indexProcedureDivision < 0)
-                Logger.Warning("Procedure division not found.");
+            // ENVIRONMENT DIVISION
+            tree.EnvironmentDivision = new EnvironmentDivision(file);
 
-            tree.IdentificationDivision = indexIdentificationDivision > 0
-                ? new IdentificationDivision(sourceCode.Substring(indexIdentificationDivision, Math.Max(0, indexEnvironmentDivision - indexIdentificationDivision)), indexIdentificationDivision)
-                : new IdentificationDivision("", 0);
-
-            tree.EnvironmentDivision = indexEnvironmentDivision > 0
-                ? new EnvironmentDivision(sourceCode.Substring(indexEnvironmentDivision, Math.Max(0, indexDataDivision - indexEnvironmentDivision)), indexEnvironmentDivision)
-                : new EnvironmentDivision("", 0);
-
-            tree.DataDivision = indexDataDivision > 0
-                ? new DataDivision(sourceCode.Substring(indexDataDivision, Math.Max(0, indexProcedureDivision - indexDataDivision)), indexDataDivision)
-                : new DataDivision("", 0);
-
-            // if there are no divisions, everything goes into the data division
-            if (indexIdentificationDivision < 0 && indexEnvironmentDivision < 0 && indexDataDivision < 0 &&
-                indexProcedureDivision < 0)
+            // DATA DIVISION
+            tree.DataDivision = new DataDivision(file)
             {
-                Logger.Info("No divisions found => everything goes into the data division, hoping this is a record.");
-                tree.DataDivision = new DataDivision(sourceCode, 0);
-            }
+                WorkingStorageSection = new WorkingStorageSection(file),
+                LinkageSection = new LinkageSection(file)
+            };
 
-            BuildDataDivision(tree.DataDivision);
-
-            tree.ProcedureDivision = indexProcedureDivision > 0
-                ? new ProcedureDivision(sourceCode.Substring(indexProcedureDivision, Math.Max(0, sourceCode.Length - indexProcedureDivision)), indexProcedureDivision)
-                : new ProcedureDivision("", 0);
-
-            BuildSections(tree.ProcedureDivision);
+            // PROCEDURE DIVISION
+            tree.ProcedureDivision = new ProcedureDivision(file);
+            BuildSections(file, tree.ProcedureDivision);
             BuildReferences(tree.ProcedureDivision);
 
-            // TODO extract from Procedure
             foreach (var procedure in tree.AllProcedures)
             {
-                AnalyzeVariables(procedure, tree.DataDivision.Variables);
+                AnalyzeVariables(procedure, file);
                 AnalyzePerformReferences(procedure);
                 AnalyzeGoTos(procedure);
                 AnalyzeCalls(procedure);
@@ -74,80 +47,38 @@
                 performReference.Procedure = tree.AllProcedures.FirstOrDefault(p => p.Name == performReference.ReferencedProcedure);
             }
 
-            file.CobolTree = tree;
+            return tree;
         }
 
-        private void BuildDataDivision(DataDivision dataDivision)
+        private void BuildSections(CobolFile cobolFile, ProcedureDivision procedureDivision)
         {
-            int indexWorkingStorageSection = Math.Max(0, dataDivision.OriginalSource.IndexOf("WORKING-STORAGE SECTION", StringComparison.Ordinal));
-            int indexLinkageSection = Math.Max(0, dataDivision.OriginalSource.IndexOf("LINKAGE SECTION", StringComparison.Ordinal));
+            var code = procedureDivision.GetCode();
 
-            dataDivision.WorkingStorageSection = new WorkingStorageSection(
-                dataDivision.OriginalSource.Substring(indexWorkingStorageSection, Math.Max(0, indexLinkageSection - indexWorkingStorageSection)),
-                dataDivision.IndexInSource + indexWorkingStorageSection);
-
-            BuildWorkingStorageSection(dataDivision.WorkingStorageSection);
-
-            dataDivision.LinkageSection = new LinkageSection(
-                dataDivision.OriginalSource.Substring(indexLinkageSection, dataDivision.OriginalSource.Length - indexLinkageSection),
-                dataDivision.IndexInSource + indexLinkageSection);
-
-            BuildLinkageSection(dataDivision.LinkageSection);
-
-            dataDivision.Nodes.Add(dataDivision.WorkingStorageSection);
-            dataDivision.Nodes.Add(dataDivision.LinkageSection);
-        }
-
-        private void BuildWorkingStorageSection(WorkingStorageSection workingStorageSection)
-        {
-            workingStorageSection.Variables = VariablesUtil.Instance.AnalyzeVariables(workingStorageSection.OriginalSource);
-            workingStorageSection.SetCopyReferences(ReferenceUtil.Instance.FindCopyReferences(workingStorageSection.OriginalSource, true));
-        }
-
-        private void BuildLinkageSection(LinkageSection linkageSection)
-        {
-            linkageSection.Variables = VariablesUtil.Instance.AnalyzeVariables(linkageSection.OriginalSource);
-            linkageSection.SetCopyReferences(ReferenceUtil.Instance.FindCopyReferences(linkageSection.OriginalSource, true));
-        }
-
-        private void BuildSections(ProcedureDivision procedureDivision)
-        {
-            var sectionNames = Regex.Matches(procedureDivision.OriginalSource, @"^ [\w\d-]+ SECTION\.", RegexOptions.Compiled | RegexOptions.Multiline);
-
-            foreach (Match sectionName in sectionNames)
+            foreach (Match sectionName in Constants.SectionRegex.Matches(code))
             {
-                var name = sectionName.Value.Trim().Trim('.');
+                var name = sectionName.Groups["sectionName"].Value;
                 var begin = sectionName.Index + sectionName.Length;
-                var length = (sectionName.NextMatch().Success ? sectionName.NextMatch().Index : procedureDivision.OriginalSource.Length) - begin;
-                var text = procedureDivision.OriginalSource.Substring(begin, length);
+                var end = sectionName.NextMatch().Success ? sectionName.NextMatch().Index : procedureDivision.Length;
 
-                var section = BuildSection(name, procedureDivision.IndexInSource + begin, text);
+                var section = new Section(cobolFile, name, begin, end);
+                BuildProcedures(cobolFile, section);
 
                 procedureDivision.Sections.Add(section);
             }
         }
 
-        private Section BuildSection(string name, int indexInSourceCode, string sourceCode)
+
+        private void BuildProcedures(CobolFile cobolFile, Section section)
         {
-            var section = new Section(name, indexInSourceCode);
+            var code = section.GetCode();
 
-            var procedureNames = Regex.Matches(sourceCode, @"^ [\w\d-]+\.", RegexOptions.Compiled | RegexOptions.Multiline);
-
-            foreach (Match procedureName in procedureNames)
+            foreach (Match procedureName in Constants.ProcedureRegex.Matches(code))
             {
-                string procName = procedureName.Value.Trim().Trim('.');
+                var procName = procedureName.Groups["procedureName"].Value;
                 var begin = procedureName.Index + procedureName.Length;
-                var length = (procedureName.NextMatch().Success ? procedureName.NextMatch().Index : sourceCode.Length) - begin;
-                string text = sourceCode.Substring(begin, length);
-                section.Procedures.Add(new Procedure(procName, text, indexInSourceCode + begin));
+                var end = procedureName.NextMatch().Success ? procedureName.NextMatch().Index : section.Length;
+                section.AddProcedure(new Procedure(cobolFile, procName, begin, end));
             }
-
-            foreach (var procedure in section.Procedures)
-            {
-                section.Nodes.Add(procedure);
-            }
-
-            return section;
         }
 
         private void BuildReferences(ProcedureDivision procedureDivision)
@@ -182,25 +113,21 @@
 
         #region procedure
 
-        public void AnalyzeVariables(Procedure procedure, List<Variable> variablesInFile)
+        public void AnalyzeVariables(Procedure procedure, CobolFile cobolFile)
         {
-            var foundTokens = VariablesUtil.Instance.GetIdentifierLiterals(procedure.OriginalSource);
+            var foundTokens = VariablesUtil.Instance.GetIdentifierLiterals(procedure.GetCode());
 
             foreach (Literal token in foundTokens)
             {
-                Variable variable = variablesInFile.FindVariable(token.Name);
-
-                if (variable != null)
-                    if (procedure.Variables.ContainsKey(variable))
-                        procedure.Variables[variable] = procedure.Variables[variable].MergeUsages(token);
-                    else
-                        procedure.Variables.Add(variable, token.UsedAs);
+                Variable variable;
+                if (cobolFile.Variables.TryGetValue(token.Name, out variable))
+                    procedure.Variables.AddOrUpdate(variable, token.UsedAs, (vari, usedAs) => usedAs.MergeUsages(token));
             }
         }
 
         public void AnalyzePerformReferences(Procedure procedure)
         {
-            var performReferenceMatches = Regex.Matches(procedure.OriginalSource, Constants.Perform, RegexOptions.Compiled | RegexOptions.Multiline);
+            var performReferenceMatches = Regex.Matches(procedure.GetCode(), Constants.Perform, RegexOptions.Compiled | RegexOptions.Multiline);
 
             foreach (Match performMatch in performReferenceMatches)
             {
@@ -212,7 +139,7 @@
 
         public void AnalyzeGoTos(Procedure procedure)
         {
-            var gotoReferenceMatches = Regex.Matches(procedure.OriginalSource, Constants.GoTo, RegexOptions.Compiled | RegexOptions.Multiline);
+            var gotoReferenceMatches = Regex.Matches(procedure.GetCode(), Constants.GoTo, RegexOptions.Compiled | RegexOptions.Multiline);
 
             foreach (Match goToMatch in gotoReferenceMatches)
             {
@@ -224,7 +151,7 @@
 
         public void AnalyzeCalls(Procedure procedure)
         {
-            var referenceMatches = Regex.Matches(procedure.OriginalSource, Constants.Call, RegexOptions.Compiled | RegexOptions.Multiline);
+            var referenceMatches = Regex.Matches(procedure.GetCode(), Constants.Call, RegexOptions.Compiled | RegexOptions.Multiline);
 
             foreach (Match match in referenceMatches)
             {

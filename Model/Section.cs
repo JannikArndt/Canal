@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace Model
 {
@@ -7,12 +6,16 @@ namespace Model
     {
         public List<Procedure> Procedures { get; private set; }
 
-        public new int LinesOfCode { get { return Procedures.Sum(proc => proc.LinesOfCode); } }
-
-        public Section(string name, int indexInSourceCode)
-            : base(name, indexInSourceCode)
+        public Section(CobolFile cobolFile, string name, int startIndex, int endIndex)
+            : base(cobolFile, name, startIndex, endIndex)
         {
             Procedures = new List<Procedure>();
+        }
+
+        public void AddProcedure(Procedure procedure)
+        {
+            Procedures.Add(procedure);
+            Nodes.Add(procedure);
         }
     }
 }

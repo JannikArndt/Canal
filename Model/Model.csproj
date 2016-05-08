@@ -41,6 +41,7 @@
     <Compile Include="CobolTreeNode.cs" />
     <Compile Include="DataDivision.cs" />
     <Compile Include="Division.cs" />
+    <Compile Include="DivisionAndSectionFlags.cs" />
     <Compile Include="EnvironmentDivision.cs" />
     <Compile Include="IdentificationDivision.cs" />
     <Compile Include="LinkageSection.cs" />

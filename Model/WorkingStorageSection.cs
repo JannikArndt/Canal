@@ -1,26 +1,19 @@
-﻿using Model.References;
-using System.Collections.Generic;
-
-namespace Model
+﻿namespace Model
 {
     public class WorkingStorageSection : CobolTreeNode
     {
-        public List<Variable> Variables { get; set; }
-
-        public void SetCopyReferences(IEnumerable<FileReference> value)
+        protected override int StartIndex
         {
-            foreach (var fileReference in value)
-            {
-                Nodes.Add("COPY " + fileReference.ProgramName);
-            }
+            get { return ParentCobolFile.DivisionsAndSection.WorkingStorage.GetValueOrDefault(-1); }
         }
 
-        public string OriginalSource { get; set; }
-
-        public WorkingStorageSection(string sourceCode, int indexInSource)
-            : base("Working-Storage Section", indexInSource)
+        protected override int EndIndex
         {
-            OriginalSource = sourceCode;
+            get { return ParentCobolFile.DivisionsAndSection.Linkage.GetValueOrDefault(-1); }
+        }
+
+        public WorkingStorageSection(CobolFile cobolFile) : base(cobolFile, "Working-Storage Section")
+        {
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using CodeGenerator;
-using System;
+﻿using System.Collections.Concurrent;
 
 namespace Canal.Utils
 {
@@ -16,14 +15,16 @@ namespace Canal.Utils
         {
         }
 
-        public List<Variable> AnalyzeVariables(string trimmedText)
+        public ConcurrentDictionary<string, Variable> AnalyzeVariables(CobolFile cobolFile)
         {
             // FILLER; REDEFINES; OCCURS; SPACES; 66
             // [ "USAGE" [ "IS" ] ] ( "BINARY" | "COMP" | "COMP-1" | "COMP-2" | "COMP-3" | "COMP-4" | "COMPUTATIONAL" | "COMPUTATIONAL-1" | "COMPUTATIONAL-2" | "COMPUTATIONAL-3" | "COMPUTATIONAL-4" | "DISPLAY" | "DISPLAY-1" | "INDEX" | "PACKED-DECIMAL" | "POINTER" )
             // ( "VALUE" [ "IS" ] | "VALUES" [ "ARE" ] ) { literal [ ( "THROUGH" | "THRU" ) literal ] }+
             // "RENAMES" qualified-data-name [ ( "THROUGH" | "THRU" ) qualified-data-name ]
 
-            var result = new List<Variable>();
+            var trimmedText = TextUtil.Instance.TrimAllLines(cobolFile.Text);
+
+            var result = new ConcurrentDictionary<string, Variable>();
             var regex = new Regex(Constants.Variable, Constants.CompiledMultilineCaseInsensitive);
             var preparedText = trimmedText.Replace("\t", " ");
             Variable lastVariable = null;
@@ -46,29 +47,15 @@ namespace Canal.Utils
                 var currentVariable = new Variable(valLevel, valLiteral, picture, match.Value, null)
                 {
                     Redefines = valRedefines,
-                    Occurs = valOccurs
+                    Occurs = valOccurs,
+                    CopyReference = cobolFile.FileReference
                 };
 
-                if (valLevel == 1)
-                {
-                    var lastCopy = preparedText.LastIndexOf("COPY", match.Index, StringComparison.Ordinal);
-
-                    if (lastCopy > -1)
-                    {
-                        var lastCopyLine = preparedText.GetIndexOfCurrentLineStart(lastCopy);
-                        var copyMatch =
-                            new Regex(Constants.Copy, RegexOptions.IgnoreCase).Match(
-                                preparedText.Substring(lastCopyLine, match.Index - lastCopyLine));
-                        currentVariable.CopyReference =
-                            FileUtil.Instance.GetFileReference(copyMatch.Groups["program"].Value,
-                                copyMatch.Groups["folder"].Value);
-                    }
-                }
+                result.TryAdd(currentVariable.VariableName, currentVariable);
 
                 // Create references between variables
                 if (lastVariable == null || currentVariable.VariableLevel == 1 || currentVariable.VariableLevel == 77)
                 {
-                    result.Add(currentVariable);
                     lastVariable = currentVariable;
                 }
                 else if (currentVariable.VariableLevel > lastVariable.VariableLevel)

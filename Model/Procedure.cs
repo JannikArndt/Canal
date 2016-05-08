@@ -1,16 +1,17 @@
 ﻿using Model.Enums;
 using Model.References;
-using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Model
 {
     public class Procedure : CobolTreeNode
     {
-        public new string Name { get; set; }
+        protected override int StartIndex { get; }
 
-        public string OriginalSource { get; set; }
+        protected override int EndIndex { get; }
+
+        public new string Name { get; set; }
 
         #region References
 
@@ -24,39 +25,20 @@ namespace Model
 
         #endregion
 
-        public Dictionary<Variable, UsedAs> Variables { get; set; }
+        public ConcurrentDictionary<Variable, UsedAs> Variables { get; set; }
 
-        private readonly List<string> lines;
-
-        public int LinesOfCode
-        {
-            get
-            {
-                return lines.Count;
-            }
-        }
-
-        public Procedure()
-        {
-        }
-
-        public Procedure(string name, string text, int indexInSourceCode)
-            : this(name, indexInSourceCode)
-        {
-            OriginalSource = text;
-
-            lines = text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
-        }
-
-        protected Procedure(string name, int indexInSourceCode)
-            : base(name, indexInSourceCode)
+        public Procedure(CobolFile cobolFile, string name, int beginIndex, int endIndex) : base(cobolFile, name)
         {
             Name = name;
+
+            StartIndex = beginIndex;
+            EndIndex = endIndex;
+
             PerformReferences = new List<PerformReference>();
             GoToReferences = new List<GoToReference>();
             IsReferencedBy = new List<PerformReference>();
             CallReferences = new List<FileReference>();
-            Variables = new Dictionary<Variable, UsedAs>();
+            Variables = new ConcurrentDictionary<Variable, UsedAs>();
         }
 
         public override string ToString()

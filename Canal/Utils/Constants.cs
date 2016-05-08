@@ -48,6 +48,10 @@ namespace Canal.Utils
 
         public static readonly string Variable = VarLevel + OptSpaces + NamedLiteral + OptSpaces + VarRedefines + OptSpaces + VarPicture + OptSpaces + VarValue + OptSpaces + VarOccurs + OptSpaces + @"\.";
 
+        public static readonly Regex SectionRegex = new Regex(@"^.{6} (?<sectionName>[\w\d-]+ SECTION)\.", RegexOptions.Compiled | RegexOptions.Multiline);
+
+        public static readonly Regex ProcedureRegex = new Regex(@"^.{6} (?<procedureName>[\w\d-]+)\.", RegexOptions.Compiled | RegexOptions.Multiline);
+
         public static readonly HashSet<string> CobolKeywords = new HashSet<string>
         {
             "ACCEPT",

@@ -1,31 +1,12 @@
 ﻿namespace Canal.Utils
 {
-    using Model;
     using Model.Enums;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Text;
     using System.Windows.Forms;
 
     public static class ExtensionMethods
     {
-        public static Variable FindVariable(this List<Variable> list, string name)
-        {
-            foreach (var variable in list)
-            {
-                var result = list.FirstOrDefault(v => v.VariableName == name);
-
-                if (result != null) return result;
-
-                result = variable.Variables.FindVariable(name);
-
-                if (result != null) return result;
-            }
-
-            return null;
-        }
-
         public static string ToText(this TreeView treeView)
         {
             var result = new StringBuilder();
@@ -83,11 +64,6 @@
                     return UsedAs.Output;
 
             return UsedAs.Unknown;
-        }
-
-        public static bool IsDigit(this Keys key)
-        {
-            return key >= Keys.D0 && key <= Keys.D9;
         }
     }
 }

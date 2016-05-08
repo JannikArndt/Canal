@@ -2,9 +2,18 @@
 {
     public class EnvironmentDivision : Division
     {
-        public EnvironmentDivision(string sourceCode, int indexEnvironmentDivision)
-            : base(sourceCode, "Environment Division", indexEnvironmentDivision)
+        public EnvironmentDivision(CobolFile cobolFile) : base(cobolFile, "Environment Division")
         {
+        }
+
+        protected override int StartIndex
+        {
+            get { return ParentCobolFile.DivisionsAndSection.Environment.GetValueOrDefault(-1); }
+        }
+
+        protected override int EndIndex
+        {
+            get { return ParentCobolFile.DivisionsAndSection.Data.GetValueOrDefault(-1); }
         }
     }
 }

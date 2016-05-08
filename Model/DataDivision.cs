@@ -1,25 +1,44 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace Model
+﻿namespace Model
 {
     public class DataDivision : Division
     {
-        public List<Variable> Variables
+        private WorkingStorageSection _workingStorageSection;
+        private LinkageSection _linkageSection;
+
+        public WorkingStorageSection WorkingStorageSection
         {
-            get
+            get { return _workingStorageSection; }
+            set
             {
-                return WorkingStorageSection.Variables.Union(LinkageSection.Variables).ToList();
+                _workingStorageSection = value;
+                Nodes.RemoveByKey(value.Text);
+                Nodes.Add(value);
             }
         }
 
-        public DataDivision(string sourceCode, int indexDataDivision)
-            : base(sourceCode, "Data Division", indexDataDivision)
+        public LinkageSection LinkageSection
         {
+            get { return _linkageSection; }
+            set
+            {
+                _linkageSection = value;
+                Nodes.RemoveByKey(value.Text);
+                Nodes.Add(value);
+            }
         }
 
-        public WorkingStorageSection WorkingStorageSection { get; set; }
+        protected override int StartIndex
+        {
+            get { return ParentCobolFile.DivisionsAndSection.Data.GetValueOrDefault(-1); }
+        }
 
-        public LinkageSection LinkageSection { get; set; }
+        protected override int EndIndex
+        {
+            get { return ParentCobolFile.DivisionsAndSection.Procedure.GetValueOrDefault(-1); }
+        }
+
+        public DataDivision(CobolFile cobolFile) : base(cobolFile, "Data Division")
+        {
+        }
     }
 }

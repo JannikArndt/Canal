@@ -1,15 +1,11 @@
 ﻿using Logging;
 using Model;
-using Model.References;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace Canal.Utils
 {
     using System;
     using System.Linq;
-    using System.Text.RegularExpressions;
     using System.Windows.Forms;
 
     public class ReferenceUtil
@@ -33,31 +29,7 @@ namespace Canal.Utils
                     counter++;
                     Logger.Info("Resolving program {0} in folder {1}", copyReference.ProgramName, copyReference.Directory);
 
-                    var copyFile = CobolFileBuilder.Instance.Build(copyReference);
-
-                    if (copyFile == null)
-                        continue;
-
-                    lock (file.Text)
-                    {
-                        var newText = new StringBuilder();
-
-                        // Index of "COPY" in text might have changed, since other copys were resolved
-                        var copyRegex = new Regex(@"^.{6} +COPY +" + copyReference.ProgramName, RegexOptions.IgnoreCase | RegexOptions.Multiline);
-                        var updatedIndexOfCopy = copyRegex.Match(file.Text).Index;
-
-                        var lineBeforeCopy = file.Text.LastIndexOf(Environment.NewLine, updatedIndexOfCopy, StringComparison.Ordinal);
-                        var lineAfterCopy = file.Text.IndexOf(Environment.NewLine, updatedIndexOfCopy, StringComparison.Ordinal);
-
-                        newText.Append(file.Text.Substring(0, lineBeforeCopy + 8));
-                        newText.Append("*"); // Comment out COPY
-                        newText.Append(file.Text.Substring(lineBeforeCopy + 8, lineAfterCopy - (lineBeforeCopy + 8)).TrimEnd());
-                        newText.AppendLine("  *> COPY resolved by Canal");
-                        newText.Append(copyFile.Text + Environment.NewLine);
-                        newText.Append(file.Text.Substring(lineAfterCopy));
-
-                        file.Text = newText.ToString();
-                    }
+                    TextUtil.Instance.Insert(file, copyReference);
 
                     if (ProgressChanged != null)
                         ProgressChanged.Invoke(null, new ProgressChangedEventArgs(counter * 100 / (file.CopyReferences.Count + 3), null));
@@ -65,9 +37,6 @@ namespace Canal.Utils
                 catch (Exception exception)
                 {
                     Logger.Error("Error resolving program {0} in folder {1}: {2}", copyReference.ProgramName, copyReference.Directory, exception.Message);
-                    var updatedIndexOfCopy = file.Text.IndexOf(copyReference.ProgramName, StringComparison.Ordinal);
-                    var lineAfterCopy = file.Text.IndexOf(Environment.NewLine, updatedIndexOfCopy, StringComparison.Ordinal);
-                    file.Text = file.Text.Insert(lineAfterCopy + 1, "ERROR RESOLVING COPY BOOK: " + exception.Message + Environment.NewLine);
                 }
             }
 
@@ -83,20 +52,6 @@ namespace Canal.Utils
 
             if (ProgressChanged != null)
                 ProgressChanged.Invoke(null, new ProgressChangedEventArgs(90, null));
-        }
-
-        public IEnumerable<FileReference> FindCopyReferences(string text, bool textIsTrimmed = false)
-        {
-            Logger.Info("Finding copy references...");
-
-            var prefix = textIsTrimmed ? @"^" : @"^.{6}";
-            var copyRegex = new Regex(prefix + Constants.Copy, RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
-
-            var matches = copyRegex.Matches(text);
-            Logger.Info("Found {0} COPYs...", matches.Count);
-
-            return from Match match in matches.AsParallel()
-                   select FileUtil.Instance.GetFileReference(match.Groups["program"].Value, match.Groups["folder"].Value);
         }
 
         public TreeNode GetPerformTree(CobolFile file)

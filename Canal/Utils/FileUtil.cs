@@ -3,7 +3,6 @@ using Canal.Properties;
 using Logging;
 using Model.References;
 using System.Collections.Concurrent;
-using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
 
@@ -35,8 +34,6 @@ namespace Canal.Utils
 
         private List<string> _allowedEndings = new List<string>();
 
-        private readonly BackgroundWorker _fileCacheWorker = new BackgroundWorker();
-
         /// <summary>
         /// Loads the given file. Uses internal cache for file contents.
         /// </summary>
@@ -57,9 +54,7 @@ namespace Canal.Utils
                     return _files[filename];
                 }
 
-                Logger.Info("File {0} is not in cache. Loading from disk and triggering background analysis.", filename);
-
-                BuildFileCacheAsync(filename);
+                Logger.Info("File {0} is not in cache. Loading from disk.", filename);
 
                 var newRef = new FileReference(filename);
                 _files.TryAdd(filename, newRef);
@@ -70,17 +65,6 @@ namespace Canal.Utils
                 Logger.Error("Error loading file {0}: {1}.", filename, exception.Message);
                 throw new FileNotFoundException("File could not be loaded.", filename, exception);
             }
-        }
-
-        private void BuildFileCacheAsync(string filename)
-        {
-            _fileCacheWorker.DoWork += AnalyzeFolder;
-            _fileCacheWorker.RunWorkerCompleted += (sender, args) =>
-            {
-                Logger.Info("Completed background filesystem analysis. Cache built.");
-                if (FileCacheChanged != null) FileCacheChanged(sender, new FileCacheChangedEventArgs());
-            };
-            _fileCacheWorker.RunWorkerAsync(filename);
         }
 
         public string GetText(FileReference reference)
@@ -125,12 +109,8 @@ namespace Canal.Utils
         /// <summary>
         /// Creates a cache of all subfolders and files in the current directory.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="doWorkEventArgs">An event containing the path as argument</param>
-        private void AnalyzeFolder(object sender, DoWorkEventArgs doWorkEventArgs)
+        public void AnalyzeFolder(string fileOrFolderPath)
         {
-            var fileOrFolderPath = doWorkEventArgs.Argument.ToString();
-
             if (_recentFolders.Contains(fileOrFolderPath))
                 return;
 
@@ -161,6 +141,10 @@ namespace Canal.Utils
             {
                 Logger.Error("Error analyzing file/folder {0}: {1}", fileOrFolderPath, exception.Message);
                 throw new FileNotFoundException("Error analyzing file/folder.", fileOrFolderPath, exception);
+            }
+            finally
+            {
+                if (FileCacheChanged != null) FileCacheChanged(this, new FileCacheChangedEventArgs());
             }
         }
 
