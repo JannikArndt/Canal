@@ -1,8 +1,8 @@
 ﻿using Canal.Events;
 using Canal.Properties;
 using Logging;
-using Model;
 using Model.References;
+using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
@@ -27,11 +27,11 @@ namespace Canal.Utils
 
         private readonly List<string> _recentFolders = new List<string>();
 
-        private readonly Dictionary<string, FileReference> _files = new Dictionary<string, FileReference>();
+        private readonly ConcurrentDictionary<string, FileReference> _files = new ConcurrentDictionary<string, FileReference>();
 
-        private readonly Dictionary<string, List<FileReference>> _directoriesAndFiles = new Dictionary<string, List<FileReference>>();
+        private readonly ConcurrentDictionary<string, List<FileReference>> _directoriesAndFiles = new ConcurrentDictionary<string, List<FileReference>>();
 
-        private Dictionary<string, List<FileReference>> _directoriesWithAllowedFiles = new Dictionary<string, List<FileReference>>();
+        private ConcurrentDictionary<string, List<FileReference>> _directoriesWithAllowedFiles = new ConcurrentDictionary<string, List<FileReference>>();
 
         private List<string> _allowedEndings = new List<string>();
 
@@ -42,7 +42,7 @@ namespace Canal.Utils
         /// </summary>
         /// <param name="filename">An exact filepath.</param>
         /// <returns>A CobolFile with the file contents as Text.</returns>
-        public CobolFile Get(string filename)
+        public FileReference GetFileReference(string filename)
         {
             if (string.IsNullOrWhiteSpace(filename))
             {
@@ -51,28 +51,19 @@ namespace Canal.Utils
             }
             try
             {
-                lock (_files)
+                if (_files.ContainsKey(filename))
                 {
-                    if (_files.ContainsKey(filename))
-                    {
-                        Logger.Info("Loading file from cache: {0}.", filename);
-                        return Get(_files[filename]);
-                    }
-
-                    Logger.Info("File {0} is not in cache. Loading from disk and triggering background analysis.", filename);
-
-                    _fileCacheWorker.DoWork += AnalyzeFolder;
-                    _fileCacheWorker.RunWorkerCompleted += (sender, args) =>
-                    {
-                        Logger.Info("Completed background filesystem analysis. Cache built.");
-                        if (FileCacheChanged != null) FileCacheChanged(sender, new FileCacheChangedEventArgs());
-                    };
-                    _fileCacheWorker.RunWorkerAsync(filename);
-
-                    var newRef = new FileReference(filename);
-                    _files.Add(filename, newRef);
-                    return Get(newRef);
+                    Logger.Info("Loading file from cache: {0}.", filename);
+                    return _files[filename];
                 }
+
+                Logger.Info("File {0} is not in cache. Loading from disk and triggering background analysis.", filename);
+
+                BuildFileCacheAsync(filename);
+
+                var newRef = new FileReference(filename);
+                _files.TryAdd(filename, newRef);
+                return newRef;
             }
             catch (Exception exception)
             {
@@ -81,18 +72,32 @@ namespace Canal.Utils
             }
         }
 
-        public CobolFile Get(FileReference reference)
+        private void BuildFileCacheAsync(string filename)
         {
-            if (reference.CobolFile != null) return reference.CobolFile;
-
-            var lines = File.ReadAllText(reference.FilePath);
-
-            reference.CobolFile = new CobolFile(lines, Path.GetFileNameWithoutExtension(reference.FilePath))
+            _fileCacheWorker.DoWork += AnalyzeFolder;
+            _fileCacheWorker.RunWorkerCompleted += (sender, args) =>
             {
-                FileReference = reference
+                Logger.Info("Completed background filesystem analysis. Cache built.");
+                if (FileCacheChanged != null) FileCacheChanged(sender, new FileCacheChangedEventArgs());
             };
+            _fileCacheWorker.RunWorkerAsync(filename);
+        }
 
-            return reference.CobolFile;
+        public string GetText(FileReference reference)
+        {
+            if (string.IsNullOrWhiteSpace(reference.FilePath))
+                if (string.IsNullOrWhiteSpace(reference.Directory))
+                    if (string.IsNullOrWhiteSpace(reference.ProgramName))
+                        throw new ArgumentException(@"FileReference is empty.", "reference");
+                    else
+                        reference = GetFileReferences(reference.ProgramName).FirstOrDefault();
+                else
+                    reference = GetFileReference(reference.ProgramName, reference.Directory);
+
+            if (reference == null)
+                return null;
+
+            return File.ReadAllText(reference.FilePath);
         }
 
         public List<FileReference> GetFileReferences(string programName)
@@ -102,12 +107,7 @@ namespace Canal.Utils
 
             Console.Write(@"Searching for Program " + programName);
 
-            List<FileReference> candidates;
-
-            lock (_files)
-            {
-                candidates = _files.Where(file => file.Key.Contains(programName)).Select(file => file.Value).ToList();
-            }
+            var candidates = _files.AsParallel().Where(file => file.Key.Contains(programName)).Select(file => file.Value).ToList();
 
             Console.WriteLine(candidates.Any() ? " => succeeded" : " => failed");
 
@@ -119,10 +119,7 @@ namespace Canal.Utils
             if (string.IsNullOrWhiteSpace(programName) || string.IsNullOrWhiteSpace(folderName))
                 return null;
 
-            lock (_files)
-            {
-                return _files.Where(file => file.Key.Contains(programName) && file.Key.Contains(folderName)).Select(file => file.Value).FirstOrDefault();
-            }
+            return _files.AsParallel().Where(file => file.Key.Contains(programName) && file.Key.Contains(folderName)).Select(file => file.Value).First();
         }
 
         /// <summary>
@@ -149,17 +146,15 @@ namespace Canal.Utils
                 if (folderPath == null)
                     return;
 
-                lock (_files)
+                foreach (var newRef in GetRelevantFileNames(folderPath).AsParallel())
                 {
-                    foreach (var newRef in GetRelevantFileNames(folderPath))
-                    {
-                        _files.Add(newRef.FilePath, newRef);
-                        if (!_directoriesAndFiles.ContainsKey(newRef.Directory))
-                            _directoriesAndFiles.Add(newRef.Directory, new List<FileReference>());
+                    _files.TryAdd(newRef.FilePath, newRef);
+                    if (!_directoriesAndFiles.ContainsKey(newRef.Directory))
+                        _directoriesAndFiles.TryAdd(newRef.Directory, new List<FileReference>());
 
-                        _directoriesAndFiles[newRef.Directory].Add(newRef);
-                    }
+                    _directoriesAndFiles[newRef.Directory].Add(newRef);
                 }
+
                 _recentFolders.Add(fileOrFolderPath);
             }
             catch (Exception exception)
@@ -171,7 +166,7 @@ namespace Canal.Utils
 
         private IEnumerable<FileReference> GetRelevantFileNames(string path)
         {
-            return GetDirectoryFiles(path, "*.*")
+            return GetDirectoryFiles(path, "*.*").AsParallel()
                 .Where(file =>
                         !new FileInfo(file).Attributes.HasFlag(FileAttributes.Hidden | FileAttributes.System) &&
                         file.IndexOf(@"\.", StringComparison.Ordinal) < 0 &&
@@ -195,7 +190,7 @@ namespace Canal.Utils
             try
             {
                 IEnumerable<string> subDirs = Directory.EnumerateDirectories(rootPath);
-                foreach (string dir in subDirs)
+                foreach (string dir in subDirs.AsParallel())
                 {
                     foundFiles = foundFiles.Concat(GetDirectoryFiles(dir, patternMatch)); // Add files in subdirectories recursively to the list
                 }
@@ -214,7 +209,7 @@ namespace Canal.Utils
 
         public void ReduceDirectoriesToAllowedFiles()
         {
-            _directoriesWithAllowedFiles = new Dictionary<string, List<FileReference>>();
+            _directoriesWithAllowedFiles = new ConcurrentDictionary<string, List<FileReference>>();
 
             _allowedEndings = new List<string>();
             if (Settings.Default.FileTypeCob) _allowedEndings.AddRange(new List<string> { ".cob", ".cbl" });
@@ -222,11 +217,11 @@ namespace Canal.Utils
             if (Settings.Default.FileTypeCob) _allowedEndings.Add(".src");
             if (!string.IsNullOrWhiteSpace(Settings.Default.FileTypeCustom)) _allowedEndings.Add(Settings.Default.FileTypeCustom);
 
-            foreach (var dir in _directoriesAndFiles.Keys)
+            foreach (var dir in _directoriesAndFiles.Keys.AsParallel())
             {
                 var tempDir = new List<FileReference>(_directoriesAndFiles[dir].Where(file => HasAllowedEnding(file.FilePath)));
                 if (tempDir.Any())
-                    _directoriesWithAllowedFiles.Add(dir, tempDir);
+                    _directoriesWithAllowedFiles.TryAdd(dir, tempDir);
             }
         }
 
@@ -238,7 +233,7 @@ namespace Canal.Utils
             var result = new List<TreeNode>();
 
             // ReSharper disable once PossibleNullReferenceException Nope
-            foreach (var dir in _directoriesWithAllowedFiles.Keys.OrderBy(key => key))
+            foreach (var dir in _directoriesWithAllowedFiles.Keys.OrderBy(key => key).AsParallel())
             {
                 var foundFiles = _directoriesWithAllowedFiles[dir]
                     .Where(file => CultureInfo.CurrentCulture.CompareInfo.IndexOf(file.ProgramName, query, CompareOptions.IgnoreCase) >= 0)

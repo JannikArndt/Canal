@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Model.References;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Model.References;
 
 namespace Model
 {
@@ -22,8 +22,6 @@ namespace Model
                 return ProcedureDivision.Sections.SelectMany(s => s.Procedures).ToList();
             }
         }
-
-        public List<Division> Divisions { get { return new List<Division> { IdentificationDivision, EnvironmentDivision, DataDivision, ProcedureDivision }; } }
 
         public List<FileReference> CallReferences
         {

@@ -20,7 +20,7 @@ namespace Canal.UserControls
     {
         private readonly BackgroundWorker _cobolTreeWorker = new BackgroundWorker();
 
-        public FileControl(CobolFile file, MainWindow parent)
+        public FileControl(string filename, MainWindow parent)
         {
             InitializeComponent();
             Name = "FileControl";
@@ -29,7 +29,8 @@ namespace Canal.UserControls
             try
             {
                 MainWindow = parent;
-                CobolFile = file;
+
+                CobolFile = CobolFileBuilder.Instance.Build(filename);
 
                 // initialize FastColoredTextBox
                 codeBox.Font = SourceCodePro.Regular;
@@ -56,7 +57,7 @@ namespace Canal.UserControls
             }
             catch (Exception exception)
             {
-                Logger.Error("Error initializing file control for CobolFile {0}: {1}", file.Name, exception.Message);
+                Logger.Error("Error initializing file control for CobolFile {0}: {1}", filename, exception.Message);
                 MessageBox.Show(Resources.ErrorMessage_FileControl_Constructor + exception.Message, Resources.Error, MessageBoxButtons.OK);
             }
         }
@@ -346,9 +347,8 @@ namespace Canal.UserControls
 
             backgroundWorker.DoWork += (o, args) =>
             {
-                var refUtil = new ReferenceUtil();
-                refUtil.ProgressChanged += (sender1, eventArgs) => backgroundWorker.ReportProgress(eventArgs.ProgressPercentage);
-                refUtil.ResolveCopys(CobolFile);
+                ReferenceUtil.Instance.ProgressChanged += (sender1, eventArgs) => backgroundWorker.ReportProgress(eventArgs.ProgressPercentage);
+                ReferenceUtil.Instance.ResolveCopys(CobolFile);
                 args.Result = CobolFile;
             };
 
@@ -452,7 +452,7 @@ namespace Canal.UserControls
 
             performTreeWorker.DoWork += delegate (object sender, DoWorkEventArgs args)
             {
-                args.Result = ReferenceUtil.GetPerformTree(CobolFile);
+                args.Result = ReferenceUtil.Instance.GetPerformTree(CobolFile);
             };
 
             performTreeWorker.RunWorkerCompleted += delegate (object sender, RunWorkerCompletedEventArgs args)

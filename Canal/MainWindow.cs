@@ -152,8 +152,7 @@
 
             try
             {
-                var file = FileUtil.Instance.Get(filename);
-                _tabUtil.AddTab(file);
+                _tabUtil.AddTab(filename);
                 if (currentVar != null)
                     _tabUtil.CurrentFileControl.FindInCodeBox(currentVar.VariableName, false, false, false, true);
                 Settings.Default.LastOpened.Add(filename);
@@ -201,7 +200,7 @@
 
         private void NewToolStripMenuItemClick(object sender, EventArgs e)
         {
-            _tabUtil.AddTab(new CobolFile("", "New File"));
+            _tabUtil.AddTab();
         }
 
         private void ReportIssueToolStripMenuItemClick(object sender, EventArgs e)

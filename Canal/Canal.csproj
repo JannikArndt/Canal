@@ -113,6 +113,7 @@
     <Compile Include="UserControls\FirstTabPage.Designer.cs">
       <DependentUpon>FirstTabPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils\CobolFileBuilder.cs" />
     <Compile Include="Utils\CobolTreeBuilder.cs" />
     <Compile Include="UserControls\TextViewer.cs">
       <SubType>Form</SubType>

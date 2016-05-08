@@ -14,23 +14,26 @@ namespace Canal.Utils
 
     public class ReferenceUtil
     {
+        public static readonly ReferenceUtil Instance = new ReferenceUtil();
+
+        private ReferenceUtil()
+        { }
+
         public event ProgressChangedEventHandler ProgressChanged;
 
         public void ResolveCopys(CobolFile file)
         {
             Logger.Info("Start resolving copys for file {0}", file.Name);
 
-            var copyReferences = FindCopyReferences(file.Text);
-
             var counter = 0;
-            foreach (var copyReference in copyReferences.AsParallel())
+            foreach (var copyReference in file.CopyReferences.AsParallel())
             {
                 try
                 {
                     counter++;
                     Logger.Info("Resolving program {0} in folder {1}", copyReference.ProgramName, copyReference.Directory);
 
-                    var copyFile = FileUtil.Instance.Get(copyReference);
+                    var copyFile = CobolFileBuilder.Instance.Build(copyReference);
 
                     if (copyFile == null)
                         continue;
@@ -57,7 +60,7 @@ namespace Canal.Utils
                     }
 
                     if (ProgressChanged != null)
-                        ProgressChanged.Invoke(null, new ProgressChangedEventArgs(counter * 100 / (copyReferences.Count() + 3), null));
+                        ProgressChanged.Invoke(null, new ProgressChangedEventArgs(counter * 100 / (file.CopyReferences.Count + 3), null));
                 }
                 catch (Exception exception)
                 {
@@ -82,7 +85,7 @@ namespace Canal.Utils
                 ProgressChanged.Invoke(null, new ProgressChangedEventArgs(90, null));
         }
 
-        public static IEnumerable<FileReference> FindCopyReferences(string text, bool textIsTrimmed = false)
+        public IEnumerable<FileReference> FindCopyReferences(string text, bool textIsTrimmed = false)
         {
             Logger.Info("Finding copy references...");
 
@@ -90,13 +93,13 @@ namespace Canal.Utils
             var copyRegex = new Regex(prefix + Constants.Copy, RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
 
             var matches = copyRegex.Matches(text);
-            Logger.Info("Resolving {0} COPYs...", matches.Count);
+            Logger.Info("Found {0} COPYs...", matches.Count);
 
             return from Match match in matches.AsParallel()
                    select FileUtil.Instance.GetFileReference(match.Groups["program"].Value, match.Groups["folder"].Value);
         }
 
-        public static TreeNode GetPerformTree(CobolFile file)
+        public TreeNode GetPerformTree(CobolFile file)
         {
             if (file == null)
                 return null;
@@ -126,7 +129,7 @@ namespace Canal.Utils
             return topNode;
         }
 
-        private static void FindPerformsRecursively(TreeNode topNode, Procedure procedure, int depth = 5)
+        private void FindPerformsRecursively(TreeNode topNode, Procedure procedure, int depth = 5)
         {
             Logger.Info("Finding performs recursively for node {0}", topNode.Text);
 

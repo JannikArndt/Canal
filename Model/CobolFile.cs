@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Model.References;
+﻿using Model.References;
+using System.Collections.Generic;
 
 namespace Model
 {
@@ -11,11 +11,9 @@ namespace Model
 
         public FileReference FileReference { get; set; }
 
-        public Dictionary<string, string> Infos { get; set; }
-
-        public List<FileReference> CallReferences { get { return CobolTree == null ? new List<FileReference>() : CobolTree.CallReferences; } }
-
         public CobolTree CobolTree { get; set; }
+
+        public List<FileReference> CopyReferences { get; set; }
 
         public CobolFile(string text, string name)
         {

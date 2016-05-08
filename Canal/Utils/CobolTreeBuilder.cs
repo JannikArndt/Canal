@@ -1,14 +1,12 @@
 ﻿namespace Canal.Utils
 {
+    using Logging;
+    using Model;
+    using Model.References;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
-
-    using Logging;
-
-    using Model;
-    using Model.References;
 
     public class CobolTreeBuilder
     {
@@ -77,12 +75,6 @@
             }
 
             file.CobolTree = tree;
-
-            // Add infos
-            file.Infos = new Dictionary<string, string>
-            {
-                {"Name", file.Name }
-            };
         }
 
         private void BuildDataDivision(DataDivision dataDivision)
@@ -109,13 +101,13 @@
         private void BuildWorkingStorageSection(WorkingStorageSection workingStorageSection)
         {
             workingStorageSection.Variables = VariablesUtil.Instance.AnalyzeVariables(workingStorageSection.OriginalSource);
-            workingStorageSection.CopyReferences = ReferenceUtil.FindCopyReferences(workingStorageSection.OriginalSource, true).ToList();
+            workingStorageSection.SetCopyReferences(ReferenceUtil.Instance.FindCopyReferences(workingStorageSection.OriginalSource, true));
         }
 
         private void BuildLinkageSection(LinkageSection linkageSection)
         {
             linkageSection.Variables = VariablesUtil.Instance.AnalyzeVariables(linkageSection.OriginalSource);
-            linkageSection.CopyReferences = ReferenceUtil.FindCopyReferences(linkageSection.OriginalSource, true).ToList();
+            linkageSection.SetCopyReferences(ReferenceUtil.Instance.FindCopyReferences(linkageSection.OriginalSource, true));
         }
 
         private void BuildSections(ProcedureDivision procedureDivision)

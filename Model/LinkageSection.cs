@@ -5,24 +5,13 @@ namespace Model
 {
     public class LinkageSection : CobolTreeNode
     {
-        private List<FileReference> copyReferences = new List<FileReference>();
-
         public List<Variable> Variables { get; set; }
 
-        public List<FileReference> CopyReferences
+        public void SetCopyReferences(IEnumerable<FileReference> value)
         {
-            get
+            foreach (var fileReference in value)
             {
-                return copyReferences;
-            }
-            set
-            {
-                foreach (var fileReference in value)
-                {
-                    Nodes.Add("COPY " + fileReference.ProgramName);
-                }
-
-                copyReferences = value;
+                Nodes.Add("COPY " + fileReference.ProgramName);
             }
         }
 

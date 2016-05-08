@@ -41,19 +41,24 @@ namespace Canal.UserControls
             // else: show file infos
             infoLabel.Visible = true;
             infoGroupBox.Text = Resources.SelectedProgram + cobolFile.Name;
-            FillCallTreeView(cobolFile.CallReferences);
+            FillCallTreeView(cobolFile);
         }
 
-        private void FillCallTreeView(List<FileReference> callReferences)
+        private void FillCallTreeView(CobolFile cobolFile)
         {
-            var uniqueFolders = new HashSet<string>(callReferences.Select(cr => cr.Directory));
+            if (cobolFile.CobolTree == null)
+            {
+                return;
+            }
+
+            var uniqueFolders = new HashSet<string>(cobolFile.CobolTree.CallReferences.Select(cr => cr.Directory));
 
             foreach (var folder in uniqueFolders)
             {
                 var folderNode = new TreeNode(folder);
                 variableTreeView.Nodes.Add(folderNode);
                 var folder1 = folder;
-                foreach (var fileRef in callReferences.Where(cr => cr.Directory == folder1))
+                foreach (var fileRef in cobolFile.CobolTree.CallReferences.Where(cr => cr.Directory == folder1))
                 {
                     folderNode.Nodes.Add(fileRef);
                 }

@@ -5,24 +5,13 @@ namespace Model
 {
     public class WorkingStorageSection : CobolTreeNode
     {
-        private List<FileReference> _copyReferences = new List<FileReference>();
-
         public List<Variable> Variables { get; set; }
 
-        public List<FileReference> CopyReferences
+        public void SetCopyReferences(IEnumerable<FileReference> value)
         {
-            get
+            foreach (var fileReference in value)
             {
-                return _copyReferences;
-            }
-            set
-            {
-                foreach (var fileReference in value)
-                {
-                    Nodes.Add("COPY " + fileReference.ProgramName);
-                }
-
-                _copyReferences = value;
+                Nodes.Add("COPY " + fileReference.ProgramName);
             }
         }
 

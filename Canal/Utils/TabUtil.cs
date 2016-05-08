@@ -79,13 +79,13 @@ namespace Canal.Utils
             }
         }
 
-        public void AddTab(CobolFile file)
+        public void AddTab(string filename = "")
         {
-            Logger.Info("Adding tab for file {0}", file.Name);
+            Logger.Info("Adding tab for file {0}", filename == "" ? "new File" : filename);
 
-            var newTab = new TabPage(file.Name + "     X");
+            var fileControl = new FileControl(filename, _parent);
 
-            var fileControl = new FileControl(file, _parent);
+            var newTab = new TabPage(fileControl.CobolFile.Name + "     X");
 
             fileControl.UsedFileTypesChanged += UsedFileTypesChanged;
             fileControl.SavedVersionChanged += (sender, args) => SetTabName(@"* " + newTab.Text);
