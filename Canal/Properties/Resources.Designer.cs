@@ -61,20 +61,18 @@ namespace Canal.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to v1.13
+        ///   Looks up a localized string similar to v1.14
+        ///- Opening a copy book from WordInfo now jumps to the variable definition
+        ///- Unsaved changes now prevent accidential closing of program
+        ///- Fixed syntax highlighting of reserved words in variable names
+        ///- Fixed variable parsing: PIC -9 is now recognized
+        ///
+        ///v1.13
         ///- &quot;Open Copybook&quot; now also works if copybook starts with comment
         ///- &quot;Resolve COPYs&quot; can be executed multiple times
         ///- Ctrl + Tab and Ctrl + Shift + Tab circle through tabs
         ///- Alt + 1 to 9 selects tab directly
-        ///- Fixes #9: Start tab can now be closed.
-        ///
-        ///v1.12
-        ///- Improved search
-        ///- Fixed error where search would skip elements
-        ///- Copy resolving is now parallel
-        ///- Already resolved Copys are commented out to prevent multiple resolvings
-        ///- Unsaved changes are marked with an asterisk
-        ///- Added &quot;Open Copyboo [rest of string was truncated]&quot;;.
+        ///- Fixes #9: Start tab can now be  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ChangeLog {
             get {
@@ -151,6 +149,15 @@ namespace Canal.Properties {
         internal static string File_Could_Not_Be_Found {
             get {
                 return ResourceManager.GetString("File_Could_Not_Be_Found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter Copybooks.
+        /// </summary>
+        internal static string FilterCopybooksWindowTitle {
+            get {
+                return ResourceManager.GetString("FilterCopybooksWindowTitle", resourceCulture);
             }
         }
         

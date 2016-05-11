@@ -1,10 +1,8 @@
 ﻿using Logging;
 using Model;
-using System.ComponentModel;
 
 namespace Canal.Utils
 {
-    using System;
     using System.Linq;
     using System.Windows.Forms;
 
@@ -14,45 +12,6 @@ namespace Canal.Utils
 
         private ReferenceUtil()
         { }
-
-        public event ProgressChangedEventHandler ProgressChanged;
-
-        public void ResolveCopys(CobolFile file)
-        {
-            Logger.Info("Start resolving copys for file {0}", file.Name);
-
-            var counter = 0;
-            foreach (var copyReference in file.CopyReferences.AsParallel())
-            {
-                try
-                {
-                    counter++;
-                    Logger.Info("Resolving program {0} in folder {1}", copyReference.ProgramName, copyReference.Directory);
-
-                    TextUtil.Instance.Insert(file, copyReference);
-
-                    if (ProgressChanged != null)
-                        ProgressChanged.Invoke(null, new ProgressChangedEventArgs(counter * 100 / (file.CopyReferences.Count + 3), null));
-                }
-                catch (Exception exception)
-                {
-                    Logger.Error("Error resolving program {0} in folder {1}: {2}", copyReference.ProgramName, copyReference.Directory, exception.Message);
-                }
-            }
-
-            try
-            {
-                var builder = new CobolTreeBuilder();
-                builder.Build(file);
-            }
-            catch (Exception exception)
-            {
-                Logger.Error("Error building cobol tree: {0}", exception.Message);
-            }
-
-            if (ProgressChanged != null)
-                ProgressChanged.Invoke(null, new ProgressChangedEventArgs(90, null));
-        }
 
         public TreeNode GetPerformTree(CobolFile file)
         {

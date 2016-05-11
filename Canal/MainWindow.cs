@@ -285,5 +285,13 @@
         {
             _tabUtil.ShowPreviousTab();
         }
+
+        private void insertCopybooksIntoSourceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_tabUtil.CurrentFileControl == null || _tabUtil.CurrentFileControl.CobolFile == null)
+                return;
+
+            _tabUtil.CurrentFileControl.InsertCopybooksIntoSource();
+        }
     }
 }

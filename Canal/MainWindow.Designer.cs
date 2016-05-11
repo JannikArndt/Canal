@@ -42,6 +42,9 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.level88ToEnumConverterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nextTabToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.previousTabToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.showLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportIssueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,9 +52,7 @@
             this.FileTabs = new System.Windows.Forms.TabControl();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nextTabToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.previousTabToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.insertCopybooksIntoSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -156,7 +157,8 @@
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.level88ToEnumConverterToolStripMenuItem});
+            this.level88ToEnumConverterToolStripMenuItem,
+            this.insertCopybooksIntoSourceToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.helpToolStripMenuItem.Text = "Tools";
@@ -164,55 +166,9 @@
             // level88ToEnumConverterToolStripMenuItem
             // 
             this.level88ToEnumConverterToolStripMenuItem.Name = "level88ToEnumConverterToolStripMenuItem";
-            this.level88ToEnumConverterToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.level88ToEnumConverterToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.level88ToEnumConverterToolStripMenuItem.Text = "Level 88 to Enum Converter";
             this.level88ToEnumConverterToolStripMenuItem.Click += new System.EventHandler(this.Level88ToEnumConverterToolStripMenuItemClick);
-            // 
-            // helpToolStripMenuItem1
-            // 
-            this.helpToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showLogToolStripMenuItem,
-            this.reportIssueToolStripMenuItem,
-            this.aboutToolStripMenuItem});
-            this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem1.Text = "Help";
-            // 
-            // showLogToolStripMenuItem
-            // 
-            this.showLogToolStripMenuItem.Name = "showLogToolStripMenuItem";
-            this.showLogToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.showLogToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.showLogToolStripMenuItem.Text = "Show Log";
-            this.showLogToolStripMenuItem.Click += new System.EventHandler(this.ShowLogToolStripMenuItemClick);
-            // 
-            // reportIssueToolStripMenuItem
-            // 
-            this.reportIssueToolStripMenuItem.Name = "reportIssueToolStripMenuItem";
-            this.reportIssueToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.reportIssueToolStripMenuItem.Text = "Report Issue";
-            this.reportIssueToolStripMenuItem.Click += new System.EventHandler(this.ReportIssueToolStripMenuItemClick);
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
-            // 
-            // FileTabs
-            // 
-            this.FileTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FileTabs.Location = new System.Drawing.Point(0, 24);
-            this.FileTabs.Margin = new System.Windows.Forms.Padding(2);
-            this.FileTabs.Name = "FileTabs";
-            this.FileTabs.SelectedIndex = 0;
-            this.FileTabs.Size = new System.Drawing.Size(1384, 738);
-            this.FileTabs.TabIndex = 1;
-            // 
-            // openFileDialog
-            // 
-            this.openFileDialog.FileName = "openFileDialog";
             // 
             // windowToolStripMenuItem
             // 
@@ -239,6 +195,59 @@
             this.previousTabToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.previousTabToolStripMenuItem.Text = "Previous Tab";
             this.previousTabToolStripMenuItem.Click += new System.EventHandler(this.previousTabToolStripMenuItem_Click);
+            // 
+            // helpToolStripMenuItem1
+            // 
+            this.helpToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showLogToolStripMenuItem,
+            this.reportIssueToolStripMenuItem,
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem1.Text = "Help";
+            // 
+            // showLogToolStripMenuItem
+            // 
+            this.showLogToolStripMenuItem.Name = "showLogToolStripMenuItem";
+            this.showLogToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.showLogToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.showLogToolStripMenuItem.Text = "Show Log";
+            this.showLogToolStripMenuItem.Click += new System.EventHandler(this.ShowLogToolStripMenuItemClick);
+            // 
+            // reportIssueToolStripMenuItem
+            // 
+            this.reportIssueToolStripMenuItem.Name = "reportIssueToolStripMenuItem";
+            this.reportIssueToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.reportIssueToolStripMenuItem.Text = "Report Issue";
+            this.reportIssueToolStripMenuItem.Click += new System.EventHandler(this.ReportIssueToolStripMenuItemClick);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
+            // 
+            // FileTabs
+            // 
+            this.FileTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FileTabs.Location = new System.Drawing.Point(0, 24);
+            this.FileTabs.Margin = new System.Windows.Forms.Padding(2);
+            this.FileTabs.Name = "FileTabs";
+            this.FileTabs.SelectedIndex = 0;
+            this.FileTabs.Size = new System.Drawing.Size(1384, 738);
+            this.FileTabs.TabIndex = 1;
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.FileName = "openFileDialog";
+            // 
+            // insertCopybooksIntoSourceToolStripMenuItem
+            // 
+            this.insertCopybooksIntoSourceToolStripMenuItem.Name = "insertCopybooksIntoSourceToolStripMenuItem";
+            this.insertCopybooksIntoSourceToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.insertCopybooksIntoSourceToolStripMenuItem.Text = "Insert Copybooks into Source...";
+            this.insertCopybooksIntoSourceToolStripMenuItem.Click += new System.EventHandler(this.insertCopybooksIntoSourceToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -284,6 +293,7 @@
         private System.Windows.Forms.ToolStripMenuItem windowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nextTabToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem previousTabToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem insertCopybooksIntoSourceToolStripMenuItem;
     }
 }
 

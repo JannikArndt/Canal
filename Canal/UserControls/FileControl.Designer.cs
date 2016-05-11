@@ -77,15 +77,14 @@ namespace Canal.UserControls
             this.navigateForwardButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.searchBox = new System.Windows.Forms.ToolStripTextBox();
+            this.findPreviousButton = new System.Windows.Forms.ToolStripButton();
+            this.findNextButton = new System.Windows.Forms.ToolStripButton();
             this.searchWithRegEx = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ResolveCopysButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.splitContainerRight = new System.Windows.Forms.SplitContainer();
             this.loaderImageInfoTab = new System.Windows.Forms.PictureBox();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
-            this.findPreviousButton = new System.Windows.Forms.ToolStripButton();
-            this.findNextButton = new System.Windows.Forms.ToolStripButton();
             this.structureTabControl.SuspendLayout();
             this.tocTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.loaderImageToc)).BeginInit();
@@ -114,8 +113,8 @@ namespace Canal.UserControls
             // 
             // tocTreeView
             // 
-            this.tocTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.tocTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tocTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tocTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -277,8 +276,8 @@ namespace Canal.UserControls
             // 
             // performsTreeView
             // 
-            this.performsTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.performsTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.performsTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.performsTreeView.ItemHeight = 22;
@@ -345,8 +344,8 @@ namespace Canal.UserControls
             // 
             // variablesTreeView
             // 
-            this.variablesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.variablesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.variablesTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.variablesTreeView.ItemHeight = 18;
@@ -413,8 +412,8 @@ namespace Canal.UserControls
             // 
             // proceduresTreeView
             // 
-            this.proceduresTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.proceduresTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.proceduresTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.proceduresTreeView.ItemHeight = 22;
@@ -505,8 +504,8 @@ namespace Canal.UserControls
             // 
             // filesTreeView
             // 
-            this.filesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.filesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.filesTreeView.Location = new System.Drawing.Point(0, 31);
             this.filesTreeView.Name = "filesTreeView";
@@ -517,8 +516,8 @@ namespace Canal.UserControls
             // 
             // codeBox
             // 
-            this.codeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.codeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.codeBox.AutoCompleteBracketsList = new char[] {
         '(',
@@ -591,8 +590,7 @@ namespace Canal.UserControls
             this.findNextButton,
             this.searchWithRegEx,
             this.toolStripSeparator1,
-            this.ResolveCopysButton,
-            this.toolStripProgressBar});
+            this.ResolveCopysButton});
             this.codeViewToolStrip.Location = new System.Drawing.Point(0, 0);
             this.codeViewToolStrip.Name = "codeViewToolStrip";
             this.codeViewToolStrip.Size = new System.Drawing.Size(679, 25);
@@ -637,6 +635,26 @@ namespace Canal.UserControls
             this.searchBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.HandleKeyDown);
             this.searchBox.TextChanged += new System.EventHandler(this.SeachBoxTextChanged);
             // 
+            // findPreviousButton
+            // 
+            this.findPreviousButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.findPreviousButton.Image = ((System.Drawing.Image)(resources.GetObject("findPreviousButton.Image")));
+            this.findPreviousButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.findPreviousButton.Name = "findPreviousButton";
+            this.findPreviousButton.Size = new System.Drawing.Size(23, 22);
+            this.findPreviousButton.Text = "Find Previous (Shift + F3)";
+            this.findPreviousButton.Click += new System.EventHandler(this.FindPreviousButtonClick);
+            // 
+            // findNextButton
+            // 
+            this.findNextButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.findNextButton.Image = ((System.Drawing.Image)(resources.GetObject("findNextButton.Image")));
+            this.findNextButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.findNextButton.Name = "findNextButton";
+            this.findNextButton.Size = new System.Drawing.Size(23, 22);
+            this.findNextButton.Text = "Find Next (F3)";
+            this.findNextButton.Click += new System.EventHandler(this.FindNextButtonClick);
+            // 
             // searchWithRegEx
             // 
             this.searchWithRegEx.CheckOnClick = true;
@@ -659,14 +677,6 @@ namespace Canal.UserControls
             this.ResolveCopysButton.Size = new System.Drawing.Size(106, 22);
             this.ResolveCopysButton.Text = "Resolve COPYs";
             this.ResolveCopysButton.Click += new System.EventHandler(this.ResolveCopysButtonClick);
-            // 
-            // toolStripProgressBar
-            // 
-            this.toolStripProgressBar.Name = "toolStripProgressBar";
-            this.toolStripProgressBar.Size = new System.Drawing.Size(100, 22);
-            this.toolStripProgressBar.Step = 1;
-            this.toolStripProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.toolStripProgressBar.Visible = false;
             // 
             // splitContainerRight
             // 
@@ -707,26 +717,6 @@ namespace Canal.UserControls
             this.miniToolStrip.Name = "miniToolStrip";
             this.miniToolStrip.Size = new System.Drawing.Size(200, 25);
             this.miniToolStrip.TabIndex = 1;
-            // 
-            // findPreviousButton
-            // 
-            this.findPreviousButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.findPreviousButton.Image = ((System.Drawing.Image)(resources.GetObject("findPreviousButton.Image")));
-            this.findPreviousButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.findPreviousButton.Name = "findPreviousButton";
-            this.findPreviousButton.Size = new System.Drawing.Size(23, 22);
-            this.findPreviousButton.Text = "Find Previous (Shift + F3)";
-            this.findPreviousButton.Click += new System.EventHandler(this.FindPreviousButtonClick);
-            // 
-            // findNextButton
-            // 
-            this.findNextButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.findNextButton.Image = ((System.Drawing.Image)(resources.GetObject("findNextButton.Image")));
-            this.findNextButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.findNextButton.Name = "findNextButton";
-            this.findNextButton.Size = new System.Drawing.Size(23, 22);
-            this.findNextButton.Text = "Find Next (F3)";
-            this.findNextButton.Click += new System.EventHandler(this.FindNextButtonClick);
             // 
             // FileControl
             // 
@@ -810,7 +800,6 @@ namespace Canal.UserControls
         private System.Windows.Forms.ToolStripButton searchWithRegEx;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton ResolveCopysButton;
-        private ToolStripProgressBar toolStripProgressBar;
         private TabPage filesTabPage;
         private ToolStrip filesTabToolStrip;
         private ToolStripTextBox filesTabSearchBox;

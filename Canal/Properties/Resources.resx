@@ -172,4 +172,7 @@
   <data name="SelectedProgram" xml:space="preserve">
     <value>Program: </value>
   </data>
+  <data name="FilterCopybooksWindowTitle" xml:space="preserve">
+    <value>Filter Copybooks</value>
+  </data>
 </root>

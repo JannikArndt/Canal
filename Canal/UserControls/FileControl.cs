@@ -315,47 +315,8 @@ namespace Canal.UserControls
 
         private void ResolveCopysButtonClick(object sender, EventArgs e)
         {
-            ResolveCopysButton.Enabled = false;
+            InsertCopybooksIntoSource();
 
-            CobolFile.Text = codeBox.Text;
-
-            // TODO
-
-            var backgroundWorker = new BackgroundWorker();
-
-            backgroundWorker.DoWork += (o, args) =>
-            {
-                ReferenceUtil.Instance.ProgressChanged += (sender1, eventArgs) => backgroundWorker.ReportProgress(eventArgs.ProgressPercentage);
-                ReferenceUtil.Instance.ResolveCopys(CobolFile);
-                args.Result = CobolFile;
-            };
-
-            backgroundWorker.RunWorkerCompleted += (o, args) =>
-            {
-                CobolFile = args.Result as CobolFile;
-                if (CobolFile == null) return;
-
-                codeBox.SetTextAsync(CobolFile.Text);
-
-                toolStripProgressBar.Value = 100;
-
-                toolStripProgressBar.Visible = false;
-
-                // Build the CobolTree in the CobolFile which contains all analysis information
-                // _cobolTreeWorker.RunWorkerAsync(CobolFile);
-            };
-
-            Cursor = Cursors.WaitCursor;
-
-            toolStripProgressBar.Visible = true;
-
-            backgroundWorker.WorkerReportsProgress = true;
-            backgroundWorker.ProgressChanged += (o, args) => toolStripProgressBar.Value = args.ProgressPercentage;
-            backgroundWorker.RunWorkerAsync();
-
-            ResolveCopysButton.Enabled = true;
-
-            Cursor = Cursors.Default;
         }
 
         private void ExportTocClick(object sender, EventArgs e)
@@ -366,6 +327,29 @@ namespace Canal.UserControls
         private void CopyProceduresClick(object sender, EventArgs e)
         {
             Clipboard.SetText(proceduresTreeView.ToText());
+        }
+
+        private void NavigateBackwardClick(object sender, EventArgs e)
+        {
+            codeBox.NavigateBackward();
+            navigateForwardButton.Enabled = true;
+        }
+
+        private void NavigateForwardButtonClick(object sender, EventArgs e)
+        {
+            var success = codeBox.NavigateForward();
+            if (!success)
+                navigateForwardButton.Enabled = false;
+        }
+
+        private void FindNextButtonClick(object sender, EventArgs e)
+        {
+            TrySearch(false);
+        }
+
+        private void FindPreviousButtonClick(object sender, EventArgs e)
+        {
+            TrySearch(false, true);
         }
 
         #endregion
@@ -588,27 +572,48 @@ namespace Canal.UserControls
 
         #endregion
 
-        private void NavigateBackwardClick(object sender, EventArgs e)
+        #region Functions
+
+        /// <summary>
+        /// Displays a filter window and then insert the selected copybook-references into the text and refreshes the view
+        /// </summary>
+        public void InsertCopybooksIntoSource()
         {
-            codeBox.NavigateBackward();
-            navigateForwardButton.Enabled = true;
+            var worker = new BackgroundWorker();
+
+            try
+            {
+                var references = TextUtil.Instance.FindCopyReferences(CobolFile.Text).ToList();
+
+                var filter = new FileReferenceFilter(references)
+                {
+                    Text = Resources.FilterCopybooksWindowTitle
+                };
+                filter.ShowDialog();
+
+                if (filter.Result != null && filter.Result.Any())
+                {
+                    worker.DoWork += (sender, args) =>
+                    {
+                        foreach (var copyRef in filter.Result)
+                        {
+                            TextUtil.Instance.Insert(CobolFile, copyRef);
+                        }
+                    };
+
+                    worker.RunWorkerCompleted += (sender, args) => codeBox.SetTextAsync(CobolFile.Text);
+
+                    worker.RunWorkerAsync();
+                }
+            }
+            catch (Exception exception)
+            {
+                Logger.Error("Error trying to insert copybooks into source: {0}.", exception.Message);
+                MessageBox.Show(string.Format("Error trying to insert copybooks into source: {0}.", exception.Message),
+                    Resources.Error, MessageBoxButtons.OK);
+            }
         }
 
-        private void NavigateForwardButtonClick(object sender, EventArgs e)
-        {
-            var success = codeBox.NavigateForward();
-            if (!success)
-                navigateForwardButton.Enabled = false;
-        }
-
-        private void FindNextButtonClick(object sender, EventArgs e)
-        {
-            TrySearch(false);
-        }
-
-        private void FindPreviousButtonClick(object sender, EventArgs e)
-        {
-            TrySearch(false, true);
-        }
+        #endregion
     }
 }
