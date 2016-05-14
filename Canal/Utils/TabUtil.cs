@@ -26,6 +26,11 @@ namespace Canal.Utils
             _tabControl.MouseDown += TabControlOnMouseDown;
         }
 
+        public override string ToString()
+        {
+            return string.Format("TabUtil, {0} TabPages, Selected: {1}", _tabControl.TabCount, _tabControl.SelectedIndex);
+        }
+
         private IEnumerable<FileControl> GetFileControls()
         {
             return (from TabPage tabPage in _tabControl.TabPages
@@ -70,11 +75,13 @@ namespace Canal.Utils
             for (int i = 0; i < _tabControl.TabPages.Count; i++)
             {
                 Rectangle r = _tabControl.GetTabRect(i);
-                //Getting the position of the "x" mark.
+
                 Rectangle closeButton = new Rectangle(r.Right - 15, r.Top + 4, 9, 7);
-                if (closeButton.Contains(mouseEventArgs.Location))
+
+                if (r.Contains(mouseEventArgs.Location) && mouseEventArgs.Button == MouseButtons.Middle || closeButton.Contains(mouseEventArgs.Location))
                 {
                     CloseTab(i);
+                    return;
                 }
             }
         }
@@ -123,7 +130,7 @@ namespace Canal.Utils
 
             var tabIndex = index < 0 ? _tabControl.SelectedIndex : index;
 
-            var fileControl = (FileControl)_tabControl.SelectedTab.Controls.Find("FileControl", false).FirstOrDefault(tab => tab is FileControl);
+            var fileControl = (FileControl)_tabControl.TabPages[tabIndex].Controls.Find("FileControl", false).FirstOrDefault(tab => tab is FileControl);
 
             if (fileControl == null)
             {

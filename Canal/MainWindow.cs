@@ -1,16 +1,16 @@
-﻿namespace Canal
+﻿using Canal.UserControls;
+using System.Diagnostics;
+
+namespace Canal
 {
-    using Level88ToEnum;
     using Logging;
     using Model;
     using Properties;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Diagnostics;
     using System.IO;
     using System.Windows.Forms;
-    using UserControls;
     using Utils;
 
     public partial class MainWindow : Form
@@ -30,6 +30,8 @@
             _tabUtil = new TabUtil(FileTabs, this);
             _tabUtil.ShowStartTab();
         }
+
+        #region Overrides
 
         protected override void OnShown(EventArgs e)
         {
@@ -134,6 +136,15 @@
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
+        #endregion
+
+        #region File Actions
+
+        public void New()
+        {
+            _tabUtil.AddTab();
+        }
+
         public void OpenFile(string filename, Variable currentVar = null)
         {
             Logger.Info("Opening file {0}", filename);
@@ -168,7 +179,7 @@
             }
         }
 
-        private void OpenToolStripMenuItemClick(object sender, EventArgs e)
+        public void OpenFile()
         {
             openFileDialog.Filter = @"COBOL Files|*.cob;*.cbl;*.txt;.src";
             openFileDialog.FileName = "";
@@ -181,46 +192,7 @@
             }
         }
 
-        private void CloseToolStripMenuItemClick(object sender, EventArgs e)
-        {
-            _tabUtil.CloseTab();
-        }
-
-        private void Level88ToEnumConverterToolStripMenuItemClick(object sender, EventArgs e)
-        {
-            var converterWindow = new Level88ToEnum();
-            converterWindow.Show();
-        }
-
-        private void ExitToolStripMenuItemClick(object sender, EventArgs e)
-        {
-            if (_tabUtil.CloseAllTabs())
-                Close();
-        }
-
-        private void NewToolStripMenuItemClick(object sender, EventArgs e)
-        {
-            _tabUtil.AddTab();
-        }
-
-        private void ReportIssueToolStripMenuItemClick(object sender, EventArgs e)
-        {
-            Process.Start("https://github.com/JannikArndt/Canal/issues/new");
-        }
-
-        private void AboutToolStripMenuItemClick(object sender, EventArgs e)
-        {
-            var about = new About();
-            about.Show();
-        }
-
-        private void ShowLogToolStripMenuItemClick(object sender, EventArgs e)
-        {
-            var logWindow = new Log();
-            logWindow.Show();
-        }
-
-        private void SaveToolStripMenuItemClick(object sender, EventArgs e)
+        public void Save()
         {
             if (_tabUtil.CurrentFileControl == null || _tabUtil.CurrentFileControl.CobolFile == null)
                 return;
@@ -228,10 +200,10 @@
             if (_tabUtil.CurrentFileControl.HasFileReference())
                 _tabUtil.CurrentFileControl.Save();
             else
-                SaveAsToolStripMenuItemClick(sender, e);
+                SaveAs();
         }
 
-        private void SaveAsToolStripMenuItemClick(object sender, EventArgs e)
+        public void SaveAs()
         {
             if (_tabUtil.CurrentFileControl == null || _tabUtil.CurrentFileControl.CobolFile == null)
                 return;
@@ -254,7 +226,7 @@
             }
         }
 
-        private void ExportToolStripMenuItemClick(object sender, EventArgs e)
+        public void Export()
         {
             if (_tabUtil.CurrentFileControl == null || _tabUtil.CurrentFileControl.CobolFile == null)
                 return;
@@ -276,22 +248,56 @@
             }
         }
 
-        private void nextTabToolStripMenuItem_Click(object sender, EventArgs e)
+        public void CloseFile()
         {
-            _tabUtil.ShowNextTab();
+            _tabUtil.CloseTab();
         }
 
-        private void previousTabToolStripMenuItem_Click(object sender, EventArgs e)
+        public void Exit()
         {
-            _tabUtil.ShowPreviousTab();
+            if (_tabUtil.CloseAllTabs())
+                Close();
         }
 
-        private void insertCopybooksIntoSourceToolStripMenuItem_Click(object sender, EventArgs e)
+        #endregion
+
+        #region Tools
+
+        public void InsertCopybooksIntoSource()
         {
             if (_tabUtil.CurrentFileControl == null || _tabUtil.CurrentFileControl.CobolFile == null)
                 return;
 
             _tabUtil.CurrentFileControl.InsertCopybooksIntoSource();
         }
+
+        public void ShowLevel88Converter()
+        {
+            var converterWindow = new Level88ToEnum.Level88ToEnum();
+            converterWindow.Show();
+        }
+
+        #endregion
+
+        #region Help
+
+        public void ShowLog()
+        {
+            var logWindow = new Log();
+            logWindow.Show();
+        }
+
+        public void ShowAbout()
+        {
+            var about = new About();
+            about.Show();
+        }
+
+        public void ReportIssue()
+        {
+            Process.Start("https://github.com/JannikArndt/Canal/issues/new");
+        }
+
+        #endregion
     }
 }

@@ -30,10 +30,13 @@ namespace Canal.UserControls
 
                 CobolFile = new CobolFileBuilder().Build(filename);
 
-                var worker = new BackgroundWorker();
-                worker.DoWork += new Analyzer().AnalyzeFile;
-                worker.RunWorkerCompleted += InitTabs;
-                worker.RunWorkerAsync(CobolFile);
+                if (CobolFile.FileReference != null)
+                {
+                    var worker = new BackgroundWorker();
+                    worker.DoWork += new Analyzer().AnalyzeFile;
+                    worker.RunWorkerCompleted += InitTabs;
+                    worker.RunWorkerAsync(CobolFile);
+                }
 
                 // initialize FastColoredTextBox
                 codeBox.Font = SourceCodePro.Regular;
@@ -41,11 +44,13 @@ namespace Canal.UserControls
 
                 codeBox.KeyDown += HandleKeyDown;
                 codeBox.WordSelected += CodeBoxOnWordSelected;
+                codeBox.UndoRedoStateChanged += CodeBoxOnUndoRedoStateChanged;
                 codeBox.TextChanged += (sender, args) =>
                 {
                     if (!UnsavedChanges && SavedVersionChanged != null)
                         SavedVersionChanged(sender, args);
                     UnsavedChanges = true;
+                    saveButton.Enabled = true;
                 };
 
                 searchBox.Text = Resources.SearchPlaceholder;
@@ -75,6 +80,11 @@ namespace Canal.UserControls
 
         public MainWindow MainWindow { get; private set; }
 
+        public override string ToString()
+        {
+            return string.Format("FileControl: {0}", CobolFile.Name);
+        }
+
         public bool HasFileReference()
         {
             return CobolFile.FileReference != null;
@@ -92,6 +102,7 @@ namespace Canal.UserControls
 
             File.WriteAllText(CobolFile.FileReference.FilePath, codeBox.Text);
             UnsavedChanges = false;
+            saveButton.Enabled = false;
             if (FileSaved != null)
                 FileSaved(this, new FileSystemEventArgs(WatcherChangeTypes.Changed, CobolFile.FileReference.Directory, CobolFile.FileReference.ProgramName));
         }
@@ -222,6 +233,12 @@ namespace Canal.UserControls
             }
         }
 
+        private void CodeBoxOnUndoRedoStateChanged(object sender, EventArgs eventArgs)
+        {
+            undoButton.Enabled = codeBox.UndoEnabled;
+            redoButton.Enabled = codeBox.RedoEnabled;
+        }
+
         #endregion
 
         #region Search Box
@@ -313,12 +330,6 @@ namespace Canal.UserControls
 
         #region Button Clicks
 
-        private void ResolveCopysButtonClick(object sender, EventArgs e)
-        {
-            InsertCopybooksIntoSource();
-
-        }
-
         private void ExportTocClick(object sender, EventArgs e)
         {
             Clipboard.SetText(tocTreeView.ToText());
@@ -340,6 +351,16 @@ namespace Canal.UserControls
             var success = codeBox.NavigateForward();
             if (!success)
                 navigateForwardButton.Enabled = false;
+        }
+
+        private void undoButton_Click(object sender, EventArgs e)
+        {
+            codeBox.Undo();
+        }
+
+        private void redoButton_Click(object sender, EventArgs e)
+        {
+            codeBox.Redo();
         }
 
         private void FindNextButtonClick(object sender, EventArgs e)
@@ -615,5 +636,20 @@ namespace Canal.UserControls
         }
 
         #endregion
+
+        private void newButton_Click(object sender, EventArgs e)
+        {
+            MainWindow.New();
+        }
+
+        private void openButton_Click(object sender, EventArgs e)
+        {
+            MainWindow.OpenFile();
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            MainWindow.Save();
+        }
     }
 }
