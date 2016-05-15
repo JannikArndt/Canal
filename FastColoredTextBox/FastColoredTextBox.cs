@@ -4765,7 +4765,6 @@ namespace FastColoredTextBoxNS
         {
             if (iLine < 0 || iLine >= LinesCount) return 0;
 
-
             EventHandler<AutoIndentEventArgs> calculator = AutoIndentNeeded;
             if (calculator == null)
                 if (Language != Language.Custom && SyntaxHighlighter != null)
@@ -4774,7 +4773,7 @@ namespace FastColoredTextBoxNS
                     calculator = CalcAutoIndentShiftByCodeFolding;
 
             var stack = new Stack<AutoIndentEventArgs>();
-            //calc indent for previous lines, find stable line
+            //calc indent for previous lines until stable line is found, push everything on a stack
             int i;
             int commentLines = 0;
             for (i = iLine - 1; i >= 0; i--)
@@ -4785,12 +4784,7 @@ namespace FastColoredTextBoxNS
                     commentLines++;
                     continue;
                 }
-                var args = new AutoIndentEventArgs(
-                    iLine: i,
-                    lineText: _lines[i].Text,
-                    prevLineText: i > 0 ? _lines[Math.Max(0, i - 1 - commentLines)].Text : "",
-                    tabLength: TabLength,
-                    currentIndentation: 0);
+                var args = new AutoIndentEventArgs(i, _lines[i].Text, i > 0 ? _lines[Math.Max(0, i - 1 - commentLines)].Text : "", TabLength, 0);
 
                 commentLines = 0;
 
@@ -4801,16 +4795,20 @@ namespace FastColoredTextBoxNS
             }
             int prevLineIndent = _lines[i >= 0 ? i : 0].GetStartSpacesCount(skip);
             string prevLineText = "";
+            // go through stack and calculate previous line's indent
             while (stack.Count != 0)
             {
                 var arg = stack.Pop();
                 prevLineText = arg.LineText;
-                if (arg.AbsoluteIndentation != 0)
-                    prevLineIndent = arg.AbsoluteIndentation + arg.ShiftNextLines;
-                else
+                if (arg.WrappedLine)
+                    continue;
+                if (arg.AbsoluteIndentation == 0)
                     prevLineIndent += arg.Shift + arg.ShiftNextLines;
+                else
+                    prevLineIndent = arg.AbsoluteIndentation + arg.ShiftNextLines;
             }
-            //calc shift for current line
+
+            //calculate shift for current line
             var a = new AutoIndentEventArgs(iLine, _lines[iLine].Text, iLine > 0 ? prevLineText : "", TabLength, prevLineIndent);
             calculator(this, a);
 

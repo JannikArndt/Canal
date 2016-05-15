@@ -114,6 +114,7 @@ namespace FastColoredTextBoxNS
         }
 
         private bool _inLastElseBlock;
+        private int rulerForWrappedLines = 0;
 
         private void CobolAutoIndentNeeded(object sender, AutoIndentEventArgs args)
         {
@@ -129,6 +130,7 @@ namespace FastColoredTextBoxNS
             if (args.PrevLineText.IndexOf('.') > 0)
             {
                 _inLastElseBlock = false;
+                // rulerForWrappedLines = 0;
                 args.AbsoluteIndentation = basicIndent;
             }
 
@@ -144,13 +146,35 @@ namespace FastColoredTextBoxNS
             currentLine = ExtractCode(currentLine);
             var previousLine = ExtractCode(args.PrevLineText);
 
-            // find labels
+            // VARIABLE DEFINITIONS
+            if (currentLine.Length > 2 && char.IsDigit(currentLine[0]) && char.IsDigit(currentLine[1]))
+            {
+                var number = int.Parse(currentLine.Substring(0, 2));
+
+                if (number == 1 || number == 77)
+                {
+                    args.AbsoluteIndentation = 0;
+                }
+                else if (number == 88)
+                {
+                    args.AbsoluteIndentation = CalculateSpaces(args.PrevLineText, 7) + (previousLine.StartsWith("88") ? 0 : 4);
+                }
+                else
+                {
+                    args.AbsoluteIndentation = number * 2 - 2;
+                }
+
+                return;
+            }
+
+            // LABELS
             if (Regex.IsMatch(currentLine, @"^[\w\d-]+( DIVISION| SECTION)?( +USING .*)?\.", RegexOptions.Multiline))
             {
                 args.AbsoluteIndentation = 0;
                 return;
             }
 
+            // IF / ELSE IF / ELSE
             if (currentLine.StartsWith("IF"))
             {
                 _inLastElseBlock = false;
@@ -173,29 +197,50 @@ namespace FastColoredTextBoxNS
                 return;
             }
 
-            if (currentLine.Length > 2 && char.IsDigit(currentLine[0]) && char.IsDigit(currentLine[1]))
+            // NON-KEYWORDS / WRAPPED LINES
+            var keyword = (currentLine + " ").Substring(0, (currentLine + " ").IndexOf(' ')).Trim(new char['.']);
+            if (!CobolKeywords.Keywords.Contains(keyword))
             {
-                var number = int.Parse(currentLine.Substring(0, 2));
+                args.WrappedLine = true;
 
-                if (number == 1 || number == 77)
-                {
-                    args.AbsoluteIndentation = 0;
-                }
-                else if (number == 88)
-                {
-                    var spaces = 0;
-                    for (int c = 7; c < args.PrevLineText.Length; c++)
-                        if (args.PrevLineText[c] == ' ')
-                            spaces++;
-                        else break;
+                // try to set new ruler
+                if (TryFindRuler(args, "= ")) return;
+                if (TryFindRuler(args, "USING ")) return;
+                if (TryFindRuler(args, "TO ")) return;
+                if (TryFindRuler(args, "VALUE ")) return;
+                if (TryFindRuler(args, "\"")) return;
 
-                    args.AbsoluteIndentation = spaces + (previousLine.StartsWith("88") ? 0 : 4);
-                }
-                else
+                // otherwise use last ruler
+                if (rulerForWrappedLines > 0)
                 {
-                    args.AbsoluteIndentation = number * 2 - 2;
+                    args.Shift = rulerForWrappedLines;
+                    return;
                 }
+
+                // otherwise right align
+                args.AbsoluteIndentation = 65 - currentLine.Length;
             }
+        }
+
+        private bool TryFindRuler(AutoIndentEventArgs args, string keyword)
+        {
+            var ruler = ExtractCode(args.PrevLineText).IndexOf(keyword, StringComparison.OrdinalIgnoreCase);
+
+            if (ruler <= 0) return false;
+
+            args.Shift = ruler + keyword.Length;
+            rulerForWrappedLines = args.Shift;
+            return true;
+        }
+
+        private int CalculateSpaces(string text, int start)
+        {
+            var spaces = 0;
+            for (int c = start; c < text.Length; c++)
+                if (text[c] == ' ')
+                    spaces++;
+                else break;
+            return spaces;
         }
 
         private string ExtractCode(string text)

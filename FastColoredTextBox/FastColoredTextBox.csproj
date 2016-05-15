@@ -61,6 +61,7 @@
     <Compile Include="BaseBookmarks.cs" />
     <Compile Include="Bookmark.cs" />
     <Compile Include="ClearSelectedCommand.cs" />
+    <Compile Include="CobolKeywords.cs" />
     <Compile Include="CollapseFoldingMarker.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="Enums\CompareResult.cs" />

@@ -4,21 +4,21 @@ namespace FastColoredTextBoxNS.Events
 {
     public class AutoIndentEventArgs : EventArgs
     {
-        public AutoIndentEventArgs(int iLine, string lineText, string prevLineText, int tabLength, int currentIndentation, bool isComment = false)
+        public AutoIndentEventArgs(int iLine, string lineText, string prevLineText, int tabLength, int currentIndentation)
         {
             this.iLine = iLine;
             LineText = lineText;
             PrevLineText = prevLineText;
             TabLength = tabLength;
             AbsoluteIndentation = currentIndentation;
-            IsComment = isComment;
         }
 
         public int iLine { get; internal set; }
         public int TabLength { get; internal set; }
         public string LineText { get; internal set; }
         public string PrevLineText { get; internal set; }
-        public bool IsComment { get; set; }
+
+        public bool WrappedLine { get; set; }
 
         /// <summary>
         /// Additional spaces count for this line, relative to previous line
