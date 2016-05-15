@@ -1,12 +1,12 @@
-﻿using System;
+﻿using FastColoredTextBoxNS.Enums;
+using FastColoredTextBoxNS.Events;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
-using FastColoredTextBoxNS.Enums;
-using FastColoredTextBoxNS.Events;
 
 namespace FastColoredTextBoxNS
 {
@@ -16,7 +16,7 @@ namespace FastColoredTextBoxNS
         protected static readonly Platform platformType = PlatformType.GetOperationSystemPlatform();
         public readonly Style BlueBoldStyle = new TextStyle(Brushes.Blue, null, FontStyle.Bold);
         public readonly Style BlueStyle = new TextStyle(Brushes.Blue, null, FontStyle.Regular);
-        public readonly Style BoldStyle = new TextStyle(null, null, FontStyle.Bold);
+        public readonly Style BoldStyle = new TextStyle(null, Brushes.Gainsboro, FontStyle.Regular, topLineBrush: Brushes.DarkGray);
         public readonly Style UnderlineStyle = new TextStyle(null, null, FontStyle.Underline);
         public readonly Style BrownStyle = new TextStyle(Brushes.Brown, null, FontStyle.Italic);
         public readonly Style GrayStyle = new TextStyle(Brushes.Gray, null, FontStyle.Regular);
@@ -27,6 +27,7 @@ namespace FastColoredTextBoxNS
         public readonly Style BlackStyle = new TextStyle(Brushes.Black, null, FontStyle.Regular);
         public readonly Style RedBackgroundStyle = new TextStyle(Brushes.Black, Brushes.LightSalmon, FontStyle.Underline);
         public readonly Style YellowBackgroundStyle = new TextStyle(Brushes.Black, Brushes.Yellow, FontStyle.Bold);
+        public readonly Style LineStyle = new TextStyle(null, null, FontStyle.Regular, bottomLineBrush: Brushes.Gainsboro);
         //
         protected readonly Dictionary<string, SyntaxDescriptor> descByXMLfileNames =
             new Dictionary<string, SyntaxDescriptor>();
@@ -1315,6 +1316,11 @@ namespace FastColoredTextBoxNS
         /// COBOL Sections
         /// </summary>
         public Style SectionStyle { get; set; }
+
+        /// <summary>
+        /// COBOL Sentences
+        /// </summary>
+        public Style DotStyle { get; set; }
 
         /// <summary>
         /// Style of tags in comments of C#
