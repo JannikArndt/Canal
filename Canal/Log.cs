@@ -8,7 +8,7 @@ namespace Canal
 {
     public partial class Log : Form
     {
-        private readonly List<LoggerEventArgs> _eventList;
+        private readonly IEnumerable<LoggerEventArgs> _eventList;
 
         private LoggingLevel _currentFilter = LoggingLevel.Info;
 

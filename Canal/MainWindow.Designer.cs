@@ -42,17 +42,22 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.level88ToEnumConverterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.insertCopybooksIntoSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nextTabToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.previousTabToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.showLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.reportIssueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reportIssueAnonymouslyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.showSourceOnGitHubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FileTabs = new System.Windows.Forms.TabControl();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.insertCopybooksIntoSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -170,6 +175,13 @@
             this.level88ToEnumConverterToolStripMenuItem.Text = "Level 88 to Enum Converter";
             this.level88ToEnumConverterToolStripMenuItem.Click += new System.EventHandler(this.Level88ToEnumConverterToolStripMenuItemClick);
             // 
+            // insertCopybooksIntoSourceToolStripMenuItem
+            // 
+            this.insertCopybooksIntoSourceToolStripMenuItem.Name = "insertCopybooksIntoSourceToolStripMenuItem";
+            this.insertCopybooksIntoSourceToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.insertCopybooksIntoSourceToolStripMenuItem.Text = "Insert Copybooks into Source...";
+            this.insertCopybooksIntoSourceToolStripMenuItem.Click += new System.EventHandler(this.insertCopybooksIntoSourceToolStripMenuItem_Click);
+            // 
             // windowToolStripMenuItem
             // 
             this.windowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -200,7 +212,12 @@
             // 
             this.helpToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showLogToolStripMenuItem,
+            this.toolStripSeparator3,
             this.reportIssueToolStripMenuItem,
+            this.reportIssueAnonymouslyToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.showSourceOnGitHubToolStripMenuItem,
+            this.toolStripSeparator4,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
             this.helpToolStripMenuItem1.Size = new System.Drawing.Size(44, 20);
@@ -210,21 +227,50 @@
             // 
             this.showLogToolStripMenuItem.Name = "showLogToolStripMenuItem";
             this.showLogToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.showLogToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.showLogToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.showLogToolStripMenuItem.Text = "Show Log";
             this.showLogToolStripMenuItem.Click += new System.EventHandler(this.ShowLogToolStripMenuItemClick);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(212, 6);
             // 
             // reportIssueToolStripMenuItem
             // 
             this.reportIssueToolStripMenuItem.Name = "reportIssueToolStripMenuItem";
-            this.reportIssueToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
-            this.reportIssueToolStripMenuItem.Text = "Report Issue";
+            this.reportIssueToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.reportIssueToolStripMenuItem.Text = "Report Issue on GitHub";
             this.reportIssueToolStripMenuItem.Click += new System.EventHandler(this.ReportIssueToolStripMenuItemClick);
+            // 
+            // reportIssueAnonymouslyToolStripMenuItem
+            // 
+            this.reportIssueAnonymouslyToolStripMenuItem.Name = "reportIssueAnonymouslyToolStripMenuItem";
+            this.reportIssueAnonymouslyToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.reportIssueAnonymouslyToolStripMenuItem.Text = "Report Issue Anonymously";
+            this.reportIssueAnonymouslyToolStripMenuItem.Click += new System.EventHandler(this.reportIssueAnonymouslyToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(212, 6);
+            // 
+            // showSourceOnGitHubToolStripMenuItem
+            // 
+            this.showSourceOnGitHubToolStripMenuItem.Name = "showSourceOnGitHubToolStripMenuItem";
+            this.showSourceOnGitHubToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.showSourceOnGitHubToolStripMenuItem.Text = "Show Source on GitHub";
+            this.showSourceOnGitHubToolStripMenuItem.Click += new System.EventHandler(this.showSourceOnGitHubToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(212, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
             // 
@@ -241,13 +287,6 @@
             // openFileDialog
             // 
             this.openFileDialog.FileName = "openFileDialog";
-            // 
-            // insertCopybooksIntoSourceToolStripMenuItem
-            // 
-            this.insertCopybooksIntoSourceToolStripMenuItem.Name = "insertCopybooksIntoSourceToolStripMenuItem";
-            this.insertCopybooksIntoSourceToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.insertCopybooksIntoSourceToolStripMenuItem.Text = "Insert Copybooks into Source...";
-            this.insertCopybooksIntoSourceToolStripMenuItem.Click += new System.EventHandler(this.insertCopybooksIntoSourceToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -294,6 +333,11 @@
         private System.Windows.Forms.ToolStripMenuItem nextTabToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem previousTabToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem insertCopybooksIntoSourceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem reportIssueAnonymouslyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem showSourceOnGitHubToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 

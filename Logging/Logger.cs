@@ -1,4 +1,6 @@
-﻿namespace Logging
+﻿using System.Linq;
+
+namespace Logging
 {
     using System;
     using System.Collections.Generic;
@@ -35,15 +37,35 @@
             Singleton.AddMsg(LoggingLevel.Error, msg, arguments);
         }
 
-        public List<LoggerEventArgs> GetEvents()
+        public IEnumerable<LoggerEventArgs> GetEvents(LoggingLevel level = LoggingLevel.Info, int i = -1)
         {
-            return this.logList;
+            if (i < 0)
+                return logList.Where(evt => evt.Level >= level);
+
+
+            var evts = logList.Where(evt => evt.Level >= level).ToList();
+            return evts.Skip(evts.Count - i);
+        }
+
+        public bool HasWarnings()
+        {
+            return logList.Any(evt => evt.Level == LoggingLevel.Warning);
+        }
+
+        public bool HasErrors()
+        {
+            return logList.Any(evt => evt.Level == LoggingLevel.Error);
+        }
+
+        public bool HasWarningsOrErrors()
+        {
+            return logList.Any(evt => evt.Level == LoggingLevel.Warning || evt.Level == LoggingLevel.Error);
         }
 
         private void AddMsg(LoggingLevel level, string msg)
         {
             var evt = new LoggerEventArgs(level, msg);
-            this.logList.Add(evt);
+            logList.Add(evt);
 
             var l = Log; // Keep reference
             if (l != null)

@@ -31,7 +31,12 @@ namespace Canal
 
         private void ReportIssueToolStripMenuItemClick(object sender, EventArgs e)
         {
-            ReportIssue();
+            ReportIssue(false);
+        }
+
+        private void reportIssueAnonymouslyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReportIssue(true);
         }
 
         private void AboutToolStripMenuItemClick(object sender, EventArgs e)

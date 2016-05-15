@@ -1,5 +1,6 @@
 ﻿using Canal.UserControls;
 using System.Diagnostics;
+using System.Net;
 
 namespace Canal
 {
@@ -293,11 +294,23 @@ namespace Canal
             about.Show();
         }
 
-        public void ReportIssue()
+        public void ReportIssue(bool anonymously)
         {
-            Process.Start("https://github.com/JannikArndt/Canal/issues/new");
+            var url = anonymously
+                ? "https://gitreports.com/issue/JannikArndt/Canal?name={0}&details={1}"
+                : "https://github.com/JannikArndt/Canal/issues/new?body={1}";
+
+            var body = "Log:" + Environment.NewLine + string.Join(Environment.NewLine, Logger.Singleton.GetEvents(LoggingLevel.Info, 20));
+
+            url = string.Format(url, Environment.UserName, WebUtility.UrlEncode(body));
+            Process.Start(url);
         }
 
         #endregion
+
+        private void showSourceOnGitHubToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/JannikArndt/Canal/");
+        }
     }
 }
