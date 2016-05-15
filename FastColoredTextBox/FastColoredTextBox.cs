@@ -3215,7 +3215,7 @@ namespace FastColoredTextBoxNS
                     {
                         LineInfo li = LineInfos[iLine];
 
-                        li.wordWrapIndent = WordWrapAutoIndent ? _lines[iLine].StartSpacesCount + WordWrapIndent : WordWrapIndent;
+                        li.wordWrapIndent = WordWrapAutoIndent ? _lines[iLine].GetStartSpacesCount() + WordWrapIndent : WordWrapIndent;
 
                         if (WordWrapMode == WordWrapMode.Custom)
                         {
@@ -3685,10 +3685,10 @@ namespace FastColoredTextBoxNS
                         {
                             var line = this[sel.Start.iLine];
                             if (sel.Start.iChar == 0 && sel.End.iChar == line.Count)
-                                Selection = new Range(this, line.StartSpacesCount, sel.Start.iLine, line.Count, sel.Start.iLine);
+                                Selection = new Range(this, line.GetStartSpacesCount(), sel.Start.iLine, line.Count, sel.Start.iLine);
                             else
                             if (sel.Start.iChar == line.Count && sel.End.iChar == 0)
-                                Selection = new Range(this, line.Count, sel.Start.iLine, line.StartSpacesCount, sel.Start.iLine);
+                                Selection = new Range(this, line.Count, sel.Start.iLine, line.GetStartSpacesCount(), sel.Start.iLine);
                         }
 
 
@@ -3702,7 +3702,7 @@ namespace FastColoredTextBoxNS
                         var sel = Selection.Clone();
                         var inverted = sel.Start > sel.End;
                         sel.Normalize();
-                        var spaces = this[sel.Start.iLine].StartSpacesCount;
+                        var spaces = this[sel.Start.iLine].GetStartSpacesCount();
                         if (sel.Start.iLine != sel.End.iLine || //selected several lines
                            (sel.Start.iChar <= spaces && sel.End.iChar == this[sel.Start.iLine].Count) || //selected whole line
                            sel.End.iChar <= spaces)//selected space prefix
@@ -3710,7 +3710,7 @@ namespace FastColoredTextBoxNS
                             IncreaseIndent();
                             if (sel.Start.iLine == sel.End.iLine && !sel.IsEmpty)
                             {
-                                Selection = new Range(this, this[sel.Start.iLine].StartSpacesCount, sel.End.iLine, this[sel.Start.iLine].Count, sel.End.iLine); //select whole line
+                                Selection = new Range(this, this[sel.Start.iLine].GetStartSpacesCount(), sel.End.iLine, this[sel.Start.iLine].Count, sel.End.iLine); //select whole line
                                 if (inverted)
                                     Selection.Inverse();
                             }
@@ -3778,7 +3778,7 @@ namespace FastColoredTextBoxNS
                         else
                         {
                             //if line contains only spaces then delete line
-                            if (this[Selection.Start.iLine].StartSpacesCount == this[Selection.Start.iLine].Count)
+                            if (this[Selection.Start.iLine].GetStartSpacesCount() == this[Selection.Start.iLine].Count)
                                 RemoveSpacesAfterCaret();
 
                             if (!Selection.IsReadOnlyRightChar())
@@ -4179,7 +4179,7 @@ namespace FastColoredTextBoxNS
             try
             {
                 int iLine = Selection.Start.iLine;
-                int spaces = this[iLine].StartSpacesCount;
+                int spaces = this[iLine].GetStartSpacesCount();
                 if (Selection.Start.iChar <= spaces)
                     Selection.GoHome(shift);
                 else
@@ -4454,11 +4454,11 @@ namespace FastColoredTextBoxNS
             var texts = new SortedDictionary<int, string>();
             var maxCapturesCount = 0;
 
-            var spaces = this[iLine].StartSpacesCount;
+            var spaces = this[iLine].GetStartSpacesCount();
 
             for (var i = iLine; i >= 0; i--)
             {
-                if (spaces != this[i].StartSpacesCount)
+                if (spaces != this[i].GetStartSpacesCount())
                     break;
 
                 var text = this[i].Text;
@@ -4477,7 +4477,7 @@ namespace FastColoredTextBoxNS
 
             for (var i = iLine + 1; i < LinesCount; i++)
             {
-                if (spaces != this[i].StartSpacesCount)
+                if (spaces != this[i].GetStartSpacesCount())
                     break;
 
                 var text = this[i].Text;
@@ -4686,13 +4686,19 @@ namespace FastColoredTextBoxNS
         /// </summary>
         public virtual void DoAutoIndent(int iLine)
         {
+            if (Language == Language.Cobol)
+            {
+                DoAutoIndentCobol(iLine);
+                return;
+            }
+
             if (Selection.ColumnSelectionMode)
                 return;
             Place oldStart = Selection.Start;
             //
             int needSpaces = CalcAutoIndent(iLine);
             //
-            int spaces = _lines[iLine].StartSpacesCount;
+            int spaces = _lines[iLine].GetStartSpacesCount();
             int needToInsert = needSpaces - spaces;
             if (needToInsert < 0)
                 needToInsert = -Math.Min(-needToInsert, spaces);
@@ -4713,9 +4719,49 @@ namespace FastColoredTextBoxNS
         }
 
         /// <summary>
+        /// Inserts autoindent's spaces in the line, ignoring the first 6 chars
+        /// </summary>
+        public virtual void DoAutoIndentCobol(int iLine)
+        {
+            if (Selection.ColumnSelectionMode)
+                return;
+
+            if (_lines[iLine].Count < 7 || _lines[iLine][6].c == '*')
+                return;
+
+            const int ignoreChars = 7;
+            Place oldStart = Selection.Start;
+            //
+            int needSpaces = CalcAutoIndent(iLine, ignoreChars);
+            //
+            // StartSpacesCount, ignoring first 7 chars
+            int spaces = _lines[iLine].GetStartSpacesCount(ignoreChars);
+
+            int needToInsert = needSpaces - spaces;
+            if (needToInsert < 0)
+                needToInsert = -Math.Min(-needToInsert, spaces);
+            //insert start spaces
+            if (needToInsert == 0)
+                return;
+
+            // Start Selection at char 7
+            Selection.Start = new Place(ignoreChars, iLine);
+            if (needToInsert > 0)
+                InsertText(new String(' ', needToInsert));
+            else
+            {
+                Selection.Start = new Place(ignoreChars, iLine);
+                Selection.End = new Place(ignoreChars - needToInsert, iLine);
+                ClearSelected();
+            }
+
+            Selection.Start = new Place(Math.Min(_lines[iLine].Count, Math.Max(0, oldStart.iChar + needToInsert)), iLine);
+        }
+
+        /// <summary>
         /// Returns needed start space count for the line
         /// </summary>
-        public virtual int CalcAutoIndent(int iLine)
+        public virtual int CalcAutoIndent(int iLine, int skip = 0)
         {
             if (iLine < 0 || iLine >= LinesCount) return 0;
 
@@ -4727,34 +4773,48 @@ namespace FastColoredTextBoxNS
                 else
                     calculator = CalcAutoIndentShiftByCodeFolding;
 
-            int needSpaces;
-
             var stack = new Stack<AutoIndentEventArgs>();
             //calc indent for previous lines, find stable line
             int i;
+            int commentLines = 0;
             for (i = iLine - 1; i >= 0; i--)
             {
-                var args = new AutoIndentEventArgs(i, _lines[i].Text, i > 0 ? _lines[i - 1].Text : "", TabLength, 0);
+                if (_lines[i].Count < 7 || _lines[i][6].c == '*' || string.IsNullOrWhiteSpace(_lines[i].Text.Substring(7, Math.Min(65, _lines[i].Count - 7)).Trim()))
+                {
+                    // if line is comment, remember it and skip it when getting prevLineText
+                    commentLines++;
+                    continue;
+                }
+                var args = new AutoIndentEventArgs(
+                    iLine: i,
+                    lineText: _lines[i].Text,
+                    prevLineText: i > 0 ? _lines[Math.Max(0, i - 1 - commentLines)].Text : "",
+                    tabLength: TabLength,
+                    currentIndentation: 0);
+
+                commentLines = 0;
+
                 calculator(this, args);
                 stack.Push(args);
                 if (args.Shift == 0 && args.AbsoluteIndentation == 0 && args.LineText.Trim() != "")
                     break;
             }
-            int indent = _lines[i >= 0 ? i : 0].StartSpacesCount;
+            int prevLineIndent = _lines[i >= 0 ? i : 0].GetStartSpacesCount(skip);
+            string prevLineText = "";
             while (stack.Count != 0)
             {
                 var arg = stack.Pop();
+                prevLineText = arg.LineText;
                 if (arg.AbsoluteIndentation != 0)
-                    indent = arg.AbsoluteIndentation + arg.ShiftNextLines;
+                    prevLineIndent = arg.AbsoluteIndentation + arg.ShiftNextLines;
                 else
-                    indent += arg.ShiftNextLines;
+                    prevLineIndent += arg.Shift + arg.ShiftNextLines;
             }
-            //clalc shift for current line
-            var a = new AutoIndentEventArgs(iLine, _lines[iLine].Text, iLine > 0 ? _lines[iLine - 1].Text : "", TabLength, indent);
+            //calc shift for current line
+            var a = new AutoIndentEventArgs(iLine, _lines[iLine].Text, iLine > 0 ? prevLineText : "", TabLength, prevLineIndent);
             calculator(this, a);
-            needSpaces = a.AbsoluteIndentation + a.Shift;
 
-            return needSpaces;
+            return a.AbsoluteIndentation + a.Shift;
         }
 
         internal virtual void CalcAutoIndentShiftByCodeFolding(object sender, AutoIndentEventArgs args)
@@ -4785,7 +4845,7 @@ namespace FastColoredTextBoxNS
             int result = int.MaxValue;
             for (int i = fromLine; i <= toLine; i++)
             {
-                int count = _lines[i].StartSpacesCount;
+                int count = _lines[i].GetStartSpacesCount();
                 if (count < result)
                     result = count;
             }
@@ -4801,7 +4861,7 @@ namespace FastColoredTextBoxNS
             int result = 0;
             for (int i = fromLine; i <= toLine; i++)
             {
-                int count = _lines[i].StartSpacesCount;
+                int count = _lines[i].GetStartSpacesCount();
                 if (count > result)
                     result = count;
             }
@@ -5342,7 +5402,7 @@ namespace FastColoredTextBoxNS
                         else if (LineInfos[iLine.Value].VisibleState == VisibleState.Visible)
                         {
                             int d = 0;
-                            int spaceCount = line.StartSpacesCount;
+                            int spaceCount = line.GetStartSpacesCount();
                             if (_lines[iLine.Value].Count <= spaceCount || _lines[iLine.Value][spaceCount].c == ' ')
                                 d = CharHeight;
                             y2 = LineInfos[iLine.Value].startY - VerticalScroll.Value + d;
@@ -5350,7 +5410,7 @@ namespace FastColoredTextBoxNS
                         else
                             continue;
 
-                        int x = LeftIndent + Paddings.Left + line.StartSpacesCount * CharWidth - HorizontalScroll.Value;
+                        int x = LeftIndent + Paddings.Left + line.GetStartSpacesCount() * CharWidth - HorizontalScroll.Value;
                         if (x >= LeftIndent + Paddings.Left)
                             e.Graphics.DrawLine(pen, x, y >= 0 ? y : 0, x,
                                                 y2 < ClientSize.Height ? y2 : ClientSize.Height);
@@ -6685,7 +6745,7 @@ namespace FastColoredTextBoxNS
             {
                 if (!Selection.ReadOnly)
                 {
-                    Selection.Start = new Place(this[Selection.Start.iLine].StartSpacesCount, Selection.Start.iLine);
+                    Selection.Start = new Place(this[Selection.Start.iLine].GetStartSpacesCount(), Selection.Start.iLine);
                     //insert tab as spaces
                     int spaces = TabLength - (Selection.Start.iChar % TabLength);
                     //replace mode? select forward chars

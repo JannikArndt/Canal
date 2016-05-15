@@ -1,8 +1,8 @@
-﻿using System;
+﻿using FastColoredTextBoxNS.Enums;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
-using FastColoredTextBoxNS.Enums;
 
 namespace FastColoredTextBoxNS
 {
@@ -89,18 +89,15 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Count of start spaces
         /// </summary>
-        public int StartSpacesCount
+        public int GetStartSpacesCount(int skip = 0)
         {
-            get
-            {
-                int spacesCount = 0;
-                for (int i = 0; i < Count; i++)
-                    if (this[i].c == ' ')
-                        spacesCount++;
-                    else
-                        break;
-                return spacesCount;
-            }
+            int spacesCount = 0;
+            for (int i = skip; i < Count; i++)
+                if (this[i].c == ' ')
+                    spacesCount++;
+                else
+                    break;
+            return spacesCount;
         }
 
         public int IndexOf(Char item)

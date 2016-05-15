@@ -1,6 +1,7 @@
 ﻿using Canal.Events;
 using Canal.Properties;
 using Canal.Utils;
+using FastColoredTextBoxNS;
 using FastColoredTextBoxNS.Events;
 using Logging;
 using Model;
@@ -650,6 +651,15 @@ namespace Canal.UserControls
         private void saveButton_Click(object sender, EventArgs e)
         {
             MainWindow.Save();
+        }
+
+        private void formatCodeButton_Click(object sender, EventArgs e)
+        {
+            var selection = new Range(codeBox, codeBox.Selection.Start, codeBox.Selection.End);
+            if (codeBox.Selection.IsEmpty)
+                codeBox.SelectAll();
+            codeBox.DoAutoIndent();
+            codeBox.Selection = selection;
         }
     }
 }

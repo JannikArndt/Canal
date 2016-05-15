@@ -1,6 +1,9 @@
 ﻿
 using FastColoredTextBoxNS.Enums;
 using FastColoredTextBoxNS.Events;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FastColoredTextBoxNS
 {
@@ -110,9 +113,97 @@ namespace FastColoredTextBoxNS
             // TODO
         }
 
+        private bool _inLastElseBlock;
+
         private void CobolAutoIndentNeeded(object sender, AutoIndentEventArgs args)
         {
-            // TODO
+            // input: args.LineText;
+            // output: args.Shift; (current line), args.ShiftNextLines; (next line)
+
+            const int basicIndent = 4;
+            const int ifIndent = 8;
+
+            var currentLine = args.LineText;
+
+            // endings
+            if (args.PrevLineText.IndexOf('.') > 0)
+            {
+                _inLastElseBlock = false;
+                args.AbsoluteIndentation = basicIndent;
+            }
+
+            // validate text
+            if (currentLine.Length < 8)
+                return;
+
+            // ignore comments
+            if (currentLine[6] == '*')
+                return;
+
+            // trim line numbers and author comments
+            currentLine = ExtractCode(currentLine);
+            var previousLine = ExtractCode(args.PrevLineText);
+
+            // find labels
+            if (Regex.IsMatch(currentLine, @"^[\w\d-]+( DIVISION| SECTION)?( +USING .*)?\.", RegexOptions.Multiline))
+            {
+                args.AbsoluteIndentation = 0;
+                return;
+            }
+
+            if (currentLine.StartsWith("IF"))
+            {
+                _inLastElseBlock = false;
+
+                // ELSE \n IF
+                if (previousLine.StartsWith("ELSE"))
+                {
+                    args.AbsoluteIndentation = args.PrevLineText.IndexOf('E') - 7;
+                }
+
+                args.ShiftNextLines = ifIndent;
+                return;
+            }
+
+            if (currentLine.StartsWith("ELSE"))
+            {
+                args.Shift = args.AbsoluteIndentation <= 12 ? -ifIndent : _inLastElseBlock ? -2 * ifIndent : -ifIndent;
+                args.ShiftNextLines = ifIndent;
+                _inLastElseBlock = true;
+                return;
+            }
+
+            if (currentLine.Length > 2 && char.IsDigit(currentLine[0]) && char.IsDigit(currentLine[1]))
+            {
+                var number = int.Parse(currentLine.Substring(0, 2));
+
+                if (number == 1 || number == 77)
+                {
+                    args.AbsoluteIndentation = 0;
+                }
+                else if (number == 88)
+                {
+                    var spaces = 0;
+                    for (int c = 7; c < args.PrevLineText.Length; c++)
+                        if (args.PrevLineText[c] == ' ')
+                            spaces++;
+                        else break;
+
+                    args.AbsoluteIndentation = spaces + (previousLine.StartsWith("88") ? 0 : 4);
+                }
+                else
+                {
+                    args.AbsoluteIndentation = number * 2 - 2;
+                }
+            }
+        }
+
+        private string ExtractCode(string text)
+        {
+            if (text.Length < 7)
+                return text.Trim();
+
+            return text.Substring(7, Math.Min(text.Length - 7, 65)).Trim();
         }
 
         private void SetCobolStyle()

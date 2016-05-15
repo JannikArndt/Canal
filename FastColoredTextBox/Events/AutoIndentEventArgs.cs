@@ -4,19 +4,21 @@ namespace FastColoredTextBoxNS.Events
 {
     public class AutoIndentEventArgs : EventArgs
     {
-        public AutoIndentEventArgs(int iLine, string lineText, string prevLineText, int tabLength, int currentIndentation)
+        public AutoIndentEventArgs(int iLine, string lineText, string prevLineText, int tabLength, int currentIndentation, bool isComment = false)
         {
             this.iLine = iLine;
             LineText = lineText;
             PrevLineText = prevLineText;
             TabLength = tabLength;
             AbsoluteIndentation = currentIndentation;
+            IsComment = isComment;
         }
 
         public int iLine { get; internal set; }
         public int TabLength { get; internal set; }
         public string LineText { get; internal set; }
         public string PrevLineText { get; internal set; }
+        public bool IsComment { get; set; }
 
         /// <summary>
         /// Additional spaces count for this line, relative to previous line
@@ -32,5 +34,10 @@ namespace FastColoredTextBoxNS.Events
         /// Absolute indentation of current line. You can change this property if you want to set absolute indentation.
         /// </summary>
         public int AbsoluteIndentation { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0} + {1}, => {2} '{3}'", AbsoluteIndentation, Shift, ShiftNextLines, LineText);
+        }
     }
 }
