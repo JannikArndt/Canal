@@ -8,12 +8,12 @@ namespace Model
 
         public LinkageSection LinkageSection { set; get; }
 
-        protected override int StartIndex
+        public override int StartIndex
         {
             get { return ParentCobolFile.DivisionsAndSection.Data.GetValueOrDefault(-1); }
         }
 
-        protected override int EndIndex
+        public override int EndIndex
         {
             get { return ParentCobolFile.DivisionsAndSection.Procedure.GetValueOrDefault(-1); }
         }

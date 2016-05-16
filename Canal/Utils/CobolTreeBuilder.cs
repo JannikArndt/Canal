@@ -33,7 +33,7 @@ namespace Canal.Utils
 
             // PROCEDURE DIVISION
             tree.ProcedureDivision = new ProcedureDivision(file);
-            BuildSections(file, tree.ProcedureDivision);
+            tree.ProcedureDivision.Sections = BuildSections(tree.ProcedureDivision);
             BuildReferences(tree.ProcedureDivision);
 
             foreach (var procedure in tree.AllProcedures)
@@ -53,26 +53,29 @@ namespace Canal.Utils
             return tree;
         }
 
-        private void BuildSections(CobolFile cobolFile, ProcedureDivision procedureDivision)
+        private List<Section> BuildSections(ProcedureDivision procedureDivision)
         {
+            var result = new List<Section>();
             var code = procedureDivision.GetCode();
 
             foreach (Match sectionName in Constants.SectionRegex.Matches(code))
             {
                 var name = sectionName.Groups["sectionName"].Value;
-                var begin = sectionName.Index + sectionName.Length;
-                var end = sectionName.NextMatch().Success ? sectionName.NextMatch().Index : procedureDivision.Length;
+                var begin = procedureDivision.StartIndex + sectionName.Index;
+                var end = procedureDivision.StartIndex + (sectionName.NextMatch().Success ? sectionName.NextMatch().Index : procedureDivision.Length);
 
-                var section = new Section(cobolFile, name, begin, end);
-                BuildProcedures(cobolFile, section);
+                var section = new Section(procedureDivision.ParentCobolFile, name, begin, end);
+                section.Procedures = BuildProcedures(section);
 
-                procedureDivision.Sections.Add(section);
+                result.Add(section);
             }
+
+            return result;
         }
 
-
-        private void BuildProcedures(CobolFile cobolFile, Section section)
+        private List<Procedure> BuildProcedures(Section section)
         {
+            var result = new List<Procedure>();
             var code = section.GetCode();
 
             foreach (Match procedureName in Constants.ProcedureRegex.Matches(code))
@@ -80,8 +83,11 @@ namespace Canal.Utils
                 var procName = procedureName.Groups["procedureName"].Value;
                 var begin = procedureName.Index + procedureName.Length;
                 var end = procedureName.NextMatch().Success ? procedureName.NextMatch().Index : section.Length;
-                section.Procedures.Add(new Procedure(cobolFile, procName, begin, end));
+
+                result.Add(new Procedure(section.ParentCobolFile, procName, begin, end));
             }
+
+            return result;
         }
 
         private void BuildReferences(ProcedureDivision procedureDivision)

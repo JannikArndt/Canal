@@ -4,7 +4,7 @@ namespace Model
 {
     public class Section : Procedure
     {
-        public List<Procedure> Procedures { get; }
+        public List<Procedure> Procedures { get; set; }
 
         public Section(CobolFile cobolFile, string name, int startIndex, int endIndex)
             : base(cobolFile, name, startIndex, endIndex)

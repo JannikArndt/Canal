@@ -6,12 +6,12 @@ namespace Model
     {
         // AUTHOR, INSTALLATION, DATE-WRITTEN; DATE-COMPILED; SECURITY
 
-        protected override int StartIndex
+        public override int StartIndex
         {
             get { return ParentCobolFile.DivisionsAndSection.Identification.GetValueOrDefault(-1); }
         }
 
-        protected override int EndIndex
+        public override int EndIndex
         {
             get { return ParentCobolFile.DivisionsAndSection.Environment.GetValueOrDefault(-1); }
         }

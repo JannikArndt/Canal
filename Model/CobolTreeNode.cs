@@ -4,10 +4,10 @@ namespace Model
 {
     public abstract class CobolTreeNode
     {
-        protected CobolFile ParentCobolFile { get; }
+        public CobolFile ParentCobolFile { get; }
 
-        protected abstract int StartIndex { get; }
-        protected abstract int EndIndex { get; }
+        public abstract int StartIndex { get; }
+        public abstract int EndIndex { get; }
 
         public string Name { get; set; }
 

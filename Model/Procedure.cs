@@ -7,9 +7,9 @@ namespace Model
 {
     public class Procedure : CobolTreeNode
     {
-        protected override int StartIndex { get; }
+        public override int StartIndex { get; }
 
-        protected override int EndIndex { get; }
+        public override int EndIndex { get; }
 
         public override List<CobolTreeNode> GetNodes()
         {
