@@ -1308,16 +1308,6 @@ namespace FastColoredTextBoxNS
         public Style ProcedureStyle { get; set; }
 
         /// <summary>
-        /// COBOL Divisions
-        /// </summary>
-        public Style DivisionStyle { get; set; }
-
-        /// <summary>
-        /// COBOL Sections
-        /// </summary>
-        public Style SectionStyle { get; set; }
-
-        /// <summary>
         /// COBOL Sentences
         /// </summary>
         public Style DotStyle { get; set; }

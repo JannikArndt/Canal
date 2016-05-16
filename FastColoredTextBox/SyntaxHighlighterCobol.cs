@@ -2,6 +2,7 @@
 using FastColoredTextBoxNS.Enums;
 using FastColoredTextBoxNS.Events;
 using System;
+using System.Drawing;
 
 namespace FastColoredTextBoxNS
 {
@@ -72,7 +73,7 @@ namespace FastColoredTextBoxNS
             range.tb.AutoIndentCharsPatterns = @"^\s*[\w\.]+(\s\w+)?\s*(?<range>=)\s*(?<range>.+)";
 
             // clear style of changed range
-            range.ClearStyle(StringStyle, CommentStyle, NumberStyle, KeywordStyle, ProcedureStyle, DivisionStyle, SectionStyle, DotStyle);
+            range.ClearStyle(StringStyle, CommentStyle, NumberStyle, KeywordStyle, ProcedureStyle, DotStyle);
 
             if (_cobolStringRegex == null)
             {
@@ -253,14 +254,12 @@ namespace FastColoredTextBoxNS
 
         private void SetCobolStyle()
         {
-            StringStyle = RedStyle;
-            CommentStyle = GrayStyle;
-            NumberStyle = MagentaStyle;
-            KeywordStyle = BlueBoldStyle;
-            ProcedureStyle = BoldStyle;
-            DivisionStyle = RedBackgroundStyle;
-            SectionStyle = YellowBackgroundStyle;
-            DotStyle = LineStyle;
+            StringStyle = new TextStyle(Brushes.Red, null, FontStyle.Regular);
+            CommentStyle = new TextStyle(Brushes.Gray, null, FontStyle.Regular);
+            NumberStyle = new TextStyle(Brushes.Magenta, null, FontStyle.Regular);
+            KeywordStyle = new TextStyle(Brushes.Blue, null, FontStyle.Bold);
+            ProcedureStyle = new TextStyle(null, null, FontStyle.Bold, topLineBrush: Brushes.DarkGray);
+            DotStyle = new TextStyle(null, null, FontStyle.Regular, bottomLineBrush: Brushes.Gainsboro);
         }
     }
 }

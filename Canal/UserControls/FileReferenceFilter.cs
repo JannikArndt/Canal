@@ -14,7 +14,7 @@ namespace Canal.UserControls
         {
             InitializeComponent();
 
-            referenceListBox.Font = SourceCodePro.Regular;
+            referenceListBox.Font = SourceCodePro.Instance.Regular();
 
             // ReSharper disable once StringCompareToIsCultureSpecific
             references.Sort((ref1, ref2) => ref1.ToString().CompareTo(ref2.ToString()));

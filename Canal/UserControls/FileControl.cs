@@ -40,7 +40,7 @@ namespace Canal.UserControls
                 }
 
                 // initialize FastColoredTextBox
-                codeBox.Font = SourceCodePro.Regular;
+                codeBox.Font = SourceCodePro.Instance.Regular();
                 codeBox.SetTextAsync(CobolFile.Text);
 
                 codeBox.KeyDown += HandleKeyDown;
