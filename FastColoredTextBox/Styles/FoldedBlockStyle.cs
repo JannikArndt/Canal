@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace FastColoredTextBoxNS
+namespace FastColoredTextBoxNS.Styles
 {
     /// <summary>
     /// Renderer for folded block

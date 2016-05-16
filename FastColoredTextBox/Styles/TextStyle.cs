@@ -1,7 +1,7 @@
 using System;
 using System.Drawing;
 
-namespace FastColoredTextBoxNS
+namespace FastColoredTextBoxNS.Styles
 {
     /// <summary>
     /// Style for chars rendering

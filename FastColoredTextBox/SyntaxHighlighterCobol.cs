@@ -1,6 +1,7 @@
 ﻿
 using FastColoredTextBoxNS.Enums;
 using FastColoredTextBoxNS.Events;
+using FastColoredTextBoxNS.Styles;
 using System;
 using System.Drawing;
 
@@ -33,6 +34,10 @@ namespace FastColoredTextBoxNS
 
         private Regex _cobolDotRegex;
 
+        private Regex _cobolPerformRegex;
+        private Regex _cobolGotoRegex;
+        private Regex _cobolCallRegex;
+
         /// <summary>
         /// Adds content to the RegExes
         /// </summary>
@@ -59,6 +64,10 @@ namespace FastColoredTextBoxNS
             _cobolProceduresRegex = new Regex(@"^.{6} [\w\d-]+( DIVISION| SECTION)?( +USING .*)?\.", multilineAndCompiled);
 
             _cobolDotRegex = new Regex(@"^.*\..*$", multilineAndCompiled);
+
+            _cobolPerformRegex = new Regex(@"^.*PERFORM.*$", multilineAndCompiled);
+            _cobolGotoRegex = new Regex(@"^.*GO TO.*$", multilineAndCompiled);
+            _cobolCallRegex = new Regex(@"^.*CALL.*$", multilineAndCompiled);
         }
 
         private void CobolSyntaxHighlight(Range range)
@@ -104,6 +113,10 @@ namespace FastColoredTextBoxNS
             range.SetStyle(ProcedureStyle, _cobolProceduresRegex);
 
             range.SetStyle(LineStyle, _cobolDotRegex);
+
+            range.SetStyle(PerformMarker, _cobolPerformRegex);
+            range.SetStyle(GotoMarker, _cobolGotoRegex);
+            range.SetStyle(CallMarker, _cobolCallRegex);
 
             // clear folding markers
             range.ClearFoldingMarkers();
@@ -260,6 +273,9 @@ namespace FastColoredTextBoxNS
             KeywordStyle = new TextStyle(Brushes.Blue, null, FontStyle.Bold);
             ProcedureStyle = new TextStyle(null, null, FontStyle.Bold, topLineBrush: Brushes.DarkGray);
             DotStyle = new TextStyle(null, null, FontStyle.Regular, bottomLineBrush: Brushes.Gainsboro);
+            PerformMarker = new SideMarkStyle(SideMarkStyle.MarkerStyle.Perform);
+            GotoMarker = new SideMarkStyle(SideMarkStyle.MarkerStyle.Goto);
+            CallMarker = new SideMarkStyle(SideMarkStyle.MarkerStyle.Call);
         }
     }
 }

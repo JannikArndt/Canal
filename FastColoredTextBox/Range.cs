@@ -1,4 +1,5 @@
 ﻿using FastColoredTextBoxNS.Enums;
+using FastColoredTextBoxNS.Styles;
 using System;
 using System.Collections.Generic;
 using System.Text;

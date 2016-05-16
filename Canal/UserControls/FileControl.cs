@@ -46,6 +46,7 @@ namespace Canal.UserControls
                 codeBox.KeyDown += HandleKeyDown;
                 codeBox.WordSelected += CodeBoxOnWordSelected;
                 codeBox.UndoRedoStateChanged += CodeBoxOnUndoRedoStateChanged;
+                codeBox.VisualMarkerClick += CodeBoxOnPerformMarkerClick;
                 codeBox.TextChanged += (sender, args) =>
                 {
                     if (!UnsavedChanges && SavedVersionChanged != null)
@@ -60,6 +61,25 @@ namespace Canal.UserControls
             {
                 Logger.Error("Error initializing file control for CobolFile {0}: {1}", filename, exception.Message);
                 MessageBox.Show(Resources.ErrorMessage_FileControl_Constructor + exception.Message, Resources.Error, MessageBoxButtons.OK);
+            }
+        }
+
+        private void CodeBoxOnPerformMarkerClick(object sender, VisualMarkerEventArgs visualMarkerEventArgs)
+        {
+            var clickedLineText = visualMarkerEventArgs.Marker.Text;
+
+            var performMatch = Regex.Match(clickedLineText, Constants.Perform, RegexOptions.IgnoreCase);
+            if (performMatch.Success)
+            {
+                codeBox.FindNext(@"^.{7}" + performMatch.Groups[1].Value + @"(\.| +USING)", false, true, false, true);
+                return;
+            }
+
+            var gotoMatch = Regex.Match(clickedLineText, Constants.GoTo, RegexOptions.IgnoreCase);
+            if (gotoMatch.Success)
+            {
+                codeBox.FindNext(@"^.{7}" + gotoMatch.Groups[1].Value + @"(\.| +USING)", false, true, false, true);
+                return;
             }
         }
 

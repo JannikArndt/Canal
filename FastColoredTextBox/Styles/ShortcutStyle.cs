@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace FastColoredTextBoxNS
+namespace FastColoredTextBoxNS.Styles
 {
     /// <summary>
     /// Draws small rectangle for popup menu

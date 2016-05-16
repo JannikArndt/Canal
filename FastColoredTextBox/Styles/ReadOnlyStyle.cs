@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace FastColoredTextBoxNS
+namespace FastColoredTextBoxNS.Styles
 {
     /// <summary>
     /// This style is used to mark range of text as ReadOnly block

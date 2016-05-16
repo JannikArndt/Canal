@@ -81,7 +81,12 @@
     <Compile Include="FCTBTypeDescriptor.cs" />
     <Compile Include="Enums\FindEndOfFoldingBlockStrategy.cs" />
     <Compile Include="FoldedAreaMarker.cs" />
-    <Compile Include="FoldedBlockStyle.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Styles\FoldedBlockStyle.cs" />
     <Compile Include="FoldingDesc.cs" />
     <Compile Include="FooTextChangedDescriptor.cs" />
     <Compile Include="Events\FunctionKeyPressedEventArgs.cs" />
@@ -114,7 +119,8 @@
     <Compile Include="LinesAccessor.cs" />
     <Compile Include="MacrosManager.cs" />
     <Compile Include="Events\PaintLineEventArgs.cs" />
-    <Compile Include="MarkerStyle.cs" />
+    <Compile Include="Styles\SideMarkStyle.cs" />
+    <Compile Include="Styles\MarkerStyle.cs" />
     <Compile Include="MethodAutocompleteItem.cs" />
     <Compile Include="MultiRangeCommand.cs" />
     <Compile Include="Enums\Platform.cs" />
@@ -123,7 +129,7 @@
     <Compile Include="PrintDialogSettings.cs" />
     <Compile Include="RangeInfo.cs" />
     <Compile Include="RangeRect.cs" />
-    <Compile Include="ReadOnlyStyle.cs" />
+    <Compile Include="Styles\ReadOnlyStyle.cs" />
     <Compile Include="RemoveLinesCommand.cs" />
     <Compile Include="ReplaceMultipleTextCommand.cs" />
     <Compile Include="ReplaceTextCommand.cs" />
@@ -139,12 +145,12 @@
     <Compile Include="SelectCommand.cs" />
     <Compile Include="SelectedEventArgs.cs" />
     <Compile Include="SelectingEventArgs.cs" />
-    <Compile Include="SelectionStyle.cs" />
+    <Compile Include="Styles\SelectionStyle.cs" />
     <Compile Include="ServiceColors.cs" />
-    <Compile Include="ShortcutStyle.cs" />
+    <Compile Include="Styles\ShortcutStyle.cs" />
     <Compile Include="SnippetAutocompleteItem.cs" />
     <Compile Include="Enums\StyleIndex.cs" />
-    <Compile Include="StyleVisualMarker.cs" />
+    <Compile Include="Styles\StyleVisualMarker.cs" />
     <Compile Include="SuggestItem.cs" />
     <Compile Include="SyntaxDescriptor.cs" />
     <Compile Include="SyntaxHighlighter.cs" />
@@ -170,14 +176,14 @@
     <Compile Include="Place.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Range.cs" />
-    <Compile Include="Style.cs" />
+    <Compile Include="Styles\Style.cs" />
     <Compile Include="SyntaxHighlighterCobol.cs" />
     <Compile Include="Enums\TextAreaBorderType.cs" />
     <Compile Include="Events\TextChangedEventArgs.cs" />
     <Compile Include="Events\TextChangingEventArgs.cs" />
     <Compile Include="TextSource.cs" />
     <Compile Include="Events\ToolTipNeededEventArgs.cs" />
-    <Compile Include="TextStyle.cs" />
+    <Compile Include="Styles\TextStyle.cs" />
     <Compile Include="FCTBDescriptionProvider.cs" />
     <Compile Include="FileTextSource.cs" />
     <Compile Include="UndoableCommand.cs" />
@@ -188,7 +194,7 @@
     <Compile Include="VisualMarker.cs" />
     <Compile Include="Events\WordSelectedEventArgs.cs" />
     <Compile Include="VisualMarkerEventArgs.cs" />
-    <Compile Include="WavyLineStyle.cs" />
+    <Compile Include="Styles\WavyLineStyle.cs" />
     <Compile Include="Enums\WordWrapMode.cs" />
     <Compile Include="Events\WordWrapNeededEventArgs.cs" />
   </ItemGroup>
@@ -205,6 +211,10 @@
     <EmbeddedResource Include="HotkeysEditorForm.resx">
       <DependentUpon>HotkeysEditorForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="ReplaceForm.resx">
       <DependentUpon>ReplaceForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -215,6 +225,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bridge.ico" />
+    <None Include="Resources\GoToNextUncovered_8593.png" />
+    <None Include="Resources\Gototypedefinition_10414.png" />
+    <None Include="Resources\GotoPreviousUncovered_8603.png" />
+    <None Include="Resources\recursion_6229_24.bmp" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

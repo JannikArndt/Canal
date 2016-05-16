@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace FastColoredTextBoxNS
+namespace FastColoredTextBoxNS.Styles
 {
     /// <summary>
     /// This style draws a wavy line below a given text range.

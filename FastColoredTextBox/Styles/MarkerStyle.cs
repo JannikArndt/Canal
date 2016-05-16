@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace FastColoredTextBoxNS
+namespace FastColoredTextBoxNS.Styles
 {
     /// <summary>
     /// Marker style
@@ -8,7 +8,7 @@ namespace FastColoredTextBoxNS
     /// </summary>
     public class MarkerStyle : Style
     {
-        public Brush BackgroundBrush{get;set;}
+        public Brush BackgroundBrush { get; set; }
 
         public MarkerStyle(Brush backgroundBrush)
         {

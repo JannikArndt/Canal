@@ -23,6 +23,7 @@
 
 using FastColoredTextBoxNS.Enums;
 using FastColoredTextBoxNS.Events;
+using FastColoredTextBoxNS.Styles;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -3073,7 +3074,7 @@ namespace FastColoredTextBoxNS
             if (Created)
             {
                 if (ShowLineNumbers)
-                    LeftIndent += charsForLineNumber * CharWidth + MinLeftIndent + 1;
+                    LeftIndent += charsForLineNumber * CharWidth + MinLeftIndent + 1 + 20;
 
                 //calc wordwrapping
                 if (NeedRecalcWordWrap)
