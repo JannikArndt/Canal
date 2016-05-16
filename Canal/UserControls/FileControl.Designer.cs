@@ -40,8 +40,14 @@ namespace Canal.UserControls
             this.loaderImageToc = new System.Windows.Forms.PictureBox();
             this.tocToolStrip = new System.Windows.Forms.ToolStrip();
             this.TocCopyButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.TocCollapseAllButton = new System.Windows.Forms.ToolStripButton();
             this.TocExpandAllButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.TocSortHierarchicallyButton = new System.Windows.Forms.ToolStripButton();
+            this.TocSortAlphabeticallyButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.tocSearchTextBox = new System.Windows.Forms.ToolStripTextBox();
             this.performsTabPage = new System.Windows.Forms.TabPage();
             this.loaderImagePerforms = new System.Windows.Forms.PictureBox();
             this.performsToolStrip = new System.Windows.Forms.ToolStrip();
@@ -92,12 +98,6 @@ namespace Canal.UserControls
             this.splitContainerRight = new System.Windows.Forms.SplitContainer();
             this.loaderImageInfoTab = new System.Windows.Forms.PictureBox();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
-            this.TocSortAlphabeticallyButton = new System.Windows.Forms.ToolStripButton();
-            this.TocSortHierarchicallyButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.structureTabControl.SuspendLayout();
             this.tocTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.loaderImageToc)).BeginInit();
@@ -189,7 +189,7 @@ namespace Canal.UserControls
             this.TocSortHierarchicallyButton,
             this.TocSortAlphabeticallyButton,
             this.toolStripSeparator7,
-            this.toolStripTextBox1});
+            this.tocSearchTextBox});
             this.tocToolStrip.Location = new System.Drawing.Point(3, 3);
             this.tocToolStrip.Name = "tocToolStrip";
             this.tocToolStrip.Size = new System.Drawing.Size(364, 25);
@@ -205,6 +205,11 @@ namespace Canal.UserControls
             this.TocCopyButton.Size = new System.Drawing.Size(23, 22);
             this.TocCopyButton.Text = "Copy";
             this.TocCopyButton.Click += new System.EventHandler(this.ExportTocClick);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
             // 
             // TocCollapseAllButton
             // 
@@ -225,6 +230,46 @@ namespace Canal.UserControls
             this.TocExpandAllButton.Size = new System.Drawing.Size(23, 22);
             this.TocExpandAllButton.Text = "Expand all";
             this.TocExpandAllButton.Click += new System.EventHandler(this.TocExpandAllButtonClick);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
+            // TocSortHierarchicallyButton
+            // 
+            this.TocSortHierarchicallyButton.Checked = true;
+            this.TocSortHierarchicallyButton.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.TocSortHierarchicallyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TocSortHierarchicallyButton.Image = ((System.Drawing.Image)(resources.GetObject("TocSortHierarchicallyButton.Image")));
+            this.TocSortHierarchicallyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TocSortHierarchicallyButton.Name = "TocSortHierarchicallyButton";
+            this.TocSortHierarchicallyButton.Size = new System.Drawing.Size(23, 22);
+            this.TocSortHierarchicallyButton.Text = "Sort Hierarchically";
+            this.TocSortHierarchicallyButton.Click += new System.EventHandler(this.TocSortHierarchicallyButton_Click);
+            // 
+            // TocSortAlphabeticallyButton
+            // 
+            this.TocSortAlphabeticallyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TocSortAlphabeticallyButton.Image = ((System.Drawing.Image)(resources.GetObject("TocSortAlphabeticallyButton.Image")));
+            this.TocSortAlphabeticallyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TocSortAlphabeticallyButton.Name = "TocSortAlphabeticallyButton";
+            this.TocSortAlphabeticallyButton.Size = new System.Drawing.Size(23, 22);
+            this.TocSortAlphabeticallyButton.Text = "Sort Alphabetically";
+            this.TocSortAlphabeticallyButton.Click += new System.EventHandler(this.TocSortAlphabeticallyButton_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tocSearchTextBox
+            // 
+            this.tocSearchTextBox.Name = "tocSearchTextBox";
+            this.tocSearchTextBox.Size = new System.Drawing.Size(100, 25);
+            this.tocSearchTextBox.Enter += new System.EventHandler(this.SearchBoxEnter);
+            this.tocSearchTextBox.Leave += new System.EventHandler(this.SearchBoxLeave);
+            this.tocSearchTextBox.TextChanged += new System.EventHandler(this.tocSearchTextBox_TextChanged);
             // 
             // performsTabPage
             // 
@@ -553,7 +598,7 @@ namespace Canal.UserControls
             this.codeBox.AutoIndentChars = false;
             this.codeBox.AutoIndentCharsPatterns = "^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>.+)";
             this.codeBox.AutoIndentExistingLines = false;
-            this.codeBox.AutoScrollMinSize = new System.Drawing.Size(25, 15);
+            this.codeBox.AutoScrollMinSize = new System.Drawing.Size(45, 15);
             this.codeBox.BackBrush = null;
             this.codeBox.BracketsHighlightStrategy = FastColoredTextBoxNS.Enums.BracketsHighlightStrategy.Strategy2;
             this.codeBox.CharHeight = 15;
@@ -808,48 +853,6 @@ namespace Canal.UserControls
             this.miniToolStrip.Size = new System.Drawing.Size(200, 25);
             this.miniToolStrip.TabIndex = 1;
             // 
-            // TocSortAlphabeticallyButton
-            // 
-            this.TocSortAlphabeticallyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TocSortAlphabeticallyButton.Image = ((System.Drawing.Image)(resources.GetObject("TocSortAlphabeticallyButton.Image")));
-            this.TocSortAlphabeticallyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TocSortAlphabeticallyButton.Name = "TocSortAlphabeticallyButton";
-            this.TocSortAlphabeticallyButton.Size = new System.Drawing.Size(23, 22);
-            this.TocSortAlphabeticallyButton.Text = "toolStripButton1";
-            this.TocSortAlphabeticallyButton.Click += new System.EventHandler(this.TocSortAlphabeticallyButton_Click);
-            // 
-            // TocSortHierarchicallyButton
-            // 
-            this.TocSortHierarchicallyButton.Checked = true;
-            this.TocSortHierarchicallyButton.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.TocSortHierarchicallyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TocSortHierarchicallyButton.Image = ((System.Drawing.Image)(resources.GetObject("TocSortHierarchicallyButton.Image")));
-            this.TocSortHierarchicallyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TocSortHierarchicallyButton.Name = "TocSortHierarchicallyButton";
-            this.TocSortHierarchicallyButton.Size = new System.Drawing.Size(23, 22);
-            this.TocSortHierarchicallyButton.Text = "toolStripButton2";
-            this.TocSortHierarchicallyButton.Click += new System.EventHandler(this.TocSortHierarchicallyButton_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripTextBox1
-            // 
-            this.toolStripTextBox1.Name = "toolStripTextBox1";
-            this.toolStripTextBox1.Size = new System.Drawing.Size(100, 25);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
-            // 
             // FileControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -962,6 +965,6 @@ namespace Canal.UserControls
         private ToolStripButton TocSortHierarchicallyButton;
         private ToolStripButton TocSortAlphabeticallyButton;
         private ToolStripSeparator toolStripSeparator7;
-        private ToolStripTextBox toolStripTextBox1;
+        private ToolStripTextBox tocSearchTextBox;
     }
 }

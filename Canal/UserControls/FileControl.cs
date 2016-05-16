@@ -685,10 +685,12 @@ namespace Canal.UserControls
             if (CobolFile.CobolTree == null)
                 return;
 
+            var query = tocSearchTextBox.Text != Resources.SearchPlaceholder ? tocSearchTextBox.Text : "";
+
             TocSortAlphabeticallyButton.Checked = true;
             TocSortHierarchicallyButton.Checked = false;
             tocTreeView.Nodes.Clear();
-            tocTreeView.Nodes.Add(CobolTreeBuilder.ConvertToFlatToc(CobolFile.CobolTree, CobolFile.Name));
+            tocTreeView.Nodes.Add(CobolTreeBuilder.ConvertToFlatToc(CobolFile.CobolTree, CobolFile.Name, query));
             // tocTreeView.Sort();
             tocTreeView.ExpandAll();
         }
@@ -698,11 +700,28 @@ namespace Canal.UserControls
             if (CobolFile.CobolTree == null)
                 return;
 
+            var query = tocSearchTextBox.Text != Resources.SearchPlaceholder ? tocSearchTextBox.Text : "";
+
             TocSortAlphabeticallyButton.Checked = false;
             TocSortHierarchicallyButton.Checked = true;
 
             tocTreeView.Nodes.Clear();
-            tocTreeView.Nodes.Add(CobolTreeBuilder.ConvertToTreeNodes(CobolFile.CobolTree, CobolFile.Name));
+            tocTreeView.Nodes.Add(CobolTreeBuilder.ConvertToTreeNodes(CobolFile.CobolTree, CobolFile.Name, query));
+            tocTreeView.ExpandAll();
+        }
+
+        private void tocSearchTextBox_TextChanged(object sender, EventArgs e)
+        {
+            var query = ((ToolStripTextBox)sender).Text;
+
+            if (query == Resources.SearchPlaceholder || CobolFile.CobolTree == null)
+                return;
+
+            tocTreeView.Nodes.Clear();
+            tocTreeView.Nodes.Add(
+                TocSortAlphabeticallyButton.Checked
+                ? CobolTreeBuilder.ConvertToFlatToc(CobolFile.CobolTree, CobolFile.Name, query)
+                : CobolTreeBuilder.ConvertToTreeNodes(CobolFile.CobolTree, CobolFile.Name, query));
             tocTreeView.ExpandAll();
         }
     }

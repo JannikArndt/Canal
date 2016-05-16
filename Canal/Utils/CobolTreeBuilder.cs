@@ -180,63 +180,67 @@ namespace Canal.Utils
 
         #endregion
 
-        public static TreeNode ConvertToTreeNodes(CobolTree cobolTree, string name)
+        public static TreeNode ConvertToTreeNodes(CobolTree cobolTree, string name, string query = "")
         {
             var result = new TreeNode(name);
             if (cobolTree.IdentificationDivision != null)
-                result.Nodes.Add(ConvertToTreeNode(cobolTree.IdentificationDivision));
+                result.Nodes.Add(ConvertToTreeNode(cobolTree.IdentificationDivision, query));
 
             if (cobolTree.EnvironmentDivision != null)
-                result.Nodes.Add(ConvertToTreeNode(cobolTree.EnvironmentDivision));
+                result.Nodes.Add(ConvertToTreeNode(cobolTree.EnvironmentDivision, query));
 
             if (cobolTree.DataDivision != null)
-                result.Nodes.Add(ConvertToTreeNode(cobolTree.DataDivision));
+                result.Nodes.Add(ConvertToTreeNode(cobolTree.DataDivision, query));
 
             if (cobolTree.ProcedureDivision != null)
-                result.Nodes.Add(ConvertToTreeNode(cobolTree.ProcedureDivision));
+                result.Nodes.Add(ConvertToTreeNode(cobolTree.ProcedureDivision, query));
             return result;
         }
 
-        public static TreeNode ConvertToTreeNode(CobolTreeNode cobolTreeNode)
+        public static TreeNode ConvertToTreeNode(CobolTreeNode cobolTreeNode, string query = "")
         {
             var result = new TreeNode(cobolTreeNode.Name);
             foreach (var treeNode in cobolTreeNode.GetNodes())
             {
-                result.Nodes.Add(ConvertToTreeNode(treeNode));
+                var node = ConvertToTreeNode(treeNode, query);
+                // if query is empty, match or Nodes contains match
+                if (string.IsNullOrWhiteSpace(query) || node.Text.IndexOf(query, StringComparison.OrdinalIgnoreCase) > 0 || node.Nodes.Count > 0)
+                    result.Nodes.Add(node);
             }
 
             return result;
         }
 
-        public static TreeNode ConvertToFlatToc(CobolTree cobolTree, string name)
+        public static TreeNode ConvertToFlatToc(CobolTree cobolTree, string name, string query = "")
         {
             var result = new TreeNode(name);
 
-            AddFlattenedOrderedIfNotNull(result, cobolTree.IdentificationDivision);
-            AddFlattenedOrderedIfNotNull(result, cobolTree.EnvironmentDivision);
-            AddFlattenedOrderedIfNotNull(result, cobolTree.DataDivision);
-            AddFlattenedOrderedIfNotNull(result, cobolTree.ProcedureDivision);
+            AddFlattenedOrderedIfNotNull(result, cobolTree.IdentificationDivision, query);
+            AddFlattenedOrderedIfNotNull(result, cobolTree.EnvironmentDivision, query);
+            AddFlattenedOrderedIfNotNull(result, cobolTree.DataDivision, query);
+            AddFlattenedOrderedIfNotNull(result, cobolTree.ProcedureDivision, query);
 
             return result;
         }
 
-        private static void AddFlattenedOrderedIfNotNull(TreeNode result, CobolTreeNode parent)
+        private static void AddFlattenedOrderedIfNotNull(TreeNode result, CobolTreeNode parent, string query = "")
         {
             if (parent == null)
                 return;
 
-            var orderedFlatNode = new TreeNode(parent.Name, Flatten(parent, true).OrderBy(node => node.Text).ToArray());
+            var orderedFlatNode = new TreeNode(parent.Name, Flatten(parent, true, query).OrderBy(node => node.Text).ToArray());
             result.Nodes.Add(orderedFlatNode);
         }
 
-        private static IEnumerable<TreeNode> Flatten(CobolTreeNode parent, bool ignoreFirst = false)
+        private static IEnumerable<TreeNode> Flatten(CobolTreeNode parent, bool ignoreFirst = false, string query = "")
         {
             if (!ignoreFirst)
                 yield return new TreeNode(parent.Name);
 
             foreach (var child in parent.GetNodes()) // check null if you must
-                foreach (var relative in Flatten(child))
-                    yield return new TreeNode(relative.Text);
+                foreach (var relative in Flatten(child, query: query))
+                    if (string.IsNullOrWhiteSpace(query) || relative.Text.IndexOf(query, StringComparison.OrdinalIgnoreCase) > 0)
+                        yield return new TreeNode(relative.Text);
         }
     }
 }
