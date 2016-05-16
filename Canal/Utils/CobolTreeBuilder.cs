@@ -81,8 +81,8 @@ namespace Canal.Utils
             foreach (Match procedureName in Constants.ProcedureRegex.Matches(code))
             {
                 var procName = procedureName.Groups["procedureName"].Value;
-                var begin = procedureName.Index + procedureName.Length;
-                var end = procedureName.NextMatch().Success ? procedureName.NextMatch().Index : section.Length;
+                var begin = section.StartIndex + procedureName.Index;
+                var end = section.StartIndex + (procedureName.NextMatch().Success ? procedureName.NextMatch().Index : section.Length);
 
                 result.Add(new Procedure(section.ParentCobolFile, procName, begin, end));
             }
@@ -131,7 +131,8 @@ namespace Canal.Utils
 
         public void AnalyzePerformReferences(Procedure procedure)
         {
-            var performReferenceMatches = Regex.Matches(procedure.GetCode(), Constants.Perform, RegexOptions.Compiled | RegexOptions.Multiline);
+            var code = procedure.GetCode();
+            var performReferenceMatches = Regex.Matches(code, Constants.Perform, RegexOptions.Compiled | RegexOptions.Multiline);
 
             foreach (Match performMatch in performReferenceMatches)
             {
