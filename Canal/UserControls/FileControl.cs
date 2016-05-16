@@ -81,6 +81,20 @@ namespace Canal.UserControls
                 codeBox.FindNext(@"^.{7}" + gotoMatch.Groups[1].Value + @"(\.| +USING)", false, true, false, true);
                 return;
             }
+
+            var callmatch = Regex.Match(clickedLineText, Constants.Call, RegexOptions.IgnoreCase);
+            if (callmatch.Success)
+            {
+                var fileRef = FileUtil.Instance.GetFileReferences(callmatch.Groups[4].Value);
+                if (fileRef.Count == 1)
+                    MainWindow.OpenFile(fileRef.First().FilePath);
+                else if (fileRef.Count > 0)
+                    MessageBox.Show(
+                        "There are multiple files matching this program name. Try files tab to open program.",
+                        "Multiple Matching Files Found", MessageBoxButtons.OK);
+                else
+                    MessageBox.Show("File could not be found.", "File Not Found", MessageBoxButtons.OK);
+            }
         }
 
         public event EventHandler<UsedFileTypesChangedEventArgs> UsedFileTypesChanged;
