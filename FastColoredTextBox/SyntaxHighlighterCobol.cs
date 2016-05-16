@@ -129,6 +129,8 @@ namespace FastColoredTextBoxNS
 
         private int _rulerForWrappedLines;
 
+        private int _rulerForWrappedLinesLine;
+
         // ReSharper disable once UnusedParameter.Local
         private void CobolAutoIndentNeeded(object sender, AutoIndentEventArgs args)
         {
@@ -224,15 +226,16 @@ namespace FastColoredTextBoxNS
                 if (TryFindRuler(args, "VALUE ")) return;
                 if (TryFindRuler(args, "\"")) return;
 
-                // otherwise use last ruler
-                if (_rulerForWrappedLines > 0)
+                // otherwise use last ruler, IF it was less then 5 lines ago. Also update that.
+                if (_rulerForWrappedLines > 0 && Math.Abs(_rulerForWrappedLinesLine - args.iLine) < 5)
                 {
+                    _rulerForWrappedLinesLine = args.iLine;
                     args.Shift = _rulerForWrappedLines;
                     return;
                 }
 
-                // otherwise right align
-                args.AbsoluteIndentation = 65 - currentLine.Length;
+                // otherwise shift by four
+                args.Shift = 4;
             }
         }
 
@@ -244,6 +247,7 @@ namespace FastColoredTextBoxNS
 
             args.Shift = ruler + keyword.Length;
             _rulerForWrappedLines = args.Shift;
+            _rulerForWrappedLinesLine = args.iLine;
             return true;
         }
 
