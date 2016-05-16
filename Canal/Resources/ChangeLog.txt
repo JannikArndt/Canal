@@ -1,4 +1,17 @@
-﻿v1.14
+﻿v2.0
+- Completely rewritten analysis algorithm
+- Copybooks are now loaded automatically and do not need to be inserted into text
+- New window when inserting copybooks into text
+- New formatter for COBOL code! Works with selections and complete files
+- More toolbar buttons, like undo, redo, new, open, save
+- Horizontal lines mark sentence endings
+- Markers on the left side mark Perform, Go To and Call statements
+- Improved syntax highlighting
+- Table of Contents can be ordered alphabetically and searched
+- Issues can now also be reported anonymously via gitreports.com
+- Many small improvements and fixes
+
+v1.14
 - Opening a copy book from WordInfo now jumps to the variable definition
 - Unsaved changes now prevent accidential closing of program
 - Fixed syntax highlighting of reserved words in variable names
