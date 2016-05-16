@@ -1,31 +1,12 @@
-﻿namespace Model
+﻿using System.Collections.Generic;
+
+namespace Model
 {
     public class DataDivision : Division
     {
-        private WorkingStorageSection _workingStorageSection;
-        private LinkageSection _linkageSection;
+        public WorkingStorageSection WorkingStorageSection { set; get; }
 
-        public WorkingStorageSection WorkingStorageSection
-        {
-            get { return _workingStorageSection; }
-            set
-            {
-                _workingStorageSection = value;
-                Nodes.RemoveByKey(value.Text);
-                Nodes.Add(value);
-            }
-        }
-
-        public LinkageSection LinkageSection
-        {
-            get { return _linkageSection; }
-            set
-            {
-                _linkageSection = value;
-                Nodes.RemoveByKey(value.Text);
-                Nodes.Add(value);
-            }
-        }
+        public LinkageSection LinkageSection { set; get; }
 
         protected override int StartIndex
         {
@@ -35,6 +16,11 @@
         protected override int EndIndex
         {
             get { return ParentCobolFile.DivisionsAndSection.Procedure.GetValueOrDefault(-1); }
+        }
+
+        public override List<CobolTreeNode> GetNodes()
+        {
+            return new List<CobolTreeNode> { WorkingStorageSection, LinkageSection };
         }
 
         public DataDivision(CobolFile cobolFile) : base(cobolFile, "Data Division")

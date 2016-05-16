@@ -1,7 +1,6 @@
 ﻿using Model.References;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace Model
 {
@@ -36,23 +35,6 @@ namespace Model
         public CobolTree(string name)
         {
             _name = name;
-        }
-
-        public TreeNode GetAsTreeNodes()
-        {
-            var result = new TreeNode(_name);
-            if (IdentificationDivision != null)
-                result.Nodes.Add(IdentificationDivision);
-
-            if (EnvironmentDivision != null)
-                result.Nodes.Add(EnvironmentDivision);
-
-            if (DataDivision != null)
-                result.Nodes.Add(DataDivision);
-
-            if (ProcedureDivision != null)
-                result.Nodes.Add(ProcedureDivision);
-            return result;
         }
     }
 }

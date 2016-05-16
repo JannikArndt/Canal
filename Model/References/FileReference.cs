@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace Model.References
 {
-    public class FileReference : TreeNode
+    public class FileReference
     {
-        public FileReference(string fileSystemEntry) : base(Path.GetFileNameWithoutExtension(fileSystemEntry))
+        public FileReference(string fileSystemEntry)
         {
             ReferencedIn = new List<Procedure>();
             FilePath = fileSystemEntry;
@@ -20,21 +19,21 @@ namespace Model.References
         /// <summary>
         /// Filename without extension
         /// </summary>
-        public string ProgramName { get; set; }
+        public string ProgramName { get; }
 
         /// <summary>
         /// Name of leaf-directory
         /// </summary>
-        public string Directory { get; set; }
+        public string Directory { get; }
 
         /// <summary>
         /// Full path
         /// </summary>
-        public string FilePath { get; set; }
+        public string FilePath { get; }
 
         public CobolFile CobolFile { get; set; }
 
-        public List<Procedure> ReferencedIn { get; set; }
+        public List<Procedure> ReferencedIn { get; }
 
         public override string ToString()
         {

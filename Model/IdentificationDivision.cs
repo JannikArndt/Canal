@@ -1,4 +1,6 @@
-﻿namespace Model
+﻿using System.Collections.Generic;
+
+namespace Model
 {
     public class IdentificationDivision : Division
     {
@@ -12,6 +14,11 @@
         protected override int EndIndex
         {
             get { return ParentCobolFile.DivisionsAndSection.Environment.GetValueOrDefault(-1); }
+        }
+
+        public override List<CobolTreeNode> GetNodes()
+        {
+            return new List<CobolTreeNode>();
         }
 
         public IdentificationDivision(CobolFile cobolFile) : base(cobolFile, "Identification Division")

@@ -1,11 +1,10 @@
 ﻿using Model.Pictures;
 using Model.References;
 using System.Collections.Generic;
-using System.Windows.Forms;
 
 namespace Model
 {
-    public class Variable : TreeNode
+    public class Variable
     {
         public int VariableLevel { get; set; }
 
@@ -55,7 +54,6 @@ namespace Model
         }
 
         public Variable(int variableLevel, string variableName, IPic picture, string code, Variable parentVariable)
-            : base(variableLevel.ToString("D2") + "  " + variableName)
         {
             VariableLevel = variableLevel;
             VariableName = variableName;
@@ -65,32 +63,9 @@ namespace Model
             Variables = new List<Variable>();
         }
 
-        public override object Clone()
+        public string GetLevelAndName()
         {
-            var clone = (Variable)base.Clone();
-            clone.VariableLevel = VariableLevel;
-            clone.VariableName = VariableName;
-            clone.Picture = Picture;
-            clone.Variables = Variables;
-            clone.Length = Length;
-            clone.Occurs = Occurs;
-            clone.Offset = Offset;
-            clone.Redefines = Redefines;
-            clone.ParentVariable = ParentVariable;
-
-            return clone;
-        }
-
-        public void FillNodesWithVariables()
-        {
-            Nodes.Clear();
-
-            foreach (var variable in Variables)
-            {
-                Nodes.Add(variable);
-
-                variable.FillNodesWithVariables();
-            }
+            return VariableLevel.ToString("D2") + "  " + VariableName;
         }
 
         public override string ToString()

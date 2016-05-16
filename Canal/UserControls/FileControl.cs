@@ -311,7 +311,7 @@ namespace Canal.UserControls
 
         private void VariablesTreeViewAfterSelect(object sender, TreeViewEventArgs e)
         {
-            var treeNode = variablesTreeView.SelectedNode as Variable;
+            var treeNode = variablesTreeView.SelectedNode;
             if (treeNode == null)
                 codeBox.DoRangeVisible(codeBox.GetRange(0, 0));
             else
@@ -392,16 +392,14 @@ namespace Canal.UserControls
 
             foreach (var variable in CobolFile.Variables.Values.Where(vari => vari.VariableLevel == 1 && vari.CopyReference.CobolFile == CobolFile))
             {
-                variable.FillNodesWithVariables();
-                workingStorageSectionTreeNode.Nodes.Add(variable);
+                workingStorageSectionTreeNode.Nodes.Add(VariablesUtil.Instance.ConvertToTreeNode(variable));
             }
 
             var linkageSectionTreeNode = new TreeNode("From Records");
 
             foreach (var variable in CobolFile.Variables.Values.Where(vari => vari.VariableLevel == 1 && vari.CopyReference.CobolFile != CobolFile))
             {
-                variable.FillNodesWithVariables();
-                linkageSectionTreeNode.Nodes.Add(variable);
+                linkageSectionTreeNode.Nodes.Add(VariablesUtil.Instance.ConvertToTreeNode(variable));
             }
 
             variablesTreeView.Nodes.Add(workingStorageSectionTreeNode);
@@ -418,7 +416,7 @@ namespace Canal.UserControls
                 return;
             }
 
-            tocTreeView.Nodes.Add(CobolFile.CobolTree.GetAsTreeNodes());
+            tocTreeView.Nodes.Add(CobolTreeBuilder.ConvertToTreeNodes(CobolFile.CobolTree, CobolFile.Name));
             tocTreeView.ExpandAll();
         }
 
@@ -664,18 +662,27 @@ namespace Canal.UserControls
 
         private void TocSortAlphabeticallyButton_Click(object sender, EventArgs e)
         {
+            if (CobolFile.CobolTree == null)
+                return;
+
             TocSortAlphabeticallyButton.Checked = true;
             TocSortHierarchicallyButton.Checked = false;
-            tocTreeView.Sort();
+            tocTreeView.Nodes.Clear();
+            tocTreeView.Nodes.Add(CobolTreeBuilder.ConvertToFlatToc(CobolFile.CobolTree, CobolFile.Name));
+            // tocTreeView.Sort();
+            tocTreeView.ExpandAll();
         }
 
         private void TocSortHierarchicallyButton_Click(object sender, EventArgs e)
         {
+            if (CobolFile.CobolTree == null)
+                return;
+
             TocSortAlphabeticallyButton.Checked = false;
             TocSortHierarchicallyButton.Checked = true;
 
             tocTreeView.Nodes.Clear();
-            tocTreeView.Nodes.Add(CobolFile.CobolTree.GetAsTreeNodes());
+            tocTreeView.Nodes.Add(CobolTreeBuilder.ConvertToTreeNodes(CobolFile.CobolTree, CobolFile.Name));
             tocTreeView.ExpandAll();
         }
     }

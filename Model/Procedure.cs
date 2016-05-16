@@ -11,7 +11,10 @@ namespace Model
 
         protected override int EndIndex { get; }
 
-        public new string Name { get; set; }
+        public override List<CobolTreeNode> GetNodes()
+        {
+            return new List<CobolTreeNode>();
+        }
 
         #region References
 
@@ -29,8 +32,6 @@ namespace Model
 
         public Procedure(CobolFile cobolFile, string name, int beginIndex, int endIndex) : base(cobolFile, name)
         {
-            Name = name;
-
             StartIndex = beginIndex;
             EndIndex = endIndex;
 

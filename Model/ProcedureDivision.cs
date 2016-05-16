@@ -14,7 +14,12 @@ namespace Model
             get { return ParentCobolFile.Text.Length - 1; }
         }
 
-        public List<Section> Sections { get; private set; }
+        public override List<CobolTreeNode> GetNodes()
+        {
+            return new List<CobolTreeNode>(Sections);
+        }
+
+        public List<Section> Sections { get; }
 
         public ProcedureDivision(CobolFile cobolFile) : base(cobolFile, "Procedure Division")
         {

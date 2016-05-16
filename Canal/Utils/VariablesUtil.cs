@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Windows.Forms;
 
 namespace Canal.Utils
 {
@@ -104,6 +105,18 @@ namespace Canal.Utils
 
                 if (!Constants.CobolKeywords.Contains(literal))
                     result.Add(new Literal(literal, usedAs));
+            }
+
+            return result;
+        }
+
+        public TreeNode ConvertToTreeNode(Variable variable)
+        {
+            var result = new TreeNode(variable.GetLevelAndName()) { Tag = variable };
+
+            foreach (var child in variable.Variables)
+            {
+                result.Nodes.Add(ConvertToTreeNode(child));
             }
 
             return result;

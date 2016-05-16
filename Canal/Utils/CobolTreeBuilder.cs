@@ -1,4 +1,7 @@
-﻿namespace Canal.Utils
+﻿using System.Collections.Generic;
+using System.Windows.Forms;
+
+namespace Canal.Utils
 {
     using Model;
     using Model.References;
@@ -77,7 +80,7 @@
                 var procName = procedureName.Groups["procedureName"].Value;
                 var begin = procedureName.Index + procedureName.Length;
                 var end = procedureName.NextMatch().Success ? procedureName.NextMatch().Index : section.Length;
-                section.AddProcedure(new Procedure(cobolFile, procName, begin, end));
+                section.Procedures.Add(new Procedure(cobolFile, procName, begin, end));
             }
         }
 
@@ -103,11 +106,6 @@
                         Console.WriteLine(@"Referenz nicht gefunden: " + reference.ReferencedProcedure);
                     }
                 }
-            }
-
-            foreach (var section in procedureDivision.Sections)
-            {
-                procedureDivision.Nodes.Add(section);
             }
         }
 
@@ -174,5 +172,64 @@
         }
 
         #endregion
+
+        public static TreeNode ConvertToTreeNodes(CobolTree cobolTree, string name)
+        {
+            var result = new TreeNode(name);
+            if (cobolTree.IdentificationDivision != null)
+                result.Nodes.Add(ConvertToTreeNode(cobolTree.IdentificationDivision));
+
+            if (cobolTree.EnvironmentDivision != null)
+                result.Nodes.Add(ConvertToTreeNode(cobolTree.EnvironmentDivision));
+
+            if (cobolTree.DataDivision != null)
+                result.Nodes.Add(ConvertToTreeNode(cobolTree.DataDivision));
+
+            if (cobolTree.ProcedureDivision != null)
+                result.Nodes.Add(ConvertToTreeNode(cobolTree.ProcedureDivision));
+            return result;
+        }
+
+        public static TreeNode ConvertToTreeNode(CobolTreeNode cobolTreeNode)
+        {
+            var result = new TreeNode(cobolTreeNode.Name);
+            foreach (var treeNode in cobolTreeNode.GetNodes())
+            {
+                result.Nodes.Add(ConvertToTreeNode(treeNode));
+            }
+
+            return result;
+        }
+
+        public static TreeNode ConvertToFlatToc(CobolTree cobolTree, string name)
+        {
+            var result = new TreeNode(name);
+
+            AddFlattenedOrderedIfNotNull(result, cobolTree.IdentificationDivision);
+            AddFlattenedOrderedIfNotNull(result, cobolTree.EnvironmentDivision);
+            AddFlattenedOrderedIfNotNull(result, cobolTree.DataDivision);
+            AddFlattenedOrderedIfNotNull(result, cobolTree.ProcedureDivision);
+
+            return result;
+        }
+
+        private static void AddFlattenedOrderedIfNotNull(TreeNode result, CobolTreeNode parent)
+        {
+            if (parent == null)
+                return;
+
+            var orderedFlatNode = new TreeNode(parent.Name, Flatten(parent, true).OrderBy(node => node.Text).ToArray());
+            result.Nodes.Add(orderedFlatNode);
+        }
+
+        private static IEnumerable<TreeNode> Flatten(CobolTreeNode parent, bool ignoreFirst = false)
+        {
+            if (!ignoreFirst)
+                yield return new TreeNode(parent.Name);
+
+            foreach (var child in parent.GetNodes()) // check null if you must
+                foreach (var relative in Flatten(child))
+                    yield return new TreeNode(relative.Text);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Canal.Properties;
+using Canal.Utils;
 using Model;
 using Model.References;
 using System.Collections.Generic;
@@ -64,7 +65,7 @@ namespace Canal.UserControls
                 var folder1 = folder;
                 foreach (var fileRef in cobolFile.CobolTree.CallReferences.Where(cr => cr.Directory == folder1))
                 {
-                    folderNode.Nodes.Add(fileRef);
+                    folderNode.Nodes.Add(new TreeNode(fileRef.ProgramName) { Tag = fileRef });
                 }
             }
 
@@ -72,7 +73,7 @@ namespace Canal.UserControls
 
             variableTreeView.NodeMouseDoubleClick += (sender, args) =>
             {
-                var fileRef = variableTreeView.SelectedNode as FileReference;
+                var fileRef = variableTreeView.SelectedNode.Tag as FileReference;
                 if (fileRef != null)
                     _parent.MainWindow.OpenFile(fileRef.FilePath);
             };
@@ -100,52 +101,51 @@ namespace Canal.UserControls
 
         private void FillVariableTreeView(Variable variable)
         {
-            // Get all vars to the root
-            var currentVar = variable;
+            var newNode = VariablesUtil.Instance.ConvertToTreeNode(variable);
 
-            if (currentVar.ParentVariable != null)
+            var parent = variable;
+
+            if (variable.ParentVariable != null)
             {
-                // Add siblings without their children (which unfortunately deletes own children)
-                currentVar.ParentVariable.Nodes.Clear();
-                foreach (var vari in currentVar.ParentVariable.Variables)
+                // save variable node
+                var temp = newNode;
+
+                // new node for parent variable
+                newNode = new TreeNode(variable.ParentVariable.GetLevelAndName()) { Tag = variable.ParentVariable };
+
+                // add parents' children (siblings and self)
+                foreach (var sibling in variable.ParentVariable.Variables)
                 {
-                    vari.Nodes.Clear();
-                    currentVar.ParentVariable.Nodes.Add(vari);
+                    newNode.Nodes.Add(sibling == variable
+                        ? temp
+                        : new TreeNode(sibling.GetLevelAndName()) { Tag = sibling });
                 }
 
-                // re-add own children
-                foreach (var vari in currentVar.Variables)
+                // go further up, add grandparents etc.
+                while (parent.ParentVariable != null)
                 {
-                    currentVar.Nodes.Add(vari);
+                    newNode = new TreeNode(parent.ParentVariable.GetLevelAndName(), new[] { newNode })
+                    {
+                        Tag = variable.ParentVariable
+                    };
+                    parent = parent.ParentVariable;
                 }
-
-                // continue with parent
-                currentVar = currentVar.ParentVariable;
-            }
-
-            // now add only grandparents, not their siblings or children
-            while (currentVar.ParentVariable != null)
-            {
-                currentVar.ParentVariable.Nodes.Clear();
-                currentVar.ParentVariable.Nodes.Add(currentVar);
-                currentVar = currentVar.ParentVariable;
             }
 
             variableTreeView.DrawMode = TreeViewDrawMode.OwnerDrawText;
             variableTreeView.DrawNode += VariableTreeViewOnDrawNode;
-            variableTreeView.Nodes.Add((Variable)currentVar.Clone());
-
+            variableTreeView.Nodes.Add(newNode);
             variableTreeView.ExpandAll();
 
-            if (currentVar.CopyReference != null)
+            if (parent.CopyReference != null)
             {
                 gotoFileButton.Visible = true;
-                gotoFileButton.Click += (sender, args) => _parent.MainWindow.OpenFile(currentVar.CopyReference.FilePath, variable);
+                gotoFileButton.Click += (sender, args) => _parent.MainWindow.OpenFile(parent.CopyReference.FilePath, variable);
             }
 
             variableTreeView.NodeMouseDoubleClick += (sender, args) =>
             {
-                var vari = variableTreeView.SelectedNode as Variable;
+                var vari = variableTreeView.SelectedNode.Tag as Variable;
                 if (vari != null)
                     _parent.FindInCodeBox(vari.VariableName, false, false, false, true);
             };
@@ -153,7 +153,7 @@ namespace Canal.UserControls
 
         private void VariableTreeViewOnDrawNode(object sender, DrawTreeNodeEventArgs e)
         {
-            var variable = e.Node as Variable;
+            var variable = e.Node.Tag as Variable;
             if (variable == null)
                 return;
 

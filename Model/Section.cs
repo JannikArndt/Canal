@@ -4,7 +4,7 @@ namespace Model
 {
     public class Section : Procedure
     {
-        public List<Procedure> Procedures { get; private set; }
+        public List<Procedure> Procedures { get; }
 
         public Section(CobolFile cobolFile, string name, int startIndex, int endIndex)
             : base(cobolFile, name, startIndex, endIndex)
@@ -12,10 +12,9 @@ namespace Model
             Procedures = new List<Procedure>();
         }
 
-        public void AddProcedure(Procedure procedure)
+        public override List<CobolTreeNode> GetNodes()
         {
-            Procedures.Add(procedure);
-            Nodes.Add(procedure);
+            return new List<CobolTreeNode>(Procedures);
         }
     }
 }
