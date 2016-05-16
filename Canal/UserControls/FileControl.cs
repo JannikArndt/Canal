@@ -661,5 +661,22 @@ namespace Canal.UserControls
             codeBox.DoAutoIndent();
             codeBox.Selection = selection;
         }
+
+        private void TocSortAlphabeticallyButton_Click(object sender, EventArgs e)
+        {
+            TocSortAlphabeticallyButton.Checked = true;
+            TocSortHierarchicallyButton.Checked = false;
+            tocTreeView.Sort();
+        }
+
+        private void TocSortHierarchicallyButton_Click(object sender, EventArgs e)
+        {
+            TocSortAlphabeticallyButton.Checked = false;
+            TocSortHierarchicallyButton.Checked = true;
+
+            tocTreeView.Nodes.Clear();
+            tocTreeView.Nodes.Add(CobolFile.CobolTree.GetAsTreeNodes());
+            tocTreeView.ExpandAll();
+        }
     }
 }
