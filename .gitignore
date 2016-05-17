@@ -13,3 +13,4 @@ packages/*
 Publish/*
 TestResults/*
 Tests/*
+*.scgdat
