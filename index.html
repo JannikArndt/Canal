@@ -40,6 +40,97 @@
 <p>Installation via <a href="http://www.jannikarndt.de/media/canal/Canal.application">www.jannikarndt.de/media/canal/Canal.application</a>, requires .NET 4.5</p>
 
 <h2>
+<a id="versionhistory" class="anchor" href="#versionhistory" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Version History</h2>
+also see <a href="https://github.com/JannikArndt/Canal/releases">https://github.com/JannikArndt/Canal/releases</a>
+<h3><a id="v2"></a>v2.0</h3>
+<ul>
+<li>Completely rewritten analysis algorithm</li>
+<li>Copybooks are now loaded automatically and do not need to be inserted into text</li>
+<li>New window when inserting copybooks into text</li>
+<li>New formatter for COBOL code! Works with selections and complete files</li>
+<li>More toolbar buttons, like undo, redo, new, open, save</li>
+<li>Horizontal lines mark sentence endings</li>
+<li>Markers on the left side mark Perform, Go To and Call statements</li>
+<li>Improved syntax highlighting</li>
+<li>Table of Contents can be ordered alphabetically and searched</li>
+<li>Issues can now also be reported anonymously via <a href="http://gitreports.com">gitreports.com</a></li>
+<li>Many small improvements and fixes</li>
+</ul>
+<h3><a id="v114_13"></a>v1.14</h3>
+<ul>
+<li>Opening a copy book from WordInfo now jumps to the variable definition</li>
+<li>Unsaved changes now prevent accidential closing of program</li>
+<li>Fixed syntax highlighting of reserved words in variable names</li>
+<li>Fixed variable parsing: PIC -9 is now recognized</li>
+</ul>
+<h3><a id="v113_19"></a>v1.13</h3>
+<ul>
+<li>"Open Copybook" now also works if copybook starts with comment</li>
+<li>"Resolve COPYs" can be executed multiple times</li>
+<li>Ctrl + Tab and Ctrl + Shift + Tab circle through tabs</li>
+<li>Alt + 1 to 9 selects tab directly</li>
+<li>Fixes #9: Start tab can now be closed.</li>
+</ul>
+<h3><a id="v112_26"></a>v1.12</h3>
+<ul>
+<li>Improved search</li>
+<li>Fixed error where search would skip elements</li>
+<li>Copy resolving is now parallel</li>
+<li>Already resolved Copys are commented out to prevent multiple resolvings</li>
+<li>Unsaved changes are marked with an asterisk</li>
+<li>Added "Open Copybook"-Button in Variable-view if the level-01-variable is from a copybook</li>
+</ul>
+<h3><a id="v111_34"></a>v1.11</h3>
+<ul>
+<li>opening a file is now 30x faster!</li>
+<li>sped up file loading, caching is now in background thread</li>
+<li>moved more analysis into background threads</li>
+<li>moved syntax highlighting into background thread</li>
+<li>improved logging</li>
+<li>stability improvements (try-catch)</li>
+</ul>
+<h3><a id="v110_42"></a>v1.10</h3>
+<ul>
+<li>added save functionality</li>
+<li>added export to html functionality</li>
+<li>improved variable info view</li>
+<li>you can now double click on a variable to find it in the source</li>
+<li>added navigate backward/forward buttons</li>
+</ul>
+<h3><a id="v19_49"></a>v1.9</h3>
+<ul>
+<li>Rebuild variable parsing</li>
+<li>Remodeled Info-view</li>
+<li>Various improvements</li>
+</ul>
+<h3><a id="v18_54"></a>v1.8</h3>
+<ul>
+<li>Fixed issue #8</li>
+<li>Added logging</li>
+<li>Added start screen</li>
+</ul>
+<h3><a id="v172_59"></a>v1.7.2</h3>
+<ul>
+<li>Stability and performance improvements</li>
+</ul>
+<h3><a id="v171_62"></a>v1.7.1</h3>
+<ul>
+<li>Bug fixes</li>
+</ul>
+<h3><a id="v17_65"></a>v1.7</h3>
+<ul>
+<li>Added multithreading for analysis</li>
+</ul>
+<h3><a id="v164_68"></a>v1.6.4</h3>
+<ul>
+<li>Stability improvements</li>
+</ul>
+<h3><a id="v163_71"></a>v1.6.3</h3>
+<ul>
+<li>Made SourceCodePro the default font</li>
+</ul>
+
+<h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
 
 <p>Published under GNU General Public License v3.0</p>
