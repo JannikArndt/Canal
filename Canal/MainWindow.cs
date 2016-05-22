@@ -307,10 +307,5 @@ namespace Canal
         }
 
         #endregion
-
-        private void showSourceOnGitHubToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Process.Start("https://github.com/JannikArndt/Canal/");
-        }
     }
 }

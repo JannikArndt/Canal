@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Canal
 {
@@ -78,6 +79,19 @@ namespace Canal
         private void insertCopybooksIntoSourceToolStripMenuItem_Click(object sender, EventArgs e)
         {
             InsertCopybooksIntoSource();
+        }
+
+        private void showSourceOnGitHubToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/JannikArndt/Canal/");
+        }
+
+        private void reRunAnalysisToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_tabUtil == null || _tabUtil.CurrentFileControl == null)
+                return;
+
+            _tabUtil.CurrentFileControl.AnalyzeFile();
         }
     }
 }

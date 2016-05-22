@@ -31,13 +31,7 @@ namespace Canal.UserControls
 
                 CobolFile = new CobolFileBuilder().Build(filename);
 
-                if (CobolFile.FileReference != null)
-                {
-                    var worker = new BackgroundWorker();
-                    worker.DoWork += new Analyzer().AnalyzeFile;
-                    worker.RunWorkerCompleted += InitTabs;
-                    worker.RunWorkerAsync(CobolFile);
-                }
+                AnalyzeFile();
 
                 // initialize FastColoredTextBox
                 codeBox.Font = SourceCodePro.Instance.Regular();
@@ -62,6 +56,16 @@ namespace Canal.UserControls
                 Logger.Error("Error initializing file control for CobolFile {0}: {1}", filename, exception.Message);
                 MessageBox.Show(Resources.ErrorMessage_FileControl_Constructor + exception.Message, Resources.Error, MessageBoxButtons.OK);
             }
+        }
+
+        public void AnalyzeFile()
+        {
+            if (CobolFile.FileReference == null) return;
+
+            var worker = new BackgroundWorker();
+            worker.DoWork += new Analyzer().AnalyzeFile;
+            worker.RunWorkerCompleted += InitTabs;
+            worker.RunWorkerAsync(CobolFile);
         }
 
         private void CodeBoxOnPerformMarkerClick(object sender, VisualMarkerEventArgs visualMarkerEventArgs)
@@ -136,6 +140,7 @@ namespace Canal.UserControls
                 CobolFile.FileReference = new FileReference(filename);
 
             File.WriteAllText(CobolFile.FileReference.FilePath, codeBox.Text);
+            CobolFile.Text = codeBox.Text;
             UnsavedChanges = false;
             saveButton.Enabled = false;
             if (FileSaved != null)

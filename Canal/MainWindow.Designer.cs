@@ -58,6 +58,7 @@
             this.FileTabs = new System.Windows.Forms.TabControl();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.reRunAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -163,7 +164,8 @@
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.level88ToEnumConverterToolStripMenuItem,
-            this.insertCopybooksIntoSourceToolStripMenuItem});
+            this.insertCopybooksIntoSourceToolStripMenuItem,
+            this.reRunAnalysisToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.helpToolStripMenuItem.Text = "Tools";
@@ -288,6 +290,13 @@
             // 
             this.openFileDialog.FileName = "openFileDialog";
             // 
+            // reRunAnalysisToolStripMenuItem
+            // 
+            this.reRunAnalysisToolStripMenuItem.Name = "reRunAnalysisToolStripMenuItem";
+            this.reRunAnalysisToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.reRunAnalysisToolStripMenuItem.Text = "Re-Run Analysis";
+            this.reRunAnalysisToolStripMenuItem.Click += new System.EventHandler(this.reRunAnalysisToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -338,6 +347,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem showSourceOnGitHubToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem reRunAnalysisToolStripMenuItem;
     }
 }
 
