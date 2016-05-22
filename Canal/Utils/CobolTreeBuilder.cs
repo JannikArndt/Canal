@@ -204,7 +204,7 @@ namespace Canal.Utils
             {
                 var node = ConvertToTreeNode(treeNode, query);
                 // if query is empty, match or Nodes contains match
-                if (string.IsNullOrWhiteSpace(query) || node.Text.IndexOf(query, StringComparison.OrdinalIgnoreCase) > 0 || node.Nodes.Count > 0)
+                if (string.IsNullOrWhiteSpace(query) || node.Text.IndexOf(query, StringComparison.OrdinalIgnoreCase) > -1 || node.Nodes.Count > 0)
                     result.Nodes.Add(node);
             }
 
@@ -239,7 +239,7 @@ namespace Canal.Utils
 
             foreach (var child in parent.GetNodes()) // check null if you must
                 foreach (var relative in Flatten(child, query: query))
-                    if (string.IsNullOrWhiteSpace(query) || relative.Text.IndexOf(query, StringComparison.OrdinalIgnoreCase) > 0)
+                    if (string.IsNullOrWhiteSpace(query) || relative.Text.IndexOf(query, StringComparison.OrdinalIgnoreCase) > -1)
                         yield return new TreeNode(relative.Text);
         }
     }
