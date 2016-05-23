@@ -1,4 +1,9 @@
-﻿v2.0
+﻿v2.1
+- Added folding markers for Divisions, Sections and Procedures
+- Added menu option to re-run analysis
+- Fixed a bug in TOC search
+
+v2.0
 - Completely rewritten analysis algorithm
 - Copybooks are now loaded automatically and do not need to be inserted into text
 - New window when inserting copybooks into text
