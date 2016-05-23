@@ -13,7 +13,7 @@ namespace Canal.Utils
     {
         public CobolTree Build(CobolFile file)
         {
-            var tree = new CobolTree(file.Name);
+            var tree = new CobolTree();
 
             if (!file.DivisionsAndSection.AllDivisionsFound())
                 return tree;
@@ -36,7 +36,7 @@ namespace Canal.Utils
             tree.ProcedureDivision.Sections = BuildSections(tree.ProcedureDivision);
             BuildReferences(tree.ProcedureDivision);
 
-            foreach (var procedure in tree.AllProcedures)
+            foreach (var procedure in tree.GetAllProcedures())
             {
                 AnalyzeVariables(procedure, file);
                 AnalyzePerformReferences(procedure);
@@ -45,9 +45,9 @@ namespace Canal.Utils
             }
 
             // fix deeper references
-            foreach (var performReference in tree.AllProcedures.SelectMany(procedure => procedure.PerformReferences.Where(pref => pref.Procedure == null)))
+            foreach (var performReference in tree.GetAllProcedures().SelectMany(procedure => procedure.PerformReferences.Where(pref => pref.Procedure == null)))
             {
-                performReference.Procedure = tree.AllProcedures.FirstOrDefault(p => p.Name == performReference.ReferencedProcedure);
+                performReference.Procedure = tree.GetAllProcedures().FirstOrDefault(p => p.Name == performReference.ReferencedProcedure);
             }
 
             return tree;

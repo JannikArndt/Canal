@@ -4,16 +4,6 @@ namespace Model
 {
     public class ProcedureDivision : Division
     {
-        public override int StartIndex
-        {
-            get { return ParentCobolFile.DivisionsAndSection.Procedure.GetValueOrDefault(-1); }
-        }
-
-        public override int EndIndex
-        {
-            get { return ParentCobolFile.Text.Length - 1; }
-        }
-
         public override List<CobolTreeNode> GetNodes()
         {
             return new List<CobolTreeNode>(Sections);
@@ -21,7 +11,9 @@ namespace Model
 
         public List<Section> Sections { get; set; }
 
-        public ProcedureDivision(CobolFile cobolFile) : base(cobolFile, "Procedure Division")
+        public ProcedureDivision(CobolFile cobolFile) : base(cobolFile, "Procedure Division",
+            cobolFile.DivisionsAndSection.Procedure.GetValueOrDefault(-1),
+            cobolFile.Text.Length - 1)
         {
             Sections = new List<Section>();
         }

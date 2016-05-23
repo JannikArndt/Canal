@@ -14,27 +14,27 @@ namespace Model
 
         public ProcedureDivision ProcedureDivision { get; set; }
 
-        public IEnumerable<Procedure> AllProcedures
+        public IEnumerable<Division> GetAllDivisions()
         {
-            get
-            {
-                return ProcedureDivision.Sections.SelectMany(s => s.Procedures).ToList();
-            }
+            return new List<Division> { IdentificationDivision, EnvironmentDivision, DataDivision, ProcedureDivision };
         }
 
-        public List<FileReference> CallReferences
+        public IEnumerable<Section> GetAllSections()
+        {
+            return ProcedureDivision.Sections.Union(new Section[] { DataDivision.WorkingStorageSection, DataDivision.LinkageSection });
+        }
+
+        public IEnumerable<Procedure> GetAllProcedures()
+        {
+            return ProcedureDivision.Sections.SelectMany(s => s.Procedures);
+        }
+
+        public IEnumerable<FileReference> CallReferences
         {
             get
             {
                 return ProcedureDivision.Sections.SelectMany(sec => sec.Procedures).SelectMany(proc => proc.CallReferences).ToList();
             }
-        }
-
-        private readonly string _name;
-
-        public CobolTree(string name)
-        {
-            _name = name;
         }
     }
 }

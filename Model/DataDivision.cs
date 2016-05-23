@@ -8,22 +8,14 @@ namespace Model
 
         public LinkageSection LinkageSection { set; get; }
 
-        public override int StartIndex
-        {
-            get { return ParentCobolFile.DivisionsAndSection.Data.GetValueOrDefault(-1); }
-        }
-
-        public override int EndIndex
-        {
-            get { return ParentCobolFile.DivisionsAndSection.Procedure.GetValueOrDefault(-1); }
-        }
-
         public override List<CobolTreeNode> GetNodes()
         {
             return new List<CobolTreeNode> { WorkingStorageSection, LinkageSection };
         }
 
-        public DataDivision(CobolFile cobolFile) : base(cobolFile, "Data Division")
+        public DataDivision(CobolFile cobolFile) : base(cobolFile, "Data Division",
+            cobolFile.DivisionsAndSection.Data.GetValueOrDefault(-1),
+            cobolFile.DivisionsAndSection.Procedure.GetValueOrDefault(-1))
         {
         }
     }

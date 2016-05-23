@@ -5,10 +5,15 @@
     /// </summary>
     public abstract class Division : CobolTreeNode
     {
-        protected Division(CobolFile cobolFile, string nodeName)
+        public override int StartIndex { get; }
+
+        public override int EndIndex { get; }
+
+        protected Division(CobolFile cobolFile, string nodeName, int beginIndex, int endIndex)
             : base(cobolFile, nodeName)
         {
-
+            StartIndex = beginIndex;
+            EndIndex = endIndex;
         }
     }
 }

@@ -65,7 +65,20 @@ namespace Canal.UserControls
             var worker = new BackgroundWorker();
             worker.DoWork += new Analyzer().AnalyzeFile;
             worker.RunWorkerCompleted += InitTabs;
+            worker.RunWorkerCompleted += SetFoldingMarkers;
             worker.RunWorkerAsync(CobolFile);
+        }
+
+        private void SetFoldingMarkers(object sender, RunWorkerCompletedEventArgs runWorkerCompletedEventArgs)
+        {
+            var foldingAreas = new List<CobolTreeNode>(CobolFile.CobolTree.GetAllDivisions())
+                                               .Concat(CobolFile.CobolTree.GetAllSections())
+                                               .Concat(CobolFile.CobolTree.GetAllProcedures());
+
+            foreach (var area in foldingAreas)
+            {
+                codeBox.SetFoldingMarker(area.StartIndex, area.EndIndex, area.Name);
+            }
         }
 
         private void CodeBoxOnPerformMarkerClick(object sender, VisualMarkerEventArgs visualMarkerEventArgs)

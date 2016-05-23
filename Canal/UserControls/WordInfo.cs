@@ -33,7 +33,7 @@ namespace Canal.UserControls
                 }
 
                 // is it a procedure?
-                var procedure = cobolFile.CobolTree.AllProcedures.FirstOrDefault(proc => proc.Name == word);
+                var procedure = cobolFile.CobolTree.GetAllProcedures().FirstOrDefault(proc => proc.Name == word);
                 if (procedure != null)
                 {
                     infoLabel.Visible = false;
