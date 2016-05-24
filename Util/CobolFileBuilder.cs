@@ -3,7 +3,7 @@ using Model;
 using Model.References;
 using System.IO;
 
-namespace Canal.Utils
+namespace Util
 {
     public class CobolFileBuilder
     {

@@ -45,11 +45,11 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeGenerator.cs">
+    <Compile Include="CodeGeneratorMainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CodeGenerator.Designer.cs">
-      <DependentUpon>CodeGenerator.cs</DependentUpon>
+    <Compile Include="CodeGeneratorMainWindow.Designer.cs">
+      <DependentUpon>CodeGeneratorMainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="GeneratedCodeTypes.cs" />
     <Compile Include="Generator.cs" />
@@ -77,8 +77,8 @@
     <Content Include="Resources\ByteArrayExtensions.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="CodeGenerator.resx">
-      <DependentUpon>CodeGenerator.cs</DependentUpon>
+    <EmbeddedResource Include="CodeGeneratorMainWindow.resx">
+      <DependentUpon>CodeGeneratorMainWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

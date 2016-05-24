@@ -1,4 +1,5 @@
 ﻿using Canal.UserControls;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Net;
 
@@ -12,7 +13,6 @@ namespace Canal
     using System.ComponentModel;
     using System.IO;
     using System.Windows.Forms;
-    using Utils;
 
     public partial class MainWindow : Form
     {
@@ -27,6 +27,9 @@ namespace Canal
             Logger.Info("Starting program");
 
             _openFilesOnStartup = files;
+
+            if (Settings.Default.LastOpened == null)
+                Settings.Default.LastOpened = new StringCollection();
 
             _tabUtil = new TabUtil(FileTabs, this);
             _tabUtil.ShowStartTab();

@@ -37,7 +37,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -80,6 +79,10 @@
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{86222556-3d40-4f67-b464-7983d6435fa6}</Project>
       <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Util\Util.csproj">
+      <Project>{340e7efd-f1ed-421f-a4d9-fd027e10724b}</Project>
+      <Name>Util</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

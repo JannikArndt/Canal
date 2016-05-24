@@ -1,11 +1,11 @@
 ﻿using Canal.Properties;
-using Canal.Utils;
 using Model;
 using Model.References;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Util;
 
 namespace Canal.UserControls
 {

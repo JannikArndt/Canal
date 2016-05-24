@@ -33,53 +33,5 @@ namespace Canal.Properties {
                 this["LastOpened"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool FileTypeCob {
-            get {
-                return ((bool)(this["FileTypeCob"]));
-            }
-            set {
-                this["FileTypeCob"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool FileTypeTxt {
-            get {
-                return ((bool)(this["FileTypeTxt"]));
-            }
-            set {
-                this["FileTypeTxt"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool FileTypeSrc {
-            get {
-                return ((bool)(this["FileTypeSrc"]));
-            }
-            set {
-                this["FileTypeSrc"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string FileTypeCustom {
-            get {
-                return ((string)(this["FileTypeCustom"]));
-            }
-            set {
-                this["FileTypeCustom"] = value;
-            }
-        }
     }
 }

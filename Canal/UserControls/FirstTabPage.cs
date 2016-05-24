@@ -20,10 +20,11 @@ namespace Canal.UserControls
             try
             {
                 var hashSet = new HashSet<string>();
-                foreach (var file in Settings.Default.LastOpened)
-                {
-                    hashSet.Add(file);
-                }
+
+                if (Settings.Default.LastOpened != null)
+                    foreach (var file in Settings.Default.LastOpened)
+                        hashSet.Add(file);
+
 
                 foreach (var file in hashSet)
                     recentFilesListView.Items.Add(file);

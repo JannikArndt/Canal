@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Canal.Events
+namespace Util.Events
 {
     public class FileCacheChangedEventArgs : EventArgs
     {

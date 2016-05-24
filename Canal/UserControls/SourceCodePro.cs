@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Text;
 
-namespace Canal.Utils
+namespace Canal.UserControls
 {
     public class SourceCodePro
     {

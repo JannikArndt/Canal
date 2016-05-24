@@ -1,12 +1,11 @@
-using Canal.Properties;
 using Logging;
 using Model;
 using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows.Forms;
+using Util.Exceptions;
 
-namespace Canal.Utils
+namespace Util
 {
     public class Analyzer
     {
@@ -127,7 +126,7 @@ namespace Canal.Utils
             catch (Exception exception)
             {
                 Logger.Error("Error building CobolTree: {0}.", exception.Message);
-                MessageBox.Show(Resources.Error_CobolTree_could_not_be_built + exception.Message, Resources.Error, MessageBoxButtons.OK);
+                throw new CanalException("Error building CobolTree: " + exception.Message, exception);
             }
         }
     }

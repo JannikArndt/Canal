@@ -6338,6 +6338,9 @@ namespace FastColoredTextBoxNS
 
         public void SetFoldingMarker(int startIndex, int endIndex, string identifier)
         {
+            if (startIndex < 0 || endIndex < 1 || endIndex < startIndex)
+                return;
+
             var range = GetRange(startIndex + 1, endIndex);
             range.tb[range.Start.iLine].FoldingStartMarker = identifier;
             range.tb[range.End.iLine - 1].FoldingEndMarker = identifier;

@@ -1,6 +1,4 @@
-﻿using Canal.Events;
-using Canal.Properties;
-using Canal.Utils;
+﻿using Canal.Properties;
 using FastColoredTextBoxNS;
 using FastColoredTextBoxNS.Events;
 using Logging;
@@ -14,6 +12,8 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Util;
+using Util.Events;
 
 namespace Canal.UserControls
 {
@@ -172,10 +172,10 @@ namespace Canal.UserControls
         /// <param name="e"></param>
         public void RefreshUsedFileTypes(object sender, EventArgs e)
         {
-            showFileTypes_cob.Checked = Settings.Default.FileTypeCob;
-            showFileTypes_txt.Checked = Settings.Default.FileTypeTxt;
-            showFileTypes_src.Checked = Settings.Default.FileTypeSrc;
-            showFileTypes_custom.Text = Settings.Default.FileTypeCustom;
+            showFileTypes_cob.Checked = Util.Properties.Settings.Default.FileTypeCob;
+            showFileTypes_txt.Checked = Util.Properties.Settings.Default.FileTypeTxt;
+            showFileTypes_src.Checked = Util.Properties.Settings.Default.FileTypeSrc;
+            showFileTypes_custom.Text = Util.Properties.Settings.Default.FileTypeCustom;
 
             RefreshFileView();
         }
@@ -631,10 +631,10 @@ namespace Canal.UserControls
 
         private void SettingsSourceCodeFilesClick(object sender, EventArgs e)
         {
-            Settings.Default.FileTypeCob = showFileTypes_cob.Checked;
-            Settings.Default.FileTypeTxt = showFileTypes_txt.Checked;
-            Settings.Default.FileTypeSrc = showFileTypes_src.Checked;
-            Settings.Default.FileTypeCustom = showFileTypes_custom.Text;
+            Util.Properties.Settings.Default.FileTypeCob = showFileTypes_cob.Checked;
+            Util.Properties.Settings.Default.FileTypeTxt = showFileTypes_txt.Checked;
+            Util.Properties.Settings.Default.FileTypeSrc = showFileTypes_src.Checked;
+            Util.Properties.Settings.Default.FileTypeCustom = showFileTypes_custom.Text;
             Settings.Default.Save();
 
             if (UsedFileTypesChanged != null) UsedFileTypesChanged(this, new UsedFileTypesChangedEventArgs());
