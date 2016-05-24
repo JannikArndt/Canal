@@ -28,96 +28,152 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.openAllButton = new System.Windows.Forms.Button();
+            this.components = new System.ComponentModel.Container();
             this.recentFilesListView = new System.Windows.Forms.ListView();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.changeLogTextBox = new System.Windows.Forms.TextBox();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.openAllButton);
-            this.groupBox1.Controls.Add(this.recentFilesListView);
-            this.groupBox1.Location = new System.Drawing.Point(21, 31);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(473, 377);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Recent Files";
-            // 
-            // openAllButton
-            // 
-            this.openAllButton.Enabled = false;
-            this.openAllButton.Location = new System.Drawing.Point(7, 347);
-            this.openAllButton.Name = "openAllButton";
-            this.openAllButton.Size = new System.Drawing.Size(75, 23);
-            this.openAllButton.TabIndex = 2;
-            this.openAllButton.Text = "Open All";
-            this.openAllButton.UseVisualStyleBackColor = true;
-            this.openAllButton.Click += new System.EventHandler(this.OpenAllRecentFiles);
             // 
             // recentFilesListView
             // 
-            this.recentFilesListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.recentFilesListView.BackColor = System.Drawing.SystemColors.Control;
             this.recentFilesListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.recentFilesListView.Location = new System.Drawing.Point(6, 19);
+            this.recentFilesListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.recentFilesListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recentFilesListView.Location = new System.Drawing.Point(66, 48);
             this.recentFilesListView.Name = "recentFilesListView";
-            this.recentFilesListView.Size = new System.Drawing.Size(461, 321);
+            this.recentFilesListView.Size = new System.Drawing.Size(458, 379);
+            this.recentFilesListView.SmallImageList = this.imageList1;
             this.recentFilesListView.TabIndex = 1;
             this.recentFilesListView.UseCompatibleStateImageBehavior = false;
             this.recentFilesListView.View = System.Windows.Forms.View.List;
             this.recentFilesListView.DoubleClick += new System.EventHandler(this.recentFilesListView_DoubleClick);
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.changeLogTextBox);
-            this.groupBox2.Location = new System.Drawing.Point(549, 31);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(508, 377);
-            this.groupBox2.TabIndex = 4;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "New in this Version";
-            // 
             // changeLogTextBox
             // 
-            this.changeLogTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.changeLogTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.changeLogTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.changeLogTextBox.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.changeLogTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.changeLogTextBox.Location = new System.Drawing.Point(3, 16);
+            this.changeLogTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.changeLogTextBox.Location = new System.Drawing.Point(593, 48);
             this.changeLogTextBox.Multiline = true;
             this.changeLogTextBox.Name = "changeLogTextBox";
             this.changeLogTextBox.ReadOnly = true;
             this.changeLogTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.changeLogTextBox.Size = new System.Drawing.Size(502, 358);
+            this.changeLogTextBox.Size = new System.Drawing.Size(479, 379);
             this.changeLogTextBox.TabIndex = 0;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Canal.Properties.Resources.bridge;
+            this.pictureBox1.Location = new System.Drawing.Point(57, -30);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(183, 143);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 5;
+            this.pictureBox1.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(246, 71);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(427, 42);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "CANAL Cobol Analyzer";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.ColumnCount = 5;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5.592841F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40.71588F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5.592841F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.50559F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5.592841F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Controls.Add(this.recentFilesListView, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.changeLogTextBox, 3, 2);
+            this.tableLayoutPanel1.Controls.Add(this.label3, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label2, 1, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 148);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1142, 430);
+            this.tableLayoutPanel1.TabIndex = 7;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(66, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(458, 40);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Recent Files";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(593, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(479, 40);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "New in this Version";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // imageList1
+            // 
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList1.ImageSize = new System.Drawing.Size(2, 30);
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // FirstTabPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Window;
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.pictureBox1);
             this.Name = "FirstTabPage";
-            this.Size = new System.Drawing.Size(1148, 537);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.Size = new System.Drawing.Size(1148, 594);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button openAllButton;
         private System.Windows.Forms.ListView recentFilesListView;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox changeLogTextBox;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }

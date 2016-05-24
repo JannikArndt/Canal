@@ -2,7 +2,8 @@
 using Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace Canal.UserControls
@@ -29,9 +30,6 @@ namespace Canal.UserControls
                 foreach (var file in hashSet)
                     recentFilesListView.Items.Add(file);
 
-                if (hashSet.Any())
-                    openAllButton.Enabled = true;
-
                 changeLogTextBox.Text = Resources.ChangeLog;
             }
             catch (Exception exception)
@@ -46,10 +44,6 @@ namespace Canal.UserControls
 
         }
 
-        private void OpenAllRecentFiles(object sender, EventArgs e)
-        {
-            foreach (var file in Settings.Default.LastOpened)
-                _parent.OpenFile(file);
-        }
+
     }
 }

@@ -61,18 +61,29 @@ namespace Canal.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to v1.14
-        ///- Opening a copy book from WordInfo now jumps to the variable definition
-        ///- Unsaved changes now prevent accidential closing of program
-        ///- Fixed syntax highlighting of reserved words in variable names
-        ///- Fixed variable parsing: PIC -9 is now recognized
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap bridge {
+            get {
+                object obj = ResourceManager.GetObject("bridge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to v2.1
+        ///- Added folding markers for Divisions, Sections and Procedures
+        ///- Added menu option to re-run analysis
+        ///- Fixed a bug in TOC search
         ///
-        ///v1.13
-        ///- &quot;Open Copybook&quot; now also works if copybook starts with comment
-        ///- &quot;Resolve COPYs&quot; can be executed multiple times
-        ///- Ctrl + Tab and Ctrl + Shift + Tab circle through tabs
-        ///- Alt + 1 to 9 selects tab directly
-        ///- Fixes #9: Start tab can now be  [rest of string was truncated]&quot;;.
+        ///v2.0
+        ///- Completely rewritten analysis algorithm
+        ///- Copybooks are now loaded automatically and do not need to be inserted into text
+        ///- New window when inserting copybooks into text
+        ///- New formatter for COBOL code! Works with selections and complete files
+        ///- More toolbar buttons, like undo, redo, new, open, save
+        ///- Horizontal lines mark sentence endings
+        ///- Markers on the [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ChangeLog {
             get {
@@ -158,6 +169,16 @@ namespace Canal.Properties {
         internal static string FilterCopybooksWindowTitle {
             get {
                 return ResourceManager.GetString("FilterCopybooksWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap loader {
+            get {
+                object obj = ResourceManager.GetObject("loader", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

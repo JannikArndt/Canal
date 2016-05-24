@@ -169,7 +169,7 @@ namespace Canal.UserControls
             // loaderImageToc
             // 
             this.loaderImageToc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.loaderImageToc.Image = ((System.Drawing.Image)(resources.GetObject("loaderImageToc.Image")));
+            this.loaderImageToc.Image = global::Canal.Properties.Resources.loader;
             this.loaderImageToc.Location = new System.Drawing.Point(3, 28);
             this.loaderImageToc.Name = "loaderImageToc";
             this.loaderImageToc.Size = new System.Drawing.Size(364, 264);
@@ -287,7 +287,7 @@ namespace Canal.UserControls
             // loaderImagePerforms
             // 
             this.loaderImagePerforms.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.loaderImagePerforms.Image = ((System.Drawing.Image)(resources.GetObject("loaderImagePerforms.Image")));
+            this.loaderImagePerforms.Image = global::Canal.Properties.Resources.loader;
             this.loaderImagePerforms.Location = new System.Drawing.Point(3, 28);
             this.loaderImagePerforms.Name = "loaderImagePerforms";
             this.loaderImagePerforms.Size = new System.Drawing.Size(364, 264);
@@ -834,7 +834,7 @@ namespace Canal.UserControls
             // loaderImageInfoTab
             // 
             this.loaderImageInfoTab.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.loaderImageInfoTab.Image = ((System.Drawing.Image)(resources.GetObject("loaderImageInfoTab.Image")));
+            this.loaderImageInfoTab.Image = global::Canal.Properties.Resources.loader;
             this.loaderImageInfoTab.Location = new System.Drawing.Point(0, 0);
             this.loaderImageInfoTab.Name = "loaderImageInfoTab";
             this.loaderImageInfoTab.Size = new System.Drawing.Size(378, 258);

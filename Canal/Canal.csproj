@@ -196,8 +196,6 @@
     <Resource Include="Resources\ChangeLog.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Content Include="Resources\bridge.png" />
-    <Content Include="Resources\loader.gif" />
     <Content Include="Resources\SourceCodePro-Bold.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
