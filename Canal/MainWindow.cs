@@ -137,6 +137,11 @@ namespace Canal
                 logWindow.Show();
                 return true;
             }
+            if (keyData == Keys.F4)
+            {
+                ShowCodeGenerator();
+                return true;
+            }
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
@@ -279,6 +284,15 @@ namespace Canal
         {
             var converterWindow = new Level88ToEnum.Level88ToEnum();
             converterWindow.Show();
+        }
+
+        private void ShowCodeGenerator()
+        {
+            if (_tabUtil == null || _tabUtil.CurrentFileControl == null || _tabUtil.CurrentFileControl.CobolFile == null)
+                return;
+
+            var generator = new CodeGenerator.CodeGeneratorMainWindow(_tabUtil.CurrentFileControl.CobolFile);
+            generator.Show(this);
         }
 
         #endregion

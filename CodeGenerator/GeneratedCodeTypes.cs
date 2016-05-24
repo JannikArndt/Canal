@@ -2,12 +2,13 @@
 {
     public enum GeneratedCodeTypes
     {
-        String,
-        Int,
-        Double,
-        Decimal,
-        Bool,
-        Enum,
-        Class
+        @string,
+        @int,
+        @long,
+        @double,
+        @decimal,
+        @bool,
+        @enum,
+        @object
     }
 }

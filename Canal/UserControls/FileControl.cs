@@ -442,14 +442,14 @@ namespace Canal.UserControls
 
             var workingStorageSectionTreeNode = new TreeNode("Local");
 
-            foreach (var variable in CobolFile.Variables.Values.Where(vari => vari.VariableLevel == 1 && vari.CopyReference.CobolFile == CobolFile))
+            foreach (var variable in CobolFile.GetLocalRootVariables())
             {
                 workingStorageSectionTreeNode.Nodes.Add(VariablesUtil.Instance.ConvertToTreeNode(variable));
             }
 
             var linkageSectionTreeNode = new TreeNode("From Records");
 
-            foreach (var variable in CobolFile.Variables.Values.Where(vari => vari.VariableLevel == 1 && vari.CopyReference.CobolFile != CobolFile))
+            foreach (var variable in CobolFile.GetCopiedRootVariables())
             {
                 linkageSectionTreeNode.Nodes.Add(VariablesUtil.Instance.ConvertToTreeNode(variable));
             }

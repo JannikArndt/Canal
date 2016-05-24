@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 
 namespace Model.Pictures
 {
@@ -9,6 +10,26 @@ namespace Model.Pictures
         public int IntegersLength { get; set; }
 
         public int FractionsLength { get; set; }
+
+        public new int ByteLength
+        {
+            get
+            {
+                switch (CompType)
+                {
+                    case CompType.None:
+                        return IntegersLength + FractionsLength;
+                    case CompType.Comp3:
+                        return (int)Math.Ceiling((double)(IntegersLength + FractionsLength) / 2);
+                    case CompType.Comp:
+                    case CompType.Comp1:
+                    case CompType.Comp2:
+                    case CompType.Comp4:
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
 
         public override string Value
         {

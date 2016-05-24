@@ -1,7 +1,39 @@
+using System.ComponentModel;
+
 namespace CodeGenerator
 {
     public interface IMappingProvider
     {
+        [DisplayName("Map?")]
+        bool DoMap { get; set; }
+
+        [DisplayName("Level")]
+        string Level { get; }
+
+        [DisplayName("Name")]
+        string CobolVariableName { get; }
+
+        [DisplayName("Picture")]
+        string VariableType { get; }
+
+        [DisplayName("Offset")]
+        int Offset { get; }
+
+        [DisplayName("Bytes")]
+        string Bytes { get; }
+
+        [DisplayName("Property Type")]
+        GeneratedCodeTypes GeneratedCodeType { get; set; }
+
+        [DisplayName("Property Name")]
+        string PropertyName { get; set; }
+
+        [DisplayName("Use Mapper")]
+        string MapperName { get; set; }
+
+        [DisplayName("Comment")]
+        string Comment { get; set; }
+
         /// <summary>
         /// Creates the code for a property definition, similar to <para />
         /// <code>&lt;summary&gt;My String [MY-TEXT]&lt;/summary&gt;<para />public String MyText { get; set; }</code>

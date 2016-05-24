@@ -38,7 +38,7 @@ namespace Util
 
         private static readonly string VarLevel = @"^[ ]+(?<level>\d\d)";
 
-        private static readonly string VarRedefines = @"(REDEFINES (?<redefines>[\w\d-()]+) +)?";
+        private static readonly string VarRedefines = @"(REDEFINES (?<redefines>[\w\d-()]+) *)?";
 
         private static readonly string VarPicture = @"(PIC(TURE)? (IS )?(?<type>(X|9|S|V|-|\(\d+\))+) *(?<comp>COMP(UTATIONAL)?(-\d)?)?)?";
 

@@ -93,5 +93,10 @@ namespace Canal
 
             _tabUtil.CurrentFileControl.AnalyzeFile();
         }
+
+        private void codeGeneratorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowCodeGenerator();
+        }
     }
 }

@@ -7,5 +7,7 @@
         string Value { get; set; }
 
         CompType CompType { get; set; }
+
+        int ByteLength { get; }
     }
 }

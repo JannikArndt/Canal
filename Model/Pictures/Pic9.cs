@@ -1,4 +1,6 @@
-﻿namespace Model.Pictures
+﻿using System;
+
+namespace Model.Pictures
 {
     public class Pic9 : IPic
     {
@@ -7,6 +9,26 @@
         public bool Negative { get; set; }
 
         public int Length { get; set; }
+
+        public int ByteLength
+        {
+            get
+            {
+                switch (CompType)
+                {
+                    case CompType.None:
+                        return Length;
+                    case CompType.Comp:
+                    case CompType.Comp3:
+                        return (int)Math.Ceiling((double)Length / 2);
+                    case CompType.Comp1:
+                    case CompType.Comp2:
+                    case CompType.Comp4:
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
 
         public CompType CompType { get; set; }
 

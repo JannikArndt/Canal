@@ -1,6 +1,7 @@
 ﻿using Model.References;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Model
 {
@@ -26,6 +27,16 @@ namespace Model
             Text = text;
             CopyReferences = new List<FileReference>();
             Variables = new ConcurrentDictionary<string, Variable>();
+        }
+
+        public IEnumerable<Variable> GetLocalRootVariables()
+        {
+            return Variables.Values.Where(vari => vari.VariableLevel == 1 && vari.CopyReference.CobolFile == this);
+        }
+
+        public IEnumerable<Variable> GetCopiedRootVariables()
+        {
+            return Variables.Values.Where(vari => vari.VariableLevel == 1 && vari.CopyReference.CobolFile != this);
         }
     }
 }

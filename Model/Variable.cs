@@ -10,13 +10,13 @@ namespace Model
 
         public string VariableName { get; set; }
 
-        public string Redefines { get; set; }
+        public Variable Redefines { get; set; }
 
-        public string Occurs { get; set; }
+        public int Occurs { get; set; }
 
         public int Offset { get; set; }
 
-        public int Length { get; set; }
+        public int ByteLength { get; set; }
 
         public IPic Picture { get; set; }
 
@@ -32,7 +32,7 @@ namespace Model
         {
             get
             {
-                return string.Format("{0}#{1}#{2}", VariableLevel.ToString("D2"), VariableName, Picture);
+                return string.Format("{0} {1} {2}", VariableLevel.ToString("D2"), VariableName, Picture);
             }
         }
 

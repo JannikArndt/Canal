@@ -1,38 +1,54 @@
 ﻿using Model;
+using Model.Pictures;
 using System;
-using System.ComponentModel;
+
+// ReSharper disable LocalizableElement
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable ConvertPropertyToExpressionBody
 
 namespace CodeGenerator
 {
     public class GeneratorModel : IMappingProvider
     {
-        [DisplayName("Map?")]
         public bool DoMap { get; set; }
 
-        [DisplayName("Cobol Variable Name")]
-        public string CobolVariableName
+        public string Level
         {
-            get { return Variable.VariableName; }
+            get
+            {
+                var indent = Variable.VariableLevel == 88
+                    ? 10
+                    : Variable.VariableLevel == 77
+                        ? 0
+                        : (Variable.VariableLevel - 1) * 2;
+                return new string(' ', indent) + Variable.VariableLevel.ToString("D2");
+            }
         }
 
-        [DisplayName("Variable Type")]
-        public string VariableType
+        public string CobolVariableName { get { return Variable.VariableName; } }
+
+        public string VariableType { get { return Variable.Picture.GetType().Name; } }
+
+        public int Offset { get { return Variable.Offset; } }
+
+        public string Bytes
         {
-            get { return Variable.Picture.GetType().Name; }
+            get
+            {
+                return Variable.Picture is PicGroup || Variable.Redefines != null
+                        ? "(" + Variable.ByteLength + ")"
+                        : Variable.ByteLength.ToString();
+            }
         }
 
         public Variable Variable { get; set; }
 
-        [DisplayName("Generated Property Name")]
         public string PropertyName { get; set; }
 
-        [DisplayName("Generated Property Type")]
         public GeneratedCodeTypes GeneratedCodeType { get; set; }
 
-        [DisplayName("Use Mapper")]
         public string MapperName { get; set; }
 
-        [DisplayName("Comment")]
         public string Comment { get; set; }
 
         /// <summary>
@@ -75,12 +91,12 @@ namespace CodeGenerator
 
             switch (GeneratedCodeType)
             {
-                case GeneratedCodeTypes.String:
-                    return "{Comment}                 {PropertyName} = bytes.GetString({Offset}, {Length})"
-                        .FormatWith(new { Comment = commentText, PropertyName, Variable.Offset, Variable.Length });
+                case GeneratedCodeTypes.@string:
+                    return "{Comment}                 {PropertyName} = bytes.GetString({Offset}, {ByteLength})"
+                        .FormatWith(new { Comment = commentText, PropertyName, Variable.Offset, Variable.Picture.ByteLength });
                 default:
-                    return "{Comment}                 {PropertyName} = bytes.GetBytes({Offset}, {Length})"
-                         .FormatWith(new { Comment = commentText, PropertyName, Variable.Offset, Variable.Length });
+                    return "{Comment}                 {PropertyName} = bytes.GetBytes({Offset}, {ByteLength})"
+                         .FormatWith(new { Comment = commentText, PropertyName, Variable.Offset, Variable.Picture.ByteLength });
             }
         }
 
@@ -96,13 +112,13 @@ namespace CodeGenerator
 
             switch (GeneratedCodeType)
             {
-                case GeneratedCodeTypes.String:
-                    return "{Comment}            bytes.SetString({Offset}, {Length}, {ObjectName}.{PropertyName})"
-                        .FormatWith(new { Comment = commentText, Variable.Offset, Variable.Length, ObjectName = objectName, PropertyName });
+                case GeneratedCodeTypes.@string:
+                    return "{Comment}            bytes.SetString({Offset}, {ByteLength}, {ObjectName}.{PropertyName})"
+                        .FormatWith(new { Comment = commentText, Variable.Offset, Variable.Picture.ByteLength, ObjectName = objectName, PropertyName });
                 default:
                     return "            // TODO No mapping found! Using bytes-mapping:" + Environment.NewLine
-                        + "{Comment}            bytes.SetBytes({Offset}, {Length}, {ObjectName}.{PropertyName})"
-                        .FormatWith(new { Comment = commentText, Variable.Offset, Variable.Length, ObjectName = objectName, PropertyName });
+                        + "{Comment}            bytes.SetBytes({Offset}, {ByteLength}, {ObjectName}.{PropertyName})"
+                        .FormatWith(new { Comment = commentText, Variable.Offset, Variable.Picture.ByteLength, ObjectName = objectName, PropertyName });
             }
         }
     }

@@ -43,6 +43,8 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.level88ToEnumConverterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insertCopybooksIntoSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reRunAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.codeGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nextTabToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.previousTabToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,7 +60,6 @@
             this.FileTabs = new System.Windows.Forms.TabControl();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.reRunAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -165,7 +166,8 @@
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.level88ToEnumConverterToolStripMenuItem,
             this.insertCopybooksIntoSourceToolStripMenuItem,
-            this.reRunAnalysisToolStripMenuItem});
+            this.reRunAnalysisToolStripMenuItem,
+            this.codeGeneratorToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.helpToolStripMenuItem.Text = "Tools";
@@ -183,6 +185,21 @@
             this.insertCopybooksIntoSourceToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.insertCopybooksIntoSourceToolStripMenuItem.Text = "Insert Copybooks into Source...";
             this.insertCopybooksIntoSourceToolStripMenuItem.Click += new System.EventHandler(this.insertCopybooksIntoSourceToolStripMenuItem_Click);
+            // 
+            // reRunAnalysisToolStripMenuItem
+            // 
+            this.reRunAnalysisToolStripMenuItem.Name = "reRunAnalysisToolStripMenuItem";
+            this.reRunAnalysisToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.reRunAnalysisToolStripMenuItem.Text = "Re-Run Analysis";
+            this.reRunAnalysisToolStripMenuItem.Click += new System.EventHandler(this.reRunAnalysisToolStripMenuItem_Click);
+            // 
+            // codeGeneratorToolStripMenuItem
+            // 
+            this.codeGeneratorToolStripMenuItem.Enabled = false;
+            this.codeGeneratorToolStripMenuItem.Name = "codeGeneratorToolStripMenuItem";
+            this.codeGeneratorToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.codeGeneratorToolStripMenuItem.Text = "Code Generator...";
+            this.codeGeneratorToolStripMenuItem.Click += new System.EventHandler(this.codeGeneratorToolStripMenuItem_Click);
             // 
             // windowToolStripMenuItem
             // 
@@ -290,13 +307,6 @@
             // 
             this.openFileDialog.FileName = "openFileDialog";
             // 
-            // reRunAnalysisToolStripMenuItem
-            // 
-            this.reRunAnalysisToolStripMenuItem.Name = "reRunAnalysisToolStripMenuItem";
-            this.reRunAnalysisToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.reRunAnalysisToolStripMenuItem.Text = "Re-Run Analysis";
-            this.reRunAnalysisToolStripMenuItem.Click += new System.EventHandler(this.reRunAnalysisToolStripMenuItem_Click);
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -348,6 +358,7 @@
         private System.Windows.Forms.ToolStripMenuItem showSourceOnGitHubToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem reRunAnalysisToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem codeGeneratorToolStripMenuItem;
     }
 }
 

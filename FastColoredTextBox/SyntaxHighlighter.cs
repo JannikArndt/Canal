@@ -598,7 +598,7 @@ namespace FastColoredTextBoxNS
                     CommentStyle = GreenStyle;
                     NumberStyle = MagentaStyle;
                     AttributeStyle = GreenStyle;
-                    ClassNameStyle = BoldStyle;
+                    ClassNameStyle = BlueBoldStyle;
                     KeywordStyle = BlueStyle;
                     CommentTagStyle = GrayStyle;
                     break;

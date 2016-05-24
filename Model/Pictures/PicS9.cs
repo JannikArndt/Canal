@@ -1,4 +1,6 @@
-﻿namespace Model.Pictures
+﻿using System;
+
+namespace Model.Pictures
 {
     public class PicS9 : Pic9
     {
@@ -11,6 +13,26 @@
         {
             get { return base.Value; }
             set { base.Value = value.Length > 1 ? value.Substring(1) : value; }
+        }
+
+        public new int ByteLength
+        {
+            get
+            {
+                switch (CompType)
+                {
+                    case CompType.None:
+                        return Length + 1;
+                    case CompType.Comp3:
+                        return (int)Math.Ceiling((double)(Length + 1) / 2);
+                    case CompType.Comp:
+                    case CompType.Comp1:
+                    case CompType.Comp2:
+                    case CompType.Comp4:
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
         }
 
         public override string ToString()

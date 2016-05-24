@@ -1,5 +1,7 @@
 ﻿using Model.Enums;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -64,6 +66,33 @@ namespace Util
                     return UsedAs.Output;
 
             return UsedAs.Unknown;
+        }
+
+        public static string ToPropertyName(this string s)
+        {
+            return new string(s.CharsToTitleCase().ToArray());
+        }
+
+        public static IEnumerable<char> CharsToTitleCase(this string s)
+        {
+            bool newWord = true;
+            foreach (char c in s)
+            {
+                if (c == ' ' || c == '-' || char.IsDigit(c))
+                {
+                    newWord = true;
+                }
+                else if (newWord)
+                {
+                    yield return char.ToUpper(c);
+                    newWord = false;
+                }
+                else
+                {
+                    yield return Char.ToLower(c);
+                }
+
+            }
         }
     }
 }

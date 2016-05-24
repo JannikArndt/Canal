@@ -1,9 +1,12 @@
 ﻿using Model;
 using Model.Enums;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Util.Exceptions;
 
 namespace Util
 {
@@ -43,14 +46,27 @@ namespace Util
                 // Create type definition ("PIC")
                 var picture = PicParser.Instance.ParsePicture(valType, valComp, valValue, valLevel);
 
+                // Find redefined variables
+                Variable redefined = null;
+                if (!string.IsNullOrWhiteSpace(valRedefines))
+                {
+                    if (!result.ContainsKey(valRedefines))
+                        throw new RedefinedVariableNotFoundException(valRedefines, match.Value);
+                    redefined = result[valRedefines];
+                }
+
+                if (valLiteral == "FILLER")
+                    Console.WriteLine("Foo");
+
                 // Create Variable
                 var currentVariable = new Variable(valLevel, valLiteral, picture, match.Value, null)
                 {
-                    Redefines = valRedefines,
-                    Occurs = valOccurs,
+                    Redefines = redefined,
+                    Occurs = !string.IsNullOrWhiteSpace(valOccurs) ? int.Parse(valOccurs) : 1,
                     CopyReference = cobolFile.FileReference
                 };
 
+                // Save result to dictionary
                 result.TryAdd(currentVariable.VariableName, currentVariable);
 
                 // Create references between variables
@@ -82,7 +98,39 @@ namespace Util
                 }
             }
 
+            foreach (var variable in result.Values.Where(vari => vari.VariableLevel == 1))
+            {
+                variable.ByteLength = GetByteLength(variable, 0);
+            }
+
             return result;
+        }
+
+        private int GetByteLength(Variable variable, int currentOffset)
+        {
+            // redefines
+            if (variable.Redefines != null)
+                currentOffset = variable.Redefines.Offset;
+
+            variable.Offset = currentOffset;
+
+            var childrenByteLength = 0;
+
+            foreach (var child in variable.Variables)
+            {
+                childrenByteLength += GetByteLength(child, variable.Offset + childrenByteLength);
+            }
+
+            variable.ByteLength = variable.Picture.ByteLength + childrenByteLength;
+
+            if (variable.Occurs > 1)
+                variable.ByteLength = variable.ByteLength * variable.Occurs;
+
+            // redefinitions' lengths do not count
+            if (variable.Redefines != null)
+                return 0;
+
+            return variable.ByteLength;
         }
 
         public IEnumerable<Literal> GetIdentifierLiterals(string text)

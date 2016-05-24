@@ -14,6 +14,8 @@ namespace Model.Pictures
 
         public CompType CompType { get; set; }
 
+        public int ByteLength { get { return Length; } }
+
         public PicX(int length)
         {
             Length = length;

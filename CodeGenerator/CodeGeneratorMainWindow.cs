@@ -1,9 +1,13 @@
 ﻿using FastColoredTextBoxNS.Enums;
 using Model;
 using Model.Pictures;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
+using Util;
 
 namespace CodeGenerator
 {
@@ -11,48 +15,213 @@ namespace CodeGenerator
     {
         private readonly GeneratorConfiguration _configuration = new GeneratorConfiguration();
 
-        public CodeGeneratorMainWindow()
+        public CodeGeneratorMainWindow(CobolFile cobolFile)
         {
             InitializeComponent();
 
-            FakeConfig();
+            InitDataGridView();
 
-            // Configuration Tab
-
-            BindingSource bindingSource = new BindingSource(_configuration.Variables, null);
-
-            ConfigurationDataGridView.DataSource = bindingSource;
-
-            var generator = new Generator();
+            BuildRootVariableTree(cobolFile);
 
             // Business Object Tab
             BusinessObjectCodeBox.Language = Language.CSharp;
-            BusinessObjectCodeBox.Text = generator.GenerateBusinessObject(_configuration);
 
             // Mapper Tab
             MapperCodeBox.Language = Language.CSharp;
-            MapperCodeBox.Text = generator.GenerateMapper(_configuration);
 
             // Extensions Tab
             ExtensionsCodeBox.Language = Language.CSharp;
-            ExtensionsCodeBox.Text = File.ReadAllText("Resources/ByteArrayExtensions.cs");
 
             // Enums Tab
             EnumsCodeBox.Language = Language.CSharp;
-            EnumsCodeBox.Text = File.ReadAllText("Resources/EnumExample.cs");
-
         }
 
-        private void FakeConfig()
+        private void BuildRootVariableTree(CobolFile cobolFile)
         {
-            _configuration.CobolFileName = "MyCobolFile";
-            _configuration.BusinessObjectName = "MyBusinessObject";
+            AddRootVariable("Local", cobolFile.GetLocalRootVariables());
+
+            foreach (var group in cobolFile.GetCopiedRootVariables().GroupBy(vari => vari.CopyReference.ProgramName))
+                AddRootVariable(group.Key, group);
+
+            VariableTreeView.ExpandAll();
+        }
+
+        private void AddRootVariable(string name, IEnumerable<Variable> variables)
+        {
+            var nodes = variables.Select(variable => new TreeNode(variable.VariableName) { Tag = variable }).ToArray();
+
+            VariableTreeView.Nodes.Add(new TreeNode(name, nodes));
+        }
+
+        private void ShowVariableConfiguration(Variable rootVar)
+        {
+            CodeGeneratorTabControl.SelectedIndex = 1;
+
+            _configuration.CobolFileName = rootVar.CopyReference.ProgramName;
+            _configuration.BusinessObjectName = rootVar.VariableName.ToPropertyName();
             _configuration.Namespace = "Projects.MyNamespace";
-            _configuration.Variables = new List<IMappingProvider>
+            _configuration.Variables = BuildFlatVariableList(rootVar);
+
+            // Configuration Tab
+            var bindingList = new BindingList<IMappingProvider>(_configuration.Variables);
+            BindingSource bindingSource = new BindingSource(bindingList, null);
+            ConfigurationDataGridView.DataSource = bindingSource;
+        }
+
+        private void InitDataGridView()
+        {
+            ConfigurationDataGridView.Columns.Add(new DataGridViewCheckBoxColumn
             {
-                new GeneratorModel(new Variable(1, "MY-TEXT", new PicX(9), string.Empty, null), "MyText", GeneratedCodeTypes.String, "My String"),
-                new GeneratorModel(new Variable(1, "MY-NUMBER", new PicS9(2),  string.Empty, null), "MyNumber", GeneratedCodeTypes.Int, "My Number")
-                };
+                Name = "Map?",
+                DataPropertyName = "DoMap"
+            });
+
+            ConfigurationDataGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Level",
+                DataPropertyName = "Level",
+                ReadOnly = true,
+                Width = 80
+            });
+
+            ConfigurationDataGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Name",
+                DataPropertyName = "CobolVariableName",
+                ReadOnly = true,
+                Width = 100
+            });
+
+            ConfigurationDataGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Picture",
+                DataPropertyName = "VariableType",
+                ReadOnly = true,
+                Width = 100
+            });
+
+            ConfigurationDataGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Offset",
+                DataPropertyName = "Offset",
+                ReadOnly = true,
+                Width = 30
+            });
+
+            ConfigurationDataGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Bytes",
+                DataPropertyName = "Bytes",
+                ReadOnly = true,
+                Width = 30
+            });
+
+            ConfigurationDataGridView.Columns.Add(new DataGridViewComboBoxColumn
+            {
+                Name = "Type",
+                DataPropertyName = "GeneratedCodeType",
+                DataSource = Enum.GetValues(typeof(GeneratedCodeTypes)),
+                ValueType = typeof(GeneratedCodeTypes),
+                Width = 50
+            });
+
+            ConfigurationDataGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Property",
+                DataPropertyName = "PropertyName",
+                Width = 150
+            });
+
+            ConfigurationDataGridView.Columns.Add(new DataGridViewComboBoxColumn
+            {
+                Name = "Mapper",
+                DataPropertyName = "MapperName",
+                DataSource = new[] { "None", "Mapper1", "Mapper2" },
+                ValueType = typeof(string),
+                Width = 150
+            });
+
+            ConfigurationDataGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Comment",
+                DataPropertyName = "Comment",
+                Width = 200
+            });
+
+
+            ConfigurationDataGridView.AutoGenerateColumns = false;
+        }
+
+        private List<IMappingProvider> BuildFlatVariableList(Variable rootVar)
+        {
+            var result = new List<IMappingProvider>
+            {
+                new GeneratorModel(rootVar, rootVar.VariableName.ToPropertyName(), MapType(rootVar.Picture), rootVar.VariableDefinition)
+            };
+
+            foreach (var variable in rootVar.Variables)
+            {
+                result.AddRange(BuildFlatVariableList(variable));
+            }
+
+            return result;
+        }
+
+        private GeneratedCodeTypes MapType(IPic pic)
+        {
+            if (pic is PicX)
+                if (pic.Length > 1)
+                    return GeneratedCodeTypes.@string;
+                else
+                    return GeneratedCodeTypes.@bool;
+
+            if (pic is Pic88)
+                return GeneratedCodeTypes.@bool;
+
+            if (pic is PicS9V9 || pic is Pic9V9)
+                return GeneratedCodeTypes.@decimal;
+
+            if (pic is PicS9 || pic is Pic9)
+                if (pic.Length < 10)
+                    return GeneratedCodeTypes.@int;
+                else
+                    return GeneratedCodeTypes.@long;
+
+            return GeneratedCodeTypes.@object;
+        }
+
+        private void VariableTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node.Tag is Variable)
+                ShowVariableConfiguration(e.Node.Tag as Variable);
+        }
+
+        private void BusinessObjectTabPage_Paint(object sender, PaintEventArgs e)
+        {
+            if (_configuration.Variables == null)
+                return;
+
+            BusinessObjectCodeBox.Text = Generator.Instance.GenerateBusinessObject(_configuration);
+        }
+
+        private void MapperTabPage_Paint(object sender, PaintEventArgs e)
+        {
+            if (_configuration.Variables == null)
+                return;
+
+            MapperCodeBox.Text = Generator.Instance.GenerateMapper(_configuration);
+        }
+
+        private void ExtensionMethods_Paint(object sender, PaintEventArgs e)
+        {
+            if (string.IsNullOrEmpty(ExtensionsCodeBox.Text))
+                ExtensionsCodeBox.Text = File.ReadAllText("Resources/ByteArrayExtensions.cs");
+        }
+
+        private void EnumsTabPage_Paint(object sender, PaintEventArgs e)
+        {
+            if (string.IsNullOrEmpty(EnumsCodeBox.Text))
+                EnumsCodeBox.Text = File.ReadAllText("Resources/EnumExample.cs");
         }
     }
 }
