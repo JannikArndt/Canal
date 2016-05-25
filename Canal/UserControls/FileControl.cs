@@ -71,13 +71,20 @@ namespace Canal.UserControls
 
         private void SetFoldingMarkers(object sender, RunWorkerCompletedEventArgs runWorkerCompletedEventArgs)
         {
-            var foldingAreas = new List<CobolTreeNode>(CobolFile.CobolTree.GetAllDivisions())
-                                               .Concat(CobolFile.CobolTree.GetAllSections())
-                                               .Concat(CobolFile.CobolTree.GetAllProcedures());
-
-            foreach (var area in foldingAreas)
+            try
             {
-                codeBox.SetFoldingMarker(area.StartIndex, area.EndIndex, area.Name);
+                var foldingAreas = new List<CobolTreeNode>(CobolFile.CobolTree.GetAllDivisions())
+                                                   .Concat(CobolFile.CobolTree.GetAllSections())
+                                                   .Concat(CobolFile.CobolTree.GetAllProcedures());
+
+                foreach (var area in foldingAreas)
+                {
+                    codeBox.SetFoldingMarker(area.StartIndex, area.EndIndex, area.Name);
+                }
+            }
+            catch (Exception exception)
+            {
+                Logger.Error("Error setting folding markers: {0}.", exception.Message);
             }
         }
 
