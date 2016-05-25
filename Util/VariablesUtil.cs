@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Util.Exceptions;
 
 namespace Util
 {
@@ -51,8 +50,9 @@ namespace Util
                 if (!string.IsNullOrWhiteSpace(valRedefines))
                 {
                     if (!result.ContainsKey(valRedefines))
-                        throw new RedefinedVariableNotFoundException(valRedefines, match.Value);
-                    redefined = result[valRedefines];
+                        Logging.Logger.Error("Redefined variable {0} not found in file {1} (variable definition: {2}).", valRedefines, cobolFile.Name, match.Value);
+                    else
+                        redefined = result[valRedefines];
                 }
 
                 if (valLiteral == "FILLER")

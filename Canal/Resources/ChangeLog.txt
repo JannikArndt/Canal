@@ -1,4 +1,6 @@
-﻿v2.2
+﻿KNOWN BUG: Recent files are not shown and file types in Files-tab cannot be changed.
+
+v2.2
 - Minor bug fixes
 - Redesigned first tab page
 

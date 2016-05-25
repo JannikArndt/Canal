@@ -27,6 +27,9 @@ namespace Canal
         {
             if (args.Level < _currentFilter) return;
 
+            if (logTextBox.IsDisposed)
+                return;
+
             if (logTextBox.InvokeRequired)
                 logTextBox.Invoke(new MethodInvoker(UpdateList));
             else

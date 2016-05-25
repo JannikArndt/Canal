@@ -2,8 +2,6 @@
 using Logging;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace Canal.UserControls
@@ -22,13 +20,13 @@ namespace Canal.UserControls
             {
                 var hashSet = new HashSet<string>();
 
-                if (Settings.Default.LastOpened != null)
-                    foreach (var file in Settings.Default.LastOpened)
-                        hashSet.Add(file);
+                //if (Util.Properties.Settings.Default.RecentFiles != null)
+                //    foreach (var file in Util.Properties.Settings.Default.RecentFiles)
+                //        hashSet.Add(file);
 
 
-                foreach (var file in hashSet)
-                    recentFilesListView.Items.Add(file);
+                //foreach (var file in hashSet)
+                //    recentFilesListView.Items.Add(file);
 
                 changeLogTextBox.Text = Resources.ChangeLog;
             }

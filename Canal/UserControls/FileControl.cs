@@ -172,10 +172,10 @@ namespace Canal.UserControls
         /// <param name="e"></param>
         public void RefreshUsedFileTypes(object sender, EventArgs e)
         {
-            showFileTypes_cob.Checked = Util.Properties.Settings.Default.FileTypeCob;
-            showFileTypes_txt.Checked = Util.Properties.Settings.Default.FileTypeTxt;
-            showFileTypes_src.Checked = Util.Properties.Settings.Default.FileTypeSrc;
-            showFileTypes_custom.Text = Util.Properties.Settings.Default.FileTypeCustom;
+            showFileTypes_cob.Checked = true; // util.Properties.Settings.Default.FileTypeCob;
+            showFileTypes_txt.Checked = true; // util.Properties.Settings.Default.FileTypeTxt;
+            showFileTypes_src.Checked = true; // uUtil.Properties.Settings.Default.FileTypeSrc;
+            //showFileTypes_custom.Text = Util.Properties.Settings.Default.FileTypeCustom;
 
             RefreshFileView();
         }
@@ -631,11 +631,11 @@ namespace Canal.UserControls
 
         private void SettingsSourceCodeFilesClick(object sender, EventArgs e)
         {
-            Util.Properties.Settings.Default.FileTypeCob = showFileTypes_cob.Checked;
-            Util.Properties.Settings.Default.FileTypeTxt = showFileTypes_txt.Checked;
-            Util.Properties.Settings.Default.FileTypeSrc = showFileTypes_src.Checked;
-            Util.Properties.Settings.Default.FileTypeCustom = showFileTypes_custom.Text;
-            Settings.Default.Save();
+            //Util.Properties.Settings.Default.FileTypeCob = showFileTypes_cob.Checked;
+            //Util.Properties.Settings.Default.FileTypeTxt = showFileTypes_txt.Checked;
+            //Util.Properties.Settings.Default.FileTypeSrc = showFileTypes_src.Checked;
+            //Util.Properties.Settings.Default.FileTypeCustom = showFileTypes_custom.Text;
+            //Util.Properties.Settings.Default.Save();
 
             if (UsedFileTypesChanged != null) UsedFileTypesChanged(this, new UsedFileTypesChangedEventArgs());
 
