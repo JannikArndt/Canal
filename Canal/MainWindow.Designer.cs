@@ -199,6 +199,7 @@
             this.codeGeneratorToolStripMenuItem.Name = "codeGeneratorToolStripMenuItem";
             this.codeGeneratorToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.codeGeneratorToolStripMenuItem.Text = "Code Generator...";
+            this.codeGeneratorToolStripMenuItem.Visible = false;
             this.codeGeneratorToolStripMenuItem.Click += new System.EventHandler(this.codeGeneratorToolStripMenuItem_Click);
             // 
             // windowToolStripMenuItem
