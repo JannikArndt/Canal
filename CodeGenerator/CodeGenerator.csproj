@@ -43,6 +43,7 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeGeneratorMainWindow.cs">
@@ -57,6 +58,7 @@
     <Compile Include="GeneratorModel.cs" />
     <Compile Include="IMappingProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerializeableGeneratorModel.cs" />
     <Compile Include="StringExtensions.cs" />
     <Content Include="Resources\EnumExample.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -70,6 +72,13 @@
     <Content Include="Resources\IMapper.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Save_6530_24.bmp" />
+    <None Include="Resources\WritetoDatabase_9889_24.bmp" />
+    <None Include="Resources\SaveFileDialogControl_703.png" />
+    <None Include="Resources\OpenFileDialog_692_24.bmp" />
+    <None Include="Resources\Open_6529_24.bmp" />
+    <None Include="Resources\Open_6296_24.bmp" />
+    <None Include="Resources\LoadProfilenode_8711_24.bmp" />
     <Content Include="Resources\MapperExample.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

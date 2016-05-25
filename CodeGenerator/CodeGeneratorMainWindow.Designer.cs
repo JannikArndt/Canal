@@ -43,11 +43,17 @@
             this.ExtensionsCodeBox = new FastColoredTextBoxNS.FastColoredTextBox();
             this.EnumsTabPage = new System.Windows.Forms.TabPage();
             this.EnumsCodeBox = new FastColoredTextBoxNS.FastColoredTextBox();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.VariableTreeView = new System.Windows.Forms.TreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.CodeGeneratorTabControl.SuspendLayout();
             this.SettingsTabPage.SuspendLayout();
             this.ConfigurationTabPage.SuspendLayout();
@@ -60,11 +66,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.ExtensionsCodeBox)).BeginInit();
             this.EnumsTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EnumsCodeBox)).BeginInit();
-            this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.toolStripContainer1.ContentPanel.SuspendLayout();
+            this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
+            this.toolStripContainer1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // CodeGeneratorTabControl
@@ -79,7 +88,7 @@
             this.CodeGeneratorTabControl.Location = new System.Drawing.Point(0, 0);
             this.CodeGeneratorTabControl.Name = "CodeGeneratorTabControl";
             this.CodeGeneratorTabControl.SelectedIndex = 0;
-            this.CodeGeneratorTabControl.Size = new System.Drawing.Size(867, 540);
+            this.CodeGeneratorTabControl.Size = new System.Drawing.Size(867, 539);
             this.CodeGeneratorTabControl.TabIndex = 0;
             // 
             // SettingsTabPage
@@ -88,7 +97,7 @@
             this.SettingsTabPage.Location = new System.Drawing.Point(4, 22);
             this.SettingsTabPage.Name = "SettingsTabPage";
             this.SettingsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.SettingsTabPage.Size = new System.Drawing.Size(859, 514);
+            this.SettingsTabPage.Size = new System.Drawing.Size(859, 513);
             this.SettingsTabPage.TabIndex = 5;
             this.SettingsTabPage.Text = "Settings";
             this.SettingsTabPage.UseVisualStyleBackColor = true;
@@ -107,7 +116,7 @@
             this.ConfigurationTabPage.Location = new System.Drawing.Point(4, 22);
             this.ConfigurationTabPage.Name = "ConfigurationTabPage";
             this.ConfigurationTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ConfigurationTabPage.Size = new System.Drawing.Size(859, 514);
+            this.ConfigurationTabPage.Size = new System.Drawing.Size(859, 513);
             this.ConfigurationTabPage.TabIndex = 0;
             this.ConfigurationTabPage.Text = "Configuration";
             this.ConfigurationTabPage.UseVisualStyleBackColor = true;
@@ -122,7 +131,7 @@
             this.ConfigurationDataGridView.Name = "ConfigurationDataGridView";
             this.ConfigurationDataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.ConfigurationDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ConfigurationDataGridView.Size = new System.Drawing.Size(853, 508);
+            this.ConfigurationDataGridView.Size = new System.Drawing.Size(853, 507);
             this.ConfigurationDataGridView.TabIndex = 0;
             // 
             // BusinessObjectTabPage
@@ -131,7 +140,7 @@
             this.BusinessObjectTabPage.Location = new System.Drawing.Point(4, 22);
             this.BusinessObjectTabPage.Name = "BusinessObjectTabPage";
             this.BusinessObjectTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.BusinessObjectTabPage.Size = new System.Drawing.Size(859, 514);
+            this.BusinessObjectTabPage.Size = new System.Drawing.Size(859, 513);
             this.BusinessObjectTabPage.TabIndex = 1;
             this.BusinessObjectTabPage.Text = "Business Object";
             this.BusinessObjectTabPage.UseVisualStyleBackColor = true;
@@ -150,7 +159,7 @@
         '\"',
         '\'',
         '\''};
-            this.BusinessObjectCodeBox.AutoScrollMinSize = new System.Drawing.Size(47, 14);
+            this.BusinessObjectCodeBox.AutoScrollMinSize = new System.Drawing.Size(2, 14);
             this.BusinessObjectCodeBox.BackBrush = null;
             this.BusinessObjectCodeBox.CharHeight = 14;
             this.BusinessObjectCodeBox.CharWidth = 8;
@@ -164,7 +173,7 @@
             this.BusinessObjectCodeBox.Paddings = new System.Windows.Forms.Padding(0);
             this.BusinessObjectCodeBox.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.BusinessObjectCodeBox.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("BusinessObjectCodeBox.ServiceColors")));
-            this.BusinessObjectCodeBox.Size = new System.Drawing.Size(853, 508);
+            this.BusinessObjectCodeBox.Size = new System.Drawing.Size(853, 507);
             this.BusinessObjectCodeBox.TabIndex = 0;
             this.BusinessObjectCodeBox.Zoom = 100;
             // 
@@ -174,7 +183,7 @@
             this.MapperTabPage.Location = new System.Drawing.Point(4, 22);
             this.MapperTabPage.Name = "MapperTabPage";
             this.MapperTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.MapperTabPage.Size = new System.Drawing.Size(859, 514);
+            this.MapperTabPage.Size = new System.Drawing.Size(859, 513);
             this.MapperTabPage.TabIndex = 2;
             this.MapperTabPage.Text = "Mapper";
             this.MapperTabPage.UseVisualStyleBackColor = true;
@@ -193,7 +202,7 @@
         '\"',
         '\'',
         '\''};
-            this.MapperCodeBox.AutoScrollMinSize = new System.Drawing.Size(47, 14);
+            this.MapperCodeBox.AutoScrollMinSize = new System.Drawing.Size(2, 14);
             this.MapperCodeBox.BackBrush = null;
             this.MapperCodeBox.CharHeight = 14;
             this.MapperCodeBox.CharWidth = 8;
@@ -207,7 +216,7 @@
             this.MapperCodeBox.Paddings = new System.Windows.Forms.Padding(0);
             this.MapperCodeBox.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.MapperCodeBox.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("MapperCodeBox.ServiceColors")));
-            this.MapperCodeBox.Size = new System.Drawing.Size(853, 508);
+            this.MapperCodeBox.Size = new System.Drawing.Size(853, 507);
             this.MapperCodeBox.TabIndex = 0;
             this.MapperCodeBox.Zoom = 100;
             // 
@@ -217,7 +226,7 @@
             this.ExtensionMethods.Location = new System.Drawing.Point(4, 22);
             this.ExtensionMethods.Name = "ExtensionMethods";
             this.ExtensionMethods.Padding = new System.Windows.Forms.Padding(3);
-            this.ExtensionMethods.Size = new System.Drawing.Size(859, 514);
+            this.ExtensionMethods.Size = new System.Drawing.Size(859, 513);
             this.ExtensionMethods.TabIndex = 3;
             this.ExtensionMethods.Text = "Extensions";
             this.ExtensionMethods.UseVisualStyleBackColor = true;
@@ -236,7 +245,7 @@
         '\"',
         '\'',
         '\''};
-            this.ExtensionsCodeBox.AutoScrollMinSize = new System.Drawing.Size(47, 14);
+            this.ExtensionsCodeBox.AutoScrollMinSize = new System.Drawing.Size(2, 14);
             this.ExtensionsCodeBox.BackBrush = null;
             this.ExtensionsCodeBox.CharHeight = 14;
             this.ExtensionsCodeBox.CharWidth = 8;
@@ -250,7 +259,7 @@
             this.ExtensionsCodeBox.Paddings = new System.Windows.Forms.Padding(0);
             this.ExtensionsCodeBox.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.ExtensionsCodeBox.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("ExtensionsCodeBox.ServiceColors")));
-            this.ExtensionsCodeBox.Size = new System.Drawing.Size(853, 508);
+            this.ExtensionsCodeBox.Size = new System.Drawing.Size(853, 507);
             this.ExtensionsCodeBox.TabIndex = 0;
             this.ExtensionsCodeBox.Zoom = 100;
             // 
@@ -260,7 +269,7 @@
             this.EnumsTabPage.Location = new System.Drawing.Point(4, 22);
             this.EnumsTabPage.Name = "EnumsTabPage";
             this.EnumsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.EnumsTabPage.Size = new System.Drawing.Size(859, 514);
+            this.EnumsTabPage.Size = new System.Drawing.Size(859, 513);
             this.EnumsTabPage.TabIndex = 4;
             this.EnumsTabPage.Text = "Enums";
             this.EnumsTabPage.UseVisualStyleBackColor = true;
@@ -279,7 +288,7 @@
         '\"',
         '\'',
         '\''};
-            this.EnumsCodeBox.AutoScrollMinSize = new System.Drawing.Size(47, 14);
+            this.EnumsCodeBox.AutoScrollMinSize = new System.Drawing.Size(2, 14);
             this.EnumsCodeBox.BackBrush = null;
             this.EnumsCodeBox.CharHeight = 14;
             this.EnumsCodeBox.CharWidth = 8;
@@ -293,39 +302,16 @@
             this.EnumsCodeBox.Paddings = new System.Windows.Forms.Padding(0);
             this.EnumsCodeBox.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.EnumsCodeBox.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("EnumsCodeBox.ServiceColors")));
-            this.EnumsCodeBox.Size = new System.Drawing.Size(853, 508);
+            this.EnumsCodeBox.Size = new System.Drawing.Size(853, 507);
             this.EnumsCodeBox.TabIndex = 0;
             this.EnumsCodeBox.Zoom = 100;
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.editToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1071, 24);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
-            // 
-            // editToolStripMenuItem
-            // 
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.editToolStripMenuItem.Text = "Edit";
             // 
             // VariableTreeView
             // 
             this.VariableTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.VariableTreeView.Location = new System.Drawing.Point(0, 0);
             this.VariableTreeView.Name = "VariableTreeView";
-            this.VariableTreeView.Size = new System.Drawing.Size(200, 540);
+            this.VariableTreeView.Size = new System.Drawing.Size(200, 539);
             this.VariableTreeView.TabIndex = 2;
             this.VariableTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.VariableTreeView_AfterSelect);
             // 
@@ -333,7 +319,7 @@
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 24);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -343,18 +329,95 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.CodeGeneratorTabControl);
-            this.splitContainer1.Size = new System.Drawing.Size(1071, 540);
+            this.splitContainer1.Size = new System.Drawing.Size(1071, 539);
             this.splitContainer1.SplitterDistance = 200;
             this.splitContainer1.TabIndex = 3;
+            // 
+            // toolStripContainer1
+            // 
+            this.toolStripContainer1.BottomToolStripPanelVisible = false;
+            // 
+            // toolStripContainer1.ContentPanel
+            // 
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.splitContainer1);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1071, 539);
+            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStripContainer1.LeftToolStripPanelVisible = false;
+            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
+            this.toolStripContainer1.Name = "toolStripContainer1";
+            this.toolStripContainer1.RightToolStripPanelVisible = false;
+            this.toolStripContainer1.Size = new System.Drawing.Size(1071, 564);
+            this.toolStripContainer1.TabIndex = 4;
+            this.toolStripContainer1.Text = "toolStripContainer1";
+            // 
+            // toolStripContainer1.TopToolStripPanel
+            // 
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton1,
+            this.toolStripButton2,
+            this.toolStripSeparator1,
+            this.toolStripButton3,
+            this.toolStripButton4});
+            this.toolStrip1.Location = new System.Drawing.Point(3, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(470, 25);
+            this.toolStrip1.TabIndex = 0;
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = global::CodeGenerator.Properties.Resources.LoadSettings;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(98, 22);
+            this.toolStripButton1.Text = "Load Settings";
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.Image = global::CodeGenerator.Properties.Resources.SaveSettings;
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(96, 22);
+            this.toolStripButton2.Text = "Save Settings";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.Image = global::CodeGenerator.Properties.Resources.LoadConfig;
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(130, 22);
+            this.toolStripButton3.Text = "Load Configuration";
+            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
+            // 
+            // toolStripButton4
+            // 
+            this.toolStripButton4.Image = global::CodeGenerator.Properties.Resources.SaveConfig;
+            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton4.Name = "toolStripButton4";
+            this.toolStripButton4.Size = new System.Drawing.Size(128, 22);
+            this.toolStripButton4.Text = "Save Configuration";
+            this.toolStripButton4.Click += new System.EventHandler(this.SaveConfigurationClick);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // CodeGeneratorMainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1071, 564);
-            this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
+            this.Controls.Add(this.toolStripContainer1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CodeGeneratorMainWindow";
             this.Text = "Canal Code Generator";
             this.CodeGeneratorTabControl.ResumeLayout(false);
@@ -369,14 +432,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.ExtensionsCodeBox)).EndInit();
             this.EnumsTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.EnumsCodeBox)).EndInit();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.toolStripContainer1.ContentPanel.ResumeLayout(false);
+            this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
+            this.toolStripContainer1.TopToolStripPanel.PerformLayout();
+            this.toolStripContainer1.ResumeLayout(false);
+            this.toolStripContainer1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -393,13 +460,19 @@
         private FastColoredTextBoxNS.FastColoredTextBox MapperCodeBox;
         private FastColoredTextBoxNS.FastColoredTextBox ExtensionsCodeBox;
         private FastColoredTextBoxNS.FastColoredTextBox EnumsCodeBox;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.TabPage SettingsTabPage;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.TreeView VariableTreeView;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.ToolStripContainer toolStripContainer1;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton toolStripButton4;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 

@@ -51,6 +51,11 @@ namespace CodeGenerator
 
         public string Comment { get; set; }
 
+        public GeneratorModel()
+        {
+
+        }
+
         /// <summary>
         /// Creates a new instance of the GeneratorModel class.
         /// </summary>

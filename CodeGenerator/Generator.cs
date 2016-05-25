@@ -29,7 +29,7 @@ namespace CodeGenerator
             text.Replace("<!NAMESPACE!>", config.Namespace);
             text.Replace("<!BUSINESSOBJECTNAME!>", config.BusinessObjectName);
             text.Replace("<!BONAMEPARAMETER!>", config.BusinessObjectNameAsParameter);
-            text.Replace("<!BYTEARRAYSIZE!>", config.ByteArraySize.ToString());
+            text.Replace("<!BYTEARRAYSIZE!>", config.Variables.Find(vari => vari.Variable.VariableLevel == 1).Bytes);
             text.Replace("<!MAPFROMCOBOL!>", string.Join("\n        \n", variables.Select(vari => vari.GetMappingFromCobol())));
             text.Replace("<!MAPTOCOBOL!>", string.Join("\n        \n", variables.Select(vari => vari.GetMappingToCobol(config.BusinessObjectNameAsParameter))));
 

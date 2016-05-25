@@ -7,13 +7,14 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using Util;
 
 namespace CodeGenerator
 {
     public partial class CodeGeneratorMainWindow : Form
     {
-        private readonly GeneratorConfiguration _configuration = new GeneratorConfiguration();
+        private GeneratorConfiguration _configuration = new GeneratorConfiguration();
 
         public CodeGeneratorMainWindow(CobolFile cobolFile)
         {
@@ -60,10 +61,11 @@ namespace CodeGenerator
             _configuration.CobolFileName = rootVar.CopyReference.ProgramName;
             _configuration.BusinessObjectName = rootVar.VariableName.ToPropertyName();
             _configuration.Namespace = "Projects.MyNamespace";
-            _configuration.Variables = BuildFlatVariableList(rootVar);
+            var vars = BuildFlatVariableList(rootVar);
+            _configuration.Variables = vars.Cast<GeneratorModel>().ToList();
 
             // Configuration Tab
-            var bindingList = new BindingList<IMappingProvider>(_configuration.Variables);
+            var bindingList = new BindingList<IMappingProvider>(vars);
             BindingSource bindingSource = new BindingSource(bindingList, null);
             ConfigurationDataGridView.DataSource = bindingSource;
         }
@@ -222,6 +224,47 @@ namespace CodeGenerator
         {
             if (string.IsNullOrEmpty(EnumsCodeBox.Text))
                 EnumsCodeBox.Text = File.ReadAllText("Resources/EnumExample.cs");
+        }
+
+        private void SaveConfigurationClick(object sender, EventArgs e)
+        {
+            saveFileDialog1.Filter = @"Configuration XML|*.xml";
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                var serializer = new XmlSerializer(typeof(GeneratorConfiguration));
+                using (TextWriter writer = new StreamWriter(saveFileDialog1.FileName))
+                {
+                    serializer.Serialize(writer, _configuration);
+                }
+            }
+        }
+
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = @"Configuration XML|*.xml"
+            };
+            if (openFileDialog.ShowDialog() != DialogResult.OK)
+                return;
+
+
+            using (var fileStream = new FileStream(openFileDialog.FileName, FileMode.Open))
+            {
+                var serializer = new XmlSerializer(typeof(GeneratorConfiguration));
+                var config = (GeneratorConfiguration)serializer.Deserialize(fileStream);
+
+                _configuration = config;
+            }
+
+            if (_configuration.Variables == null)
+                return;
+
+            // Configuration Tab
+            var bindingList = new BindingList<IMappingProvider>(_configuration.Variables.Cast<IMappingProvider>().ToList());
+            BindingSource bindingSource = new BindingSource(bindingList, null);
+            ConfigurationDataGridView.DataSource = bindingSource;
         }
     }
 }
