@@ -1,4 +1,5 @@
-﻿using FastColoredTextBoxNS.Enums;
+﻿using CodeGenerator.Properties;
+using FastColoredTextBoxNS.Enums;
 using Model;
 using Model.Pictures;
 using System;
@@ -217,13 +218,13 @@ namespace CodeGenerator
         private void ExtensionMethods_Paint(object sender, PaintEventArgs e)
         {
             if (string.IsNullOrEmpty(ExtensionsCodeBox.Text))
-                ExtensionsCodeBox.Text = File.ReadAllText("Resources/ByteArrayExtensions.cs");
+                ExtensionsCodeBox.Text = Resources.ByteArrayExtensions;
         }
 
         private void EnumsTabPage_Paint(object sender, PaintEventArgs e)
         {
             if (string.IsNullOrEmpty(EnumsCodeBox.Text))
-                EnumsCodeBox.Text = File.ReadAllText("Resources/EnumExample.cs");
+                EnumsCodeBox.Text = Resources.EnumExample;
         }
 
         private void SaveConfigurationClick(object sender, EventArgs e)
