@@ -19,7 +19,9 @@ namespace Util
             {
                 IPic result;
 
-                if (valLevel == 88)
+                if (type == "BINARY")
+                    result = new PicBinary();
+                else if (valLevel == 88)
                     result = new Pic88 { Value = value };
                 else if (string.IsNullOrWhiteSpace(type))
                     result = new PicGroup();

@@ -47,6 +47,7 @@
     <Compile Include="Enums\PerformType.cs" />
     <Compile Include="Pictures\CompType.cs" />
     <Compile Include="Pictures\IPic.cs" />
+    <Compile Include="Pictures\PicBinary.cs" />
     <Compile Include="Pictures\PicGroup.cs" />
     <Compile Include="Pictures\Pic88.cs" />
     <Compile Include="Pictures\Pic9.cs" />

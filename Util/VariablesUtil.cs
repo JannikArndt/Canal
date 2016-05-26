@@ -1,5 +1,6 @@
 ﻿using Model;
 using Model.Enums;
+using Model.Pictures;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -34,6 +35,8 @@ namespace Util
             foreach (Match match in regex.Matches(preparedText))
             {
                 // Read properties from RegEx
+
+
                 var valLevel = int.Parse(match.Groups["level"].Value);
                 var valLiteral = match.Groups["literal"].Value;
                 var valRedefines = match.Groups["redefines"].Value;
@@ -43,7 +46,10 @@ namespace Util
                 var valOccurs = match.Groups["occurs"].Value;
 
                 // Create type definition ("PIC")
-                var picture = PicParser.Instance.ParsePicture(valType, valComp, valValue, valLevel);
+                var picture = match.Groups[2].ToString().ToUpperInvariant() == "BINARY"
+                    ? new PicBinary()
+                    : PicParser.Instance.ParsePicture(valType, valComp, valValue, valLevel);
+
 
                 // Find redefined variables
                 Variable redefined = null;
