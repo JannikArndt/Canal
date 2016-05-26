@@ -18,15 +18,7 @@ namespace Canal.UserControls
 
             try
             {
-                var hashSet = new HashSet<string>();
-
-                //if (Util.Properties.Settings.Default.RecentFiles != null)
-                //    foreach (var file in Util.Properties.Settings.Default.RecentFiles)
-                //        hashSet.Add(file);
-
-
-                //foreach (var file in hashSet)
-                //    recentFilesListView.Items.Add(file);
+                ShowRecentFiles();
 
                 changeLogTextBox.Text = Resources.ChangeLog;
             }
@@ -34,6 +26,24 @@ namespace Canal.UserControls
             {
                 Logger.Error("Error on startup (FirstTabPage) {0}: {1}", exception.GetType(), exception.Message);
             }
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            ShowRecentFiles();
+            base.OnPaint(e);
+        }
+
+        private void ShowRecentFiles()
+        {
+            recentFilesListView.Clear();
+            var hashSet = new HashSet<string>();
+            if (Util.Properties.Settings.Default.RecentFiles != null)
+                foreach (var file in Util.Properties.Settings.Default.RecentFiles)
+                    hashSet.Add(file);
+
+            foreach (var file in hashSet)
+                recentFilesListView.Items.Add(file);
         }
 
         private void recentFilesListView_DoubleClick(object sender, EventArgs e)

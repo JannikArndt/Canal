@@ -2,7 +2,6 @@
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Net;
-using Util.Properties;
 
 namespace Canal
 {
@@ -29,8 +28,8 @@ namespace Canal
 
             _openFilesOnStartup = files;
 
-            //if (Util.Properties.Settings.Default.RecentFiles == null)
-            //    Util.Properties.Settings.Default.RecentFiles = new StringCollection();
+            if (Util.Properties.Settings.Default.RecentFiles == null)
+                Util.Properties.Settings.Default.RecentFiles = new StringCollection();
 
             _tabUtil = new TabUtil(FileTabs, this);
             _tabUtil.ShowStartTab();
@@ -67,6 +66,7 @@ namespace Canal
 
             Logger.Info("Closing program");
             Settings.Default.Save();
+            Util.Properties.Settings.Default.Save();
             base.OnClosing(e);
         }
 
@@ -176,7 +176,8 @@ namespace Canal
                 _tabUtil.AddTab(filename);
                 if (currentVar != null)
                     _tabUtil.CurrentFileControl.FindInCodeBox(currentVar.VariableName, false, false, false, true);
-                //Util.Properties.Settings.Default.RecentFiles.Add(filename);
+                Util.Properties.Settings.Default.RecentFiles.Add(filename);
+                Util.Properties.Settings.Default.Save();
             }
             catch (Exception exception)
             {
