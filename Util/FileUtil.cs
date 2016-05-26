@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Util.Events;
+using Util.Properties;
 
 namespace Util
 {
@@ -194,13 +195,13 @@ namespace Util
             _directoriesWithAllowedFiles = new ConcurrentDictionary<string, List<FileReference>>();
 
             _allowedEndings = new List<string>();
-            //if (Settings.Default.FileTypeCob)
-            _allowedEndings.AddRange(new List<string> { ".cob", ".cbl" });
-            //if (Settings.Default.FileTypeTxt)
-            _allowedEndings.Add(".txt");
-            //if (Settings.Default.FileTypeCob)
-            _allowedEndings.Add(".src");
-            //if (!string.IsNullOrWhiteSpace(Settings.Default.FileTypeCustom)) _allowedEndings.Add(Settings.Default.FileTypeCustom);
+            if (Settings.Default.FileTypeCob)
+                _allowedEndings.AddRange(new List<string> { ".cob", ".cbl" });
+            if (Settings.Default.FileTypeTxt)
+                _allowedEndings.Add(".txt");
+            if (Settings.Default.FileTypeCob)
+                _allowedEndings.Add(".src");
+            if (!string.IsNullOrWhiteSpace(Settings.Default.FileTypeCustom)) _allowedEndings.Add(Settings.Default.FileTypeCustom);
 
             foreach (var dir in _directoriesAndFiles.Keys.AsParallel())
             {
