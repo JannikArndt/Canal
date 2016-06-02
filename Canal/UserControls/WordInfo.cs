@@ -109,6 +109,7 @@ namespace Canal.UserControls
             {
                 // save variable node
                 var temp = newNode;
+                parent = variable.ParentVariable;
 
                 // new node for parent variable
                 newNode = new TreeNode(variable.ParentVariable.GetLevelAndName()) { Tag = variable.ParentVariable };
@@ -126,8 +127,9 @@ namespace Canal.UserControls
                 {
                     newNode = new TreeNode(parent.ParentVariable.GetLevelAndName(), new[] { newNode })
                     {
-                        Tag = variable.ParentVariable
+                        Tag = parent.ParentVariable
                     };
+
                     parent = parent.ParentVariable;
                 }
             }

@@ -1,4 +1,11 @@
-﻿KNOWN BUG: Recent files are not shown and file types in Files-tab cannot be changed.
+﻿v2.2.3
+- Fixed bug where WordInfo (if you double click on a variable) would not show the root variable
+
+v2.2.2
+- Recent files and file-type-selection work again
+- Missing REDEFINES-references doesn't crash analysis anymore
+- Fixed issue #11 (SetFoldingMarker)
+- Added support for BINARY variables
 
 v2.2
 - Minor bug fixes
