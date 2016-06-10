@@ -19,6 +19,8 @@ namespace Canal.UserControls
 {
     public sealed partial class FileControl : UserControl
     {
+        private TreeNode _performsTree;
+
         public FileControl(string filename, MainWindow parent)
         {
             InitializeComponent();
@@ -207,13 +209,9 @@ namespace Canal.UserControls
                 tocTabPage.Controls.Remove(loaderImageToc);
                 splitContainerRight.Panel2.Controls.Remove(loaderImageInfoTab);
 
-                ShowTocTreeView();
+                SortToc(SortKind.Alphabetical);
 
-                ShowPerformsTreeView();
-
-                ShowProceduresTreeView();
-
-                ShowVariablesTreeView();
+                InitPerformsTree();
 
                 ShowWordInfo();
 
@@ -359,33 +357,6 @@ namespace Canal.UserControls
             codeBox.FindNext(@"^.{7}" + tocTreeView.SelectedNode.Text + @"(\.| +USING| OF)", false, true, false, true);
         }
 
-        private void PerformsTreeAfterSelect(object sender, TreeViewEventArgs e)
-        {
-            var treeNode = performsTreeView.SelectedNode;
-            if (treeNode == null)
-                codeBox.DoRangeVisible(codeBox.GetRange(0, 0));
-            else
-                codeBox.FindNext(@"^.{7}" + treeNode.Text + @"(\.| +USING)", false, true, false, true);
-        }
-
-        private void VariablesTreeViewAfterSelect(object sender, TreeViewEventArgs e)
-        {
-            var treeNode = variablesTreeView.SelectedNode;
-            if (treeNode == null)
-                codeBox.DoRangeVisible(codeBox.GetRange(0, 0));
-            else
-                codeBox.FindNext(treeNode.Text, false, false, false, true);
-        }
-
-        private void ProceduresTreeViewAfterSelect(object sender, TreeViewEventArgs e)
-        {
-            var treeNode = proceduresTreeView.SelectedNode;
-            if (treeNode == null)
-                codeBox.DoRangeVisible(codeBox.GetRange(0, 0));
-            else if (!Regex.IsMatch(treeNode.Text, @"^\d\d"))
-                codeBox.FindNext(@"^.{7}" + treeNode.Text + @"(\.| +USING)", false, true, false, true);
-        }
-
         #endregion
 
         #region Button Clicks
@@ -393,11 +364,6 @@ namespace Canal.UserControls
         private void ExportTocClick(object sender, EventArgs e)
         {
             Clipboard.SetText(tocTreeView.ToText());
-        }
-
-        private void CopyProceduresClick(object sender, EventArgs e)
-        {
-            Clipboard.SetText(proceduresTreeView.ToText());
         }
 
         private void NavigateBackwardClick(object sender, EventArgs e)
@@ -437,55 +403,11 @@ namespace Canal.UserControls
 
         #region Tree View Initializers
 
-        private void ShowVariablesTreeView()
+        private void InitPerformsTree()
         {
-            variablesTreeView.Nodes.Clear();
-
             if (CobolFile.CobolTree == null)
             {
-                variablesTreeView.Nodes.Add(new TreeNode("Error: CobolTree could not be built.") { ForeColor = Color.Red });
-                return;
-            }
-
-            var workingStorageSectionTreeNode = new TreeNode("Local");
-
-            foreach (var variable in CobolFile.GetLocalRootVariables())
-            {
-                workingStorageSectionTreeNode.Nodes.Add(VariablesUtil.Instance.ConvertToTreeNode(variable));
-            }
-
-            var linkageSectionTreeNode = new TreeNode("From Records");
-
-            foreach (var variable in CobolFile.GetCopiedRootVariables())
-            {
-                linkageSectionTreeNode.Nodes.Add(VariablesUtil.Instance.ConvertToTreeNode(variable));
-            }
-
-            variablesTreeView.Nodes.Add(workingStorageSectionTreeNode);
-            variablesTreeView.Nodes.Add(linkageSectionTreeNode);
-        }
-
-        private void ShowTocTreeView()
-        {
-            tocTreeView.Nodes.Clear();
-
-            if (CobolFile.CobolTree == null)
-            {
-                tocTreeView.Nodes.Add(new TreeNode("Error: CobolTree could not be built.") { ForeColor = Color.Red });
-                return;
-            }
-
-            tocTreeView.Nodes.Add(CobolTreeBuilder.ConvertToTreeNodes(CobolFile.CobolTree, CobolFile.Name));
-            tocTreeView.ExpandAll();
-        }
-
-        private void ShowPerformsTreeView()
-        {
-            performsTreeView.Nodes.Clear();
-
-            if (CobolFile.CobolTree == null)
-            {
-                performsTreeView.Nodes.Add(new TreeNode("Error: CobolTree could not be built.") { ForeColor = Color.Red });
+                Logger.Error("PerformTree could not be built because CobolTree is null.");
                 return;
             }
 
@@ -498,55 +420,11 @@ namespace Canal.UserControls
 
             performTreeWorker.RunWorkerCompleted += delegate (object sender, RunWorkerCompletedEventArgs args)
             {
-                performsTabPage.Controls.Remove(loaderImagePerforms);
-                performsTreeView.Nodes.Add((TreeNode)args.Result);
+                _performsTree = (TreeNode)args.Result;
+                TocSortByPerformsButton.Enabled = true;
             };
 
             performTreeWorker.RunWorkerAsync();
-        }
-
-        private void ShowProceduresTreeView()
-        {
-            proceduresTreeView.Nodes.Clear();
-
-            if (CobolFile.CobolTree == null)
-            {
-                proceduresTreeView.Nodes.Add(new TreeNode("Error: CobolTree could not be built.") { ForeColor = Color.Red });
-                return;
-            }
-
-            foreach (var section in CobolFile.CobolTree.ProcedureDivision.Sections)
-            {
-                var sectionNode = new TreeNode(section.Name);
-
-                foreach (var procedure in section.Procedures)
-                {
-                    var procNode = new TreeNode(procedure.Name);
-                    sectionNode.Nodes.Add(procNode);
-
-                    var varDict = new Dictionary<Variable, List<Variable>>();
-
-                    foreach (var variable in procedure.Variables.Keys)
-                    {
-                        var root = variable.Root ?? variable;
-                        if (varDict.ContainsKey(root))
-                            varDict[root].Add(variable);
-                        else
-                            varDict.Add(root, new List<Variable> { variable });
-                    }
-
-                    foreach (var key in varDict.Keys.OrderBy(r => r.VariableName))
-                    {
-                        var rootVarNode = new TreeNode(key.VariableName);
-                        foreach (var variable in varDict[key])
-                            rootVarNode.Nodes.Add(new TreeNode(variable.VariableLevel.ToString("D2") + "  " + variable.VariableName + " " + procedure.Variables[variable].ToShortString()));
-
-                        procNode.Nodes.Add(rootVarNode);
-                    }
-                }
-
-                proceduresTreeView.Nodes.Add(sectionNode);
-            }
         }
 
         #endregion
@@ -561,46 +439,6 @@ namespace Canal.UserControls
         private void TocCollapseAllButtonClick(object sender, EventArgs e)
         {
             tocTreeView.CollapseAll();
-        }
-
-        private void ProceduresExpandAllButtonClick(object sender, EventArgs e)
-        {
-            proceduresTreeView.ExpandAll();
-        }
-
-        private void ProceduresCollapseAllButtonClick(object sender, EventArgs e)
-        {
-            proceduresTreeView.CollapseAll();
-        }
-
-        private void VariablesCopyButtonClick(object sender, EventArgs e)
-        {
-            Clipboard.SetText(variablesTreeView.ToText());
-        }
-
-        private void VariablesExpandAllButtonClick(object sender, EventArgs e)
-        {
-            variablesTreeView.ExpandAll();
-        }
-
-        private void VariablesCollapseAllButtonClick(object sender, EventArgs e)
-        {
-            variablesTreeView.CollapseAll();
-        }
-
-        private void PerformsCopyButtonClick(object sender, EventArgs e)
-        {
-            Clipboard.SetText(proceduresTreeView.ToText());
-        }
-
-        private void PerformsExpandAllButtonClick(object sender, EventArgs e)
-        {
-            performsTreeView.ExpandAll();
-        }
-
-        private void PerformsCollapseAllButtonClick(object sender, EventArgs e)
-        {
-            performsTreeView.CollapseAll();
         }
 
         #endregion
@@ -719,49 +557,66 @@ namespace Canal.UserControls
             codeBox.Selection = selection;
         }
 
-        private void TocSortAlphabeticallyButton_Click(object sender, EventArgs e)
+        private SortKind _tocSort = SortKind.Alphabetical;
+
+        private void SortToc(SortKind kind)
         {
+            _tocSort = kind;
+
             if (CobolFile.CobolTree == null)
+            {
+                tocTreeView.Nodes.Add(new TreeNode("Error: CobolTree could not be built.") { ForeColor = Color.Red });
                 return;
+            }
 
             var query = tocSearchTextBox.Text != Resources.SearchPlaceholder ? tocSearchTextBox.Text : "";
 
-            TocSortAlphabeticallyButton.Checked = true;
-            TocSortHierarchicallyButton.Checked = false;
+            TocSortAlphabeticallyButton.Checked = _tocSort == SortKind.Alphabetical;
+            TocSortHierarchicallyButton.Checked = _tocSort == SortKind.BySections;
+            TocSortByPerformsButton.Checked = _tocSort == SortKind.ByPerforms;
+
             tocTreeView.Nodes.Clear();
-            tocTreeView.Nodes.Add(CobolTreeBuilder.ConvertToFlatToc(CobolFile.CobolTree, CobolFile.Name, query));
-            // tocTreeView.Sort();
-            tocTreeView.ExpandAll();
+            var rootNode = GetToc(query);
+            rootNode.ExpandAll();
+            tocTreeView.Nodes.Add(rootNode);
+
         }
 
-        private void TocSortHierarchicallyButton_Click(object sender, EventArgs e)
+        private TreeNode GetToc(string query)
         {
-            if (CobolFile.CobolTree == null)
-                return;
+            switch (_tocSort)
+            {
+                case SortKind.Alphabetical:
+                    return CobolTreeBuilder.ConvertToFlatToc(CobolFile.CobolTree, CobolFile.Name, query);
+                case SortKind.BySections:
+                    return CobolTreeBuilder.ConvertToTreeNodes(CobolFile.CobolTree, CobolFile.Name, query);
+                case SortKind.ByPerforms:
+                    return _performsTree;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
 
-            var query = tocSearchTextBox.Text != Resources.SearchPlaceholder ? tocSearchTextBox.Text : "";
+        private void TocSortAlphabeticallyButton_Click(object sender, EventArgs e)
+        {
+            SortToc(SortKind.Alphabetical);
+        }
 
-            TocSortAlphabeticallyButton.Checked = false;
-            TocSortHierarchicallyButton.Checked = true;
+        private void TocSortBySectionsButtonClick(object sender, EventArgs e)
+        {
+            SortToc(SortKind.BySections);
+        }
 
-            tocTreeView.Nodes.Clear();
-            tocTreeView.Nodes.Add(CobolTreeBuilder.ConvertToTreeNodes(CobolFile.CobolTree, CobolFile.Name, query));
-            tocTreeView.ExpandAll();
+        private void TocSortByPerformsButtonClick(object sender, EventArgs e)
+        {
+            SortToc(SortKind.ByPerforms);
         }
 
         private void tocSearchTextBox_TextChanged(object sender, EventArgs e)
         {
-            var query = ((ToolStripTextBox)sender).Text;
-
-            if (query == Resources.SearchPlaceholder || CobolFile.CobolTree == null)
-                return;
-
-            tocTreeView.Nodes.Clear();
-            tocTreeView.Nodes.Add(
-                TocSortAlphabeticallyButton.Checked
-                ? CobolTreeBuilder.ConvertToFlatToc(CobolFile.CobolTree, CobolFile.Name, query)
-                : CobolTreeBuilder.ConvertToTreeNodes(CobolFile.CobolTree, CobolFile.Name, query));
-            tocTreeView.ExpandAll();
+            SortToc(_tocSort);
         }
+
+
     }
 }

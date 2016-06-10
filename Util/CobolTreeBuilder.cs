@@ -114,7 +114,7 @@ namespace Util
             }
         }
 
-        #region procedure
+        #region Analysis
 
         public void AnalyzeVariables(Procedure procedure, CobolFile cobolFile)
         {
@@ -124,7 +124,7 @@ namespace Util
             {
                 Variable variable;
                 if (cobolFile.Variables.TryGetValue(token.Name, out variable))
-                    procedure.Variables.AddOrUpdate(variable, token.UsedAs, (vari, usedAs) => usedAs.MergeUsages(token));
+                    procedure.VariableUsages.AddOrUpdate(variable, token.UsedAs, (vari, usedAs) => usedAs.MergeUsages(token));
             }
         }
 
@@ -179,6 +179,8 @@ namespace Util
 
         #endregion
 
+        #region Sort By Section
+
         public static TreeNode ConvertToTreeNodes(CobolTree cobolTree, string name, string query = "")
         {
             var result = new TreeNode(name);
@@ -209,6 +211,10 @@ namespace Util
 
             return result;
         }
+
+        #endregion
+
+        #region Sort Alphabetical
 
         public static TreeNode ConvertToFlatToc(CobolTree cobolTree, string name, string query = "")
         {
@@ -241,5 +247,7 @@ namespace Util
                     if (string.IsNullOrWhiteSpace(query) || relative.Text.IndexOf(query, StringComparison.OrdinalIgnoreCase) > -1)
                         yield return new TreeNode(relative.Text);
         }
+
+        #endregion
     }
 }

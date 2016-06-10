@@ -1,5 +1,5 @@
-﻿using System.Windows.Forms;
-using FastColoredTextBoxNS;
+﻿using FastColoredTextBoxNS;
+using System.Windows.Forms;
 
 namespace Canal.UserControls
 {
@@ -46,27 +46,9 @@ namespace Canal.UserControls
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.TocSortHierarchicallyButton = new System.Windows.Forms.ToolStripButton();
             this.TocSortAlphabeticallyButton = new System.Windows.Forms.ToolStripButton();
+            this.TocSortByPerformsButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.tocSearchTextBox = new System.Windows.Forms.ToolStripTextBox();
-            this.performsTabPage = new System.Windows.Forms.TabPage();
-            this.loaderImagePerforms = new System.Windows.Forms.PictureBox();
-            this.performsToolStrip = new System.Windows.Forms.ToolStrip();
-            this.performsCopyButton = new System.Windows.Forms.ToolStripButton();
-            this.performsCollapseAllButton = new System.Windows.Forms.ToolStripButton();
-            this.performsExpandAllButton = new System.Windows.Forms.ToolStripButton();
-            this.performsTreeView = new System.Windows.Forms.TreeView();
-            this.variablesTabPage = new System.Windows.Forms.TabPage();
-            this.variablesToolStrip = new System.Windows.Forms.ToolStrip();
-            this.variablesCopyButton = new System.Windows.Forms.ToolStripButton();
-            this.variablesCollapseAllButton = new System.Windows.Forms.ToolStripButton();
-            this.variablesExpandAllButton = new System.Windows.Forms.ToolStripButton();
-            this.variablesTreeView = new System.Windows.Forms.TreeView();
-            this.proceduresTabPage = new System.Windows.Forms.TabPage();
-            this.proceduresToolStrip = new System.Windows.Forms.ToolStrip();
-            this.proceduresCopyButton = new System.Windows.Forms.ToolStripButton();
-            this.proceduresCollapseAllButton = new System.Windows.Forms.ToolStripButton();
-            this.proceduresExpandAllButton = new System.Windows.Forms.ToolStripButton();
-            this.proceduresTreeView = new System.Windows.Forms.TreeView();
             this.filesTabPage = new System.Windows.Forms.TabPage();
             this.filesTabToolStrip = new System.Windows.Forms.ToolStrip();
             this.filesTabSearchBox = new System.Windows.Forms.ToolStripTextBox();
@@ -102,13 +84,6 @@ namespace Canal.UserControls
             this.tocTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.loaderImageToc)).BeginInit();
             this.tocToolStrip.SuspendLayout();
-            this.performsTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.loaderImagePerforms)).BeginInit();
-            this.performsToolStrip.SuspendLayout();
-            this.variablesTabPage.SuspendLayout();
-            this.variablesToolStrip.SuspendLayout();
-            this.proceduresTabPage.SuspendLayout();
-            this.proceduresToolStrip.SuspendLayout();
             this.filesTabPage.SuspendLayout();
             this.filesTabToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.codeBox)).BeginInit();
@@ -142,9 +117,6 @@ namespace Canal.UserControls
             // structureTabControl
             // 
             this.structureTabControl.Controls.Add(this.tocTabPage);
-            this.structureTabControl.Controls.Add(this.performsTabPage);
-            this.structureTabControl.Controls.Add(this.variablesTabPage);
-            this.structureTabControl.Controls.Add(this.proceduresTabPage);
             this.structureTabControl.Controls.Add(this.filesTabPage);
             this.structureTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.structureTabControl.Location = new System.Drawing.Point(0, 0);
@@ -188,6 +160,7 @@ namespace Canal.UserControls
             this.toolStripSeparator5,
             this.TocSortHierarchicallyButton,
             this.TocSortAlphabeticallyButton,
+            this.TocSortByPerformsButton,
             this.toolStripSeparator7,
             this.tocSearchTextBox});
             this.tocToolStrip.Location = new System.Drawing.Point(3, 3);
@@ -245,8 +218,8 @@ namespace Canal.UserControls
             this.TocSortHierarchicallyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.TocSortHierarchicallyButton.Name = "TocSortHierarchicallyButton";
             this.TocSortHierarchicallyButton.Size = new System.Drawing.Size(23, 22);
-            this.TocSortHierarchicallyButton.Text = "Sort Hierarchically";
-            this.TocSortHierarchicallyButton.Click += new System.EventHandler(this.TocSortHierarchicallyButton_Click);
+            this.TocSortHierarchicallyButton.Text = "Sort by Sections";
+            this.TocSortHierarchicallyButton.Click += new System.EventHandler(this.TocSortBySectionsButtonClick);
             // 
             // TocSortAlphabeticallyButton
             // 
@@ -257,6 +230,17 @@ namespace Canal.UserControls
             this.TocSortAlphabeticallyButton.Size = new System.Drawing.Size(23, 22);
             this.TocSortAlphabeticallyButton.Text = "Sort Alphabetically";
             this.TocSortAlphabeticallyButton.Click += new System.EventHandler(this.TocSortAlphabeticallyButton_Click);
+            // 
+            // TocSortByPerformsButton
+            // 
+            this.TocSortByPerformsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TocSortByPerformsButton.Enabled = false;
+            this.TocSortByPerformsButton.Image = ((System.Drawing.Image)(resources.GetObject("TocSortByPerformsButton.Image")));
+            this.TocSortByPerformsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TocSortByPerformsButton.Name = "TocSortByPerformsButton";
+            this.TocSortByPerformsButton.Size = new System.Drawing.Size(23, 22);
+            this.TocSortByPerformsButton.Text = "Sort by Performs";
+            this.TocSortByPerformsButton.Click += new System.EventHandler(this.TocSortByPerformsButtonClick);
             // 
             // toolStripSeparator7
             // 
@@ -270,222 +254,6 @@ namespace Canal.UserControls
             this.tocSearchTextBox.Enter += new System.EventHandler(this.SearchBoxEnter);
             this.tocSearchTextBox.Leave += new System.EventHandler(this.SearchBoxLeave);
             this.tocSearchTextBox.TextChanged += new System.EventHandler(this.tocSearchTextBox_TextChanged);
-            // 
-            // performsTabPage
-            // 
-            this.performsTabPage.Controls.Add(this.loaderImagePerforms);
-            this.performsTabPage.Controls.Add(this.performsToolStrip);
-            this.performsTabPage.Controls.Add(this.performsTreeView);
-            this.performsTabPage.Location = new System.Drawing.Point(4, 22);
-            this.performsTabPage.Name = "performsTabPage";
-            this.performsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.performsTabPage.Size = new System.Drawing.Size(370, 295);
-            this.performsTabPage.TabIndex = 1;
-            this.performsTabPage.Text = "Performs";
-            this.performsTabPage.UseVisualStyleBackColor = true;
-            // 
-            // loaderImagePerforms
-            // 
-            this.loaderImagePerforms.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.loaderImagePerforms.Image = global::Canal.Properties.Resources.loader;
-            this.loaderImagePerforms.Location = new System.Drawing.Point(3, 28);
-            this.loaderImagePerforms.Name = "loaderImagePerforms";
-            this.loaderImagePerforms.Size = new System.Drawing.Size(364, 264);
-            this.loaderImagePerforms.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.loaderImagePerforms.TabIndex = 4;
-            this.loaderImagePerforms.TabStop = false;
-            // 
-            // performsToolStrip
-            // 
-            this.performsToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.performsToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.performsCopyButton,
-            this.performsCollapseAllButton,
-            this.performsExpandAllButton});
-            this.performsToolStrip.Location = new System.Drawing.Point(3, 3);
-            this.performsToolStrip.Name = "performsToolStrip";
-            this.performsToolStrip.Size = new System.Drawing.Size(364, 25);
-            this.performsToolStrip.TabIndex = 3;
-            this.performsToolStrip.Text = "toolStrip1";
-            // 
-            // performsCopyButton
-            // 
-            this.performsCopyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.performsCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("performsCopyButton.Image")));
-            this.performsCopyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.performsCopyButton.Name = "performsCopyButton";
-            this.performsCopyButton.Size = new System.Drawing.Size(23, 22);
-            this.performsCopyButton.Text = "Copy";
-            this.performsCopyButton.Click += new System.EventHandler(this.PerformsCopyButtonClick);
-            // 
-            // performsCollapseAllButton
-            // 
-            this.performsCollapseAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.performsCollapseAllButton.Image = ((System.Drawing.Image)(resources.GetObject("performsCollapseAllButton.Image")));
-            this.performsCollapseAllButton.ImageTransparentColor = System.Drawing.Color.Black;
-            this.performsCollapseAllButton.Name = "performsCollapseAllButton";
-            this.performsCollapseAllButton.Size = new System.Drawing.Size(23, 22);
-            this.performsCollapseAllButton.Text = "Collapse All";
-            this.performsCollapseAllButton.Click += new System.EventHandler(this.PerformsCollapseAllButtonClick);
-            // 
-            // performsExpandAllButton
-            // 
-            this.performsExpandAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.performsExpandAllButton.Image = ((System.Drawing.Image)(resources.GetObject("performsExpandAllButton.Image")));
-            this.performsExpandAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.performsExpandAllButton.Name = "performsExpandAllButton";
-            this.performsExpandAllButton.Size = new System.Drawing.Size(23, 22);
-            this.performsExpandAllButton.Text = "Expand all";
-            this.performsExpandAllButton.Click += new System.EventHandler(this.PerformsExpandAllButtonClick);
-            // 
-            // performsTreeView
-            // 
-            this.performsTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.performsTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.performsTreeView.ItemHeight = 22;
-            this.performsTreeView.Location = new System.Drawing.Point(3, 31);
-            this.performsTreeView.Name = "performsTreeView";
-            this.performsTreeView.Size = new System.Drawing.Size(364, 261);
-            this.performsTreeView.TabIndex = 0;
-            this.performsTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.PerformsTreeAfterSelect);
-            // 
-            // variablesTabPage
-            // 
-            this.variablesTabPage.Controls.Add(this.variablesToolStrip);
-            this.variablesTabPage.Controls.Add(this.variablesTreeView);
-            this.variablesTabPage.Location = new System.Drawing.Point(4, 22);
-            this.variablesTabPage.Name = "variablesTabPage";
-            this.variablesTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.variablesTabPage.Size = new System.Drawing.Size(370, 295);
-            this.variablesTabPage.TabIndex = 2;
-            this.variablesTabPage.Text = "Variables";
-            this.variablesTabPage.UseVisualStyleBackColor = true;
-            // 
-            // variablesToolStrip
-            // 
-            this.variablesToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.variablesToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.variablesCopyButton,
-            this.variablesCollapseAllButton,
-            this.variablesExpandAllButton});
-            this.variablesToolStrip.Location = new System.Drawing.Point(3, 3);
-            this.variablesToolStrip.Name = "variablesToolStrip";
-            this.variablesToolStrip.Size = new System.Drawing.Size(364, 25);
-            this.variablesToolStrip.TabIndex = 3;
-            this.variablesToolStrip.Text = "toolStrip1";
-            // 
-            // variablesCopyButton
-            // 
-            this.variablesCopyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.variablesCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("variablesCopyButton.Image")));
-            this.variablesCopyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.variablesCopyButton.Name = "variablesCopyButton";
-            this.variablesCopyButton.Size = new System.Drawing.Size(23, 22);
-            this.variablesCopyButton.Text = "Copy";
-            this.variablesCopyButton.Click += new System.EventHandler(this.VariablesCopyButtonClick);
-            // 
-            // variablesCollapseAllButton
-            // 
-            this.variablesCollapseAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.variablesCollapseAllButton.Image = ((System.Drawing.Image)(resources.GetObject("variablesCollapseAllButton.Image")));
-            this.variablesCollapseAllButton.ImageTransparentColor = System.Drawing.Color.Black;
-            this.variablesCollapseAllButton.Name = "variablesCollapseAllButton";
-            this.variablesCollapseAllButton.Size = new System.Drawing.Size(23, 22);
-            this.variablesCollapseAllButton.Text = "Collapse All";
-            this.variablesCollapseAllButton.Click += new System.EventHandler(this.VariablesCollapseAllButtonClick);
-            // 
-            // variablesExpandAllButton
-            // 
-            this.variablesExpandAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.variablesExpandAllButton.Image = ((System.Drawing.Image)(resources.GetObject("variablesExpandAllButton.Image")));
-            this.variablesExpandAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.variablesExpandAllButton.Name = "variablesExpandAllButton";
-            this.variablesExpandAllButton.Size = new System.Drawing.Size(23, 22);
-            this.variablesExpandAllButton.Text = "Expand all";
-            this.variablesExpandAllButton.Click += new System.EventHandler(this.VariablesExpandAllButtonClick);
-            // 
-            // variablesTreeView
-            // 
-            this.variablesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.variablesTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.variablesTreeView.ItemHeight = 18;
-            this.variablesTreeView.Location = new System.Drawing.Point(3, 31);
-            this.variablesTreeView.Name = "variablesTreeView";
-            this.variablesTreeView.Size = new System.Drawing.Size(364, 261);
-            this.variablesTreeView.TabIndex = 0;
-            this.variablesTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.VariablesTreeViewAfterSelect);
-            // 
-            // proceduresTabPage
-            // 
-            this.proceduresTabPage.Controls.Add(this.proceduresToolStrip);
-            this.proceduresTabPage.Controls.Add(this.proceduresTreeView);
-            this.proceduresTabPage.Location = new System.Drawing.Point(4, 22);
-            this.proceduresTabPage.Name = "proceduresTabPage";
-            this.proceduresTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.proceduresTabPage.Size = new System.Drawing.Size(370, 295);
-            this.proceduresTabPage.TabIndex = 3;
-            this.proceduresTabPage.Text = "Procedures";
-            this.proceduresTabPage.UseVisualStyleBackColor = true;
-            // 
-            // proceduresToolStrip
-            // 
-            this.proceduresToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.proceduresToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.proceduresCopyButton,
-            this.proceduresCollapseAllButton,
-            this.proceduresExpandAllButton});
-            this.proceduresToolStrip.Location = new System.Drawing.Point(3, 3);
-            this.proceduresToolStrip.Name = "proceduresToolStrip";
-            this.proceduresToolStrip.Size = new System.Drawing.Size(364, 25);
-            this.proceduresToolStrip.TabIndex = 1;
-            this.proceduresToolStrip.Text = "toolStrip1";
-            // 
-            // proceduresCopyButton
-            // 
-            this.proceduresCopyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.proceduresCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("proceduresCopyButton.Image")));
-            this.proceduresCopyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.proceduresCopyButton.Name = "proceduresCopyButton";
-            this.proceduresCopyButton.Size = new System.Drawing.Size(23, 22);
-            this.proceduresCopyButton.Text = "Copy";
-            this.proceduresCopyButton.Click += new System.EventHandler(this.CopyProceduresClick);
-            // 
-            // proceduresCollapseAllButton
-            // 
-            this.proceduresCollapseAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.proceduresCollapseAllButton.Image = ((System.Drawing.Image)(resources.GetObject("proceduresCollapseAllButton.Image")));
-            this.proceduresCollapseAllButton.ImageTransparentColor = System.Drawing.Color.Black;
-            this.proceduresCollapseAllButton.Name = "proceduresCollapseAllButton";
-            this.proceduresCollapseAllButton.Size = new System.Drawing.Size(23, 22);
-            this.proceduresCollapseAllButton.Text = "Collapse All";
-            this.proceduresCollapseAllButton.Click += new System.EventHandler(this.ProceduresCollapseAllButtonClick);
-            // 
-            // proceduresExpandAllButton
-            // 
-            this.proceduresExpandAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.proceduresExpandAllButton.Image = ((System.Drawing.Image)(resources.GetObject("proceduresExpandAllButton.Image")));
-            this.proceduresExpandAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.proceduresExpandAllButton.Name = "proceduresExpandAllButton";
-            this.proceduresExpandAllButton.Size = new System.Drawing.Size(23, 22);
-            this.proceduresExpandAllButton.Text = "Expand all";
-            this.proceduresExpandAllButton.Click += new System.EventHandler(this.ProceduresExpandAllButtonClick);
-            // 
-            // proceduresTreeView
-            // 
-            this.proceduresTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.proceduresTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.proceduresTreeView.ItemHeight = 22;
-            this.proceduresTreeView.Location = new System.Drawing.Point(3, 31);
-            this.proceduresTreeView.Name = "proceduresTreeView";
-            this.proceduresTreeView.Size = new System.Drawing.Size(364, 261);
-            this.proceduresTreeView.TabIndex = 0;
-            this.proceduresTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.ProceduresTreeViewAfterSelect);
             // 
             // filesTabPage
             // 
@@ -867,19 +635,6 @@ namespace Canal.UserControls
             ((System.ComponentModel.ISupportInitialize)(this.loaderImageToc)).EndInit();
             this.tocToolStrip.ResumeLayout(false);
             this.tocToolStrip.PerformLayout();
-            this.performsTabPage.ResumeLayout(false);
-            this.performsTabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.loaderImagePerforms)).EndInit();
-            this.performsToolStrip.ResumeLayout(false);
-            this.performsToolStrip.PerformLayout();
-            this.variablesTabPage.ResumeLayout(false);
-            this.variablesTabPage.PerformLayout();
-            this.variablesToolStrip.ResumeLayout(false);
-            this.variablesToolStrip.PerformLayout();
-            this.proceduresTabPage.ResumeLayout(false);
-            this.proceduresTabPage.PerformLayout();
-            this.proceduresToolStrip.ResumeLayout(false);
-            this.proceduresToolStrip.PerformLayout();
             this.filesTabPage.ResumeLayout(false);
             this.filesTabPage.PerformLayout();
             this.filesTabToolStrip.ResumeLayout(false);
@@ -906,28 +661,10 @@ namespace Canal.UserControls
         private FastColoredTextBox codeBox;
         private System.Windows.Forms.TabControl structureTabControl;
         private System.Windows.Forms.TabPage tocTabPage;
-        private System.Windows.Forms.TabPage performsTabPage;
-        private System.Windows.Forms.TreeView performsTreeView;
-        private System.Windows.Forms.TabPage variablesTabPage;
-        private System.Windows.Forms.TreeView variablesTreeView;
-        private System.Windows.Forms.TabPage proceduresTabPage;
-        private System.Windows.Forms.TreeView proceduresTreeView;
         private System.Windows.Forms.ToolStrip tocToolStrip;
         private System.Windows.Forms.ToolStripButton TocCopyButton;
-        private System.Windows.Forms.ToolStrip proceduresToolStrip;
-        private System.Windows.Forms.ToolStripButton proceduresCopyButton;
         private System.Windows.Forms.ToolStripButton TocExpandAllButton;
         private System.Windows.Forms.ToolStripButton TocCollapseAllButton;
-        private System.Windows.Forms.ToolStrip performsToolStrip;
-        private System.Windows.Forms.ToolStripButton performsCopyButton;
-        private System.Windows.Forms.ToolStripButton performsExpandAllButton;
-        private System.Windows.Forms.ToolStripButton performsCollapseAllButton;
-        private System.Windows.Forms.ToolStrip variablesToolStrip;
-        private System.Windows.Forms.ToolStripButton variablesCopyButton;
-        private System.Windows.Forms.ToolStripButton variablesExpandAllButton;
-        private System.Windows.Forms.ToolStripButton variablesCollapseAllButton;
-        private System.Windows.Forms.ToolStripButton proceduresExpandAllButton;
-        private System.Windows.Forms.ToolStripButton proceduresCollapseAllButton;
         private System.Windows.Forms.SplitContainer splitContainerTop;
         private System.Windows.Forms.SplitContainer splitContainerRight;
         private System.Windows.Forms.ToolStrip codeViewToolStrip;
@@ -949,7 +686,6 @@ namespace Canal.UserControls
         private ToolStripButton navigateBackward;
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripButton navigateForwardButton;
-        private PictureBox loaderImagePerforms;
         private ToolStripButton findPreviousButton;
         private ToolStripButton findNextButton;
         private ToolStripButton newButton;
@@ -966,5 +702,6 @@ namespace Canal.UserControls
         private ToolStripButton TocSortAlphabeticallyButton;
         private ToolStripSeparator toolStripSeparator7;
         private ToolStripTextBox tocSearchTextBox;
+        private ToolStripButton TocSortByPerformsButton;
     }
 }

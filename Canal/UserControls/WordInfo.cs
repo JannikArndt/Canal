@@ -18,35 +18,35 @@ namespace Canal.UserControls
             InitializeComponent();
             _parent = parent;
 
+            // 1. No CobolFile? Nothing to do.
             if (cobolFile == null)
                 return;
 
-            if (cobolFile.CobolTree != null)
+            // 2. No CobolTree? Show Program infos
+            if (cobolFile.CobolTree == null)
             {
-                // is the word a variable?
-                if (cobolFile.Variables.ContainsKey(word))
-                {
-                    infoLabel.Visible = false;
-                    infoGroupBox.Text = Resources.SelectedVariable + word;
-                    FillVariableTreeView(cobolFile.Variables[word]);
-                    return;
-                }
-
-                // is it a procedure?
-                var procedure = cobolFile.CobolTree.GetAllProcedures().FirstOrDefault(proc => proc.Name == word);
-                if (procedure != null)
-                {
-                    infoLabel.Visible = false;
-                    infoGroupBox.Text = Resources.SelectedProcedure + word;
-                    FillProcedureTreeView(procedure);
-                    return;
-                }
+                // else: show file infos
+                infoGroupBox.Text = Resources.SelectedProgram + cobolFile.Name;
+                FillCallTreeView(cobolFile);
+                return;
             }
 
-            // else: show file infos
-            infoLabel.Visible = true;
-            infoGroupBox.Text = Resources.SelectedProgram + cobolFile.Name;
-            FillCallTreeView(cobolFile);
+            // 3. Is the word a variable?
+            if (cobolFile.Variables.ContainsKey(word))
+            {
+                infoGroupBox.Text = Resources.SelectedVariable + word;
+                FillVariableTreeView(cobolFile.Variables[word]);
+                return;
+            }
+
+            // 4. Is the word a procedure?
+            var procedure = cobolFile.CobolTree.GetAllProcedures().FirstOrDefault(proc => proc.Name == word);
+            if (procedure != null)
+            {
+                infoGroupBox.Text = Resources.SelectedProcedure + word;
+                FillProcedureTreeView(procedure);
+                return;
+            }
         }
 
         private void FillCallTreeView(CobolFile cobolFile)
@@ -61,7 +61,7 @@ namespace Canal.UserControls
             foreach (var folder in uniqueFolders)
             {
                 var folderNode = new TreeNode(folder);
-                variableTreeView.Nodes.Add(folderNode);
+                wordInfoTreeView.Nodes.Add(folderNode);
                 var folder1 = folder;
                 foreach (var fileRef in cobolFile.CobolTree.CallReferences.Where(cr => cr.Directory == folder1))
                 {
@@ -69,11 +69,11 @@ namespace Canal.UserControls
                 }
             }
 
-            variableTreeView.ExpandAll();
+            wordInfoTreeView.ExpandAll();
 
-            variableTreeView.NodeMouseDoubleClick += (sender, args) =>
+            wordInfoTreeView.NodeMouseDoubleClick += (sender, args) =>
             {
-                var fileRef = variableTreeView.SelectedNode.Tag as FileReference;
+                var fileRef = wordInfoTreeView.SelectedNode.Tag as FileReference;
                 if (fileRef != null)
                     _parent.MainWindow.OpenFile(fileRef.FilePath);
             };
@@ -81,22 +81,52 @@ namespace Canal.UserControls
 
         private void FillProcedureTreeView(Procedure procedure)
         {
-            variableTreeView.Nodes.Add(procedure.Name);
+            wordInfoTreeView.Nodes.Add(procedure.Name);
 
             var performs = procedure.PerformReferences.Select(pref => new TreeNode(pref.ReferencedProcedure)).ToArray();
             if (performs.Any())
-                variableTreeView.Nodes.Add(new TreeNode("Performs", performs));
+                wordInfoTreeView.Nodes.Add(new TreeNode("Performs", performs));
 
             var gotos = procedure.GoToReferences.Select(pref => new TreeNode(pref.ReferencedProcedure)).ToArray();
             if (gotos.Any())
-                variableTreeView.Nodes.Add(new TreeNode("GO TOs", gotos));
+                wordInfoTreeView.Nodes.Add(new TreeNode("GO TOs", gotos));
 
             var calls = procedure.CallReferences.Select(pref => new TreeNode(pref.ProgramName)).ToArray();
             if (calls.Any())
-                variableTreeView.Nodes.Add(new TreeNode("Calls", calls));
+                wordInfoTreeView.Nodes.Add(new TreeNode("Calls", calls));
 
+            // Variable usages
+            wordInfoTreeView.Nodes.Add(GetVariableUsagesNode(procedure));
 
-            variableTreeView.ExpandAll();
+            wordInfoTreeView.ExpandAll();
+        }
+
+        private TreeNode GetVariableUsagesNode(Procedure procedure)
+        {
+            var result = new TreeNode("Variables");
+            var varDict = new Dictionary<Variable, List<Variable>>();
+
+            // 1. Find all root variables
+            foreach (var variable in procedure.VariableUsages.Keys)
+            {
+                var root = variable.Root ?? variable;
+                if (varDict.ContainsKey(root))
+                    varDict[root].Add(variable);
+                else
+                    varDict.Add(root, new List<Variable> { variable });
+            }
+
+            // 2. Add all variables to their respective root
+            foreach (var key in varDict.Keys.OrderBy(r => r.VariableName))
+            {
+                var rootVarNode = new TreeNode(key.VariableName);
+                foreach (var variable in varDict[key])
+                    rootVarNode.Nodes.Add(new TreeNode(variable.VariableLevel.ToString("D2") + "  " + variable.VariableName + " " + procedure.VariableUsages[variable].ToShortString()));
+
+                result.Nodes.Add(rootVarNode);
+            }
+
+            return result;
         }
 
         private void FillVariableTreeView(Variable variable)
@@ -134,10 +164,10 @@ namespace Canal.UserControls
                 }
             }
 
-            variableTreeView.DrawMode = TreeViewDrawMode.OwnerDrawText;
-            variableTreeView.DrawNode += VariableTreeViewOnDrawNode;
-            variableTreeView.Nodes.Add(newNode);
-            variableTreeView.ExpandAll();
+            wordInfoTreeView.DrawMode = TreeViewDrawMode.OwnerDrawText;
+            wordInfoTreeView.DrawNode += WordInfoTreeViewOnDrawNode;
+            wordInfoTreeView.Nodes.Add(newNode);
+            wordInfoTreeView.ExpandAll();
 
             if (parent.CopyReference != null)
             {
@@ -145,15 +175,15 @@ namespace Canal.UserControls
                 gotoFileButton.Click += (sender, args) => _parent.MainWindow.OpenFile(parent.CopyReference.FilePath, variable);
             }
 
-            variableTreeView.NodeMouseDoubleClick += (sender, args) =>
+            wordInfoTreeView.NodeMouseDoubleClick += (sender, args) =>
             {
-                var vari = variableTreeView.SelectedNode.Tag as Variable;
+                var vari = wordInfoTreeView.SelectedNode.Tag as Variable;
                 if (vari != null)
                     _parent.FindInCodeBox(vari.VariableName, false, false, false, true);
             };
         }
 
-        private void VariableTreeViewOnDrawNode(object sender, DrawTreeNodeEventArgs e)
+        private void WordInfoTreeViewOnDrawNode(object sender, DrawTreeNodeEventArgs e)
         {
             var variable = e.Node.Tag as Variable;
             if (variable == null)
@@ -198,8 +228,8 @@ namespace Canal.UserControls
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            variableTreeView.Nodes.Clear();
-            variableTreeView.Dispose();
+            wordInfoTreeView.Nodes.Clear();
+            wordInfoTreeView.Dispose();
 
             if (disposing && (components != null))
             {

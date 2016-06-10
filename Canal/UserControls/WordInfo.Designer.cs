@@ -16,30 +16,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.variableTreeView = new System.Windows.Forms.TreeView();
+            this.wordInfoTreeView = new System.Windows.Forms.TreeView();
             this.infoGroupBox = new System.Windows.Forms.GroupBox();
             this.gotoFileButton = new System.Windows.Forms.Button();
-            this.infoLabel = new System.Windows.Forms.Label();
             this.infoGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
-            // variableTreeView
+            // wordInfoTreeView
             // 
-            this.variableTreeView.BackColor = System.Drawing.SystemColors.Control;
-            this.variableTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.variableTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.variableTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.variableTreeView.ItemHeight = 22;
-            this.variableTreeView.Location = new System.Drawing.Point(3, 16);
-            this.variableTreeView.Name = "variableTreeView";
-            this.variableTreeView.Size = new System.Drawing.Size(288, 454);
-            this.variableTreeView.TabIndex = 1;
+            this.wordInfoTreeView.BackColor = System.Drawing.SystemColors.Control;
+            this.wordInfoTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.wordInfoTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.wordInfoTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.wordInfoTreeView.ItemHeight = 22;
+            this.wordInfoTreeView.Location = new System.Drawing.Point(3, 16);
+            this.wordInfoTreeView.Name = "wordInfoTreeView";
+            this.wordInfoTreeView.Size = new System.Drawing.Size(288, 454);
+            this.wordInfoTreeView.TabIndex = 1;
             // 
             // infoGroupBox
             // 
-            this.infoGroupBox.Controls.Add(this.infoLabel);
             this.infoGroupBox.Controls.Add(this.gotoFileButton);
-            this.infoGroupBox.Controls.Add(this.variableTreeView);
+            this.infoGroupBox.Controls.Add(this.wordInfoTreeView);
             this.infoGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.infoGroupBox.Location = new System.Drawing.Point(0, 0);
             this.infoGroupBox.Name = "infoGroupBox";
@@ -59,17 +57,6 @@
             this.gotoFileButton.UseVisualStyleBackColor = true;
             this.gotoFileButton.Visible = false;
             // 
-            // infoLabel
-            // 
-            this.infoLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.infoLabel.AutoSize = true;
-            this.infoLabel.Location = new System.Drawing.Point(34, 422);
-            this.infoLabel.Name = "infoLabel";
-            this.infoLabel.Size = new System.Drawing.Size(222, 13);
-            this.infoLabel.TabIndex = 3;
-            this.infoLabel.Text = "Double-click anything to get more information.";
-            // 
             // WordInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -78,15 +65,13 @@
             this.Name = "WordInfo";
             this.Size = new System.Drawing.Size(294, 473);
             this.infoGroupBox.ResumeLayout(false);
-            this.infoGroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.TreeView variableTreeView;
+        private System.Windows.Forms.TreeView wordInfoTreeView;
         private System.Windows.Forms.GroupBox infoGroupBox;
         private System.Windows.Forms.Button gotoFileButton;
-        private System.Windows.Forms.Label infoLabel;
     }
 }

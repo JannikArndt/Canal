@@ -18,17 +18,17 @@ namespace Model
 
         #region References
 
-        public List<PerformReference> PerformReferences { get; set; }
+        public List<PerformReference> PerformReferences { get; }
 
-        public List<GoToReference> GoToReferences { get; set; }
+        public List<GoToReference> GoToReferences { get; }
 
-        public List<PerformReference> IsReferencedBy { get; set; }
+        public List<PerformReference> IsReferencedBy { get; }
 
-        public List<FileReference> CallReferences { get; set; }
+        public List<FileReference> CallReferences { get; }
 
         #endregion
 
-        public ConcurrentDictionary<Variable, UsedAs> Variables { get; set; }
+        public ConcurrentDictionary<Variable, UsedAs> VariableUsages { get; }
 
         public Procedure(CobolFile cobolFile, string name, int beginIndex, int endIndex) : base(cobolFile, name)
         {
@@ -39,7 +39,7 @@ namespace Model
             GoToReferences = new List<GoToReference>();
             IsReferencedBy = new List<PerformReference>();
             CallReferences = new List<FileReference>();
-            Variables = new ConcurrentDictionary<Variable, UsedAs>();
+            VariableUsages = new ConcurrentDictionary<Variable, UsedAs>();
         }
 
         public override string ToString()

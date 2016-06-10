@@ -129,6 +129,7 @@
     <Compile Include="UserControls\FirstTabPage.Designer.cs">
       <DependentUpon>FirstTabPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\SortKind.cs" />
     <Compile Include="UserControls\SourceCodePro.cs" />
     <Compile Include="UserControls\TabUtil.cs" />
     <Compile Include="UserControls\TextViewer.cs">
@@ -162,6 +163,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\FileControl.resx">
       <DependentUpon>FileControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
