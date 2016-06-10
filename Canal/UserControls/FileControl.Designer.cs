@@ -234,7 +234,6 @@ namespace Canal.UserControls
             // TocSortByPerformsButton
             // 
             this.TocSortByPerformsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TocSortByPerformsButton.Enabled = false;
             this.TocSortByPerformsButton.Image = ((System.Drawing.Image)(resources.GetObject("TocSortByPerformsButton.Image")));
             this.TocSortByPerformsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.TocSortByPerformsButton.Name = "TocSortByPerformsButton";

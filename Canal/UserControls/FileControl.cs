@@ -19,7 +19,8 @@ namespace Canal.UserControls
 {
     public sealed partial class FileControl : UserControl
     {
-        private TreeNode _performsTree;
+        private TableOfContentsWorker _tableOfContentsWorker;
+        private SortKind _tocSort = SortKind.Alphabetical;
 
         public FileControl(string filename, MainWindow parent)
         {
@@ -209,9 +210,8 @@ namespace Canal.UserControls
                 tocTabPage.Controls.Remove(loaderImageToc);
                 splitContainerRight.Panel2.Controls.Remove(loaderImageInfoTab);
 
+                _tableOfContentsWorker = new TableOfContentsWorker(CobolFile);
                 SortToc(SortKind.Alphabetical);
-
-                InitPerformsTree();
 
                 ShowWordInfo();
 
@@ -361,6 +361,30 @@ namespace Canal.UserControls
 
         #region Button Clicks
 
+        private void newButton_Click(object sender, EventArgs e)
+        {
+            MainWindow.New();
+        }
+
+        private void openButton_Click(object sender, EventArgs e)
+        {
+            MainWindow.OpenFile();
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            MainWindow.Save();
+        }
+
+        private void formatCodeButton_Click(object sender, EventArgs e)
+        {
+            var selection = new Range(codeBox, codeBox.Selection.Start, codeBox.Selection.End);
+            if (codeBox.Selection.IsEmpty)
+                codeBox.SelectAll();
+            codeBox.DoAutoIndent();
+            codeBox.Selection = selection;
+        }
+
         private void ExportTocClick(object sender, EventArgs e)
         {
             Clipboard.SetText(tocTreeView.ToText());
@@ -397,34 +421,6 @@ namespace Canal.UserControls
         private void FindPreviousButtonClick(object sender, EventArgs e)
         {
             TrySearch(false, true);
-        }
-
-        #endregion
-
-        #region Tree View Initializers
-
-        private void InitPerformsTree()
-        {
-            if (CobolFile.CobolTree == null)
-            {
-                Logger.Error("PerformTree could not be built because CobolTree is null.");
-                return;
-            }
-
-            var performTreeWorker = new BackgroundWorker();
-
-            performTreeWorker.DoWork += delegate (object sender, DoWorkEventArgs args)
-            {
-                args.Result = ReferenceUtil.Instance.GetPerformTree(CobolFile);
-            };
-
-            performTreeWorker.RunWorkerCompleted += delegate (object sender, RunWorkerCompletedEventArgs args)
-            {
-                _performsTree = (TreeNode)args.Result;
-                TocSortByPerformsButton.Enabled = true;
-            };
-
-            performTreeWorker.RunWorkerAsync();
         }
 
         #endregion
@@ -533,31 +529,7 @@ namespace Canal.UserControls
 
         #endregion
 
-        private void newButton_Click(object sender, EventArgs e)
-        {
-            MainWindow.New();
-        }
-
-        private void openButton_Click(object sender, EventArgs e)
-        {
-            MainWindow.OpenFile();
-        }
-
-        private void saveButton_Click(object sender, EventArgs e)
-        {
-            MainWindow.Save();
-        }
-
-        private void formatCodeButton_Click(object sender, EventArgs e)
-        {
-            var selection = new Range(codeBox, codeBox.Selection.Start, codeBox.Selection.End);
-            if (codeBox.Selection.IsEmpty)
-                codeBox.SelectAll();
-            codeBox.DoAutoIndent();
-            codeBox.Selection = selection;
-        }
-
-        private SortKind _tocSort = SortKind.Alphabetical;
+        #region Table of Contents
 
         private void SortToc(SortKind kind)
         {
@@ -576,25 +548,10 @@ namespace Canal.UserControls
             TocSortByPerformsButton.Checked = _tocSort == SortKind.ByPerforms;
 
             tocTreeView.Nodes.Clear();
-            var rootNode = GetToc(query);
+            var rootNode = _tableOfContentsWorker.GetToc(_tocSort, query);
             rootNode.ExpandAll();
             tocTreeView.Nodes.Add(rootNode);
 
-        }
-
-        private TreeNode GetToc(string query)
-        {
-            switch (_tocSort)
-            {
-                case SortKind.Alphabetical:
-                    return CobolTreeBuilder.ConvertToFlatToc(CobolFile.CobolTree, CobolFile.Name, query);
-                case SortKind.BySections:
-                    return CobolTreeBuilder.ConvertToTreeNodes(CobolFile.CobolTree, CobolFile.Name, query);
-                case SortKind.ByPerforms:
-                    return _performsTree;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
         }
 
         private void TocSortAlphabeticallyButton_Click(object sender, EventArgs e)
@@ -617,6 +574,6 @@ namespace Canal.UserControls
             SortToc(_tocSort);
         }
 
-
+        #endregion
     }
 }

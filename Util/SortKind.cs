@@ -1,6 +1,6 @@
-﻿namespace Canal.UserControls
+﻿namespace Util
 {
-    internal enum SortKind
+    public enum SortKind
     {
         Alphabetical,
         BySections,

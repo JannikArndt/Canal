@@ -120,12 +120,6 @@
   <metadata name="tocToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="filesTabToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>790, 17</value>
-  </metadata>
-  <metadata name="tocToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="TocCopyButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -171,12 +165,12 @@
   <data name="TocSortByPerformsButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEGSURBVDhPjZK7EYMwEEQpwSW4BNdAC04dktOCS3ABzLgI
-        crsUB4QESviEWE9o5QPjz87cjNjb27sTyrquO2QewzBMNuCU+wovdghD0bEKwTlyLso+AzHCtUHifgHR
-        6XKbxzYGifsFFVIgA53JWRN9933/SPfjCWeLrUld128GeZ5PRVEEk0DqstYTUFxV8xRB6MEZDpO2badx
-        HPchYU0IdbLFwsecTHBWF0TOuV2UBMgATdM010jPwAQDBGVZsuc5phLgyKFBG+kX1OEfg7c1gBdc7QqR
-        TrAroI30Elrjm8Fmd0EGdLFCzppuc3/Bj3bnsayFMl48pC3w6zCh43oCguL5KWfZE3EVvjpFwyCrAAAA
-        AElFTkSuQmCC
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEKSURBVDhPjZK9cYQwEIVVgktwCa6BFi51SE4LV8IVwAxF
+        kN+V4oCQQAk/IdYn9OSF4zi/mZ0Rb9++3ZVwwzB8uYBpmhYbcMqdIog9wlh0qWNwTpxPstdAjHBvkLl3
+        QPR9u69jG4PMvYMKKZCBzuSsib7Dej/5fgLhbbE1adv2yaAoiqUsy2gSSV3WfgKK63qdIgoDOMNh0vf9
+        Ms/zZ0xYE0KdbLHwMicTnNUFkff+I0kiZICm67om0SswwQBBVVXLOI7XlMqAI4cGbaL/oA7/MXhaAwRB
+        Y1dIdIZdAW2it9AaZwaH3QUZ0MUKOWu6w/2FMNqDn2UvlPHmRzoCT4cJHfcTEBTzYs459wtf574uO954
+        jQAAAABJRU5ErkJggg==
 </value>
   </data>
   <metadata name="filesTabToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">

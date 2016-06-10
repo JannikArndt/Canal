@@ -61,7 +61,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="ReferenceUtil.cs" />
+    <Compile Include="SortKind.cs" />
+    <Compile Include="TableOfContentsWorker.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TextUtil.cs" />
     <Compile Include="VariablesUtil.cs" />

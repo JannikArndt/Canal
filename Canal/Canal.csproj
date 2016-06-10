@@ -129,7 +129,6 @@
     <Compile Include="UserControls\FirstTabPage.Designer.cs">
       <DependentUpon>FirstTabPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\SortKind.cs" />
     <Compile Include="UserControls\SourceCodePro.cs" />
     <Compile Include="UserControls\TabUtil.cs" />
     <Compile Include="UserControls\TextViewer.cs">
