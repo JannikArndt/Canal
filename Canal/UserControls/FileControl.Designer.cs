@@ -34,21 +34,8 @@ namespace Canal.UserControls
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileControl));
-            this.tocTreeView = new System.Windows.Forms.TreeView();
             this.structureTabControl = new System.Windows.Forms.TabControl();
             this.tocTabPage = new System.Windows.Forms.TabPage();
-            this.loaderImageToc = new System.Windows.Forms.PictureBox();
-            this.tocToolStrip = new System.Windows.Forms.ToolStrip();
-            this.TocCopyButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.TocCollapseAllButton = new System.Windows.Forms.ToolStripButton();
-            this.TocExpandAllButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.TocSortHierarchicallyButton = new System.Windows.Forms.ToolStripButton();
-            this.TocSortAlphabeticallyButton = new System.Windows.Forms.ToolStripButton();
-            this.TocSortByPerformsButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.tocSearchTextBox = new System.Windows.Forms.ToolStripTextBox();
             this.filesTabPage = new System.Windows.Forms.TabPage();
             this.filesTabToolStrip = new System.Windows.Forms.ToolStrip();
             this.filesTabSearchBox = new System.Windows.Forms.ToolStripTextBox();
@@ -80,10 +67,9 @@ namespace Canal.UserControls
             this.splitContainerRight = new System.Windows.Forms.SplitContainer();
             this.loaderImageInfoTab = new System.Windows.Forms.PictureBox();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
+            this.tocLoaderImage = new System.Windows.Forms.PictureBox();
             this.structureTabControl.SuspendLayout();
             this.tocTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.loaderImageToc)).BeginInit();
-            this.tocToolStrip.SuspendLayout();
             this.filesTabPage.SuspendLayout();
             this.filesTabToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.codeBox)).BeginInit();
@@ -97,22 +83,8 @@ namespace Canal.UserControls
             this.splitContainerRight.Panel2.SuspendLayout();
             this.splitContainerRight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.loaderImageInfoTab)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tocLoaderImage)).BeginInit();
             this.SuspendLayout();
-            // 
-            // tocTreeView
-            // 
-            this.tocTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tocTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tocTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tocTreeView.ItemHeight = 22;
-            this.tocTreeView.Location = new System.Drawing.Point(3, 30);
-            this.tocTreeView.Margin = new System.Windows.Forms.Padding(2);
-            this.tocTreeView.Name = "tocTreeView";
-            this.tocTreeView.Size = new System.Drawing.Size(364, 262);
-            this.tocTreeView.TabIndex = 1;
-            this.tocTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewAfterSelect);
             // 
             // structureTabControl
             // 
@@ -127,9 +99,7 @@ namespace Canal.UserControls
             // 
             // tocTabPage
             // 
-            this.tocTabPage.Controls.Add(this.loaderImageToc);
-            this.tocTabPage.Controls.Add(this.tocToolStrip);
-            this.tocTabPage.Controls.Add(this.tocTreeView);
+            this.tocTabPage.Controls.Add(this.tocLoaderImage);
             this.tocTabPage.Location = new System.Drawing.Point(4, 22);
             this.tocTabPage.Name = "tocTabPage";
             this.tocTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -137,122 +107,6 @@ namespace Canal.UserControls
             this.tocTabPage.TabIndex = 0;
             this.tocTabPage.Text = "Table of Contents";
             this.tocTabPage.UseVisualStyleBackColor = true;
-            // 
-            // loaderImageToc
-            // 
-            this.loaderImageToc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.loaderImageToc.Image = global::Canal.Properties.Resources.loader;
-            this.loaderImageToc.Location = new System.Drawing.Point(3, 28);
-            this.loaderImageToc.Name = "loaderImageToc";
-            this.loaderImageToc.Size = new System.Drawing.Size(364, 264);
-            this.loaderImageToc.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.loaderImageToc.TabIndex = 3;
-            this.loaderImageToc.TabStop = false;
-            // 
-            // tocToolStrip
-            // 
-            this.tocToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.tocToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TocCopyButton,
-            this.toolStripSeparator6,
-            this.TocCollapseAllButton,
-            this.TocExpandAllButton,
-            this.toolStripSeparator5,
-            this.TocSortHierarchicallyButton,
-            this.TocSortAlphabeticallyButton,
-            this.TocSortByPerformsButton,
-            this.toolStripSeparator7,
-            this.tocSearchTextBox});
-            this.tocToolStrip.Location = new System.Drawing.Point(3, 3);
-            this.tocToolStrip.Name = "tocToolStrip";
-            this.tocToolStrip.Size = new System.Drawing.Size(364, 25);
-            this.tocToolStrip.TabIndex = 2;
-            this.tocToolStrip.Text = "toolStrip1";
-            // 
-            // TocCopyButton
-            // 
-            this.TocCopyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TocCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("TocCopyButton.Image")));
-            this.TocCopyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TocCopyButton.Name = "TocCopyButton";
-            this.TocCopyButton.Size = new System.Drawing.Size(23, 22);
-            this.TocCopyButton.Text = "Copy";
-            this.TocCopyButton.Click += new System.EventHandler(this.ExportTocClick);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
-            // 
-            // TocCollapseAllButton
-            // 
-            this.TocCollapseAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TocCollapseAllButton.Image = ((System.Drawing.Image)(resources.GetObject("TocCollapseAllButton.Image")));
-            this.TocCollapseAllButton.ImageTransparentColor = System.Drawing.Color.Black;
-            this.TocCollapseAllButton.Name = "TocCollapseAllButton";
-            this.TocCollapseAllButton.Size = new System.Drawing.Size(23, 22);
-            this.TocCollapseAllButton.Text = "Collapse All";
-            this.TocCollapseAllButton.Click += new System.EventHandler(this.TocCollapseAllButtonClick);
-            // 
-            // TocExpandAllButton
-            // 
-            this.TocExpandAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TocExpandAllButton.Image = ((System.Drawing.Image)(resources.GetObject("TocExpandAllButton.Image")));
-            this.TocExpandAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TocExpandAllButton.Name = "TocExpandAllButton";
-            this.TocExpandAllButton.Size = new System.Drawing.Size(23, 22);
-            this.TocExpandAllButton.Text = "Expand all";
-            this.TocExpandAllButton.Click += new System.EventHandler(this.TocExpandAllButtonClick);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
-            // 
-            // TocSortHierarchicallyButton
-            // 
-            this.TocSortHierarchicallyButton.Checked = true;
-            this.TocSortHierarchicallyButton.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.TocSortHierarchicallyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TocSortHierarchicallyButton.Image = ((System.Drawing.Image)(resources.GetObject("TocSortHierarchicallyButton.Image")));
-            this.TocSortHierarchicallyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TocSortHierarchicallyButton.Name = "TocSortHierarchicallyButton";
-            this.TocSortHierarchicallyButton.Size = new System.Drawing.Size(23, 22);
-            this.TocSortHierarchicallyButton.Text = "Sort by Sections";
-            this.TocSortHierarchicallyButton.Click += new System.EventHandler(this.TocSortBySectionsButtonClick);
-            // 
-            // TocSortAlphabeticallyButton
-            // 
-            this.TocSortAlphabeticallyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TocSortAlphabeticallyButton.Image = ((System.Drawing.Image)(resources.GetObject("TocSortAlphabeticallyButton.Image")));
-            this.TocSortAlphabeticallyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TocSortAlphabeticallyButton.Name = "TocSortAlphabeticallyButton";
-            this.TocSortAlphabeticallyButton.Size = new System.Drawing.Size(23, 22);
-            this.TocSortAlphabeticallyButton.Text = "Sort Alphabetically";
-            this.TocSortAlphabeticallyButton.Click += new System.EventHandler(this.TocSortAlphabeticallyButton_Click);
-            // 
-            // TocSortByPerformsButton
-            // 
-            this.TocSortByPerformsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TocSortByPerformsButton.Image = ((System.Drawing.Image)(resources.GetObject("TocSortByPerformsButton.Image")));
-            this.TocSortByPerformsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TocSortByPerformsButton.Name = "TocSortByPerformsButton";
-            this.TocSortByPerformsButton.Size = new System.Drawing.Size(23, 22);
-            this.TocSortByPerformsButton.Text = "Sort by Performs";
-            this.TocSortByPerformsButton.Click += new System.EventHandler(this.TocSortByPerformsButtonClick);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
-            // 
-            // tocSearchTextBox
-            // 
-            this.tocSearchTextBox.Name = "tocSearchTextBox";
-            this.tocSearchTextBox.Size = new System.Drawing.Size(100, 25);
-            this.tocSearchTextBox.Enter += new System.EventHandler(this.SearchBoxEnter);
-            this.tocSearchTextBox.Leave += new System.EventHandler(this.SearchBoxLeave);
-            this.tocSearchTextBox.TextChanged += new System.EventHandler(this.tocSearchTextBox_TextChanged);
             // 
             // filesTabPage
             // 
@@ -620,6 +474,17 @@ namespace Canal.UserControls
             this.miniToolStrip.Size = new System.Drawing.Size(200, 25);
             this.miniToolStrip.TabIndex = 1;
             // 
+            // tocLoaderImage
+            // 
+            this.tocLoaderImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tocLoaderImage.Image = global::Canal.Properties.Resources.loader;
+            this.tocLoaderImage.Location = new System.Drawing.Point(3, 3);
+            this.tocLoaderImage.Name = "tocLoaderImage";
+            this.tocLoaderImage.Size = new System.Drawing.Size(364, 289);
+            this.tocLoaderImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.tocLoaderImage.TabIndex = 0;
+            this.tocLoaderImage.TabStop = false;
+            // 
             // FileControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -630,10 +495,6 @@ namespace Canal.UserControls
             this.Size = new System.Drawing.Size(1061, 583);
             this.structureTabControl.ResumeLayout(false);
             this.tocTabPage.ResumeLayout(false);
-            this.tocTabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.loaderImageToc)).EndInit();
-            this.tocToolStrip.ResumeLayout(false);
-            this.tocToolStrip.PerformLayout();
             this.filesTabPage.ResumeLayout(false);
             this.filesTabPage.PerformLayout();
             this.filesTabToolStrip.ResumeLayout(false);
@@ -651,19 +512,15 @@ namespace Canal.UserControls
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerRight)).EndInit();
             this.splitContainerRight.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.loaderImageInfoTab)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tocLoaderImage)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.TreeView tocTreeView;
         private FastColoredTextBox codeBox;
         private System.Windows.Forms.TabControl structureTabControl;
         private System.Windows.Forms.TabPage tocTabPage;
-        private System.Windows.Forms.ToolStrip tocToolStrip;
-        private System.Windows.Forms.ToolStripButton TocCopyButton;
-        private System.Windows.Forms.ToolStripButton TocExpandAllButton;
-        private System.Windows.Forms.ToolStripButton TocCollapseAllButton;
         private System.Windows.Forms.SplitContainer splitContainerTop;
         private System.Windows.Forms.SplitContainer splitContainerRight;
         private System.Windows.Forms.ToolStrip codeViewToolStrip;
@@ -681,7 +538,6 @@ namespace Canal.UserControls
         private TreeView filesTreeView;
         private ToolStrip miniToolStrip;
         private PictureBox loaderImageInfoTab;
-        private PictureBox loaderImageToc;
         private ToolStripButton navigateBackward;
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripButton navigateForwardButton;
@@ -695,12 +551,6 @@ namespace Canal.UserControls
         private ToolStripButton redoButton;
         private ToolStripSeparator toolStripSeparator3;
         private ToolStripButton formatCodeButton;
-        private ToolStripSeparator toolStripSeparator6;
-        private ToolStripSeparator toolStripSeparator5;
-        private ToolStripButton TocSortHierarchicallyButton;
-        private ToolStripButton TocSortAlphabeticallyButton;
-        private ToolStripSeparator toolStripSeparator7;
-        private ToolStripTextBox tocSearchTextBox;
-        private ToolStripButton TocSortByPerformsButton;
+        private PictureBox tocLoaderImage;
     }
 }

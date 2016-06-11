@@ -32,7 +32,6 @@ namespace Util
             // PROCEDURE DIVISION
             tree.ProcedureDivision = new ProcedureDivision(file);
             tree.ProcedureDivision.Sections = BuildSections(tree.ProcedureDivision);
-            BuildReferences(tree.ProcedureDivision);
 
             foreach (var procedure in tree.GetAllProcedures())
             {
@@ -41,6 +40,8 @@ namespace Util
                 AnalyzeGoTos(procedure);
                 AnalyzeCalls(procedure);
             }
+
+            BuildReferences(tree.ProcedureDivision);
 
             // fix deeper references
             foreach (var performReference in tree.GetAllProcedures().SelectMany(procedure => procedure.PerformReferences.Where(pref => pref.Procedure == null)))
@@ -115,7 +116,7 @@ namespace Util
 
         #region Analysis
 
-        public void AnalyzeVariables(Procedure procedure, CobolFile cobolFile)
+        private void AnalyzeVariables(Procedure procedure, CobolFile cobolFile)
         {
             var foundTokens = VariablesUtil.Instance.GetIdentifierLiterals(procedure.GetCode());
 
@@ -127,7 +128,7 @@ namespace Util
             }
         }
 
-        public void AnalyzePerformReferences(Procedure procedure)
+        private void AnalyzePerformReferences(Procedure procedure)
         {
             var code = procedure.GetCode();
             var performReferenceMatches = Regex.Matches(code, Constants.Perform, RegexOptions.Compiled | RegexOptions.Multiline);
@@ -140,7 +141,7 @@ namespace Util
             }
         }
 
-        public void AnalyzeGoTos(Procedure procedure)
+        private void AnalyzeGoTos(Procedure procedure)
         {
             var gotoReferenceMatches = Regex.Matches(procedure.GetCode(), Constants.GoTo, RegexOptions.Compiled | RegexOptions.Multiline);
 
@@ -152,7 +153,7 @@ namespace Util
             }
         }
 
-        public void AnalyzeCalls(Procedure procedure)
+        private void AnalyzeCalls(Procedure procedure)
         {
             var referenceMatches = Regex.Matches(procedure.GetCode(), Constants.Call, RegexOptions.Compiled | RegexOptions.Multiline);
 

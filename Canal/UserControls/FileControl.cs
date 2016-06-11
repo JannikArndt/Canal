@@ -19,9 +19,6 @@ namespace Canal.UserControls
 {
     public sealed partial class FileControl : UserControl
     {
-        private TableOfContentsWorker _tableOfContentsWorker;
-        private SortKind _tocSort = SortKind.Alphabetical;
-
         public FileControl(string filename, MainWindow parent)
         {
             InitializeComponent();
@@ -207,11 +204,14 @@ namespace Canal.UserControls
         {
             try
             {
-                tocTabPage.Controls.Remove(loaderImageToc);
-                splitContainerRight.Panel2.Controls.Remove(loaderImageInfoTab);
-
-                _tableOfContentsWorker = new TableOfContentsWorker(CobolFile);
-                SortToc(SortKind.Alphabetical);
+                var tableOfContents = new TableOfContents(CobolFile) { Dock = DockStyle.Fill };
+                tableOfContents.OnWordSelected += (o, args) =>
+                {
+                    codeBox.FindNext(@"^.{7}" + args.Word + @"(\.| +USING| OF)", false, true, false, true);
+                    ShowWordInfo(args.Word);
+                };
+                tocTabPage.Controls.Remove(tocLoaderImage);
+                tocTabPage.Controls.Add(tableOfContents);
 
                 ShowWordInfo();
 
@@ -350,15 +350,6 @@ namespace Canal.UserControls
 
         #endregion
 
-        #region Tree View Selects
-
-        private void TreeViewAfterSelect(object sender, TreeViewEventArgs e)
-        {
-            codeBox.FindNext(@"^.{7}" + tocTreeView.SelectedNode.Text + @"(\.| +USING| OF)", false, true, false, true);
-        }
-
-        #endregion
-
         #region Button Clicks
 
         private void newButton_Click(object sender, EventArgs e)
@@ -383,11 +374,6 @@ namespace Canal.UserControls
                 codeBox.SelectAll();
             codeBox.DoAutoIndent();
             codeBox.Selection = selection;
-        }
-
-        private void ExportTocClick(object sender, EventArgs e)
-        {
-            Clipboard.SetText(tocTreeView.ToText());
         }
 
         private void NavigateBackwardClick(object sender, EventArgs e)
@@ -421,20 +407,6 @@ namespace Canal.UserControls
         private void FindPreviousButtonClick(object sender, EventArgs e)
         {
             TrySearch(false, true);
-        }
-
-        #endregion
-
-        #region Expand and Collapse Buttons
-
-        private void TocExpandAllButtonClick(object sender, EventArgs e)
-        {
-            tocTreeView.ExpandAll();
-        }
-
-        private void TocCollapseAllButtonClick(object sender, EventArgs e)
-        {
-            tocTreeView.CollapseAll();
         }
 
         #endregion
@@ -525,53 +497,6 @@ namespace Canal.UserControls
                 MessageBox.Show(string.Format("Error trying to insert copybooks into source: {0}.", exception.Message),
                     Resources.Error, MessageBoxButtons.OK);
             }
-        }
-
-        #endregion
-
-        #region Table of Contents
-
-        private void SortToc(SortKind kind)
-        {
-            _tocSort = kind;
-
-            if (CobolFile.CobolTree == null)
-            {
-                tocTreeView.Nodes.Add(new TreeNode("Error: CobolTree could not be built.") { ForeColor = Color.Red });
-                return;
-            }
-
-            var query = tocSearchTextBox.Text != Resources.SearchPlaceholder ? tocSearchTextBox.Text : "";
-
-            TocSortAlphabeticallyButton.Checked = _tocSort == SortKind.Alphabetical;
-            TocSortHierarchicallyButton.Checked = _tocSort == SortKind.BySections;
-            TocSortByPerformsButton.Checked = _tocSort == SortKind.ByPerforms;
-
-            tocTreeView.Nodes.Clear();
-            var rootNode = _tableOfContentsWorker.GetToc(_tocSort, query);
-            rootNode.ExpandAll();
-            tocTreeView.Nodes.Add(rootNode);
-
-        }
-
-        private void TocSortAlphabeticallyButton_Click(object sender, EventArgs e)
-        {
-            SortToc(SortKind.Alphabetical);
-        }
-
-        private void TocSortBySectionsButtonClick(object sender, EventArgs e)
-        {
-            SortToc(SortKind.BySections);
-        }
-
-        private void TocSortByPerformsButtonClick(object sender, EventArgs e)
-        {
-            SortToc(SortKind.ByPerforms);
-        }
-
-        private void tocSearchTextBox_TextChanged(object sender, EventArgs e)
-        {
-            SortToc(_tocSort);
         }
 
         #endregion

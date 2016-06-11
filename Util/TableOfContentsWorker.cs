@@ -14,6 +14,8 @@ namespace Util
 
         private TreeNode _performsTree;
 
+        public event EventHandler<RunWorkerCompletedEventArgs> PerformTreeIsBuilt;
+
         public TableOfContentsWorker(CobolFile cobolFile)
         {
             _cobolFile = cobolFile;
@@ -28,12 +30,14 @@ namespace Util
 
             performTreeWorker.DoWork += delegate (object sender, DoWorkEventArgs args)
             {
-                args.Result = GetPerformTree(_cobolFile);
+                args.Result = GetPerformTree();
             };
 
             performTreeWorker.RunWorkerCompleted += delegate (object sender, RunWorkerCompletedEventArgs args)
             {
                 _performsTree = (TreeNode)args.Result;
+                if (PerformTreeIsBuilt != null)
+                    PerformTreeIsBuilt(this, args);
             };
 
             performTreeWorker.RunWorkerAsync();
@@ -45,13 +49,13 @@ namespace Util
             switch (tocSort)
             {
                 case SortKind.Alphabetical:
-                    return ConvertToFlatToc(_cobolFile.CobolTree, _cobolFile.Name, query);
+                    return ConvertToFlatToc(query);
                 case SortKind.BySections:
-                    return ConvertToTreeNodes(_cobolFile.CobolTree, _cobolFile.Name, query);
+                    return ConvertToTreeNodes(query);
                 case SortKind.ByPerforms:
-                    if (_performsTree == null)
-                        return new TreeNode("Performs-Tree is currently being built...");
-                    return _performsTree;
+                    if (string.IsNullOrEmpty(query))
+                        return _performsTree;
+                    return FilterByQuery(_performsTree, query) ?? new TreeNode();
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -60,19 +64,19 @@ namespace Util
 
         #region Sort Alphabetical
 
-        private static TreeNode ConvertToFlatToc(CobolTree cobolTree, string name, string query = "")
+        private TreeNode ConvertToFlatToc(string query = "")
         {
-            var result = new TreeNode(name);
+            var result = new TreeNode(_cobolFile.Name);
 
-            AddFlattenedOrderedIfNotNull(result, cobolTree.IdentificationDivision, query);
-            AddFlattenedOrderedIfNotNull(result, cobolTree.EnvironmentDivision, query);
-            AddFlattenedOrderedIfNotNull(result, cobolTree.DataDivision, query);
-            AddFlattenedOrderedIfNotNull(result, cobolTree.ProcedureDivision, query);
+            AddFlattenedOrderedIfNotNull(result, _cobolFile.CobolTree.IdentificationDivision, query);
+            AddFlattenedOrderedIfNotNull(result, _cobolFile.CobolTree.EnvironmentDivision, query);
+            AddFlattenedOrderedIfNotNull(result, _cobolFile.CobolTree.DataDivision, query);
+            AddFlattenedOrderedIfNotNull(result, _cobolFile.CobolTree.ProcedureDivision, query);
 
             return result;
         }
 
-        private static void AddFlattenedOrderedIfNotNull(TreeNode result, CobolTreeNode parent, string query = "")
+        private void AddFlattenedOrderedIfNotNull(TreeNode result, CobolTreeNode parent, string query = "")
         {
             if (parent == null)
                 return;
@@ -81,14 +85,14 @@ namespace Util
             result.Nodes.Add(orderedFlatNode);
         }
 
-        private static IEnumerable<TreeNode> Flatten(CobolTreeNode parent, bool ignoreFirst = false, string query = "")
+        private IEnumerable<TreeNode> Flatten(CobolTreeNode parent, bool ignoreFirst = false, string query = "")
         {
             if (!ignoreFirst)
                 yield return new TreeNode(parent.Name);
 
             foreach (var child in parent.GetNodes()) // check null if you must
                 foreach (var relative in Flatten(child, query: query))
-                    if (string.IsNullOrWhiteSpace(query) || relative.Text.IndexOf(query, StringComparison.OrdinalIgnoreCase) > -1)
+                    if (string.IsNullOrWhiteSpace(query) || relative.Text.ContainsIgnoreCase(query))
                         yield return new TreeNode(relative.Text);
         }
 
@@ -96,31 +100,31 @@ namespace Util
 
         #region Sort By Section
 
-        private static TreeNode ConvertToTreeNodes(CobolTree cobolTree, string name, string query = "")
+        private TreeNode ConvertToTreeNodes(string query = "")
         {
-            var result = new TreeNode(name);
-            if (cobolTree.IdentificationDivision != null)
-                result.Nodes.Add(ConvertToTreeNode(cobolTree.IdentificationDivision, query));
+            var result = new TreeNode(_cobolFile.Name);
+            if (_cobolFile.CobolTree.IdentificationDivision != null)
+                result.Nodes.Add(ConvertToTreeNode(_cobolFile.CobolTree.IdentificationDivision, query));
 
-            if (cobolTree.EnvironmentDivision != null)
-                result.Nodes.Add(ConvertToTreeNode(cobolTree.EnvironmentDivision, query));
+            if (_cobolFile.CobolTree.EnvironmentDivision != null)
+                result.Nodes.Add(ConvertToTreeNode(_cobolFile.CobolTree.EnvironmentDivision, query));
 
-            if (cobolTree.DataDivision != null)
-                result.Nodes.Add(ConvertToTreeNode(cobolTree.DataDivision, query));
+            if (_cobolFile.CobolTree.DataDivision != null)
+                result.Nodes.Add(ConvertToTreeNode(_cobolFile.CobolTree.DataDivision, query));
 
-            if (cobolTree.ProcedureDivision != null)
-                result.Nodes.Add(ConvertToTreeNode(cobolTree.ProcedureDivision, query));
+            if (_cobolFile.CobolTree.ProcedureDivision != null)
+                result.Nodes.Add(ConvertToTreeNode(_cobolFile.CobolTree.ProcedureDivision, query));
             return result;
         }
 
-        private static TreeNode ConvertToTreeNode(CobolTreeNode cobolTreeNode, string query = "")
+        private TreeNode ConvertToTreeNode(CobolTreeNode cobolTreeNode, string query = "")
         {
             var result = new TreeNode(cobolTreeNode.Name);
             foreach (var treeNode in cobolTreeNode.GetNodes())
             {
                 var node = ConvertToTreeNode(treeNode, query);
                 // if query is empty, match or Nodes contains match
-                if (string.IsNullOrWhiteSpace(query) || node.Text.IndexOf(query, StringComparison.OrdinalIgnoreCase) > -1 || node.Nodes.Count > 0)
+                if (string.IsNullOrWhiteSpace(query) || node.Text.ContainsIgnoreCase(query) || node.Nodes.Count > 0)
                     result.Nodes.Add(node);
             }
 
@@ -131,26 +135,26 @@ namespace Util
 
         #region Sort by Perform
 
-        private TreeNode GetPerformTree(CobolFile file)
+        private TreeNode GetPerformTree()
         {
-            if (file == null)
+            if (_cobolFile == null)
                 return null;
 
-            Logger.Info("Creating perform tree for file {0}", file.Name);
+            Logger.Info("Creating perform tree for file {0}", _cobolFile.Name);
 
-            if (file.CobolTree == null || file.CobolTree.ProcedureDivision == null)
+            if (_cobolFile.CobolTree == null || _cobolFile.CobolTree.ProcedureDivision == null)
                 return new TreeNode();
 
-            var topNode = new TreeNode(file.Name);
+            var topNode = new TreeNode(_cobolFile.Name);
 
-            var sections = file.CobolTree.ProcedureDivision.Sections;
+            var sections = _cobolFile.CobolTree.ProcedureDivision.Sections;
 
             // for all top-level-sections
-            foreach (var section in sections.Where(sec => !sec.IsReferencedBy.Any()))
+            foreach (var section in sections.Where(sec => sec.IsReferencedBy.None()))
             {
                 var node = new TreeNode(section.Name);
 
-                foreach (var procedure in section.Procedures)
+                foreach (var procedure in section.Procedures.Where(proc => proc.IsReferencedBy.None()))
                 {
                     FindPerformsRecursively(node, procedure);
                 }
@@ -191,6 +195,24 @@ namespace Util
                 topNode.Nodes.Add(newNode);
                 FindPerformsRecursively(newNode, performReference.Procedure, depth - 1);
             }
+        }
+
+        private TreeNode FilterByQuery(TreeNode treeNode, string query)
+        {
+            if (treeNode == null)
+                return null;
+
+            if (treeNode.Text.ContainsIgnoreCase(query))
+                return treeNode;
+
+            var childrenContainingQuery = treeNode.Nodes.Cast<TreeNode>()
+                .Select(child => FilterByQuery(child, query))
+                .Where(node => node != null).ToList();
+
+            if (childrenContainingQuery.Any())
+                return new TreeNode(treeNode.Text, childrenContainingQuery.ToArray());
+
+            return null;
         }
 
         #endregion

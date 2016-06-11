@@ -44,7 +44,6 @@
             this.infoGroupBox.Size = new System.Drawing.Size(294, 473);
             this.infoGroupBox.TabIndex = 2;
             this.infoGroupBox.TabStop = false;
-            this.infoGroupBox.Text = "groupBox1";
             // 
             // gotoFileButton
             // 

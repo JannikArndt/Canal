@@ -96,7 +96,9 @@ namespace Canal.UserControls
                 wordInfoTreeView.Nodes.Add(new TreeNode("Calls", calls));
 
             // Variable usages
-            wordInfoTreeView.Nodes.Add(GetVariableUsagesNode(procedure));
+            var variables = GetVariableUsagesNode(procedure);
+            if (variables.Nodes.Count > 0)
+                wordInfoTreeView.Nodes.Add(variables);
 
             wordInfoTreeView.ExpandAll();
         }

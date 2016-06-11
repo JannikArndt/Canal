@@ -44,7 +44,7 @@ namespace Util
                 case UsedAs.Both:
                     return "(in/out)";
                 default:
-                    throw new ArgumentOutOfRangeException("usedAs", usedAs, null);
+                    throw new ArgumentOutOfRangeException(nameof(usedAs), usedAs, null);
             }
         }
 
@@ -73,7 +73,7 @@ namespace Util
             return new string(s.CharsToTitleCase().ToArray());
         }
 
-        public static IEnumerable<char> CharsToTitleCase(this string s)
+        private static IEnumerable<char> CharsToTitleCase(this string s)
         {
             bool newWord = true;
             foreach (char c in s)
@@ -89,10 +89,25 @@ namespace Util
                 }
                 else
                 {
-                    yield return Char.ToLower(c);
+                    yield return char.ToLower(c);
                 }
 
             }
+        }
+
+        public static bool ContainsIgnoreCase(this string text, string query)
+        {
+            return text.IndexOf(query, StringComparison.OrdinalIgnoreCase) > -1;
+        }
+
+        public static bool None<TSource>(this IEnumerable<TSource> source)
+        {
+            return !source.Any();
+        }
+
+        public static bool None<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+        {
+            return !source.Any(predicate);
         }
     }
 }

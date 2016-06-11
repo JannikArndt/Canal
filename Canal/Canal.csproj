@@ -130,6 +130,12 @@
       <DependentUpon>FirstTabPage.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\SourceCodePro.cs" />
+    <Compile Include="UserControls\TableOfContents.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\TableOfContents.Designer.cs">
+      <DependentUpon>TableOfContents.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\TabUtil.cs" />
     <Compile Include="UserControls\TextViewer.cs">
       <SubType>Form</SubType>
@@ -181,6 +187,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\FirstTabPage.resx">
       <DependentUpon>FirstTabPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\TableOfContents.resx">
+      <DependentUpon>TableOfContents.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\TextViewer.resx">
       <DependentUpon>TextViewer.cs</DependentUpon>
