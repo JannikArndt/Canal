@@ -1,6 +1,6 @@
-﻿namespace Canal.UserControls
+﻿namespace Canal.UserControls.WordInfoViews
 {
-    partial class WordInfo
+    partial class ProgramInfo
     {
         /// <summary> 
         /// Required designer variable.
@@ -16,28 +16,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.wordInfoTreeView = new System.Windows.Forms.TreeView();
             this.infoGroupBox = new System.Windows.Forms.GroupBox();
             this.gotoFileButton = new System.Windows.Forms.Button();
+            this.wordInfoTreeView = new System.Windows.Forms.TreeView();
             this.infoGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
-            // wordInfoTreeView
-            // 
-            this.wordInfoTreeView.BackColor = System.Drawing.SystemColors.Control;
-            this.wordInfoTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.wordInfoTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.wordInfoTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.wordInfoTreeView.ItemHeight = 22;
-            this.wordInfoTreeView.Location = new System.Drawing.Point(3, 16);
-            this.wordInfoTreeView.Name = "wordInfoTreeView";
-            this.wordInfoTreeView.Size = new System.Drawing.Size(288, 454);
-            this.wordInfoTreeView.TabIndex = 1;
-            // 
             // infoGroupBox
             // 
-            this.infoGroupBox.Controls.Add(this.gotoFileButton);
             this.infoGroupBox.Controls.Add(this.wordInfoTreeView);
+            this.infoGroupBox.Controls.Add(this.gotoFileButton);
             this.infoGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.infoGroupBox.Location = new System.Drawing.Point(0, 0);
             this.infoGroupBox.Name = "infoGroupBox";
@@ -56,12 +44,24 @@
             this.gotoFileButton.UseVisualStyleBackColor = true;
             this.gotoFileButton.Visible = false;
             // 
-            // WordInfo
+            // wordInfoTreeView
+            // 
+            this.wordInfoTreeView.BackColor = System.Drawing.SystemColors.Control;
+            this.wordInfoTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.wordInfoTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.wordInfoTreeView.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.wordInfoTreeView.ItemHeight = 22;
+            this.wordInfoTreeView.Location = new System.Drawing.Point(3, 16);
+            this.wordInfoTreeView.Name = "wordInfoTreeView";
+            this.wordInfoTreeView.Size = new System.Drawing.Size(288, 454);
+            this.wordInfoTreeView.TabIndex = 3;
+            // 
+            // ProgramInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.infoGroupBox);
-            this.Name = "WordInfo";
+            this.Name = "ProgramInfo";
             this.Size = new System.Drawing.Size(294, 473);
             this.infoGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -69,8 +69,8 @@
         }
 
         #endregion
-        private System.Windows.Forms.TreeView wordInfoTreeView;
         private System.Windows.Forms.GroupBox infoGroupBox;
         private System.Windows.Forms.Button gotoFileButton;
+        private System.Windows.Forms.TreeView wordInfoTreeView;
     }
 }

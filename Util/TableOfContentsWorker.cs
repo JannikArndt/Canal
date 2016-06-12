@@ -92,7 +92,7 @@ namespace Util
 
             foreach (var child in parent.GetNodes()) // check null if you must
                 foreach (var relative in Flatten(child, query: query))
-                    if (string.IsNullOrWhiteSpace(query) || relative.Text.ContainsIgnoreCase(query))
+                    if ((string.IsNullOrWhiteSpace(query) || relative.Text.ContainsIgnoreCase(query)) && child.Name != relative.Name)
                         yield return new TreeNode(relative.Text);
         }
 

@@ -143,11 +143,23 @@
     <Compile Include="UserControls\TextViewer.Designer.cs">
       <DependentUpon>TextViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\WordInfo.cs">
+    <Compile Include="UserControls\WordInfoViews\ProcedureInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\WordInfo.Designer.cs">
-      <DependentUpon>WordInfo.cs</DependentUpon>
+    <Compile Include="UserControls\WordInfoViews\ProcedureInfo.Designer.cs">
+      <DependentUpon>ProcedureInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\WordInfoViews\VariableInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\WordInfoViews\VariableInfo.Designer.cs">
+      <DependentUpon>VariableInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\WordInfoViews\ProgramInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\WordInfoViews\ProgramInfo.Designer.cs">
+      <DependentUpon>ProgramInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\FileControl.cs">
       <SubType>UserControl</SubType>
@@ -197,8 +209,14 @@
     <EmbeddedResource Include="UserControls\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\WordInfo.resx">
-      <DependentUpon>WordInfo.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\WordInfoViews\ProcedureInfo.resx">
+      <DependentUpon>ProcedureInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\WordInfoViews\ProgramInfo.resx">
+      <DependentUpon>ProgramInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\WordInfoViews\VariableInfo.resx">
+      <DependentUpon>VariableInfo.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\app.manifest" />
     <Resource Include="Resources\ChangeLog.txt">

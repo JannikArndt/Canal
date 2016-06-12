@@ -1,4 +1,5 @@
 ﻿using Canal.Properties;
+using Canal.UserControls.WordInfoViews;
 using FastColoredTextBoxNS;
 using FastColoredTextBoxNS.Events;
 using Logging;
@@ -226,13 +227,39 @@ namespace Canal.UserControls
 
         private void ShowWordInfo(string word = "")
         {
+            // 1. No CobolFile? Nothing to do.
+            if (CobolFile == null)
+                return;
+
             foreach (Control control in splitContainerRight.Panel2.Controls)
             {
                 control.Dispose();
             }
 
             splitContainerRight.Panel2.Controls.Clear();
-            var fileInfoControl = new WordInfo(word, CobolFile, this) { Dock = DockStyle.Fill };
+
+            // 2. No CobolTree? Show Program infos
+            if (CobolFile.CobolTree != null)
+            {
+                // 3. Is the word a variable?
+                if (CobolFile.Variables.ContainsKey(word))
+                {
+                    var variableInfoControl = new VariableInfo(CobolFile.Variables[word], this) { Dock = DockStyle.Fill };
+                    splitContainerRight.Panel2.Controls.Add(variableInfoControl);
+                    return;
+                }
+
+                // 4. Is the word a procedure?
+                var procedure = CobolFile.CobolTree.GetAllProcedures().FirstOrDefault(proc => proc.Name == word);
+                if (procedure != null)
+                {
+                    var procedureInfoControl = new ProcedureInfo(procedure) { Dock = DockStyle.Fill };
+                    splitContainerRight.Panel2.Controls.Add(procedureInfoControl);
+                    return;
+                }
+            }
+
+            var fileInfoControl = new ProgramInfo(CobolFile, this) { Dock = DockStyle.Fill };
             splitContainerRight.Panel2.Controls.Add(fileInfoControl);
         }
 
