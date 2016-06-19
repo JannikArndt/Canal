@@ -30,6 +30,16 @@ namespace Canal
             New();
         }
 
+        private void NewProjectToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            NewProject();
+        }
+
+        private void showFilesViewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            splitContainer.Panel1Collapsed = !splitContainer.Panel1Collapsed;
+        }
+
         private void ReportIssueToolStripMenuItemClick(object sender, EventArgs e)
         {
             ReportIssue(false);

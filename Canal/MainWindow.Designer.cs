@@ -32,6 +32,8 @@
             this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cOBOLFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cOBOLProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -48,6 +50,7 @@
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nextTabToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.previousTabToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showFilesViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.showLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -62,7 +65,6 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.projectView = new Canal.UserControls.FilesView();
-            this.showFilesViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -103,11 +105,29 @@
             // 
             // newToolStripMenuItem
             // 
+            this.newToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cOBOLFileToolStripMenuItem,
+            this.cOBOLProjectToolStripMenuItem});
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.newToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.newToolStripMenuItem.Text = "New";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.NewToolStripMenuItemClick);
+            // 
+            // cOBOLFileToolStripMenuItem
+            // 
+            this.cOBOLFileToolStripMenuItem.Name = "cOBOLFileToolStripMenuItem";
+            this.cOBOLFileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.cOBOLFileToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.cOBOLFileToolStripMenuItem.Text = "COBOL File";
+            this.cOBOLFileToolStripMenuItem.Click += new System.EventHandler(this.NewToolStripMenuItemClick);
+            // 
+            // cOBOLProjectToolStripMenuItem
+            // 
+            this.cOBOLProjectToolStripMenuItem.Name = "cOBOLProjectToolStripMenuItem";
+            this.cOBOLProjectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.N)));
+            this.cOBOLProjectToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.cOBOLProjectToolStripMenuItem.Text = "COBOL Project";
+            this.cOBOLProjectToolStripMenuItem.Click += new System.EventHandler(this.NewProjectToolStripMenuItemClick);
             // 
             // openToolStripMenuItem
             // 
@@ -236,6 +256,16 @@
             this.previousTabToolStripMenuItem.Text = "Previous Tab";
             this.previousTabToolStripMenuItem.Click += new System.EventHandler(this.previousTabToolStripMenuItem_Click);
             // 
+            // showFilesViewToolStripMenuItem
+            // 
+            this.showFilesViewToolStripMenuItem.Checked = true;
+            this.showFilesViewToolStripMenuItem.CheckOnClick = true;
+            this.showFilesViewToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showFilesViewToolStripMenuItem.Name = "showFilesViewToolStripMenuItem";
+            this.showFilesViewToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.showFilesViewToolStripMenuItem.Text = "Show Files View";
+            this.showFilesViewToolStripMenuItem.Click += new System.EventHandler(this.showFilesViewToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem1
             // 
             this.helpToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -341,16 +371,6 @@
             this.projectView.Size = new System.Drawing.Size(181, 738);
             this.projectView.TabIndex = 0;
             // 
-            // showFilesViewToolStripMenuItem
-            // 
-            this.showFilesViewToolStripMenuItem.Checked = true;
-            this.showFilesViewToolStripMenuItem.CheckOnClick = true;
-            this.showFilesViewToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showFilesViewToolStripMenuItem.Name = "showFilesViewToolStripMenuItem";
-            this.showFilesViewToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-            this.showFilesViewToolStripMenuItem.Text = "Show Files View";
-            this.showFilesViewToolStripMenuItem.Click += new System.EventHandler(this.showFilesViewToolStripMenuItem_Click);
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -410,6 +430,8 @@
         private System.Windows.Forms.SplitContainer splitContainer;
         private UserControls.FilesView projectView;
         private System.Windows.Forms.ToolStripMenuItem showFilesViewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cOBOLFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cOBOLProjectToolStripMenuItem;
     }
 }
 

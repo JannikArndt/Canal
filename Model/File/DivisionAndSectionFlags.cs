@@ -1,4 +1,4 @@
-﻿namespace Model
+﻿namespace Model.File
 {
     public class DivisionAndSectionFlags
     {

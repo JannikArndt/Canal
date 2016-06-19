@@ -1,6 +1,7 @@
 ﻿using Model;
 using System.Drawing;
 using System.Windows.Forms;
+using Model.File;
 using Util;
 
 namespace Canal.UserControls.WordInfoViews

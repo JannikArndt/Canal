@@ -135,6 +135,13 @@
     <Compile Include="UserControls\FilesView.Designer.cs">
       <DependentUpon>FilesView.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ProjectAssistant.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControls\ProjectAssistant.Designer.cs">
+      <DependentUpon>ProjectAssistant.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ProjectUtil.cs" />
     <Compile Include="UserControls\SourceCodePro.cs" />
     <Compile Include="UserControls\TableOfContents.cs">
       <SubType>UserControl</SubType>
@@ -208,6 +215,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\FilesView.resx">
       <DependentUpon>FilesView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ProjectAssistant.resx">
+      <DependentUpon>ProjectAssistant.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\TableOfContents.resx">
       <DependentUpon>TableOfContents.cs</DependentUpon>

@@ -190,10 +190,8 @@ namespace Util
             return foundFiles;
         }
 
-        public void ReduceDirectoriesToAllowedFiles()
+        private void UpdateAllowedEndings()
         {
-            _directoriesWithAllowedFiles = new ConcurrentDictionary<string, List<FileReference>>();
-
             _allowedEndings = new List<string>();
             if (Settings.Default.FileTypeCob)
                 _allowedEndings.AddRange(new List<string> { ".cob", ".cbl" });
@@ -202,13 +200,34 @@ namespace Util
             if (Settings.Default.FileTypeCob)
                 _allowedEndings.Add(".src");
             if (!string.IsNullOrWhiteSpace(Settings.Default.FileTypeCustom)) _allowedEndings.Add(Settings.Default.FileTypeCustom);
+        }
+
+        public void ReduceDirectoriesToAllowedFiles()
+        {
+            _directoriesWithAllowedFiles = new ConcurrentDictionary<string, List<FileReference>>();
+
+            UpdateAllowedEndings();
 
             foreach (var dir in _directoriesAndFiles.Keys.AsParallel())
             {
-                var tempDir = new List<FileReference>(_directoriesAndFiles[dir].Where(file => HasAllowedEnding(file.FilePath)));
+                var tempDir = new List<FileReference>(_directoriesAndFiles[dir].Where(HasAllowedEnding));
                 if (tempDir.Any())
                     _directoriesWithAllowedFiles.TryAdd(dir, tempDir);
             }
+        }
+
+        public int CountValidFiles(string dir)
+        {
+            UpdateAllowedEndings();
+
+            AnalyzeFolder(dir);
+
+            var filenames = new HashSet<string>();
+            foreach (var refs in _directoriesAndFiles.Values)
+                foreach (var filename in refs.Select(fileRef => fileRef.FilePath).Where(HasAllowedEnding).Where(path => path.Contains(dir)))
+                    filenames.Add(filename);
+
+            return filenames.Count;
         }
 
         public TreeNode[] GetDirectoryStructure(string query = "")
@@ -230,6 +249,11 @@ namespace Util
             }
 
             return result.ToArray();
+        }
+
+        private bool HasAllowedEnding(FileReference fileReference)
+        {
+            return HasAllowedEnding(fileReference.FilePath);
         }
 
         private bool HasAllowedEnding(string text)

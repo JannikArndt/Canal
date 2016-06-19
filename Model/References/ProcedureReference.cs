@@ -1,4 +1,6 @@
-﻿namespace Model.References
+﻿using Model.File;
+
+namespace Model.References
 {
     public class ProcedureReference
     {

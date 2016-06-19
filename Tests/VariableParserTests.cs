@@ -2,6 +2,7 @@
 using Model;
 using Model.Pictures;
 using System.Collections.Generic;
+using Model.File;
 using Util;
 
 namespace Tests

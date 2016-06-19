@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Model
+namespace Model.File
 {
     public class EnvironmentDivision : Division
     {

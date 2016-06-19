@@ -1,6 +1,7 @@
 ﻿using Model;
 using Model.Pictures;
 using System;
+using Model.File;
 
 // ReSharper disable LocalizableElement
 // ReSharper disable MemberCanBePrivate.Global

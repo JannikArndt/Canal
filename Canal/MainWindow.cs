@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Net;
+using Model.File;
 
 namespace Canal
 {
@@ -153,6 +154,11 @@ namespace Canal
         public void New()
         {
             _tabUtil.AddTab();
+        }
+
+        public void NewProject()
+        {
+            ProjectUtil.Instance.CreateNewProject();
         }
 
         public void OpenFile(string filename, Variable currentVar = null)
@@ -326,10 +332,5 @@ namespace Canal
         }
 
         #endregion
-
-        private void showFilesViewToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            splitContainer.Panel1Collapsed = !splitContainer.Panel1Collapsed;
-        }
     }
 }
