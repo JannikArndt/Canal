@@ -60,7 +60,14 @@
             this.FileTabs = new System.Windows.Forms.TabControl();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.splitContainer = new System.Windows.Forms.SplitContainer();
+            this.projectView = new Canal.UserControls.FilesView();
+            this.showFilesViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
+            this.splitContainer.Panel1.SuspendLayout();
+            this.splitContainer.Panel2.SuspendLayout();
+            this.splitContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainMenu
@@ -206,7 +213,8 @@
             // 
             this.windowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.nextTabToolStripMenuItem,
-            this.previousTabToolStripMenuItem});
+            this.previousTabToolStripMenuItem,
+            this.showFilesViewToolStripMenuItem});
             this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
             this.windowToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
             this.windowToolStripMenuItem.Text = "Window";
@@ -297,23 +305,58 @@
             // FileTabs
             // 
             this.FileTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FileTabs.Location = new System.Drawing.Point(0, 24);
+            this.FileTabs.Location = new System.Drawing.Point(0, 0);
             this.FileTabs.Margin = new System.Windows.Forms.Padding(2);
             this.FileTabs.Name = "FileTabs";
             this.FileTabs.SelectedIndex = 0;
-            this.FileTabs.Size = new System.Drawing.Size(1384, 738);
+            this.FileTabs.Size = new System.Drawing.Size(1199, 738);
             this.FileTabs.TabIndex = 1;
             // 
             // openFileDialog
             // 
             this.openFileDialog.FileName = "openFileDialog";
             // 
+            // splitContainer
+            // 
+            this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer.Location = new System.Drawing.Point(0, 24);
+            this.splitContainer.Name = "splitContainer";
+            // 
+            // splitContainer.Panel1
+            // 
+            this.splitContainer.Panel1.Controls.Add(this.projectView);
+            // 
+            // splitContainer.Panel2
+            // 
+            this.splitContainer.Panel2.Controls.Add(this.FileTabs);
+            this.splitContainer.Size = new System.Drawing.Size(1384, 738);
+            this.splitContainer.SplitterDistance = 181;
+            this.splitContainer.TabIndex = 2;
+            // 
+            // projectView
+            // 
+            this.projectView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.projectView.Location = new System.Drawing.Point(0, 0);
+            this.projectView.Name = "projectView";
+            this.projectView.Size = new System.Drawing.Size(181, 738);
+            this.projectView.TabIndex = 0;
+            // 
+            // showFilesViewToolStripMenuItem
+            // 
+            this.showFilesViewToolStripMenuItem.Checked = true;
+            this.showFilesViewToolStripMenuItem.CheckOnClick = true;
+            this.showFilesViewToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showFilesViewToolStripMenuItem.Name = "showFilesViewToolStripMenuItem";
+            this.showFilesViewToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.showFilesViewToolStripMenuItem.Text = "Show Files View";
+            this.showFilesViewToolStripMenuItem.Click += new System.EventHandler(this.showFilesViewToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1384, 762);
-            this.Controls.Add(this.FileTabs);
+            this.Controls.Add(this.splitContainer);
             this.Controls.Add(this.MainMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.MainMenu;
@@ -322,6 +365,10 @@
             this.Text = "CANAL Cobol Analyzer";
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
+            this.splitContainer.Panel1.ResumeLayout(false);
+            this.splitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
+            this.splitContainer.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -360,6 +407,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem reRunAnalysisToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem codeGeneratorToolStripMenuItem;
+        private System.Windows.Forms.SplitContainer splitContainer;
+        private UserControls.FilesView projectView;
+        private System.Windows.Forms.ToolStripMenuItem showFilesViewToolStripMenuItem;
     }
 }
 

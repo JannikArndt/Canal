@@ -2,12 +2,9 @@
 using Logging;
 using Model;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using Util;
-using Util.Events;
 
 namespace Canal.UserControls
 {
@@ -28,14 +25,6 @@ namespace Canal.UserControls
         public override string ToString()
         {
             return string.Format("TabUtil, {0} TabPages, Selected: {1}", _tabControl.TabCount, _tabControl.SelectedIndex);
-        }
-
-        private IEnumerable<FileControl> GetFileControls()
-        {
-            return (from TabPage tabPage in _tabControl.TabPages
-                    select tabPage.Controls.Find("FileControl", false)
-                    .FirstOrDefault(foundTab => foundTab is FileControl))
-                    .OfType<FileControl>().ToList();
         }
 
         public void SetTabName(string text)
@@ -91,42 +80,17 @@ namespace Canal.UserControls
 
             var fileControl = new FileControl(filename, _parent);
 
+            if (fileControl.CobolFile == null) // error in constructor
+                return;
+
             var newTab = new TabPage(fileControl.CobolFile.Name + "     X");
 
-            fileControl.UsedFileTypesChanged += UsedFileTypesChanged;
             fileControl.SavedVersionChanged += (sender, args) => SetTabName(@"* " + newTab.Text);
             fileControl.FileSaved += (sender, args) => SetTabName(newTab.Text.TrimStart('*', ' '));
-            FileUtil.Instance.FileCacheChanged += RefreshFileView;
 
             newTab.Controls.Add(fileControl);
             _tabControl.Controls.Add(newTab);
             _tabControl.SelectTab(newTab);
-        }
-
-        private void RefreshFileView(object sender, FileCacheChangedEventArgs fileCacheChangedEventArgs)
-        {
-            Logger.Info("Refreshing files view.");
-
-            foreach (var fileControl in GetFileControls())
-            {
-                if (fileControl.InvokeRequired)
-                {
-                    var control = fileControl;
-                    fileControl.Invoke(new MethodInvoker(() => control.RefreshFileView()));
-                }
-                else
-                    fileControl.RefreshFileView();
-            }
-        }
-
-        private void UsedFileTypesChanged(object sender, UsedFileTypesChangedEventArgs usedFileTypesChangedEventArgs)
-        {
-            Logger.Info("Used file types changed.");
-
-            foreach (var fileControl in GetFileControls())
-            {
-                fileControl.RefreshUsedFileTypes(sender, usedFileTypesChangedEventArgs);
-            }
         }
 
         public bool CloseTab(int index = -1)

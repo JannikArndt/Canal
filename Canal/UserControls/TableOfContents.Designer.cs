@@ -145,6 +145,8 @@
             // 
             this.tocSearchTextBox.Name = "tocSearchTextBox";
             this.tocSearchTextBox.Size = new System.Drawing.Size(100, 25);
+            this.tocSearchTextBox.Enter += new System.EventHandler(this.SearchBoxEnter);
+            this.tocSearchTextBox.Leave += new System.EventHandler(this.SearchBoxLeave);
             this.tocSearchTextBox.TextChanged += new System.EventHandler(this.TocSearchTextBox_TextChanged);
             // 
             // tocTreeView

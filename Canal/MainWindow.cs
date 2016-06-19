@@ -326,5 +326,10 @@ namespace Canal
         }
 
         #endregion
+
+        private void showFilesViewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            splitContainer.Panel1Collapsed = !splitContainer.Panel1Collapsed;
+        }
     }
 }

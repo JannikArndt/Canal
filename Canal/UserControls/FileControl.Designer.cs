@@ -34,17 +34,6 @@ namespace Canal.UserControls
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileControl));
-            this.structureTabControl = new System.Windows.Forms.TabControl();
-            this.tocTabPage = new System.Windows.Forms.TabPage();
-            this.filesTabPage = new System.Windows.Forms.TabPage();
-            this.filesTabToolStrip = new System.Windows.Forms.ToolStrip();
-            this.filesTabSearchBox = new System.Windows.Forms.ToolStripTextBox();
-            this.fileTypeDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
-            this.showFileTypes_cob = new System.Windows.Forms.ToolStripMenuItem();
-            this.showFileTypes_txt = new System.Windows.Forms.ToolStripMenuItem();
-            this.showFileTypes_src = new System.Windows.Forms.ToolStripMenuItem();
-            this.showFileTypes_custom = new System.Windows.Forms.ToolStripTextBox();
-            this.filesTreeView = new System.Windows.Forms.TreeView();
             this.codeBox = new FastColoredTextBoxNS.FastColoredTextBox();
             this.splitContainerTop = new System.Windows.Forms.SplitContainer();
             this.codeViewToolStrip = new System.Windows.Forms.ToolStrip();
@@ -67,11 +56,7 @@ namespace Canal.UserControls
             this.splitContainerRight = new System.Windows.Forms.SplitContainer();
             this.loaderImageInfoTab = new System.Windows.Forms.PictureBox();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
-            this.tocLoaderImage = new System.Windows.Forms.PictureBox();
-            this.structureTabControl.SuspendLayout();
-            this.tocTabPage.SuspendLayout();
-            this.filesTabPage.SuspendLayout();
-            this.filesTabToolStrip.SuspendLayout();
+            this.tableOfContents = new Canal.UserControls.TableOfContents();
             ((System.ComponentModel.ISupportInitialize)(this.codeBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerTop)).BeginInit();
             this.splitContainerTop.Panel1.SuspendLayout();
@@ -83,121 +68,7 @@ namespace Canal.UserControls
             this.splitContainerRight.Panel2.SuspendLayout();
             this.splitContainerRight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.loaderImageInfoTab)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tocLoaderImage)).BeginInit();
             this.SuspendLayout();
-            // 
-            // structureTabControl
-            // 
-            this.structureTabControl.Controls.Add(this.tocTabPage);
-            this.structureTabControl.Controls.Add(this.filesTabPage);
-            this.structureTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.structureTabControl.Location = new System.Drawing.Point(0, 0);
-            this.structureTabControl.Name = "structureTabControl";
-            this.structureTabControl.SelectedIndex = 0;
-            this.structureTabControl.Size = new System.Drawing.Size(378, 321);
-            this.structureTabControl.TabIndex = 5;
-            // 
-            // tocTabPage
-            // 
-            this.tocTabPage.Controls.Add(this.tocLoaderImage);
-            this.tocTabPage.Location = new System.Drawing.Point(4, 22);
-            this.tocTabPage.Name = "tocTabPage";
-            this.tocTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.tocTabPage.Size = new System.Drawing.Size(370, 295);
-            this.tocTabPage.TabIndex = 0;
-            this.tocTabPage.Text = "Table of Contents";
-            this.tocTabPage.UseVisualStyleBackColor = true;
-            // 
-            // filesTabPage
-            // 
-            this.filesTabPage.Controls.Add(this.filesTabToolStrip);
-            this.filesTabPage.Controls.Add(this.filesTreeView);
-            this.filesTabPage.Location = new System.Drawing.Point(4, 22);
-            this.filesTabPage.Name = "filesTabPage";
-            this.filesTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.filesTabPage.Size = new System.Drawing.Size(370, 295);
-            this.filesTabPage.TabIndex = 4;
-            this.filesTabPage.Text = "Files";
-            this.filesTabPage.UseVisualStyleBackColor = true;
-            // 
-            // filesTabToolStrip
-            // 
-            this.filesTabToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.filesTabToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.filesTabSearchBox,
-            this.fileTypeDropDownButton});
-            this.filesTabToolStrip.Location = new System.Drawing.Point(3, 3);
-            this.filesTabToolStrip.Name = "filesTabToolStrip";
-            this.filesTabToolStrip.Size = new System.Drawing.Size(364, 25);
-            this.filesTabToolStrip.TabIndex = 1;
-            this.filesTabToolStrip.Text = "toolStrip1";
-            // 
-            // filesTabSearchBox
-            // 
-            this.filesTabSearchBox.Name = "filesTabSearchBox";
-            this.filesTabSearchBox.Size = new System.Drawing.Size(100, 25);
-            this.filesTabSearchBox.Text = "Search Files...";
-            this.filesTabSearchBox.Enter += new System.EventHandler(this.SearchBoxEnter);
-            this.filesTabSearchBox.Leave += new System.EventHandler(this.SearchBoxLeave);
-            this.filesTabSearchBox.TextChanged += new System.EventHandler(this.FilesTabSearchBoxTextChanged);
-            // 
-            // fileTypeDropDownButton
-            // 
-            this.fileTypeDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.fileTypeDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showFileTypes_cob,
-            this.showFileTypes_txt,
-            this.showFileTypes_src,
-            this.showFileTypes_custom});
-            this.fileTypeDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("fileTypeDropDownButton.Image")));
-            this.fileTypeDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.fileTypeDropDownButton.Name = "fileTypeDropDownButton";
-            this.fileTypeDropDownButton.Size = new System.Drawing.Size(29, 22);
-            this.fileTypeDropDownButton.Text = "File Types";
-            this.fileTypeDropDownButton.Click += new System.EventHandler(this.RefreshUsedFileTypes);
-            // 
-            // showFileTypes_cob
-            // 
-            this.showFileTypes_cob.Checked = true;
-            this.showFileTypes_cob.CheckOnClick = true;
-            this.showFileTypes_cob.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showFileTypes_cob.Name = "showFileTypes_cob";
-            this.showFileTypes_cob.Size = new System.Drawing.Size(160, 22);
-            this.showFileTypes_cob.Text = "*.cob/*.cbl";
-            this.showFileTypes_cob.Click += new System.EventHandler(this.SettingsSourceCodeFilesClick);
-            // 
-            // showFileTypes_txt
-            // 
-            this.showFileTypes_txt.CheckOnClick = true;
-            this.showFileTypes_txt.Name = "showFileTypes_txt";
-            this.showFileTypes_txt.Size = new System.Drawing.Size(160, 22);
-            this.showFileTypes_txt.Text = "*.txt";
-            this.showFileTypes_txt.Click += new System.EventHandler(this.SettingsSourceCodeFilesClick);
-            // 
-            // showFileTypes_src
-            // 
-            this.showFileTypes_src.CheckOnClick = true;
-            this.showFileTypes_src.Name = "showFileTypes_src";
-            this.showFileTypes_src.Size = new System.Drawing.Size(160, 22);
-            this.showFileTypes_src.Text = "*.src";
-            this.showFileTypes_src.Click += new System.EventHandler(this.SettingsSourceCodeFilesClick);
-            // 
-            // showFileTypes_custom
-            // 
-            this.showFileTypes_custom.Name = "showFileTypes_custom";
-            this.showFileTypes_custom.Size = new System.Drawing.Size(100, 23);
-            // 
-            // filesTreeView
-            // 
-            this.filesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.filesTreeView.Location = new System.Drawing.Point(0, 31);
-            this.filesTreeView.Name = "filesTreeView";
-            this.filesTreeView.Size = new System.Drawing.Size(370, 261);
-            this.filesTreeView.TabIndex = 0;
-            this.filesTreeView.DoubleClick += new System.EventHandler(this.FilesTreeViewDoubleClick);
-            this.filesTreeView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FilesTreeViewKeyUp);
             // 
             // codeBox
             // 
@@ -443,7 +314,7 @@ namespace Canal.UserControls
             // 
             // splitContainerRight.Panel1
             // 
-            this.splitContainerRight.Panel1.Controls.Add(this.structureTabControl);
+            this.splitContainerRight.Panel1.Controls.Add(this.tableOfContents);
             // 
             // splitContainerRight.Panel2
             // 
@@ -474,16 +345,13 @@ namespace Canal.UserControls
             this.miniToolStrip.Size = new System.Drawing.Size(200, 25);
             this.miniToolStrip.TabIndex = 1;
             // 
-            // tocLoaderImage
+            // tableOfContents
             // 
-            this.tocLoaderImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tocLoaderImage.Image = global::Canal.Properties.Resources.loader;
-            this.tocLoaderImage.Location = new System.Drawing.Point(3, 3);
-            this.tocLoaderImage.Name = "tocLoaderImage";
-            this.tocLoaderImage.Size = new System.Drawing.Size(364, 289);
-            this.tocLoaderImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.tocLoaderImage.TabIndex = 0;
-            this.tocLoaderImage.TabStop = false;
+            this.tableOfContents.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableOfContents.Location = new System.Drawing.Point(0, 0);
+            this.tableOfContents.Name = "tableOfContents";
+            this.tableOfContents.Size = new System.Drawing.Size(378, 321);
+            this.tableOfContents.TabIndex = 0;
             // 
             // FileControl
             // 
@@ -493,12 +361,6 @@ namespace Canal.UserControls
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FileControl";
             this.Size = new System.Drawing.Size(1061, 583);
-            this.structureTabControl.ResumeLayout(false);
-            this.tocTabPage.ResumeLayout(false);
-            this.filesTabPage.ResumeLayout(false);
-            this.filesTabPage.PerformLayout();
-            this.filesTabToolStrip.ResumeLayout(false);
-            this.filesTabToolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.codeBox)).EndInit();
             this.splitContainerTop.Panel1.ResumeLayout(false);
             this.splitContainerTop.Panel1.PerformLayout();
@@ -512,30 +374,18 @@ namespace Canal.UserControls
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerRight)).EndInit();
             this.splitContainerRight.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.loaderImageInfoTab)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tocLoaderImage)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private FastColoredTextBox codeBox;
-        private System.Windows.Forms.TabControl structureTabControl;
-        private System.Windows.Forms.TabPage tocTabPage;
         private System.Windows.Forms.SplitContainer splitContainerTop;
         private System.Windows.Forms.SplitContainer splitContainerRight;
         private System.Windows.Forms.ToolStrip codeViewToolStrip;
         private System.Windows.Forms.ToolStripTextBox searchBox;
         private System.Windows.Forms.ToolStripButton searchWithRegEx;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private TabPage filesTabPage;
-        private ToolStrip filesTabToolStrip;
-        private ToolStripTextBox filesTabSearchBox;
-        private ToolStripDropDownButton fileTypeDropDownButton;
-        private ToolStripMenuItem showFileTypes_cob;
-        private ToolStripMenuItem showFileTypes_txt;
-        private ToolStripMenuItem showFileTypes_src;
-        private ToolStripTextBox showFileTypes_custom;
-        private TreeView filesTreeView;
         private ToolStrip miniToolStrip;
         private PictureBox loaderImageInfoTab;
         private ToolStripButton navigateBackward;
@@ -551,6 +401,6 @@ namespace Canal.UserControls
         private ToolStripButton redoButton;
         private ToolStripSeparator toolStripSeparator3;
         private ToolStripButton formatCodeButton;
-        private PictureBox tocLoaderImage;
+        private TableOfContents tableOfContents;
     }
 }

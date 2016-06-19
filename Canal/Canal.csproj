@@ -129,6 +129,12 @@
     <Compile Include="UserControls\FirstTabPage.Designer.cs">
       <DependentUpon>FirstTabPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\FilesView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\FilesView.Designer.cs">
+      <DependentUpon>FilesView.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\SourceCodePro.cs" />
     <Compile Include="UserControls\TableOfContents.cs">
       <SubType>UserControl</SubType>
@@ -199,6 +205,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\FirstTabPage.resx">
       <DependentUpon>FirstTabPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\FilesView.resx">
+      <DependentUpon>FilesView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\TableOfContents.resx">
       <DependentUpon>TableOfContents.cs</DependentUpon>

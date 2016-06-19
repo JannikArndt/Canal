@@ -14,7 +14,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Util;
-using Util.Events;
 
 namespace Canal.UserControls
 {
@@ -122,8 +121,6 @@ namespace Canal.UserControls
             }
         }
 
-        public event EventHandler<UsedFileTypesChangedEventArgs> UsedFileTypesChanged;
-
         /// <summary>
         /// Event is thrown the first time the text is changed after it is loaded or saved.
         /// </summary>
@@ -173,50 +170,19 @@ namespace Canal.UserControls
             codeBox.FindNext(pattern, matchCase, regex, wholeWord, firstSearch);
         }
 
-        /// <summary>
-        /// Updates the DropDownButton in the Files-tab with the settings stored in Settings.Default.FileType* and refreshes the Files-tab
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void RefreshUsedFileTypes(object sender, EventArgs e)
-        {
-            showFileTypes_cob.Checked = Util.Properties.Settings.Default.FileTypeCob;
-            showFileTypes_txt.Checked = Util.Properties.Settings.Default.FileTypeTxt;
-            showFileTypes_src.Checked = Util.Properties.Settings.Default.FileTypeSrc;
-            showFileTypes_custom.Text = Util.Properties.Settings.Default.FileTypeCustom;
-
-            RefreshFileView();
-        }
-
-        /// <summary>
-        /// Refreshes the Files-tab
-        /// </summary>
-        public void RefreshFileView()
-        {
-            var searchText = filesTabSearchBox.Text == Resources.SearchPlaceholder ? "" : filesTabSearchBox.Text;
-            FileUtil.Instance.ReduceDirectoriesToAllowedFiles();
-            var nodes = FileUtil.Instance.GetDirectoryStructure(searchText);
-            filesTreeView.Nodes.Clear();
-            filesTreeView.Nodes.AddRange(nodes);
-            filesTreeView.ExpandAll();
-        }
-
         private void InitTabs(object sender, RunWorkerCompletedEventArgs runWorkerCompletedEventArgs)
         {
             try
             {
-                var tableOfContents = new TableOfContents(CobolFile) { Dock = DockStyle.Fill };
+                tableOfContents.SetCobolFile(CobolFile);
+
                 tableOfContents.OnWordSelected += (o, args) =>
                 {
                     codeBox.FindNext(@"^.{7}" + args.Word + @"(\.| +USING| OF)", false, true, false, true);
                     ShowWordInfo(args.Word);
                 };
-                tocTabPage.Controls.Remove(tocLoaderImage);
-                tocTabPage.Controls.Add(tableOfContents);
 
                 ShowWordInfo();
-
-                ShowFilesTreeView();
             }
             catch (Exception exception)
             {
@@ -261,16 +227,6 @@ namespace Canal.UserControls
 
             var fileInfoControl = new ProgramInfo(CobolFile, this) { Dock = DockStyle.Fill };
             splitContainerRight.Panel2.Controls.Add(fileInfoControl);
-        }
-
-        private void ShowFilesTreeView()
-        {
-            if (IsDisposed) return;
-
-            FileUtil.Instance.ReduceDirectoriesToAllowedFiles();
-            filesTreeView.Nodes.AddRange(FileUtil.Instance.GetDirectoryStructure());
-            filesTreeView.ExpandAll();
-            filesTabSearchBox.Text = Resources.SearchPlaceholder;
         }
 
         private void HandleKeyDown(object sender, KeyEventArgs e)
@@ -434,52 +390,6 @@ namespace Canal.UserControls
         private void FindPreviousButtonClick(object sender, EventArgs e)
         {
             TrySearch(false, true);
-        }
-
-        #endregion
-
-        #region Files Tree
-
-        private void FilesTabSearchBoxTextChanged(object sender, EventArgs e)
-        {
-            if (((ToolStripTextBox)sender).Text == Resources.SearchPlaceholder)
-                return;
-            filesTreeView.Nodes.Clear();
-            filesTreeView.Nodes.AddRange(FileUtil.Instance.GetDirectoryStructure(((ToolStripTextBox)sender).Text));
-            filesTreeView.ExpandAll();
-
-            if (filesTreeView.Nodes.Count == 1 && filesTreeView.Nodes[0].Nodes.Count == 1)
-            {
-                filesTreeView.SelectedNode = filesTreeView.Nodes[0].Nodes[0];
-                filesTreeView.Focus();
-            }
-        }
-
-        private void FilesTreeViewDoubleClick(object sender, EventArgs e)
-        {
-            if (filesTreeView.SelectedNode == null || filesTreeView.SelectedNode.Tag == null)
-                return;
-
-            MainWindow.OpenFile(((FileReference)filesTreeView.SelectedNode.Tag).FilePath);
-        }
-
-        private void FilesTreeViewKeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-                MainWindow.OpenFile(((FileReference)filesTreeView.SelectedNode.Tag).FilePath);
-        }
-
-        private void SettingsSourceCodeFilesClick(object sender, EventArgs e)
-        {
-            Util.Properties.Settings.Default.FileTypeCob = showFileTypes_cob.Checked;
-            Util.Properties.Settings.Default.FileTypeTxt = showFileTypes_txt.Checked;
-            Util.Properties.Settings.Default.FileTypeSrc = showFileTypes_src.Checked;
-            Util.Properties.Settings.Default.FileTypeCustom = showFileTypes_custom.Text;
-            Util.Properties.Settings.Default.Save();
-
-            if (UsedFileTypesChanged != null) UsedFileTypesChanged(this, new UsedFileTypesChangedEventArgs());
-
-            RefreshFileView();
         }
 
         #endregion
