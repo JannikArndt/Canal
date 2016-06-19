@@ -113,11 +113,9 @@ namespace Canal.UserControls
                 if (fileRef.Count == 1)
                     MainWindow.OpenFile(fileRef.First().FilePath);
                 else if (fileRef.Count > 0)
-                    MessageBox.Show(
-                        "There are multiple files matching this program name. Try files tab to open program.",
-                        "Multiple Matching Files Found", MessageBoxButtons.OK);
+                    MessageBox.Show(Resources.MultipleFilesMatchSearch, Resources.MultipleFilesFound, MessageBoxButtons.OK);
                 else
-                    MessageBox.Show("File could not be found.", "File Not Found", MessageBoxButtons.OK);
+                    MessageBox.Show(Resources.FileCouldNotBeFound, Resources.FileNotFound, MessageBoxButtons.OK);
             }
         }
 
@@ -178,7 +176,6 @@ namespace Canal.UserControls
 
                 tableOfContents.OnWordSelected += (o, args) =>
                 {
-                    codeBox.FindNext(@"^.{7}" + args.Word + @"(\.| +USING| OF)", false, true, false, true);
                     ShowWordInfo(args.Word);
                 };
 
@@ -212,6 +209,8 @@ namespace Canal.UserControls
                 {
                     var variableInfoControl = new VariableInfo(CobolFile.Variables[word], this) { Dock = DockStyle.Fill };
                     splitContainerRight.Panel2.Controls.Add(variableInfoControl);
+                    codeBox.FindNext(word, false, false, true, true);
+
                     return;
                 }
 
@@ -221,6 +220,7 @@ namespace Canal.UserControls
                 {
                     var procedureInfoControl = new ProcedureInfo(procedure) { Dock = DockStyle.Fill };
                     splitContainerRight.Panel2.Controls.Add(procedureInfoControl);
+                    codeBox.FindNext(@"^.{7}" + word + @"(\.| +USING| OF)", false, true, false, true);
                     return;
                 }
             }

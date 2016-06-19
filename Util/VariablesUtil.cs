@@ -1,7 +1,6 @@
 ﻿using Model;
 using Model.Enums;
 using Model.Pictures;
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,8 +34,6 @@ namespace Util
             foreach (Match match in regex.Matches(preparedText))
             {
                 // Read properties from RegEx
-
-
                 var valLevel = int.Parse(match.Groups["level"].Value);
                 var valLiteral = match.Groups["literal"].Value;
                 var valRedefines = match.Groups["redefines"].Value;
@@ -44,6 +41,7 @@ namespace Util
                 var valComp = match.Groups["comp"].Value;
                 var valValue = match.Groups["value"].Value;
                 var valOccurs = match.Groups["occurs"].Value;
+                var valIndex = match.Index;
 
                 // Create type definition ("PIC")
                 var picture = match.Groups[2].ToString().ToUpperInvariant() == "BINARY"
@@ -61,15 +59,13 @@ namespace Util
                         redefined = result[valRedefines];
                 }
 
-                if (valLiteral == "FILLER")
-                    Console.WriteLine("Foo");
-
                 // Create Variable
                 var currentVariable = new Variable(valLevel, valLiteral, picture, match.Value, null)
                 {
                     Redefines = redefined,
                     Occurs = !string.IsNullOrWhiteSpace(valOccurs) ? int.Parse(valOccurs) : 1,
-                    CopyReference = cobolFile.FileReference
+                    CopyReference = cobolFile.FileReference,
+                    Index = valIndex
                 };
 
                 // Save result to dictionary

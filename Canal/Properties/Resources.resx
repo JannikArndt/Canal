@@ -181,4 +181,16 @@
   <data name="loader" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\loader.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="MultipleFilesMatchSearch" xml:space="preserve">
+    <value>There are multiple files matching this program name. Try files tab to open program.</value>
+  </data>
+  <data name="MultipleFilesFound" xml:space="preserve">
+    <value>Multiple Matching Files Found</value>
+  </data>
+  <data name="FileCouldNotBeFound" xml:space="preserve">
+    <value>File could not be found.</value>
+  </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>File Not Found</value>
+  </data>
 </root>

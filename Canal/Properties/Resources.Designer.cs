@@ -71,19 +71,18 @@ namespace Canal.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to v2.1
-        ///- Added folding markers for Divisions, Sections and Procedures
-        ///- Added menu option to re-run analysis
-        ///- Fixed a bug in TOC search
+        ///   Looks up a localized string similar to v2.3
+        ///- Tidied up tab area: former Performs view is now integrated into Table of Contents and searchable
+        ///- Improved info area: Programs, procedures and variables have their own view with context sensitive information
         ///
-        ///v2.0
-        ///- Completely rewritten analysis algorithm
-        ///- Copybooks are now loaded automatically and do not need to be inserted into text
-        ///- New window when inserting copybooks into text
-        ///- New formatter for COBOL code! Works with selections and complete files
-        ///- More toolbar buttons, like undo, redo, new, open, save
-        ///- Horizontal lines mark sentence endings
-        ///- Markers on the [rest of string was truncated]&quot;;.
+        ///v2.2.3
+        ///- Fixed bug where WordInfo (if you double click on a variable) would not show the root variable
+        ///
+        ///v2.2.2
+        ///- Recent files and file-type-selection work again
+        ///- Missing REDEFINES-references doesn&apos;t crash analysis anymore
+        ///- Fixed issue #11 (SetFoldingMarker)
+        ///- Added support for BINA [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ChangeLog {
             get {
@@ -164,6 +163,24 @@ namespace Canal.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File could not be found..
+        /// </summary>
+        internal static string FileCouldNotBeFound {
+            get {
+                return ResourceManager.GetString("FileCouldNotBeFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File Not Found.
+        /// </summary>
+        internal static string FileNotFound {
+            get {
+                return ResourceManager.GetString("FileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter Copybooks.
         /// </summary>
         internal static string FilterCopybooksWindowTitle {
@@ -179,6 +196,24 @@ namespace Canal.Properties {
             get {
                 object obj = ResourceManager.GetObject("loader", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Multiple Matching Files Found.
+        /// </summary>
+        internal static string MultipleFilesFound {
+            get {
+                return ResourceManager.GetString("MultipleFilesFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are multiple files matching this program name. Try files tab to open program..
+        /// </summary>
+        internal static string MultipleFilesMatchSearch {
+            get {
+                return ResourceManager.GetString("MultipleFilesMatchSearch", resourceCulture);
             }
         }
         

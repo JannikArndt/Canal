@@ -73,12 +73,18 @@ namespace Util
             AddFlattenedOrderedIfNotNull(result, _cobolFile.CobolTree.DataDivision, query);
             AddFlattenedOrderedIfNotNull(result, _cobolFile.CobolTree.ProcedureDivision, query);
 
+            if (result.Nodes.Count == 0 && _cobolFile.Variables.Count > 0)
+                result.Nodes.AddRange(_cobolFile.GetLocalRootVariables()
+                        .Select(variable => new TreeNode(variable.VariableName) { Tag = variable })
+                        .OrderBy(node => node.Text)
+                        .ToArray());
+
             return result;
         }
 
         private void AddFlattenedOrderedIfNotNull(TreeNode result, CobolTreeNode parent, string query = "")
         {
-            if (parent == null)
+            if (parent == null || parent.Length == 0)
                 return;
 
             var orderedFlatNode = new TreeNode(parent.Name, Flatten(parent, true, query).OrderBy(node => node.Text).ToArray());
@@ -103,17 +109,24 @@ namespace Util
         private TreeNode ConvertToTreeNodes(string query = "")
         {
             var result = new TreeNode(_cobolFile.Name);
-            if (_cobolFile.CobolTree.IdentificationDivision != null)
+            if (_cobolFile.CobolTree.IdentificationDivision != null && _cobolFile.CobolTree.IdentificationDivision.Length > 0)
                 result.Nodes.Add(ConvertToTreeNode(_cobolFile.CobolTree.IdentificationDivision, query));
 
-            if (_cobolFile.CobolTree.EnvironmentDivision != null)
+            if (_cobolFile.CobolTree.EnvironmentDivision != null && _cobolFile.CobolTree.EnvironmentDivision.Length > 0)
                 result.Nodes.Add(ConvertToTreeNode(_cobolFile.CobolTree.EnvironmentDivision, query));
 
-            if (_cobolFile.CobolTree.DataDivision != null)
+            if (_cobolFile.CobolTree.DataDivision != null && _cobolFile.CobolTree.DataDivision.Length > 0)
                 result.Nodes.Add(ConvertToTreeNode(_cobolFile.CobolTree.DataDivision, query));
 
-            if (_cobolFile.CobolTree.ProcedureDivision != null)
+            if (_cobolFile.CobolTree.ProcedureDivision != null && _cobolFile.CobolTree.ProcedureDivision.Length > 0)
                 result.Nodes.Add(ConvertToTreeNode(_cobolFile.CobolTree.ProcedureDivision, query));
+
+            if (result.Nodes.Count == 0 && _cobolFile.Variables.Count > 0)
+                result.Nodes.AddRange(_cobolFile.GetLocalRootVariables()
+                        .Select(variable => new TreeNode(variable.VariableName) { Tag = variable })
+                        .OrderBy(node => ((Variable)node.Tag).Index)
+                        .ToArray());
+
             return result;
         }
 
@@ -161,6 +174,12 @@ namespace Util
 
                 topNode.Nodes.Add(node);
             }
+
+            if (topNode.Nodes.Count == 0 && _cobolFile.Variables.Count > 0)
+                topNode.Nodes.AddRange(_cobolFile.GetLocalRootVariables()
+                        .Select(variable => new TreeNode(variable.VariableName) { Tag = variable })
+                        .OrderBy(node => ((Variable)node.Tag).Index)
+                        .ToArray());
 
             return topNode;
         }

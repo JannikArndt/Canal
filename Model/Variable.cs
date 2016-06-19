@@ -28,6 +28,8 @@ namespace Model
 
         public FileReference CopyReference { get; set; }
 
+        public int Index { get; set; }
+
         public string VariableDefinition
         {
             get

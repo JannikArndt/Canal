@@ -30,7 +30,9 @@ namespace Canal.UserControls
                 Size = new Size(364, 289)
             };
 
+            tocSearchTextBox.Tag = false;
             tocSearchTextBox.Text = Resources.SearchPlaceholder;
+            tocSearchTextBox.Tag = true;
 
             tocTreeView.Controls.Add(_loader);
         }
