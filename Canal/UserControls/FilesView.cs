@@ -92,7 +92,7 @@ namespace Canal.UserControls
 
         private void FilesTreeViewKeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter && filesTreeView.SelectedNode != null)
             {
                 TryOpenFile(((FileReference)filesTreeView.SelectedNode.Tag).FilePath);
             }

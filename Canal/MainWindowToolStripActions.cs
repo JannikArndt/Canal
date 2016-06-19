@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace Canal
 {
@@ -32,7 +33,9 @@ namespace Canal
 
         private void NewProjectToolStripMenuItemClick(object sender, EventArgs e)
         {
-            NewProject();
+            MessageBox.Show("Project files are not supported in this version of Canal.", "Not supported.",
+                MessageBoxButtons.OK);
+            // NewProject();
         }
 
         private void showFilesViewToolStripMenuItem_Click(object sender, EventArgs e)

@@ -1,4 +1,7 @@
-﻿v2.3
+﻿v2.4
+- Redesigned files view and table of content
+
+v2.3
 - Tidied up tab area: former Performs view is now integrated into Table of Contents and searchable
 - Improved info area: Programs, procedures and variables have their own view with context sensitive information
 
