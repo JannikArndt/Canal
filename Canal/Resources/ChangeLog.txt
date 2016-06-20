@@ -1,4 +1,10 @@
-﻿v2.4
+﻿v2.5
+- Fix: Double clicking a word does not jump to first occurrence in code
+- TOC sort remembers last used sort kind
+- Added expand all and collapse all buttons to Files View
+- Reduced flickering in Files View if content did not change
+
+v2.4
 - Redesigned files view and table of content
 
 v2.3
