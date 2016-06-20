@@ -81,5 +81,17 @@ namespace Util.Properties {
                 this["RecentFiles"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Alphabetical")]
+        public global::Util.SortKind TocSort {
+            get {
+                return ((global::Util.SortKind)(this["TocSort"]));
+            }
+            set {
+                this["TocSort"] = value;
+            }
+        }
     }
 }

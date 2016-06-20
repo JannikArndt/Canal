@@ -1,10 +1,9 @@
 ﻿using Canal.Properties;
 using FastColoredTextBoxNS.Events;
-using Model;
+using Model.File;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Model.File;
 using Util;
 
 namespace Canal.UserControls
@@ -42,7 +41,7 @@ namespace Canal.UserControls
         {
             _cobolFile = cobolFile;
             _tableOfContentsWorker = new TableOfContentsWorker(_cobolFile);
-            SortToc(SortKind.Alphabetical);
+            SortToc(Util.Properties.Settings.Default.TocSort);
 
             if (tocTreeView.Controls.Contains(_loader))
                 tocTreeView.Controls.Remove(_loader);
@@ -51,6 +50,9 @@ namespace Canal.UserControls
         private void SortToc(SortKind kind)
         {
             _tocSort = kind;
+            Util.Properties.Settings.Default.TocSort = kind;
+            Util.Properties.Settings.Default.Save();
+
             _userIsStillWaitingForPerformsTreeView = false;
 
 

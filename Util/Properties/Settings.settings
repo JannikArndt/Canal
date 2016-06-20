@@ -17,5 +17,8 @@
     <Setting Name="RecentFiles" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="TocSort" Type="Util.SortKind" Scope="User">
+      <Value Profile="(Default)">Alphabetical</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
