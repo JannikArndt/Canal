@@ -3,7 +3,7 @@ using Canal.UserControls.WordInfoViews;
 using FastColoredTextBoxNS;
 using FastColoredTextBoxNS.Events;
 using Logging;
-using Model;
+using Model.File;
 using Model.References;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Model.File;
 using Util;
 
 namespace Canal.UserControls
@@ -175,10 +174,7 @@ namespace Canal.UserControls
             {
                 tableOfContents.SetCobolFile(CobolFile);
 
-                tableOfContents.OnWordSelected += (o, args) =>
-                {
-                    ShowWordInfo(args.Word);
-                };
+                tableOfContents.OnWordSelected += (o, args) => ShowWordInfo(args.Word, true);
 
                 ShowWordInfo();
             }
@@ -189,7 +185,7 @@ namespace Canal.UserControls
             }
         }
 
-        private void ShowWordInfo(string word = "")
+        private void ShowWordInfo(string word = "", bool findInCode = false)
         {
             // 1. No CobolFile? Nothing to do.
             if (CobolFile == null)
@@ -210,7 +206,9 @@ namespace Canal.UserControls
                 {
                     var variableInfoControl = new VariableInfo(CobolFile.Variables[word], this) { Dock = DockStyle.Fill };
                     splitContainerRight.Panel2.Controls.Add(variableInfoControl);
-                    codeBox.FindNext(word, false, false, true, true);
+
+                    if (findInCode)
+                        codeBox.FindNext(word, false, false, true, true);
 
                     return;
                 }
@@ -221,7 +219,10 @@ namespace Canal.UserControls
                 {
                     var procedureInfoControl = new ProcedureInfo(procedure) { Dock = DockStyle.Fill };
                     splitContainerRight.Panel2.Controls.Add(procedureInfoControl);
-                    codeBox.FindNext(@"^.{7}" + word + @"(\.| +USING| OF)", false, true, false, true);
+
+                    if (findInCode)
+                        codeBox.FindNext(@"^.{7}" + word + @"(\.| +USING| OF)", false, true, false, true);
+
                     return;
                 }
             }

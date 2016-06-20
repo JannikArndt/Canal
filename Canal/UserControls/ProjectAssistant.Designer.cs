@@ -40,7 +40,7 @@
             this.ProgressBar = new System.Windows.Forms.ProgressBar();
             this.ProgressLabel = new System.Windows.Forms.Label();
             this.StartAnalysisButton = new System.Windows.Forms.Button();
-            this.CancelButton = new System.Windows.Forms.Button();
+            this.CancelButton1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.tableLayoutPanel1.SuspendLayout();
@@ -66,7 +66,7 @@
             this.tableLayoutPanel1.Controls.Add(this.ProgressBar, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.ProgressLabel, 3, 4);
             this.tableLayoutPanel1.Controls.Add(this.StartAnalysisButton, 4, 4);
-            this.tableLayoutPanel1.Controls.Add(this.CancelButton, 5, 4);
+            this.tableLayoutPanel1.Controls.Add(this.CancelButton1, 5, 4);
             this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 5, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -186,15 +186,15 @@
             this.StartAnalysisButton.UseVisualStyleBackColor = true;
             this.StartAnalysisButton.Click += new System.EventHandler(this.StartAnalysisButton_Click);
             // 
-            // CancelButton
+            // CancelButton1
             // 
-            this.CancelButton.Enabled = false;
-            this.CancelButton.Location = new System.Drawing.Point(452, 227);
-            this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(129, 23);
-            this.CancelButton.TabIndex = 8;
-            this.CancelButton.Text = "Cancel";
-            this.CancelButton.UseVisualStyleBackColor = true;
+            this.CancelButton1.Enabled = false;
+            this.CancelButton1.Location = new System.Drawing.Point(452, 227);
+            this.CancelButton1.Name = "CancelButton1";
+            this.CancelButton1.Size = new System.Drawing.Size(129, 23);
+            this.CancelButton1.TabIndex = 8;
+            this.CancelButton1.Text = "Cancel";
+            this.CancelButton1.UseVisualStyleBackColor = true;
             // 
             // pictureBox1
             // 
@@ -235,7 +235,7 @@
         private System.Windows.Forms.TextBox FolderTextBox;
         private System.Windows.Forms.CheckedListBox FileTypesCheckedListBox;
         private System.Windows.Forms.Button StartAnalysisButton;
-        private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Button CancelButton1;
         private System.Windows.Forms.ProgressBar ProgressBar;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.Label ProgressLabel;
