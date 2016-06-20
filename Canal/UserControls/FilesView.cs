@@ -1,6 +1,8 @@
 ﻿using Canal.Properties;
 using Model.References;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using Util;
 
@@ -143,12 +145,28 @@ namespace Canal.UserControls
         /// </summary>
         private void RefreshFileView()
         {
+
+            var expanded = filesTreeView.Nodes.Count > 0 && filesTreeView.Nodes[0].IsExpanded;
+
             var searchText = filesTabSearchBox.Text == Resources.SearchPlaceholder ? "" : filesTabSearchBox.Text;
             var nodes = FileUtil.Instance.GetDirectoryStructure(searchText);
 
+            if (NodesEqual(nodes, filesTreeView.Nodes))
+                return;
+
             filesTreeView.Nodes.Clear();
             filesTreeView.Nodes.AddRange(nodes);
-            filesTreeView.ExpandAll();
+
+            if (expanded || searchText != "")
+                filesTreeView.ExpandAll();
+        }
+
+        private bool NodesEqual(IReadOnlyCollection<TreeNode> nodes, TreeNodeCollection treeNodeCollection)
+        {
+            if (nodes.Count != treeNodeCollection.Count)
+                return false;
+
+            return !nodes.Where((node1, nodeIndex) => node1.Text != treeNodeCollection[nodeIndex].Text).Any();
         }
 
         private void CollapseAllToolStripButton_Click(object sender, EventArgs e)
