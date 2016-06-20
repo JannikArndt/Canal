@@ -71,7 +71,10 @@ namespace Canal.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to v2.3
+        ///   Looks up a localized string similar to v2.4
+        ///- Redesigned files view and table of content
+        ///
+        ///v2.3
         ///- Tidied up tab area: former Performs view is now integrated into Table of Contents and searchable
         ///- Improved info area: Programs, procedures and variables have their own view with context sensitive information
         ///
@@ -81,8 +84,7 @@ namespace Canal.Properties {
         ///v2.2.2
         ///- Recent files and file-type-selection work again
         ///- Missing REDEFINES-references doesn&apos;t crash analysis anymore
-        ///- Fixed issue #11 (SetFoldingMarker)
-        ///- Added support for BINA [rest of string was truncated]&quot;;.
+        ///- Fixed  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ChangeLog {
             get {
@@ -96,6 +98,16 @@ namespace Canal.Properties {
         internal static string CloseTab {
             get {
                 return ResourceManager.GetString("CloseTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CollapseAllButton_Image {
+            get {
+                object obj = ResourceManager.GetObject("CollapseAllButton_Image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -150,6 +162,16 @@ namespace Canal.Properties {
         internal static string ErrorWithMessage {
             get {
                 return ResourceManager.GetString("ErrorWithMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ExpandAllButton_Image {
+            get {
+                object obj = ResourceManager.GetObject("ExpandAllButton_Image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

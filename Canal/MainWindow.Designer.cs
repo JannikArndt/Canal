@@ -339,7 +339,7 @@
             this.FileTabs.Margin = new System.Windows.Forms.Padding(2);
             this.FileTabs.Name = "FileTabs";
             this.FileTabs.SelectedIndex = 0;
-            this.FileTabs.Size = new System.Drawing.Size(1199, 738);
+            this.FileTabs.Size = new System.Drawing.Size(1190, 738);
             this.FileTabs.TabIndex = 1;
             // 
             // openFileDialog
@@ -355,12 +355,13 @@
             // splitContainer.Panel1
             // 
             this.splitContainer.Panel1.Controls.Add(this.projectView);
+            this.splitContainer.Panel1MinSize = 190;
             // 
             // splitContainer.Panel2
             // 
             this.splitContainer.Panel2.Controls.Add(this.FileTabs);
             this.splitContainer.Size = new System.Drawing.Size(1384, 738);
-            this.splitContainer.SplitterDistance = 181;
+            this.splitContainer.SplitterDistance = 190;
             this.splitContainer.TabIndex = 2;
             // 
             // projectView
@@ -368,7 +369,7 @@
             this.projectView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.projectView.Location = new System.Drawing.Point(0, 0);
             this.projectView.Name = "projectView";
-            this.projectView.Size = new System.Drawing.Size(181, 738);
+            this.projectView.Size = new System.Drawing.Size(190, 738);
             this.projectView.TabIndex = 0;
             // 
             // MainWindow

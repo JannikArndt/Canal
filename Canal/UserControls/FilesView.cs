@@ -150,5 +150,15 @@ namespace Canal.UserControls
             filesTreeView.Nodes.AddRange(nodes);
             filesTreeView.ExpandAll();
         }
+
+        private void CollapseAllToolStripButton_Click(object sender, EventArgs e)
+        {
+            filesTreeView.CollapseAll();
+        }
+
+        private void ExpandAllToolStripButton_Click(object sender, EventArgs e)
+        {
+            filesTreeView.ExpandAll();
+        }
     }
 }

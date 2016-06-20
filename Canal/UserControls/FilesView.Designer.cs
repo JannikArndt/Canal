@@ -36,7 +36,10 @@
             this.showFileTypes_txt = new System.Windows.Forms.ToolStripMenuItem();
             this.showFileTypes_src = new System.Windows.Forms.ToolStripMenuItem();
             this.showFileTypes_custom = new System.Windows.Forms.ToolStripTextBox();
+            this.CollapseAllToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.ExpandAllToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.filesTreeView = new System.Windows.Forms.TreeView();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.filesTabToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,7 +48,10 @@
             this.filesTabToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.filesTabToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.filesTabSearchBox,
-            this.fileTypeDropDownButton});
+            this.fileTypeDropDownButton,
+            this.toolStripSeparator1,
+            this.CollapseAllToolStripButton,
+            this.ExpandAllToolStripButton});
             this.filesTabToolStrip.Location = new System.Drawing.Point(0, 0);
             this.filesTabToolStrip.Name = "filesTabToolStrip";
             this.filesTabToolStrip.Size = new System.Drawing.Size(381, 25);
@@ -106,6 +112,26 @@
             this.showFileTypes_custom.Name = "showFileTypes_custom";
             this.showFileTypes_custom.Size = new System.Drawing.Size(100, 23);
             // 
+            // CollapseAllToolStripButton
+            // 
+            this.CollapseAllToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.CollapseAllToolStripButton.Image = global::Canal.Properties.Resources.CollapseAllButton_Image;
+            this.CollapseAllToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CollapseAllToolStripButton.Name = "CollapseAllToolStripButton";
+            this.CollapseAllToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.CollapseAllToolStripButton.Text = "Collapse All";
+            this.CollapseAllToolStripButton.Click += new System.EventHandler(this.CollapseAllToolStripButton_Click);
+            // 
+            // ExpandAllToolStripButton
+            // 
+            this.ExpandAllToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.ExpandAllToolStripButton.Image = global::Canal.Properties.Resources.ExpandAllButton_Image;
+            this.ExpandAllToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ExpandAllToolStripButton.Name = "ExpandAllToolStripButton";
+            this.ExpandAllToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.ExpandAllToolStripButton.Text = "Expand All";
+            this.ExpandAllToolStripButton.Click += new System.EventHandler(this.ExpandAllToolStripButton_Click);
+            // 
             // filesTreeView
             // 
             this.filesTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -115,6 +141,11 @@
             this.filesTreeView.TabIndex = 3;
             this.filesTreeView.DoubleClick += new System.EventHandler(this.FilesTreeViewDoubleClick);
             this.filesTreeView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FilesTreeViewKeyUp);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // FilesView
             // 
@@ -141,5 +172,8 @@
         private System.Windows.Forms.ToolStripMenuItem showFileTypes_src;
         private System.Windows.Forms.ToolStripTextBox showFileTypes_custom;
         private System.Windows.Forms.TreeView filesTreeView;
+        private System.Windows.Forms.ToolStripButton CollapseAllToolStripButton;
+        private System.Windows.Forms.ToolStripButton ExpandAllToolStripButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
