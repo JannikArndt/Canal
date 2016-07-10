@@ -170,6 +170,12 @@ namespace Canal.UserControls
 
         private void InitTabs(object sender, RunWorkerCompletedEventArgs runWorkerCompletedEventArgs)
         {
+            if (IsDisposed)
+            {
+                Logger.Warning("Tried to initialize tabs on disposed FileControl.");
+                return;
+            }
+
             try
             {
                 tableOfContents.SetCobolFile(CobolFile);

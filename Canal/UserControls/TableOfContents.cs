@@ -39,6 +39,9 @@ namespace Canal.UserControls
 
         public void SetCobolFile(CobolFile cobolFile)
         {
+            if (IsDisposed)
+                return;
+
             _cobolFile = cobolFile;
             _tableOfContentsWorker = new TableOfContentsWorker(_cobolFile);
             SortToc(Util.Properties.Settings.Default.TocSort);
