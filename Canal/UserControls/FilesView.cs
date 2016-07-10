@@ -163,10 +163,16 @@ namespace Canal.UserControls
 
         private bool NodesEqual(IReadOnlyCollection<TreeNode> nodes, TreeNodeCollection treeNodeCollection)
         {
+            // different count of nodes => not equal
             if (nodes.Count != treeNodeCollection.Count)
                 return false;
 
-            return !nodes.Where((node1, nodeIndex) => node1.Text != treeNodeCollection[nodeIndex].Text).Any();
+            // different texts for any node? (only top level) => not equal
+            if (!nodes.Where((node1, nodeIndex) => node1.Text != treeNodeCollection[nodeIndex].Text).Any())
+                return false;
+
+            // continue for next level
+            return treeNodeCollection.Cast<TreeNode>().Any(child => !NodesEqual(nodes, child.Nodes));
         }
 
         private void CollapseAllToolStripButton_Click(object sender, EventArgs e)

@@ -36,10 +36,10 @@
             this.showFileTypes_txt = new System.Windows.Forms.ToolStripMenuItem();
             this.showFileTypes_src = new System.Windows.Forms.ToolStripMenuItem();
             this.showFileTypes_custom = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.CollapseAllToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.ExpandAllToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.filesTreeView = new System.Windows.Forms.TreeView();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.filesTabToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,7 +54,7 @@
             this.ExpandAllToolStripButton});
             this.filesTabToolStrip.Location = new System.Drawing.Point(0, 0);
             this.filesTabToolStrip.Name = "filesTabToolStrip";
-            this.filesTabToolStrip.Size = new System.Drawing.Size(381, 25);
+            this.filesTabToolStrip.Size = new System.Drawing.Size(186, 25);
             this.filesTabToolStrip.TabIndex = 2;
             this.filesTabToolStrip.Text = "toolStrip1";
             // 
@@ -112,6 +112,11 @@
             this.showFileTypes_custom.Name = "showFileTypes_custom";
             this.showFileTypes_custom.Size = new System.Drawing.Size(100, 23);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // CollapseAllToolStripButton
             // 
             this.CollapseAllToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -137,15 +142,10 @@
             this.filesTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.filesTreeView.Location = new System.Drawing.Point(0, 25);
             this.filesTreeView.Name = "filesTreeView";
-            this.filesTreeView.Size = new System.Drawing.Size(381, 739);
+            this.filesTreeView.Size = new System.Drawing.Size(186, 739);
             this.filesTreeView.TabIndex = 3;
             this.filesTreeView.DoubleClick += new System.EventHandler(this.FilesTreeViewDoubleClick);
             this.filesTreeView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FilesTreeViewKeyUp);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // FilesView
             // 
@@ -154,7 +154,7 @@
             this.Controls.Add(this.filesTreeView);
             this.Controls.Add(this.filesTabToolStrip);
             this.Name = "FilesView";
-            this.Size = new System.Drawing.Size(381, 764);
+            this.Size = new System.Drawing.Size(186, 764);
             this.filesTabToolStrip.ResumeLayout(false);
             this.filesTabToolStrip.PerformLayout();
             this.ResumeLayout(false);
