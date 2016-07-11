@@ -9,6 +9,12 @@ namespace Model.References
             ReferencedProcedure = referencedProcedure;
         }
 
+        public ProcedureReference(Procedure procedure)
+        {
+            Procedure = procedure;
+            ReferencedProcedure = procedure.Name;
+        }
+
         public string ReferencedProcedure { get; set; }
 
         public Procedure Procedure { get; set; }

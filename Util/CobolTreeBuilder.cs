@@ -1,10 +1,9 @@
-﻿using Model;
+﻿using Model.File;
 using Model.References;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Model.File;
 
 namespace Util
 {
@@ -94,18 +93,19 @@ namespace Util
         {
             // Perform-Referenzen aufbauen
             var allProcedures = procedureDivision.Sections.SelectMany(sec => sec.Procedures).ToList();
-            var allProceduresAndSections = allProcedures.Union(procedureDivision.Sections).ToList();
 
             foreach (var procedure in allProcedures)
             {
                 foreach (var reference in procedure.PerformReferences)
                 {
-                    var referencedProcedure = allProceduresAndSections.FirstOrDefault(proc => proc.Name == reference.ReferencedProcedure);
+                    // procedure performs reference. Find referencedProcedure
+                    var referencedProcedure = allProcedures.FirstOrDefault(proc => proc.Name == reference.ReferencedProcedure) ??
+                                              procedureDivision.Sections.FirstOrDefault(sec => sec.Name == reference.ReferencedProcedure + " SECTION");
 
                     if (referencedProcedure != null)
                     {
                         reference.Procedure = referencedProcedure;
-                        reference.Procedure.IsReferencedBy.Add(reference);
+                        referencedProcedure.IsReferencedBy.Add(new PerformReference(procedure));
                     }
                     else
                     {
