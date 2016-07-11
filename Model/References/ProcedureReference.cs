@@ -9,7 +9,7 @@ namespace Model.References
             ReferencedProcedure = referencedProcedure;
         }
 
-        public ProcedureReference(Procedure procedure)
+        protected ProcedureReference(Procedure procedure)
         {
             Procedure = procedure;
             ReferencedProcedure = procedure.Name;

@@ -1,4 +1,5 @@
-﻿using Model.File;
+﻿using Logging;
+using Model.File;
 using Model.References;
 using System;
 using System.Collections.Generic;
@@ -165,7 +166,7 @@ namespace Util
                 var fileRefs = FileUtil.Instance.GetFileReferences(programName);
 
                 if (fileRefs.Count > 1)
-                    Console.WriteLine(@"error: ambiguous name");
+                    Logger.Warning("Ambiguous name in file references: {0}. Taking first item.", programName);
 
                 var fileRef = fileRefs.FirstOrDefault();
 

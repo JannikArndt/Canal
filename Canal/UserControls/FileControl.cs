@@ -197,6 +197,31 @@ namespace Canal.UserControls
             if (CobolFile == null)
                 return;
 
+            // 2. No CobolTree? Show Program infos
+            if (CobolFile.CobolTree == null)
+            {
+                foreach (Control control in splitContainerRight.Panel2.Controls)
+                {
+                    control.Dispose();
+                }
+
+                splitContainerRight.Panel2.Controls.Clear();
+
+                var fileInfoControl = new ProgramInfo(CobolFile, this) { Dock = DockStyle.Fill };
+                splitContainerRight.Panel2.Controls.Add(fileInfoControl);
+                return;
+            }
+
+            // 3. Call Reference? Open file, keep Info
+            var callRef = CobolFile.CobolTree.CallReferences.FirstOrDefault(call => call.ProgramName == word);
+            if (callRef != null)
+            {
+                MainWindow.OpenFile(callRef.FilePath);
+                return;
+            }
+
+            // else dispose of current info
+
             foreach (Control control in splitContainerRight.Panel2.Controls)
             {
                 control.Dispose();
@@ -204,37 +229,35 @@ namespace Canal.UserControls
 
             splitContainerRight.Panel2.Controls.Clear();
 
-            // 2. No CobolTree? Show Program infos
-            if (CobolFile.CobolTree != null)
+            // 4. Is the word a variable?
+            if (CobolFile.Variables.ContainsKey(word))
             {
-                // 3. Is the word a variable?
-                if (CobolFile.Variables.ContainsKey(word))
-                {
-                    var variableInfoControl = new VariableInfo(CobolFile.Variables[word], this) { Dock = DockStyle.Fill };
-                    splitContainerRight.Panel2.Controls.Add(variableInfoControl);
+                var variableInfoControl = new VariableInfo(CobolFile.Variables[word], this) { Dock = DockStyle.Fill };
+                splitContainerRight.Panel2.Controls.Add(variableInfoControl);
 
-                    if (findInCode)
-                        codeBox.FindNext(word, false, false, true, true);
+                if (findInCode)
+                    codeBox.FindNext(word, false, false, true, true);
 
-                    return;
-                }
-
-                // 4. Is the word a procedure?
-                var procedure = CobolFile.CobolTree.GetAllProcedures().FirstOrDefault(proc => proc.Name == word);
-                if (procedure != null)
-                {
-                    var procedureInfoControl = new ProcedureInfo(procedure) { Dock = DockStyle.Fill };
-                    splitContainerRight.Panel2.Controls.Add(procedureInfoControl);
-
-                    if (findInCode)
-                        codeBox.FindNext(@"^.{7}" + word + @"(\.| +USING| OF)", false, true, false, true);
-
-                    return;
-                }
+                return;
             }
 
-            var fileInfoControl = new ProgramInfo(CobolFile, this) { Dock = DockStyle.Fill };
-            splitContainerRight.Panel2.Controls.Add(fileInfoControl);
+            // 5. Is the word a procedure?
+            var procedure = CobolFile.CobolTree.GetAllProcedures().FirstOrDefault(proc => proc.Name == word);
+            if (procedure != null)
+            {
+                var procedureInfoControl = new ProcedureInfo(procedure, this) { Dock = DockStyle.Fill };
+                splitContainerRight.Panel2.Controls.Add(procedureInfoControl);
+
+                procedureInfoControl.OnWordSelected += (o, args) => ShowWordInfo(args.Word, true);
+
+                if (findInCode)
+                    codeBox.FindNext(@"^.{7}" + word + @"(\.| +USING| OF)", false, true, false, true);
+
+                return;
+            }
+
+            var fileInfoControl2 = new ProgramInfo(CobolFile, this) { Dock = DockStyle.Fill };
+            splitContainerRight.Panel2.Controls.Add(fileInfoControl2);
         }
 
         private void HandleKeyDown(object sender, KeyEventArgs e)

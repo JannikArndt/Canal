@@ -1,9 +1,8 @@
-﻿using Model;
+﻿using Model.File;
 using Model.References;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Model.File;
 
 namespace Canal.UserControls.WordInfoViews
 {
@@ -21,7 +20,7 @@ namespace Canal.UserControls.WordInfoViews
 
         private void FillCallTreeView(CobolFile cobolFile)
         {
-            if (cobolFile.CobolTree == null)
+            if (cobolFile == null || cobolFile.CobolTree == null)
             {
                 return;
             }

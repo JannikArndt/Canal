@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Model.File;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Model.File;
 
 namespace Model.References
 {
