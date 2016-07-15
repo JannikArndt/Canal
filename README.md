@@ -1,6 +1,10 @@
 # Canal
 "CANAL Cobol Analyzer" is a tool for editing and analyzing COBOL files
 
+See [http://jannikarndt.github.io/Canal/](http://jannikarndt.github.io/Canal/) for more info!
+
+![](http://jannikarndt.github.io/Canal/CanalScreenShot.png)
+
 Installation via www.jannikarndt.de/media/canal/Canal.application, requires .NET 4.5
 
 ##License
