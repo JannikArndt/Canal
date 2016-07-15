@@ -1,11 +1,10 @@
 ﻿using Canal.Properties;
 using Logging;
-using Model;
+using Model.File;
 using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using Model.File;
 
 namespace Canal.UserControls
 {
@@ -100,13 +99,16 @@ namespace Canal.UserControls
 
             var tabIndex = index < 0 ? _tabControl.SelectedIndex : index;
 
+            if (tabIndex < 0)
+                return false;
+
             var fileControl = (FileControl)_tabControl.TabPages[tabIndex].Controls.Find("FileControl", false).FirstOrDefault(tab => tab is FileControl);
 
             if (fileControl == null)
             {
                 try
                 {
-                    _tabControl.TabPages.RemoveAt(index);
+                    _tabControl.TabPages.RemoveAt(tabIndex);
                 }
                 catch (Exception exception)
                 {
