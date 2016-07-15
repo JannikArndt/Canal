@@ -94,7 +94,7 @@ namespace Canal.UserControls
 
         private void FilesTreeViewKeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter && filesTreeView.SelectedNode != null)
+            if (e.KeyCode == Keys.Enter && filesTreeView.SelectedNode != null && filesTreeView.SelectedNode.Tag != null)
             {
                 TryOpenFile(((FileReference)filesTreeView.SelectedNode.Tag).FilePath);
             }
@@ -148,7 +148,7 @@ namespace Canal.UserControls
 
             var expanded = filesTreeView.Nodes.Count > 0 && filesTreeView.Nodes[0].IsExpanded;
 
-            var searchText = filesTabSearchBox.Text == Resources.SearchPlaceholder ? "" : filesTabSearchBox.Text;
+            var searchText = filesTabSearchBox == null || filesTabSearchBox.Text == Resources.SearchPlaceholder ? "" : filesTabSearchBox.Text;
             var nodes = FileUtil.Instance.GetDirectoryStructure(searchText);
 
             if (NodesEqual(nodes, filesTreeView.Nodes))

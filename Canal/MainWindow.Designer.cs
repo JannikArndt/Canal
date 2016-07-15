@@ -35,10 +35,12 @@
             this.cOBOLFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cOBOLProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,6 +67,8 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.projectView = new Canal.UserControls.FilesView();
+            this.saveProjectDialog = new System.Windows.Forms.SaveFileDialog();
+            this.openProjectDialog = new System.Windows.Forms.OpenFileDialog();
             this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -92,10 +96,12 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripMenuItem,
             this.openToolStripMenuItem,
+            this.openProjectToolStripMenuItem,
             this.closeToolStripMenuItem,
             this.toolStripSeparator1,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
+            this.saveProjectToolStripMenuItem,
             this.exportToolStripMenuItem,
             this.toolStripSeparator2,
             this.exitToolStripMenuItem});
@@ -109,7 +115,7 @@
             this.cOBOLFileToolStripMenuItem,
             this.cOBOLProjectToolStripMenuItem});
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.newToolStripMenuItem.Text = "New";
             // 
             // cOBOLFileToolStripMenuItem
@@ -133,58 +139,74 @@
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItemClick);
+            // 
+            // openProjectToolStripMenuItem
+            // 
+            this.openProjectToolStripMenuItem.Name = "openProjectToolStripMenuItem";
+            this.openProjectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.O)));
+            this.openProjectToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.openProjectToolStripMenuItem.Text = "Open Project";
+            this.openProjectToolStripMenuItem.Click += new System.EventHandler(this.openProjectToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
             this.closeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.CloseToolStripMenuItemClick);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(192, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(215, 6);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItemClick);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.S)));
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.saveAsToolStripMenuItem.Text = "Save As...";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAsToolStripMenuItemClick);
+            // 
+            // saveProjectToolStripMenuItem
+            // 
+            this.saveProjectToolStripMenuItem.Name = "saveProjectToolStripMenuItem";
+            this.saveProjectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.saveProjectToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.saveProjectToolStripMenuItem.Text = "Save Project";
+            this.saveProjectToolStripMenuItem.Click += new System.EventHandler(this.saveProjectToolStripMenuItem_Click);
             // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
             this.exportToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.exportToolStripMenuItem.Text = "Export";
             this.exportToolStripMenuItem.Click += new System.EventHandler(this.ExportToolStripMenuItemClick);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(192, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(215, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItemClick);
             // 
@@ -372,6 +394,17 @@
             this.projectView.Size = new System.Drawing.Size(190, 738);
             this.projectView.TabIndex = 0;
             // 
+            // saveProjectDialog
+            // 
+            this.saveProjectDialog.Filter = "Canal Project File|*.canal";
+            this.saveProjectDialog.RestoreDirectory = true;
+            this.saveProjectDialog.Title = "Save Project...";
+            // 
+            // openProjectDialog
+            // 
+            this.openProjectDialog.Filter = "Canal Project File|*.canal";
+            this.openProjectDialog.Title = "Open Project...";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -433,6 +466,10 @@
         private System.Windows.Forms.ToolStripMenuItem showFilesViewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cOBOLFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cOBOLProjectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openProjectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveProjectToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveProjectDialog;
+        private System.Windows.Forms.OpenFileDialog openProjectDialog;
     }
 }
 

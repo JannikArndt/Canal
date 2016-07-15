@@ -188,13 +188,13 @@
             // 
             // CancelButton1
             // 
-            this.CancelButton1.Enabled = false;
             this.CancelButton1.Location = new System.Drawing.Point(452, 227);
             this.CancelButton1.Name = "CancelButton1";
             this.CancelButton1.Size = new System.Drawing.Size(129, 23);
             this.CancelButton1.TabIndex = 8;
             this.CancelButton1.Text = "Cancel";
             this.CancelButton1.UseVisualStyleBackColor = true;
+            this.CancelButton1.Click += new System.EventHandler(this.CancelButton1_Click);
             // 
             // pictureBox1
             // 

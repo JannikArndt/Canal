@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Windows.Forms;
 
 namespace Canal
 {
     public partial class MainWindow
     {
+        #region File
+
         private void OpenToolStripMenuItemClick(object sender, EventArgs e)
         {
             OpenFile();
@@ -15,6 +16,18 @@ namespace Canal
         {
             CloseFile();
         }
+
+        private void saveProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveProject();
+        }
+
+        private void openProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenProject();
+        }
+
+        #endregion
 
         private void Level88ToEnumConverterToolStripMenuItemClick(object sender, EventArgs e)
         {
@@ -33,9 +46,9 @@ namespace Canal
 
         private void NewProjectToolStripMenuItemClick(object sender, EventArgs e)
         {
-            MessageBox.Show("Project files are not supported in this version of Canal.", "Not supported.",
-                MessageBoxButtons.OK);
-            // NewProject();
+            //MessageBox.Show("Project files are not supported in this version of Canal.", "Not supported.",
+            //    MessageBoxButtons.OK);
+            NewProject();
         }
 
         private void showFilesViewToolStripMenuItem_Click(object sender, EventArgs e)

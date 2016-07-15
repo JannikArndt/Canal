@@ -1,13 +1,12 @@
 ﻿using Canal.UserControls;
+using Model.File;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Net;
-using Model.File;
 
 namespace Canal
 {
     using Logging;
-    using Model;
     using Properties;
     using System;
     using System.Collections.Generic;
@@ -158,7 +157,7 @@ namespace Canal
 
         public void NewProject()
         {
-            ProjectUtil.Instance.CreateNewProject();
+            ProjectUtil.Instance.ShowProjectAssistant();
         }
 
         public void OpenFile(string filename, Variable currentVar = null)
@@ -240,6 +239,42 @@ namespace Canal
             {
                 _tabUtil.CurrentFileControl.Save(saveFileDialog.FileName);
                 _tabUtil.SetTabName(_tabUtil.CurrentFileControl.CobolFile.FileReference.ProgramName);
+            }
+        }
+
+        public void SaveProject()
+        {
+            if (ProjectUtil.Instance.Current == null)
+                return;
+
+            if (string.IsNullOrWhiteSpace(ProjectUtil.Instance.CurrentFilename))
+            {
+                saveProjectDialog.InitialDirectory = ProjectUtil.Instance.Current.FilesRoot;
+                saveProjectDialog.FileName = ProjectUtil.Instance.Current.Name;
+            }
+
+            var dialogResult = saveProjectDialog.ShowDialog();
+
+            if (dialogResult == DialogResult.OK)
+            {
+                ProjectUtil.Instance.Save(saveProjectDialog.FileName);
+            }
+        }
+
+        public void OpenProject()
+        {
+            if (ProjectUtil.Instance.Current != null)
+            {
+                var result = MessageBox.Show("Close current project without saving?", "Warning", MessageBoxButtons.YesNo);
+                if (result == DialogResult.No)
+                    return;
+            }
+
+            var dialogResult = openProjectDialog.ShowDialog();
+
+            if (dialogResult == DialogResult.OK)
+            {
+                ProjectUtil.Instance.Open(openProjectDialog.FileName);
             }
         }
 

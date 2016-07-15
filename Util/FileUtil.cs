@@ -253,6 +253,9 @@ namespace Util
 
         private bool HasAllowedEnding(FileReference fileReference)
         {
+            if (fileReference == null)
+                return false;
+
             return HasAllowedEnding(fileReference.FilePath);
         }
 

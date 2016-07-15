@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace Model.References
 {
+    [DataContract(IsReference = true)]
     public class FileReference
     {
         public FileReference(string fileSystemEntry)
@@ -20,21 +22,26 @@ namespace Model.References
         /// <summary>
         /// Filename without extension
         /// </summary>
-        public string ProgramName { get; }
+        [DataMember]
+        public string ProgramName { get; private set; }
 
         /// <summary>
         /// Name of leaf-directory
         /// </summary>
-        public string Directory { get; }
+        [DataMember]
+        public string Directory { get; private set; }
 
         /// <summary>
         /// Full path
         /// </summary>
-        public string FilePath { get; }
+        [DataMember]
+        public string FilePath { get; private set; }
 
+        [DataMember]
         public CobolFile CobolFile { get; set; }
 
-        public List<Procedure> ReferencedIn { get; }
+        [DataMember]
+        public List<Procedure> ReferencedIn { get; private set; }
 
         public override string ToString()
         {

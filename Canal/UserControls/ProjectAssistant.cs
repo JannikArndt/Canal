@@ -1,4 +1,5 @@
 ﻿using Canal.Properties;
+using Logging;
 using Model.Project;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,14 @@ namespace Canal.UserControls
     public partial class ProjectAssistant : Form
     {
         public bool Success { get; set; }
+
+        public bool Cancelled { get; set; }
+
+        public CobolProject Result { get; private set; }
+
+        private readonly BackgroundWorker _folderWorker = new BackgroundWorker();
+
+        private readonly BackgroundWorker _analysisWorker = new BackgroundWorker();
 
         public ProjectAssistant()
         {
@@ -42,7 +51,7 @@ namespace Canal.UserControls
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(FolderTextBox.Text))
+            if (string.IsNullOrWhiteSpace(FolderTextBox.Text) || !Directory.Exists(FolderTextBox.Text))
             {
                 MessageBox.Show("Please enter a valid filepath.", Resources.Error, MessageBoxButtons.OK);
                 return;
@@ -54,17 +63,32 @@ namespace Canal.UserControls
                 return;
             }
 
-            var project = new CobolProject(NameTextBox.Text, FolderTextBox.Text, new List<string>(FileTypesCheckedListBox.CheckedItems.Cast<string>()));
-
-            var worker = new BackgroundWorker();
-            worker.DoWork += ProjectUtil.Instance.CreateProject;
-            worker.ProgressChanged += (o, args) => ProgressBar.Increment(1);
-            worker.RunWorkerCompleted += (o, args) =>
+            try
             {
-                Success = true;
-                Close();
-            };
-            worker.RunWorkerAsync(project);
+                ProgressBar.Visible = true;
+
+                var project = new CobolProject(NameTextBox.Text, FolderTextBox.Text, new List<string>(FileTypesCheckedListBox.CheckedItems.Cast<string>()));
+
+                _analysisWorker.DoWork += ProjectUtil.Instance.LoadFiles;
+                _analysisWorker.WorkerReportsProgress = true;
+                _analysisWorker.ProgressChanged += (o, args) => ProgressBar.Value = args.ProgressPercentage;
+                _analysisWorker.RunWorkerCompleted += (o, args) =>
+                {
+                    if (Cancelled)
+                        return;
+
+                    ProgressBar.Visible = false;
+                    Result = args.Result as CobolProject;
+                    Success = Result != null;
+                    Close();
+                };
+                _analysisWorker.RunWorkerAsync(project);
+            }
+            catch (Exception exception)
+            {
+                Logger.Error("Project creation failed: {0}.", exception.Message);
+                MessageBox.Show("Project creation failed: " + exception.Message, Resources.Error, MessageBoxButtons.OK);
+            }
         }
 
         private void FolderTextBox_TextChanged(object sender, EventArgs e)
@@ -106,12 +130,29 @@ namespace Canal.UserControls
         {
             ProgressLabel.Text = "";
 
-            var folderWorker = new BackgroundWorker();
-            folderWorker.DoWork += (o, args) => FileUtil.Instance.AnalyzeFolder(dir);
-            folderWorker.RunWorkerCompleted +=
-                (o, args) => ProgressLabel.Text = FileUtil.Instance.CountValidFiles(dir) + @" Files found.";
+            if (!File.Exists(dir))
+                return;
 
-            folderWorker.RunWorkerAsync();
+            _folderWorker.DoWork += (o, args) => FileUtil.Instance.AnalyzeFolder(dir);
+            _folderWorker.RunWorkerCompleted +=
+                (o, args) =>
+                {
+                    if (!Cancelled) ProgressLabel.Text = FileUtil.Instance.CountValidFiles(dir) + @" Files found.";
+                };
+
+            _folderWorker.RunWorkerAsync();
+        }
+
+        private void CancelButton1_Click(object sender, EventArgs e)
+        {
+            if (_analysisWorker.WorkerSupportsCancellation)
+                _analysisWorker.CancelAsync();
+
+            if (_folderWorker.WorkerSupportsCancellation)
+                _folderWorker.CancelAsync();
+
+            Cancelled = true;
+            Close();
         }
     }
 }
