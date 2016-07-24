@@ -408,19 +408,19 @@
   <data name="CollapseAllButton_Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsAAAA7AAWrWiQkAAAA+SURBVDhPYxhc4Nu3b/+JxVAtqAAk4eTkRBDTx4AP7z9i
+        YQUAAAAJcEhZcwAADr8AAA6/ATgFUyQAAAA+SURBVDhPYxhc4Nu3b/+JxVAtqAAk4eTkRBDTx4AP7z9i
         YPobwBA8B47JMgAd09cAfJi2BhCLoVqGPmBgAABFsVfkaPROQAAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="ExpandAllButton_Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsEAAA7BAbiRa+0AAABISURBVDhPYxhc4Nu3b/+JxVAtqAAk4eTkRBDTx4AP7z9i
+        YQUAAAAJcEhZcwAADsAAAA7AAWrWiQkAAABISURBVDhPYxhc4Nu3b/+JxVAtqAAk4eTkRBDTx4AP7z9i
         YLIMYAieQ74BIM0wTJYBMENgbLIMQMYkGYAP09YAYjFUy9AHDAwALXVUItsXe+wAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="ProcedureDivisionMissing_Text" xml:space="preserve">
-    <value>The file contains a Identification, Environment and Data Division, but no Procedure Division. This might be hidden in a copy book. You can insert code from copy books and re-run analysis. Open copy book selection now?</value>
+    <value>The file contains an Identification, Environment and Data Division, but no Procedure Division. This might be hidden in a copy book. You can insert code from copy books and re-run analysis. Open copy book selection now?</value>
   </data>
   <data name="ProcedureDivisionMissing_Title" xml:space="preserve">
     <value>Procedure Division missing</value>

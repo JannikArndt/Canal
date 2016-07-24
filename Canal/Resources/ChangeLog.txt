@@ -1,4 +1,9 @@
-﻿v2.6
+﻿v2.7
+- Added support for PIC ---.--9,99 types
+- Added support for procedure sections in copy book
+- Improved analysis stability
+
+v2.6
 - Bugfix: FilesView continues to update, even if only one directory is left
 - Bugfix: Fixed error if file was already closed before analysis finished
 - Fixed "Referenced By" in procedure-info

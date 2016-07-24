@@ -258,7 +258,7 @@ namespace Canal.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The file contains a Identification, Environment and Data Division, but no Procedure Division. This might be hidden in a copy book. You can insert code from copy books and re-run analysis. Open copy book selection now?.
+        ///   Looks up a localized string similar to The file contains an Identification, Environment and Data Division, but no Procedure Division. This might be hidden in a copy book. You can insert code from copy books and re-run analysis. Open copy book selection now?.
         /// </summary>
         internal static string ProcedureDivisionMissing_Text {
             get {
