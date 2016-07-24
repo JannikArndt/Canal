@@ -71,20 +71,20 @@ namespace Canal.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to v2.4
-        ///- Redesigned files view and table of content
+        ///   Looks up a localized string similar to v2.7
+        ///- Added support for PIC ---.--9,99 types
+        ///- Improved analysis stability
         ///
-        ///v2.3
-        ///- Tidied up tab area: former Performs view is now integrated into Table of Contents and searchable
-        ///- Improved info area: Programs, procedures and variables have their own view with context sensitive information
+        ///v2.6
+        ///- Bugfix: FilesView continues to update, even if only one directory is left
+        ///- Bugfix: Fixed error if file was already closed before analysis finished
+        ///- Fixed &quot;Referenced By&quot; in procedure-info
+        ///- Added double click functionality for procedure info view
         ///
-        ///v2.2.3
-        ///- Fixed bug where WordInfo (if you double click on a variable) would not show the root variable
-        ///
-        ///v2.2.2
-        ///- Recent files and file-type-selection work again
-        ///- Missing REDEFINES-references doesn&apos;t crash analysis anymore
-        ///- Fixed  [rest of string was truncated]&quot;;.
+        ///v2.5
+        ///- Fix: Double clicking a word does not jump to first occurrence in code
+        ///- TOC sort remembers last used sort kind
+        ///- Added expand all and collapse all buttons to  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ChangeLog {
             get {
@@ -98,6 +98,24 @@ namespace Canal.Properties {
         internal static string CloseTab {
             get {
                 return ResourceManager.GetString("CloseTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Code has changed. Re-run analysis now?.
+        /// </summary>
+        internal static string CodeHasChanged_Text {
+            get {
+                return ResourceManager.GetString("CodeHasChanged_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Code has changed.
+        /// </summary>
+        internal static string CodeHasChanged_Title {
+            get {
+                return ResourceManager.GetString("CodeHasChanged_Title", resourceCulture);
             }
         }
         
@@ -236,6 +254,24 @@ namespace Canal.Properties {
         internal static string MultipleFilesMatchSearch {
             get {
                 return ResourceManager.GetString("MultipleFilesMatchSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The file contains a Identification, Environment and Data Division, but no Procedure Division. This might be hidden in a copy book. You can insert code from copy books and re-run analysis. Open copy book selection now?.
+        /// </summary>
+        internal static string ProcedureDivisionMissing_Text {
+            get {
+                return ResourceManager.GetString("ProcedureDivisionMissing_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Procedure Division missing.
+        /// </summary>
+        internal static string ProcedureDivisionMissing_Title {
+            get {
+                return ResourceManager.GetString("ProcedureDivisionMissing_Title", resourceCulture);
             }
         }
         

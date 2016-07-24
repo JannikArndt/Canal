@@ -64,9 +64,20 @@ namespace Canal.UserControls
 
             var worker = new BackgroundWorker();
             worker.DoWork += new Analyzer().AnalyzeFile;
+            worker.RunWorkerCompleted += CheckPlausability;
             worker.RunWorkerCompleted += InitTabs;
             worker.RunWorkerCompleted += SetFoldingMarkers;
             worker.RunWorkerAsync(CobolFile);
+        }
+
+        private void CheckPlausability(object sender, RunWorkerCompletedEventArgs runWorkerCompletedEventArgs)
+        {
+            if (CobolFile.DivisionsAndSection.ProcedureMissing())
+            {
+                var result = MessageBox.Show(Resources.ProcedureDivisionMissing_Text, Resources.ProcedureDivisionMissing_Title, MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                    InsertCopybooksIntoSource();
+            }
         }
 
         private void SetFoldingMarkers(object sender, RunWorkerCompletedEventArgs runWorkerCompletedEventArgs)
@@ -455,6 +466,12 @@ namespace Canal.UserControls
                     };
 
                     worker.RunWorkerCompleted += (sender, args) => codeBox.SetTextAsync(CobolFile.Text);
+                    worker.RunWorkerCompleted += (sender, args) =>
+                    {
+                        var result = MessageBox.Show(Resources.CodeHasChanged_Text, Resources.CodeHasChanged_Title, MessageBoxButtons.YesNo);
+                        if (result == DialogResult.Yes)
+                            AnalyzeFile();
+                    };
 
                     worker.RunWorkerAsync();
                 }

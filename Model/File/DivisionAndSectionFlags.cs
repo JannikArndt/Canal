@@ -18,5 +18,11 @@
         {
             return Identification.HasValue && Environment.HasValue && Data.HasValue && Procedure.HasValue;
         }
+
+        public bool ProcedureMissing()
+        {
+            return Identification.HasValue && Environment.HasValue && Environment.Value > Identification.Value
+                   && Data.HasValue && Data.Value > Environment.Value && (!Procedure.HasValue || Procedure.Value == 0);
+        }
     }
 }
