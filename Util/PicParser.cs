@@ -81,6 +81,13 @@ namespace Util
                 return new Pic9V9(decimalPointIndex, picPartResolved.Length - decimalPointIndex - 1);
             }
 
+            var commaIndex = picPartResolved.IndexOf(',');
+            if (commaIndex > -1)
+            {
+                // PIC ---.--9,99
+                return new Pic9V9(commaIndex, picPartResolved.Length - commaIndex - 1);
+            }
+
             // PIC 99
             if (picPartResolved.All(c => c == '9'))
                 return new Pic9(picPartResolved.Length);

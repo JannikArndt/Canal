@@ -1,9 +1,8 @@
 using Logging;
-using Model;
+using Model.File;
 using System;
 using System.ComponentModel;
 using System.Linq;
-using Model.File;
 using Util.Exceptions;
 
 namespace Util
@@ -39,16 +38,24 @@ namespace Util
         /// </summary>
         private void AnalyzeVariables(CobolFile cobolFile)
         {
-            cobolFile.Variables = VariablesUtil.Instance.AnalyzeVariables(cobolFile);
-
-            foreach (var copyReference in cobolFile.CopyReferences.AsParallel())
+            try
             {
-                copyReference.CobolFile.Variables = VariablesUtil.Instance.AnalyzeVariables(copyReference.CobolFile);
-                foreach (var variablePair in copyReference.CobolFile.Variables)
+                cobolFile.Variables = VariablesUtil.Instance.AnalyzeVariables(cobolFile);
+
+                foreach (var copyReference in cobolFile.CopyReferences.AsParallel())
                 {
-                    cobolFile.Variables.TryAdd(variablePair.Key, variablePair.Value);
+                    copyReference.CobolFile.Variables = VariablesUtil.Instance.AnalyzeVariables(copyReference.CobolFile);
+                    foreach (var variablePair in copyReference.CobolFile.Variables)
+                    {
+                        cobolFile.Variables.TryAdd(variablePair.Key, variablePair.Value);
+                    }
                 }
             }
+            catch (Exception exception)
+            {
+                Logger.Error("Error analyzing variable for file '{0}': {1}", cobolFile.Name, exception.Message);
+            }
+
         }
 
         /// <summary>
