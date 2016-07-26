@@ -91,6 +91,10 @@ namespace Canal
             Export();
         }
 
+        private void revertChangesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RevertChanges();
+        }
 
         private void nextTabToolStripMenuItem_Click(object sender, EventArgs e)
         {

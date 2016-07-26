@@ -300,6 +300,17 @@ namespace Canal
             }
         }
 
+        public void RevertChanges()
+        {
+            if (_tabUtil.CurrentFileControl == null)
+                return;
+
+            var result = MessageBox.Show(Resources.RevertChanges_Text, Resources.RevertChanges_Title, MessageBoxButtons.OKCancel);
+
+            if (result == DialogResult.OK)
+                _tabUtil.CurrentFileControl.RevertChanges();
+        }
+
         public void CloseFile()
         {
             _tabUtil.CloseTab();

@@ -161,6 +161,11 @@ namespace Canal.UserControls
             return codeBox.Html;
         }
 
+        public void RevertChanges()
+        {
+            codeBox.SetTextAsync(CobolFile.Text);
+        }
+
         public void Save(string filename = "")
         {
             if (!string.IsNullOrWhiteSpace(filename))

@@ -431,4 +431,10 @@
   <data name="CodeHasChanged_Title" xml:space="preserve">
     <value>Code has changed</value>
   </data>
+  <data name="RevertChanges_Text" xml:space="preserve">
+    <value>Really revert all changes to last saved version?</value>
+  </data>
+  <data name="RevertChanges_Title" xml:space="preserve">
+    <value>Revert Changes...</value>
+  </data>
 </root>

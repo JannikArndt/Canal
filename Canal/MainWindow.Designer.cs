@@ -69,6 +69,9 @@
             this.projectView = new Canal.UserControls.FilesView();
             this.saveProjectDialog = new System.Windows.Forms.SaveFileDialog();
             this.openProjectDialog = new System.Windows.Forms.OpenFileDialog();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.revertChangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -102,6 +105,9 @@
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.saveProjectToolStripMenuItem,
+            this.toolStripSeparator7,
+            this.revertChangesToolStripMenuItem,
+            this.toolStripSeparator6,
             this.exportToolStripMenuItem,
             this.toolStripSeparator2,
             this.exitToolStripMenuItem});
@@ -405,6 +411,23 @@
             this.openProjectDialog.Filter = "Canal Project File|*.canal";
             this.openProjectDialog.Title = "Open Project...";
             // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(215, 6);
+            // 
+            // revertChangesToolStripMenuItem
+            // 
+            this.revertChangesToolStripMenuItem.Name = "revertChangesToolStripMenuItem";
+            this.revertChangesToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.revertChangesToolStripMenuItem.Text = "Revert Changes...";
+            this.revertChangesToolStripMenuItem.Click += new System.EventHandler(this.revertChangesToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(215, 6);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -470,6 +493,9 @@
         private System.Windows.Forms.ToolStripMenuItem saveProjectToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveProjectDialog;
         private System.Windows.Forms.OpenFileDialog openProjectDialog;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem revertChangesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
     }
 }
 

@@ -73,6 +73,7 @@ namespace Canal.Properties {
         /// <summary>
         ///   Looks up a localized string similar to v2.7
         ///- Added support for PIC ---.--9,99 types
+        ///- Added support for procedure sections in copy book
         ///- Improved analysis stability
         ///
         ///v2.6
@@ -83,8 +84,7 @@ namespace Canal.Properties {
         ///
         ///v2.5
         ///- Fix: Double clicking a word does not jump to first occurrence in code
-        ///- TOC sort remembers last used sort kind
-        ///- Added expand all and collapse all buttons to  [rest of string was truncated]&quot;;.
+        ///- TOC sort remembers last used sort  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ChangeLog {
             get {
@@ -281,6 +281,24 @@ namespace Canal.Properties {
         internal static string ReallyCloseThisTab {
             get {
                 return ResourceManager.GetString("ReallyCloseThisTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Really revert all changes to last saved version?.
+        /// </summary>
+        internal static string RevertChanges_Text {
+            get {
+                return ResourceManager.GetString("RevertChanges_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Revert Changes....
+        /// </summary>
+        internal static string RevertChanges_Title {
+            get {
+                return ResourceManager.GetString("RevertChanges_Title", resourceCulture);
             }
         }
         
