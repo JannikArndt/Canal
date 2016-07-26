@@ -44,8 +44,10 @@ namespace Canal.UserControls
                 codeBox.TextChanged += (sender, args) =>
                 {
                     if (!UnsavedChanges && SavedVersionChanged != null)
+                    {
+                        UnsavedChanges = true;
                         SavedVersionChanged(sender, args);
-                    UnsavedChanges = true;
+                    }
                     saveButton.Enabled = true;
                 };
 

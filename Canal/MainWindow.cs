@@ -33,6 +33,24 @@ namespace Canal
 
             _tabUtil = new TabUtil(FileTabs, this);
             _tabUtil.ShowStartTab();
+
+            _tabUtil.SelectedTabChanged += UpdateMenuItems;
+            _tabUtil.SavedVersionChanged += UpdateMenuItems;
+            _tabUtil.FileSaved += UpdateMenuItems;
+            UpdateMenuItems(null, null);
+        }
+
+        private void UpdateMenuItems(object sender, EventArgs eventArgs)
+        {
+            var enabled = _tabUtil.CurrentFileControl != null && _tabUtil.CurrentFileControl.UnsavedChanges;
+
+            saveToolStripMenuItem.Enabled = enabled;
+            saveAsToolStripMenuItem.Enabled = enabled;
+            revertChangesToolStripMenuItem.Enabled = enabled;
+            exportToolStripMenuItem.Enabled = enabled;
+
+            insertCopybooksIntoSourceToolStripMenuItem.Enabled = _tabUtil.CurrentFileControl != null;
+            reRunAnalysisToolStripMenuItem.Enabled = _tabUtil.CurrentFileControl != null;
         }
 
         #region Overrides

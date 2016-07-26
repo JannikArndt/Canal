@@ -1,8 +1,10 @@
 ﻿using Canal.Properties;
+using FastColoredTextBoxNS.Events;
 using Logging;
 using Model.File;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -13,6 +15,16 @@ namespace Canal.UserControls
         private readonly TabControl _tabControl;
 
         private readonly MainWindow _parent;
+
+        public event EventHandler SelectedTabChanged
+        {
+            add { _tabControl.SelectedIndexChanged += value; }
+            remove { _tabControl.SelectedIndexChanged -= value; }
+        }
+
+        public event EventHandler<TextChangedEventArgs> SavedVersionChanged;
+
+        public event EventHandler<FileSystemEventArgs> FileSaved;
 
         public TabUtil(TabControl tabControl, MainWindow parent)
         {
@@ -86,6 +98,14 @@ namespace Canal.UserControls
             var newTab = new TabPage(fileControl.CobolFile.Name + "     X");
 
             fileControl.SavedVersionChanged += (sender, args) => SetTabName(@"* " + newTab.Text);
+            fileControl.SavedVersionChanged += (sender, args) =>
+            {
+                if (SavedVersionChanged != null) SavedVersionChanged(sender, args);
+            };
+            fileControl.FileSaved += (sender, args) =>
+            {
+                if (FileSaved != null) FileSaved(sender, args);
+            };
             fileControl.FileSaved += (sender, args) => SetTabName(newTab.Text.TrimStart('*', ' '));
 
             newTab.Controls.Add(fileControl);
