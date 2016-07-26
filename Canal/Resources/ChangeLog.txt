@@ -1,4 +1,11 @@
-﻿v2.7
+﻿v2.8
+- Added jumping to sections
+- Added command to revert all changes
+- Control + F now focusses search textbox instead of opening search window
+- Bugfix: Navigate backwards now includes lines from search and toc selection
+- Bugfix: Filenames for resolving copys now have to be an exact match
+
+v2.7
 - Added support for PIC ---.--9,99 types
 - Added support for procedure sections in copy book
 - Improved analysis stability
