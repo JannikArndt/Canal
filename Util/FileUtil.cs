@@ -102,7 +102,7 @@ namespace Util
             if (string.IsNullOrWhiteSpace(programName) || string.IsNullOrWhiteSpace(folderName))
                 return null;
 
-            return _files.AsParallel().Where(file => file.Key.Contains(programName) && file.Key.Contains(folderName)).Select(file => file.Value).First();
+            return _files.AsParallel().Where(file => file.Key.Contains(programName + ".") && file.Key.Contains(folderName)).Select(file => file.Value).First();
         }
 
         /// <summary>
