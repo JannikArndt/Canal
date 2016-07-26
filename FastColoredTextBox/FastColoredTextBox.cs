@@ -2317,7 +2317,7 @@ namespace FastColoredTextBoxNS
             if (LeftBracket2 != '\x0' && RightBracket2 != '\x0')
                 HighlightBrackets(LeftBracket2, RightBracket2, ref _leftBracketPosition2, ref _rightBracketPosition2);
             //remember last visit time
-            if (Selection.IsEmpty && Selection.Start.iLine < LinesCount)
+            if (Selection.Start.iLine < LinesCount)
             {
                 if (_lastNavigatedDateTime != _lines[Selection.Start.iLine].LastVisit)
                 {
