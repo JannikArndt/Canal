@@ -3617,9 +3617,9 @@ namespace FastColoredTextBoxNS
                     ShowGoToDialog();
                     break;
 
-                case FCTBAction.FindDialog:
-                    ShowFindDialog();
-                    break;
+                // case FCTBAction.FindDialog:
+                // ShowFindDialog();
+                // break;
 
                 case FCTBAction.FindChar:
                     _findCharMode = true;

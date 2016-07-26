@@ -282,6 +282,15 @@ namespace Canal.UserControls
                             TrySearch(false, true);
                             return;
                     }
+                else if (e.Control)
+                {
+                    switch (e.KeyCode)
+                    {
+                        case Keys.F:
+                            searchBox.Focus();
+                            return;
+                    }
+                }
                 else
                     switch (e.KeyCode)
                     {
