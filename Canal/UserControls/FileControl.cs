@@ -106,7 +106,7 @@ namespace Canal.UserControls
             var performMatch = Regex.Match(clickedLineText, Constants.Perform, RegexOptions.IgnoreCase);
             if (performMatch.Success)
             {
-                codeBox.FindNext(@"^.{7}" + performMatch.Groups[1].Value + @"(\.| +USING)", false, true, false, true);
+                codeBox.FindNext(@"^.{7}" + performMatch.Groups[1].Value + @"(\.| +USING| SECTION\.)", false, true, false, true);
                 return;
             }
 
@@ -263,6 +263,15 @@ namespace Canal.UserControls
 
                 if (findInCode)
                     codeBox.FindNext(@"^.{7}" + word + @"(\.| +USING| OF)", false, true, false, true);
+
+                return;
+            }
+
+            var section = CobolFile.CobolTree.GetAllSections().FirstOrDefault(sec => sec.Name == word);
+            if (section != null)
+            {
+                if (findInCode)
+                    codeBox.FindNext(@"^.{7}" + word + @"\.", false, true, false, true);
 
                 return;
             }
