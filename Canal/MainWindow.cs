@@ -35,9 +35,23 @@ namespace Canal
             _tabUtil.ShowStartTab();
 
             _tabUtil.SelectedTabChanged += UpdateMenuItems;
+            _tabUtil.SelectedTabChanged += UpdateWindowName;
             _tabUtil.SavedVersionChanged += UpdateMenuItems;
             _tabUtil.FileSaved += UpdateMenuItems;
             UpdateMenuItems(null, null);
+        }
+
+        private void UpdateWindowName(object sender, EventArgs e)
+        {
+            if (_tabUtil.CurrentFileControl != null)
+            {
+                Text = "CANAL - " + _tabUtil.CurrentFileControl.CobolFile.Name + " (" +
+                       _tabUtil.CurrentFileControl.CobolFile.FileReference.FilePath + ")";
+            }
+            else
+            {
+                Text = "CANAL Cobol Analyzer";
+            }
         }
 
         private void UpdateMenuItems(object sender, EventArgs eventArgs)
