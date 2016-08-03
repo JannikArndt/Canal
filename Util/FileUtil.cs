@@ -116,6 +116,7 @@ namespace Util
             if (!File.Exists(fileOrFolderPath))
             {
                 Logger.Error("Trying to analyze non-existent file or folder {0}.", fileOrFolderPath);
+                return;
             }
 
             try

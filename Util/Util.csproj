@@ -58,6 +58,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="RecentlyOpenedFile.cs" />
     <Compile Include="SortKind.cs" />
     <Compile Include="TableOfContentsWorker.cs" />
     <Compile Include="Settings.cs" />
