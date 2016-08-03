@@ -1,11 +1,10 @@
 ﻿using Logging;
-using Model;
+using Model.File;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
-using Model.File;
 
 namespace Util
 {
@@ -185,7 +184,7 @@ namespace Util
             return topNode;
         }
 
-        private void FindPerformsRecursively(TreeNode topNode, Procedure procedure, int depth = 5)
+        private void FindPerformsRecursively(TreeNode topNode, Procedure procedure, int depth = 8)
         {
             Logger.Info("Finding performs recursively for node {0}", topNode.Text);
 
@@ -206,6 +205,16 @@ namespace Util
                 if (tempNode.Text == procedure.Name)
                     return;
                 tempNode = tempNode.Parent;
+            }
+
+            if (procedure is Section)
+            {
+                foreach (var proc in ((Section)procedure).Procedures)
+                {
+                    var newNode = new TreeNode(proc.Name);
+                    topNode.Nodes.Add(newNode);
+                    FindPerformsRecursively(newNode, proc, depth - 1);
+                }
             }
 
             // create nodes for perform references and continue recusively
