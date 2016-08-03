@@ -1,7 +1,10 @@
-﻿using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using Logging;
 using Model.Enums;
+using Model.Exceptions;
 using Model.References;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Model.File
 {
@@ -28,6 +31,8 @@ namespace Model.File
 
         #endregion
 
+        private int _linesOfCode;
+
         public ConcurrentDictionary<Variable, UsedAs> VariableUsages { get; }
 
         public Procedure(CobolFile cobolFile, string name, int beginIndex, int endIndex) : base(cobolFile, name)
@@ -40,6 +45,28 @@ namespace Model.File
             IsReferencedBy = new List<PerformReference>();
             CallReferences = new List<FileReference>();
             VariableUsages = new ConcurrentDictionary<Variable, UsedAs>();
+        }
+
+        public int GetLinesOfCode()
+        {
+            if (_linesOfCode == 0)
+                _linesOfCode = GetCode().Split('\n', '\r').Count(text => !string.IsNullOrWhiteSpace(text)) - 1;
+
+            return _linesOfCode;
+        }
+
+        public int GetLinesOfCodeRecursively(int depth = 20)
+        {
+            if (depth == 0)
+            {
+                Logger.Warning("Recursion limit of {0} reached while looking for Lines of Code recursively in procedure {1}.", 20, Name);
+                throw new RecursionTooDeepException();
+            }
+
+            return GetLinesOfCode()
+                + PerformReferences.Where(pref => pref.Procedure.Name != Name).Sum(pref => pref.Procedure.GetLinesOfCodeRecursively(depth - 1))
+                   + GoToReferences.Where(gref => gref.Procedure.Name != Name).Sum(gref => gref.Procedure.GetLinesOfCodeRecursively(depth - 1));
+
         }
 
         public override string ToString()

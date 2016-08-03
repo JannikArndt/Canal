@@ -1,5 +1,6 @@
 ﻿using FastColoredTextBoxNS.Events;
 using Logging;
+using Model.Exceptions;
 using Model.File;
 using Model.References;
 using System;
@@ -25,9 +26,20 @@ namespace Canal.UserControls.WordInfoViews
             TreeView.DrawMode = TreeViewDrawMode.OwnerDrawText;
             TreeView.DrawNode += TreeViewOnDrawNode;
 
-            FillReferencesTreeView(procedure);
-            FillReferencedByTreeView(procedure);
-            FillVariableUsagesNode(procedure);
+            try
+            {
+                FillInformationLists(procedure);
+                FillVariableUsagesNode(procedure);
+
+                tableLayoutPanel1.RowStyles[0].Height = 26 * PerformsList.Items.Count;
+                tableLayoutPanel1.RowStyles[1].Height = 26 * GoTosList.Items.Count;
+                tableLayoutPanel1.RowStyles[2].Height = 26 * CallsList.Items.Count;
+                tableLayoutPanel1.RowStyles[3].Height = 26 * ReferencedByList.Items.Count;
+            }
+            catch (Exception exception)
+            {
+                Logger.Error("Error displaying information for Procedure {0}: {1}.", procedure.Name, exception.Message);
+            }
 
             TreeView.NodeMouseDoubleClick += TreeViewOnNodeMouseDoubleClick;
 
@@ -58,31 +70,38 @@ namespace Canal.UserControls.WordInfoViews
             }
         }
 
-        private void FillReferencesTreeView(Procedure procedure)
+        private void FillInformationLists(Procedure procedure)
         {
-            var referencesNode = new TreeNode("References") { Tag = "h1" };
-            TreeView.Nodes.Add(referencesNode);
+            foreach (var perform in procedure.PerformReferences.Select(pref => pref.ReferencedProcedure))
+            {
+                PerformsList.Items.Add(perform);
+            }
 
-            var performs = procedure.PerformReferences.Select(pref => new TreeNode(pref.ReferencedProcedure) { Tag = pref }).ToArray();
-            if (performs.Any())
-                referencesNode.Nodes.Add(new TreeNode("Performs", performs) { Tag = "h1" });
+            foreach (var perform in procedure.GoToReferences.Select(pref => pref.ReferencedProcedure))
+            {
+                GoTosList.Items.Add(perform);
+            }
 
-            var gotos = procedure.GoToReferences.Select(pref => new TreeNode(pref.ReferencedProcedure) { Tag = pref }).ToArray();
-            if (gotos.Any())
-                referencesNode.Nodes.Add(new TreeNode("GO TOs", gotos) { Tag = "h1" });
+            foreach (var perform in procedure.CallReferences.Select(pref => pref.ProgramName))
+            {
+                CallsList.Items.Add(perform);
+            }
 
-            var calls = procedure.CallReferences.Select(pref => new TreeNode(pref.ProgramName) { Tag = pref }).ToArray();
-            if (calls.Any())
-                referencesNode.Nodes.Add(new TreeNode("Calls", calls) { Tag = "h1" });
-        }
+            foreach (var perform in procedure.IsReferencedBy.DistinctBy(refProc => refProc.Procedure.Name).Select(pref => pref.ReferencedProcedure))
+            {
+                ReferencedByList.Items.Add(perform);
+            }
 
-        private void FillReferencedByTreeView(Procedure procedure)
-        {
-            var performs = procedure.IsReferencedBy.DistinctBy(refProc => refProc.Procedure.Name)
-                .Select(pref => new TreeNode(pref.ReferencedProcedure) { Tag = pref }).ToArray();
+            LinesOfCodeText.Text = procedure.GetLinesOfCode() + " Lines" + Environment.NewLine;
+            try
+            {
+                LinesOfCodeText.Text += procedure.GetLinesOfCodeRecursively() + " Lines incl. performs";
+            }
+            catch (RecursionTooDeepException)
+            {
+                LinesOfCodeText.Text += "Lines incl. performs not calculated due to recursion.";
+            }
 
-            if (performs.Any())
-                TreeView.Nodes.Add(new TreeNode("Referenced By", performs) { Tag = "h1" });
         }
 
         private void FillVariableUsagesNode(Procedure procedure)
@@ -153,6 +172,15 @@ namespace Canal.UserControls.WordInfoViews
                 components.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private void SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (OnWordSelected != null && ((ListBox)sender).SelectedItem != null)
+            {
+                OnWordSelected(this, new WordSelectedEventArgs(((ListBox)sender).SelectedItem.ToString()));
+                ((ListBox)sender).ClearSelected();
+            }
         }
     }
 }

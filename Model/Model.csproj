@@ -37,6 +37,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\CanalException.cs" />
+    <Compile Include="Exceptions\MultipleOccursException.cs" />
+    <Compile Include="Exceptions\RecursionTooDeepException.cs" />
+    <Compile Include="Exceptions\RedefinedVariableNotFoundException.cs" />
     <Compile Include="File\CobolFile.cs" />
     <Compile Include="File\CobolTree.cs" />
     <Compile Include="File\CobolTreeNode.cs" />

@@ -1,9 +1,9 @@
 using Logging;
+using Model.Exceptions;
 using Model.File;
 using System;
 using System.ComponentModel;
 using System.Linq;
-using Util.Exceptions;
 
 namespace Util
 {

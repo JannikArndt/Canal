@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Util.Exceptions
+namespace Model.Exceptions
 {
     public class MultipleOccursException : Exception
     {
