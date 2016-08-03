@@ -14,14 +14,11 @@ namespace Canal.UserControls.WordInfoViews
 {
     public partial class ProcedureInfo : UserControl
     {
-        private readonly FileControl _parent;
-
         public event EventHandler<WordSelectedEventArgs> OnWordSelected;
 
-        public ProcedureInfo(Procedure procedure, FileControl parent)
+        public ProcedureInfo(Procedure procedure)
         {
             InitializeComponent();
-            _parent = parent;
 
             TreeView.DrawMode = TreeViewDrawMode.OwnerDrawText;
             TreeView.DrawNode += TreeViewOnDrawNode;
@@ -31,10 +28,10 @@ namespace Canal.UserControls.WordInfoViews
                 FillInformationLists(procedure);
                 FillVariableUsagesNode(procedure);
 
-                tableLayoutPanel1.RowStyles[0].Height = 26 * PerformsList.Items.Count;
-                tableLayoutPanel1.RowStyles[1].Height = 26 * GoTosList.Items.Count;
-                tableLayoutPanel1.RowStyles[2].Height = 26 * CallsList.Items.Count;
-                tableLayoutPanel1.RowStyles[3].Height = 26 * ReferencedByList.Items.Count;
+                tableLayoutPanel1.RowStyles[0].Height = Math.Max(16, 13 * PerformsList.Items.Count) +6;
+                tableLayoutPanel1.RowStyles[1].Height = Math.Max(16, 13 * GoTosList.Items.Count) + 6;
+                tableLayoutPanel1.RowStyles[2].Height = Math.Max(16, 13 * CallsList.Items.Count) + 6;
+                tableLayoutPanel1.RowStyles[3].Height = Math.Max(16, 13 * ReferencedByList.Items.Count) + 6;
             }
             catch (Exception exception)
             {
@@ -175,6 +172,11 @@ namespace Canal.UserControls.WordInfoViews
         }
 
         private void SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PerformsList_DoubleClick(object sender, EventArgs e)
         {
             if (OnWordSelected != null && ((ListBox)sender).SelectedItem != null)
             {

@@ -230,16 +230,7 @@ namespace Canal.UserControls
                 return;
             }
 
-            // 3. Call Reference? Open file, keep Info
-            var callRef = CobolFile.CobolTree.CallReferences.FirstOrDefault(call => call.ProgramName == word);
-            if (callRef != null)
-            {
-                MainWindow.OpenFile(callRef.FilePath);
-                return;
-            }
-
-            // else dispose of current info
-
+            // dispose of current info
             foreach (Control control in splitContainerRight.Panel2.Controls)
             {
                 control.Dispose();
@@ -247,7 +238,7 @@ namespace Canal.UserControls
 
             splitContainerRight.Panel2.Controls.Clear();
 
-            // 4. Is the word a variable?
+            // 3. Is the word a variable?
             if (CobolFile.Variables.ContainsKey(word))
             {
                 var variableInfoControl = new VariableInfo(CobolFile.Variables[word], this) { Dock = DockStyle.Fill };
@@ -259,11 +250,11 @@ namespace Canal.UserControls
                 return;
             }
 
-            // 5. Is the word a procedure?
+            // 4. Is the word a procedure?
             var procedure = CobolFile.CobolTree.GetAllProcedures().FirstOrDefault(proc => proc.Name == word);
             if (procedure != null)
             {
-                var procedureInfoControl = new ProcedureInfo(procedure, this) { Dock = DockStyle.Fill };
+                var procedureInfoControl = new ProcedureInfo(procedure) { Dock = DockStyle.Fill, VerticalScroll = { Enabled = true } };
                 splitContainerRight.Panel2.Controls.Add(procedureInfoControl);
 
                 procedureInfoControl.OnWordSelected += (o, args) => ShowWordInfo(args.Word, true);
@@ -274,12 +265,21 @@ namespace Canal.UserControls
                 return;
             }
 
+            // 5. Is it a section?
             var section = CobolFile.CobolTree.GetAllSections().FirstOrDefault(sec => sec.Name == word);
             if (section != null)
             {
                 if (findInCode)
                     codeBox.FindNext(@"^.{7}" + word + @"\.", false, true, false, true);
 
+                return;
+            }
+
+            // 6. Call Reference? Open file, keep Info
+            var callRef = CobolFile.CobolTree.CallReferences.FirstOrDefault(call => call.ProgramName == word);
+            if (callRef != null)
+            {
+                MainWindow.OpenFile(callRef.FilePath);
                 return;
             }
 

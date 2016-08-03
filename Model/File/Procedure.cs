@@ -64,8 +64,10 @@ namespace Model.File
             }
 
             return GetLinesOfCode()
-                + PerformReferences.Where(pref => pref.Procedure.Name != Name).Sum(pref => pref.Procedure.GetLinesOfCodeRecursively(depth - 1))
-                   + GoToReferences.Where(gref => gref.Procedure.Name != Name).Sum(gref => gref.Procedure.GetLinesOfCodeRecursively(depth - 1));
+                + PerformReferences.Where(pref => pref.Procedure != null && pref.Procedure.Name != Name)
+                                   .Sum(pref => pref.Procedure.GetLinesOfCodeRecursively(depth - 1))
+                   + GoToReferences.Where(gref => gref.Procedure != null && gref.Procedure.Name != Name)
+                                   .Sum(gref => gref.Procedure.GetLinesOfCodeRecursively(depth - 1));
 
         }
 
