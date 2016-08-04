@@ -139,6 +139,7 @@
             this.recentFilesListView.BackColor = System.Drawing.SystemColors.Control;
             this.recentFilesListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.recentFilesListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.recentFilesListView.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.recentFilesListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.recentFilesListView.FormattingEnabled = true;
             this.recentFilesListView.ItemHeight = 16;
