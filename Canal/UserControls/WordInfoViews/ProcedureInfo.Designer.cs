@@ -23,10 +23,10 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.TreeView = new System.Windows.Forms.TreeView();
             this.PerformsList = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.LinesOfCodeText = new System.Windows.Forms.Label();
+            this.TreeView = new System.Windows.Forms.TreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -41,7 +41,7 @@
             this.tableLayoutPanel1.AutoSize = true;
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 138F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 241F));
             this.tableLayoutPanel1.Controls.Add(this.ReferencedByList, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.GoTosList, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.CallsList, 1, 2);
@@ -70,6 +70,7 @@
             // 
             this.ReferencedByList.BackColor = System.Drawing.SystemColors.Control;
             this.ReferencedByList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ReferencedByList.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ReferencedByList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ReferencedByList.FormattingEnabled = true;
             this.ReferencedByList.Location = new System.Drawing.Point(141, 123);
@@ -83,6 +84,7 @@
             // 
             this.GoTosList.BackColor = System.Drawing.SystemColors.Control;
             this.GoTosList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.GoTosList.Cursor = System.Windows.Forms.Cursors.Hand;
             this.GoTosList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GoTosList.FormattingEnabled = true;
             this.GoTosList.Location = new System.Drawing.Point(141, 43);
@@ -96,6 +98,7 @@
             // 
             this.CallsList.BackColor = System.Drawing.SystemColors.Control;
             this.CallsList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.CallsList.Cursor = System.Windows.Forms.Cursors.Hand;
             this.CallsList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CallsList.FormattingEnabled = true;
             this.CallsList.Location = new System.Drawing.Point(141, 83);
@@ -149,20 +152,11 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Performs";
             // 
-            // TreeView
-            // 
-            this.TreeView.BackColor = System.Drawing.SystemColors.Control;
-            this.TreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TreeView.Location = new System.Drawing.Point(0, 0);
-            this.TreeView.Name = "TreeView";
-            this.TreeView.Size = new System.Drawing.Size(379, 213);
-            this.TreeView.TabIndex = 7;
-            // 
             // PerformsList
             // 
             this.PerformsList.BackColor = System.Drawing.SystemColors.Control;
             this.PerformsList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.PerformsList.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PerformsList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PerformsList.FormattingEnabled = true;
             this.PerformsList.IntegralHeight = false;
@@ -193,6 +187,16 @@
             this.LinesOfCodeText.TabIndex = 13;
             this.LinesOfCodeText.Text = "Lines Of Code";
             this.LinesOfCodeText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // TreeView
+            // 
+            this.TreeView.BackColor = System.Drawing.SystemColors.Control;
+            this.TreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TreeView.Location = new System.Drawing.Point(0, 0);
+            this.TreeView.Name = "TreeView";
+            this.TreeView.Size = new System.Drawing.Size(379, 213);
+            this.TreeView.TabIndex = 7;
             // 
             // splitContainer1
             // 

@@ -20,6 +20,8 @@ namespace Canal.UserControls.WordInfoViews
         {
             InitializeComponent();
 
+            Logger.Info("Showing info for procedure {0}.", procedure.Name);
+
             TreeView.DrawMode = TreeViewDrawMode.OwnerDrawText;
             TreeView.DrawNode += TreeViewOnDrawNode;
 
@@ -28,7 +30,7 @@ namespace Canal.UserControls.WordInfoViews
                 FillInformationLists(procedure);
                 FillVariableUsagesNode(procedure);
 
-                tableLayoutPanel1.RowStyles[0].Height = Math.Max(16, 13 * PerformsList.Items.Count) +6;
+                tableLayoutPanel1.RowStyles[0].Height = Math.Max(16, 13 * PerformsList.Items.Count) + 6;
                 tableLayoutPanel1.RowStyles[1].Height = Math.Max(16, 13 * GoTosList.Items.Count) + 6;
                 tableLayoutPanel1.RowStyles[2].Height = Math.Max(16, 13 * CallsList.Items.Count) + 6;
                 tableLayoutPanel1.RowStyles[3].Height = Math.Max(16, 13 * ReferencedByList.Items.Count) + 6;

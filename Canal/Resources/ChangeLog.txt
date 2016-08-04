@@ -1,4 +1,9 @@
-﻿v2.9
+﻿v2.10
+- Many small improvements on glitches in 2.9
+- Current file name is now displayed in titlebar
+- New "Most recently used"
+
+v2.9
 - Fixed perform tree
 - Added "Lines of Code" information
 - Redesigned procedure view
