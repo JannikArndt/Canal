@@ -33,7 +33,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analyzer.cs" />
@@ -46,6 +49,7 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="FileUtil.cs" />
     <Compile Include="Literal.cs" />
+    <Compile Include="MostRecentlyUsed.cs" />
     <Compile Include="PicParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -58,7 +62,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="RecentlyOpenedFile.cs" />
     <Compile Include="SortKind.cs" />
     <Compile Include="TableOfContentsWorker.cs" />
     <Compile Include="Settings.cs" />

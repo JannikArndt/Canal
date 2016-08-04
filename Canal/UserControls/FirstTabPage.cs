@@ -1,8 +1,6 @@
 ﻿using Canal.Properties;
 using Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using Util;
 
@@ -38,14 +36,21 @@ namespace Canal.UserControls
 
         private void ShowRecentFiles()
         {
-            recentFilesListView.Items.Clear();
-            var hashSet = new HashSet<string>();
-            if (Util.Properties.Settings.Default.RecentFiles != null)
-                foreach (var file in Util.Properties.Settings.Default.RecentFiles)
-                    hashSet.Add(file);
+            var files = MostRecentlyUsed.Instance.GetFiles();
 
-            foreach (var file in hashSet.OrderBy(item => item))
+            if (files.None() && Util.Properties.Settings.Default.RecentFiles != null &&
+                Util.Properties.Settings.Default.RecentFiles.Count > 0)
+            {
+                MostRecentlyUsed.Instance.Import(Util.Properties.Settings.Default.RecentFiles);
+                files = MostRecentlyUsed.Instance.GetFiles();
+            }
+
+            recentFilesListView.Items.Clear();
+
+            foreach (var file in files)
+            {
                 recentFilesListView.Items.Add(file);
+            }
         }
 
         private void recentFilesListView_DoubleClick(object sender, EventArgs e)

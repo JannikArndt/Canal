@@ -100,8 +100,7 @@ namespace Canal.UserControls
         {
             if (string.IsNullOrWhiteSpace(folderBrowserDialog.SelectedPath))
             {
-                var recentFiles = Util.Properties.Settings.Default.RecentFiles;
-                var mostRecentFolder = recentFiles[recentFiles.Count - 1];
+                var mostRecentFolder = MostRecentlyUsed.Instance.GetMostRecentFile();
                 folderBrowserDialog.SelectedPath = Path.GetDirectoryName(mostRecentFolder);
             }
 
