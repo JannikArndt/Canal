@@ -18,8 +18,8 @@ namespace Canal.UserControls.WordInfoViews
 
             VariableInfoTreeView.OnVariableSelected += (sender, clickedVariable) =>
             {
-                if (variable.Root != null && variable.Root.CopyReference != null)
-                    _parent.MainWindow.OpenFile(variable.Root.CopyReference.FilePath, variable);
+                if (clickedVariable.Root != null && clickedVariable.Root.CopyReference != null)
+                    _parent.MainWindow.OpenFile(clickedVariable.Root.CopyReference.FilePath, clickedVariable);
             };
         }
 

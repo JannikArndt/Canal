@@ -254,7 +254,7 @@ namespace Canal.UserControls
             var procedure = CobolFile.CobolTree.GetAllProcedures().FirstOrDefault(proc => proc.Name == word);
             if (procedure != null)
             {
-                var procedureInfoControl = new ProcedureInfo(procedure) { Dock = DockStyle.Fill, VerticalScroll = { Enabled = true } };
+                var procedureInfoControl = new ProcedureInfo(procedure, this) { Dock = DockStyle.Fill, VerticalScroll = { Enabled = true } };
                 splitContainerRight.Panel2.Controls.Add(procedureInfoControl);
 
                 procedureInfoControl.OnWordSelected += (o, args) => ShowWordInfo(args.Word, true, args.LookFor);

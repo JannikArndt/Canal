@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Model.Pictures;
+﻿using Model.Pictures;
 using Model.References;
+using System.Collections.Generic;
 
 namespace Model.File
 {
@@ -42,7 +42,7 @@ namespace Model.File
         {
             get
             {
-                if (ParentVariable == null) return null;
+                if (ParentVariable == null) return VariableLevel == 1 ? this : null;
 
                 var result = ParentVariable;
                 while ((result.VariableLevel != 1 || result.VariableLevel != 77) && result.ParentVariable != null)

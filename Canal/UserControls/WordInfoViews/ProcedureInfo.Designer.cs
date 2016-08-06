@@ -26,8 +26,8 @@
             this.PerformsList = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.LinesOfCodeText = new System.Windows.Forms.Label();
-            this.TreeView = new System.Windows.Forms.TreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.variableTreeView = new Canal.UserControls.WordInfoViews.VariableTreeView();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -184,16 +184,6 @@
             this.LinesOfCodeText.Text = "Lines Of Code";
             this.LinesOfCodeText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // TreeView
-            // 
-            this.TreeView.BackColor = System.Drawing.SystemColors.Control;
-            this.TreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TreeView.Location = new System.Drawing.Point(0, 0);
-            this.TreeView.Name = "TreeView";
-            this.TreeView.Size = new System.Drawing.Size(379, 213);
-            this.TreeView.TabIndex = 7;
-            // 
             // splitContainer1
             // 
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -209,11 +199,19 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.TreeView);
+            this.splitContainer1.Panel2.Controls.Add(this.variableTreeView);
             this.splitContainer1.Panel2MinSize = 0;
             this.splitContainer1.Size = new System.Drawing.Size(381, 437);
             this.splitContainer1.SplitterDistance = 218;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // variableTreeView
+            // 
+            this.variableTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.variableTreeView.Location = new System.Drawing.Point(0, 0);
+            this.variableTreeView.Name = "variableTreeView";
+            this.variableTreeView.Size = new System.Drawing.Size(379, 213);
+            this.variableTreeView.TabIndex = 0;
             // 
             // ProcedureInfo
             // 
@@ -242,7 +240,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TreeView TreeView;
         private System.Windows.Forms.ListBox PerformsList;
         private System.Windows.Forms.ListBox CallsList;
         private System.Windows.Forms.ListBox ReferencedByList;
@@ -250,5 +247,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label LinesOfCodeText;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private VariableTreeView variableTreeView;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Model.File;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -26,6 +27,12 @@ namespace Canal.UserControls.WordInfoViews
         public void SetTree(TreeNode node)
         {
             VariableInfoTreeView.Nodes.Add(node);
+            VariableInfoTreeView.ExpandAll();
+        }
+
+        public void SetTree(List<TreeNode> nodes)
+        {
+            VariableInfoTreeView.Nodes.AddRange(nodes.ToArray());
             VariableInfoTreeView.ExpandAll();
         }
 
