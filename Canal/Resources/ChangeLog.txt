@@ -1,4 +1,9 @@
-﻿v2.10
+﻿v2.11
+- "Referenced By" now jumps to the line where the "perform" is
+- Added support for multiline-variable-definitions
+- Reworked VariableTree
+
+v2.10
 - Many small improvements on glitches in 2.9
 - Current file name is now displayed in titlebar
 - New "Most recently used"
