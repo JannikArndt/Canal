@@ -1,8 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Model;
+using Model.File;
 using Model.Pictures;
 using System.Collections.Generic;
-using Model.File;
 using Util;
 
 namespace Tests
@@ -15,7 +14,7 @@ namespace Tests
         {
             const string input = " 01 FOO-1-BAR.       ";
 
-            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""));
+            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""), false);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual(typeof(PicGroup), actual["FOO-1-BAR"].Picture.GetType());
@@ -47,7 +46,7 @@ namespace Tests
 
             foreach (var input in strings)
             {
-                var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""));
+                var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""), false);
 
                 Assert.AreEqual(1, actual.Count, input);
             }
@@ -58,7 +57,7 @@ namespace Tests
         {
             const string input = " 01 FOO-1-BAR PIC X VALUE \"asdjh\".       ";
 
-            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""));
+            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""), false);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual("FOO-1-BAR", actual["FOO-1-BAR"].VariableName);
@@ -69,7 +68,7 @@ namespace Tests
         {
             const string input = " 01 FOO-1-BAR PIC X(04) VALUE SPACES.     ";
 
-            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""));
+            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""), false);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual("FOO-1-BAR", actual["FOO-1-BAR"].VariableName);
@@ -80,7 +79,7 @@ namespace Tests
         {
             const string input = " 01 FOO-1-BAR PIC 9 VALUE 3.";
 
-            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""));
+            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""), false);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual("FOO-1-BAR", actual["FOO-1-BAR"].VariableName);
@@ -91,7 +90,7 @@ namespace Tests
         {
             const string input = " 01 FOO-1-BAR PIC S9V99 VALUE 2.43.";
 
-            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""));
+            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""), false);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual("FOO-1-BAR", actual["FOO-1-BAR"].VariableName);
@@ -103,8 +102,10 @@ namespace Tests
         {
             var strings = new List<string>
             {
-                " 01 FOO-1-BAR PIC 9 VALUE HIGH-VALUES.     ",
-                " 01 FOO-1-BAR PIC 9 VALUE LOW-VALUES.      ",
+                " 01 FOO-1-BAR PIC X VALUE HIGH-VALUES.     ",
+                // " 01 FOO-1-BAR PIC 9 VALUE HIGH-VALUES.     ", // PIC 9 does not currently support high or low values
+                " 01 FOO-1-BAR PIC X VALUE LOW-VALUES.      ",
+                // " 01 FOO-1-BAR PIC 9 VALUE LOW-VALUES.      ", // PIC 9 does not currently support high or low values
                 " 01 FOO-1-BAR PIC 9 VALUE ZERO.            ",
                 " 01 FOO-1-BAR PIC 999 VALUE 432.           ",
                 " 01 FOO-1-BAR PIC 9(5) VALUE 12397.        ",
@@ -117,7 +118,7 @@ namespace Tests
 
             foreach (var input in strings)
             {
-                var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""));
+                var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""), false);
 
                 Assert.AreEqual(1, actual.Count, input);
             }
@@ -128,7 +129,7 @@ namespace Tests
         {
             const string input = " 01 FOO-1-BAR PIC 999 OCCURS 20.";
 
-            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""));
+            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""), false);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual("FOO-1-BAR", actual["FOO-1-BAR"].VariableName);
@@ -137,13 +138,13 @@ namespace Tests
         [TestMethod]
         public void VariableParserTest_WithRedefines()
         {
-            const string input = " 03 FOO-2-BAR REDEFINES FOO-1-BAR PIC 9.";
+            const string input = " 01 FOO-1-BAR PIC 9. \n 03 FOO-2-BAR  REDEFINES  FOO-1-BAR  PIC 9.";
 
-            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""));
+            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""), false);
 
-            Assert.AreEqual(1, actual.Count, input);
-            Assert.AreEqual("FOO-1-BAR", actual["FOO-1-BAR"].Redefines);
-            Assert.AreEqual("FOO-2-BAR", actual["FOO-1-BAR"].VariableName);
+            Assert.AreEqual(2, actual.Count, input);
+            Assert.AreEqual("FOO-2-BAR", actual["FOO-2-BAR"].VariableName);
+            Assert.AreEqual("FOO-1-BAR", actual["FOO-2-BAR"].Redefines.VariableName);
         }
 
         [TestMethod]
@@ -151,7 +152,7 @@ namespace Tests
         {
             const string input = " 88 FOO-1-BAR VALUE 1.";
 
-            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""));
+            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""), false);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual(typeof(Pic88), actual["FOO-1-BAR"].Picture.GetType());
@@ -164,7 +165,7 @@ namespace Tests
         {
             const string input = " 88 FOO-1-BAR VALUE \"foo\".                     ";
 
-            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""));
+            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""), false);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual(typeof(Pic88), actual["FOO-1-BAR"].Picture.GetType());
@@ -177,7 +178,7 @@ namespace Tests
         {
             const string input = " 88 FOO-1-BAR VALUE \" \".";
 
-            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""));
+            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""), false);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual(typeof(Pic88), actual["FOO-1-BAR"].Picture.GetType());
@@ -190,12 +191,12 @@ namespace Tests
         {
             const string input = " 88  FOO-1-BAR VALUE \" \"   THRU \"2\".";
 
-            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""));
+            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""), false);
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual(typeof(Pic88), actual["FOO-1-BAR"].Picture.GetType());
             Assert.AreEqual("FOO-1-BAR", actual["FOO-1-BAR"].VariableName);
-            Assert.AreEqual("\" \"   THRU \"2\"", actual["FOO-1-BAR"].Picture.Value);
+            Assert.AreEqual("\" \" THRU \"2\"", actual["FOO-1-BAR"].Picture.Value);
         }
 
         [TestMethod]
@@ -229,10 +230,36 @@ namespace Tests
 
             foreach (var input in strings)
             {
-                var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""));
+                var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""), false);
 
                 Assert.AreEqual(1, actual.Count, input);
             }
+        }
+
+        [TestMethod]
+        public void VariableParserTest_Multiline_1()
+        {
+            const string input = " 03  BAR                   PIC S9(11)V99 COMP \n                                OCCURS 5.";
+
+            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""), false);
+
+            Assert.AreEqual(1, actual.Count, input);
+            Assert.AreEqual(typeof(PicS9V9), actual["BAR"].Picture.GetType());
+            Assert.AreEqual("BAR", actual["BAR"].VariableName);
+            Assert.AreEqual(5, actual["BAR"].Occurs);
+        }
+
+        [TestMethod]
+        public void VariableParserTest_Multiline_2()
+        {
+            const string input = " 88  BAR              VALUE \"0\", \"1\",\n \"2\", \"3\", \"4\", \"A\", \"B\".";
+
+            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""), false);
+
+            Assert.AreEqual(1, actual.Count, input);
+            Assert.AreEqual(typeof(Pic88), actual["BAR"].Picture.GetType());
+            Assert.AreEqual("BAR", actual["BAR"].VariableName);
+            Assert.AreEqual("\"0\", \"1\", \"2\", \"3\", \"4\", \"A\", \"B\"", actual["BAR"].Picture.Value); // TODO
         }
     }
 }

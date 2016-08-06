@@ -19,17 +19,19 @@ namespace Util
             {
                 IPic result;
 
+                var trimmedValue = value.Replace("\n", "").Replace("\r", "").Replace("      ", " ").Replace("   ", " ").Replace("  ", " ").Trim();
+
                 if (type == "BINARY")
                     result = new PicBinary();
                 else if (valLevel == 88)
-                    result = new Pic88 { Value = value };
+                    result = new Pic88 { Value = trimmedValue };
                 else if (string.IsNullOrWhiteSpace(type))
                     result = new PicGroup();
                 else
                 {
                     result = ParsePicType(type) ?? new Pic88();
                     result.CompType = CompParser.Instance.Parse(comp);
-                    result.Value = value;
+                    result.Value = trimmedValue;
                 }
 
                 return result;

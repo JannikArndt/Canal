@@ -42,6 +42,7 @@ namespace Canal.UserControls.WordInfoViews
             VariableInfoTreeView.DrawNode += VariableInfoTreeViewOnDrawNode;
             VariableInfoTreeView.NodeMouseDoubleClick += (sender, args) =>
             {
+                if (VariableInfoTreeView.SelectedNode == null) return;
                 var clickedVariable = VariableInfoTreeView.SelectedNode.Tag as Variable;
                 if (clickedVariable != null && OnVariableSelected != null)
                     OnVariableSelected(this, clickedVariable);
@@ -61,10 +62,12 @@ namespace Canal.UserControls.WordInfoViews
 
             var nameWidth = NameWidth - e.Node.Level * LevelWidth;
 
+            var font = e.Node.NodeFont ?? VariableInfoTreeView.Font;
+
             // Level
             TextRenderer.DrawText(e.Graphics,
                                   variable.VariableLevel.ToString("D2"),
-                                  e.Node.NodeFont,
+                                  font,
                                   new Rectangle(e.Bounds.X, e.Bounds.Y, LevelWidth, e.Bounds.Height),
                                   Color.DarkGray,
                                   Color.Empty,
@@ -73,7 +76,7 @@ namespace Canal.UserControls.WordInfoViews
             // Name
             TextRenderer.DrawText(e.Graphics,
                                   variable.VariableName,
-                                  e.Node.NodeFont,
+                                  font,
                                   new Rectangle(e.Bounds.X + LevelWidth, e.Bounds.Y, nameWidth, e.Bounds.Height),
                                   (e.State & TreeNodeStates.Selected) != 0 ? SystemColors.HighlightText : e.Node.ForeColor,
                                   Color.Empty,
@@ -82,12 +85,12 @@ namespace Canal.UserControls.WordInfoViews
             // PIC
             if (variable.Picture != null)
                 TextRenderer.DrawText(e.Graphics,
-                                      variable.Picture.ToString(),
-                                      e.Node.NodeFont,
-                                      new Rectangle(e.Bounds.X + LevelWidth + nameWidth, e.Bounds.Y, PicWidth, e.Bounds.Height),
-                                      Color.DarkGray,
-                                      Color.Empty,
-                                      TextFormatFlags.VerticalCenter);
+                                  variable.Picture.ToString(),
+                                  font,
+                                  new Rectangle(e.Bounds.X + LevelWidth + nameWidth, e.Bounds.Y, PicWidth, e.Bounds.Height),
+                                  Color.DarkGray,
+                                  Color.Empty,
+                                  TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
         }
 
         /// <summary> 

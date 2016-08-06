@@ -19,7 +19,7 @@ namespace Util
         {
         }
 
-        public ConcurrentDictionary<string, Variable> AnalyzeVariables(CobolFile cobolFile)
+        public ConcurrentDictionary<string, Variable> AnalyzeVariables(CobolFile cobolFile, bool trim = true)
         {
             // FILLER; REDEFINES; OCCURS; SPACES; 66
             // [ "USAGE" [ "IS" ] ] ( "BINARY" | "COMP" | "COMP-1" | "COMP-2" | "COMP-3" | "COMP-4" | "COMPUTATIONAL" | "COMPUTATIONAL-1" | "COMPUTATIONAL-2" | "COMPUTATIONAL-3" | "COMPUTATIONAL-4" | "DISPLAY" | "DISPLAY-1" | "INDEX" | "PACKED-DECIMAL" | "POINTER" )
@@ -29,7 +29,7 @@ namespace Util
 
             try
             {
-                var trimmedText = TextUtil.Instance.TrimAllLines(cobolFile.Text);
+                var trimmedText = trim ? TextUtil.Instance.TrimAllLines(cobolFile.Text) : cobolFile.Text;
 
                 var regex = new Regex(Constants.Variable, Constants.CompiledMultilineCaseInsensitive);
                 var preparedText = trimmedText.Replace("\t", " ");
@@ -187,7 +187,7 @@ namespace Util
 
         public TreeNode ConvertToTreeNode(Variable variable)
         {
-            var result = new TreeNode(variable.GetLevelAndName()) { Tag = variable };
+            var result = new TreeNode(variable.GetLevelAndName()) { Tag = variable, ToolTipText = variable.Picture.Value };
 
             foreach (var child in variable.Variables)
             {

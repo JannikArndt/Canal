@@ -8,6 +8,7 @@ namespace Util
         public static readonly string Literal = @"([\w\d-()]+)";
         public static readonly string NamedLiteral = @"(?<literal>[\w\d-()]+)";
         public static readonly string OptSpaces = @" *";
+        public static readonly string OptNewLine = @"[ \n\r]*";
 
         public static readonly string Or = @"|";
 
@@ -38,15 +39,15 @@ namespace Util
 
         private static readonly string VarLevel = @"^[ ]+(?<level>\d\d)";
 
-        private static readonly string VarRedefines = @"(REDEFINES (?<redefines>[\w\d-()]+) *)?";
+        private static readonly string VarRedefines = @"(REDEFINES *(?<redefines>[\w\d-()]+))?";
 
         private static readonly string VarPicture = @"(BINARY|PIC(TURE)? (IS )?(-*\.-*)?(?<type>(X|9|S|V|-|,|\(\d+\))+) *(?<comp>COMP(UTATIONAL)?(-\d)?)?)?";
 
-        private static readonly string VarValue = @"((VALUE(S)?) (IS |ARE )?(?<value>(""[^""]+""|(\d*\.)?\d+|SPACE(S)?|ZERO(E)?(S)?|(HIGH-|LOW-)VALUES| +THROUGH +| +THRU +|, *)*))?";
+        private static readonly string VarValue = @"((VALUE(S)?) (IS |ARE )?(?<value>(""[^""]+""|(\d*\.)?\d+|SPACE(S)?|ZERO(E)?(S)?|(HIGH-|LOW-)VALUES| +THROUGH +| +THRU +|, *|\n|\r| )*))?";
 
         private static readonly string VarOccurs = @"(OCCURS (?<occurs>\d+))?";
 
-        public static readonly string Variable = VarLevel + OptSpaces + NamedLiteral + OptSpaces + VarRedefines + OptSpaces + VarPicture + OptSpaces + VarValue + OptSpaces + VarOccurs + OptSpaces + @"\.";
+        public static readonly string Variable = VarLevel + OptSpaces + NamedLiteral + OptNewLine + VarRedefines + OptNewLine + VarPicture + OptNewLine + VarValue + OptNewLine + VarOccurs + OptNewLine + @"\.";
 
         public static readonly Regex SectionRegex = new Regex(@"^.{6} (?<sectionName>[\w\d-]+ SECTION)\.", RegexOptions.Compiled | RegexOptions.Multiline);
 

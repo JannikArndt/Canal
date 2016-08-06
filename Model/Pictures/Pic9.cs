@@ -4,7 +4,7 @@ namespace Model.Pictures
 {
     public class Pic9 : IPic
     {
-        private int? value;
+        private long? value;
 
         public bool Negative { get; set; }
 
@@ -42,7 +42,7 @@ namespace Model.Pictures
         public virtual string Value
         {
             get { return value != null ? value.ToString() : null; }
-            set { this.value = string.IsNullOrWhiteSpace(value) ? (int?)null : value.StartsWith("ZERO") ? 0 : int.Parse(value); }
+            set { this.value = string.IsNullOrWhiteSpace(value) ? (long?)null : value.StartsWith("ZERO") ? 0 : long.Parse(value); }
         }
 
         public override string ToString()
