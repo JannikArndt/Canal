@@ -1,4 +1,5 @@
-﻿using FastColoredTextBoxNS.Events;
+﻿using Canal.Properties;
+using FastColoredTextBoxNS.Events;
 using Logging;
 using Model.Exceptions;
 using Model.File;
@@ -16,11 +17,15 @@ namespace Canal.UserControls.WordInfoViews
     {
         public event EventHandler<WordSelectedEventArgs> OnWordSelected;
 
+        private Procedure CurrentProcedure { get; set; }
+
         public ProcedureInfo(Procedure procedure)
         {
             InitializeComponent();
 
             Logger.Info("Showing info for procedure {0}.", procedure.Name);
+
+            CurrentProcedure = procedure;
 
             TreeView.DrawMode = TreeViewDrawMode.OwnerDrawText;
             TreeView.DrawNode += TreeViewOnDrawNode;
@@ -91,16 +96,16 @@ namespace Canal.UserControls.WordInfoViews
                 ReferencedByList.Items.Add(perform);
             }
 
-            LinesOfCodeText.Text = procedure.GetLinesOfCode() + " Lines" + Environment.NewLine;
+            LinesOfCodeText.Text = string.Format("{0} Lines", procedure.GetLinesOfCode()) + Environment.NewLine;
+
             try
             {
-                LinesOfCodeText.Text += procedure.GetLinesOfCodeRecursively() + " Lines incl. performs";
+                LinesOfCodeText.Text += string.Format("{0} Lines incl. performs", procedure.GetLinesOfCodeRecursively());
             }
             catch (RecursionTooDeepException)
             {
-                LinesOfCodeText.Text += "Lines incl. performs not calculated due to recursion.";
+                LinesOfCodeText.Text += Resources.ProcedureInfo_LinesOfCodeError;
             }
-
         }
 
         private void FillVariableUsagesNode(Procedure procedure)
@@ -173,18 +178,15 @@ namespace Canal.UserControls.WordInfoViews
             base.Dispose(disposing);
         }
 
-        private void SelectedIndexChanged(object sender, EventArgs e)
+        private void ProcedureList_DoubleClick(object sender, EventArgs e)
         {
+            if (OnWordSelected == null || ((ListBox)sender).SelectedItem == null) return;
 
-        }
+            var clickedProcedureName = ((ListBox)sender).SelectedItem.ToString();
+            var lookFor = sender == ReferencedByList ? CurrentProcedure.Name : "";
 
-        private void PerformsList_DoubleClick(object sender, EventArgs e)
-        {
-            if (OnWordSelected != null && ((ListBox)sender).SelectedItem != null)
-            {
-                OnWordSelected(this, new WordSelectedEventArgs(((ListBox)sender).SelectedItem.ToString()));
-                ((ListBox)sender).ClearSelected();
-            }
+            OnWordSelected(this, new WordSelectedEventArgs(clickedProcedureName, lookFor));
+            ((ListBox)sender).ClearSelected();
         }
     }
 }

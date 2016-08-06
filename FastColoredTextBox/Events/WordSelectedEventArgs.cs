@@ -6,9 +6,12 @@ namespace FastColoredTextBoxNS.Events
     {
         public string Word { get; }
 
-        public WordSelectedEventArgs(string word)
+        public string LookFor { get; }
+
+        public WordSelectedEventArgs(string word, string lookFor = "")
         {
             Word = word;
+            LookFor = lookFor;
         }
     }
 }

@@ -209,7 +209,7 @@ namespace Canal.UserControls
             }
         }
 
-        private void ShowWordInfo(string word = "", bool findInCode = false)
+        private void ShowWordInfo(string word = "", bool findInCode = false, string lookFor = "")
         {
             // 1. No CobolFile? Nothing to do.
             if (CobolFile == null)
@@ -257,10 +257,15 @@ namespace Canal.UserControls
                 var procedureInfoControl = new ProcedureInfo(procedure) { Dock = DockStyle.Fill, VerticalScroll = { Enabled = true } };
                 splitContainerRight.Panel2.Controls.Add(procedureInfoControl);
 
-                procedureInfoControl.OnWordSelected += (o, args) => ShowWordInfo(args.Word, true);
+                procedureInfoControl.OnWordSelected += (o, args) => ShowWordInfo(args.Word, true, args.LookFor);
 
                 if (findInCode)
+                {
                     codeBox.FindNext(@"^.{7}" + word + @"(\.| +USING| OF)", false, true, false, true);
+                    if (!string.IsNullOrWhiteSpace(lookFor))
+                        codeBox.FindNext(@"PERFORM +" + lookFor, false, true, false); // NOT first search
+
+                }
 
                 return;
             }

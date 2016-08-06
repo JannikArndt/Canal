@@ -71,20 +71,22 @@ namespace Canal.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to v2.7
-        ///- Added support for PIC ---.--9,99 types
-        ///- Added support for procedure sections in copy book
-        ///- Improved analysis stability
+        ///   Looks up a localized string similar to v2.10
+        ///- Many small improvements on glitches in 2.9
+        ///- Current file name is now displayed in titlebar
+        ///- New &quot;Most recently used&quot;
         ///
-        ///v2.6
-        ///- Bugfix: FilesView continues to update, even if only one directory is left
-        ///- Bugfix: Fixed error if file was already closed before analysis finished
-        ///- Fixed &quot;Referenced By&quot; in procedure-info
-        ///- Added double click functionality for procedure info view
+        ///v2.9
+        ///- Fixed perform tree
+        ///- Added &quot;Lines of Code&quot; information
+        ///- Redesigned procedure view
         ///
-        ///v2.5
-        ///- Fix: Double clicking a word does not jump to first occurrence in code
-        ///- TOC sort remembers last used sort  [rest of string was truncated]&quot;;.
+        ///v2.8
+        ///- Added jumping to sections
+        ///- Added command to revert all changes
+        ///- Control + F now focusses search textbox instead of opening search window
+        ///- Bugfix: Navigate backwards now includes lines from search and toc selection
+        ///- Bugfix: Filenames for resolving copys now have to be [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ChangeLog {
             get {
@@ -272,6 +274,15 @@ namespace Canal.Properties {
         internal static string ProcedureDivisionMissing_Title {
             get {
                 return ResourceManager.GetString("ProcedureDivisionMissing_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lines incl. performs not calculated due to recursion..
+        /// </summary>
+        internal static string ProcedureInfo_LinesOfCodeError {
+            get {
+                return ResourceManager.GetString("ProcedureInfo_LinesOfCodeError", resourceCulture);
             }
         }
         

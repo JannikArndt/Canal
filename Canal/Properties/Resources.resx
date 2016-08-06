@@ -437,4 +437,7 @@
   <data name="RevertChanges_Title" xml:space="preserve">
     <value>Revert Changes...</value>
   </data>
+  <data name="ProcedureInfo_LinesOfCodeError" xml:space="preserve">
+    <value>Lines incl. performs not calculated due to recursion.</value>
+  </data>
 </root>

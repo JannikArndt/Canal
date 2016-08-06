@@ -77,8 +77,7 @@
             this.ReferencedByList.Name = "ReferencedByList";
             this.ReferencedByList.Size = new System.Drawing.Size(235, 34);
             this.ReferencedByList.TabIndex = 10;
-            this.ReferencedByList.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged);
-            this.ReferencedByList.DoubleClick += new System.EventHandler(this.PerformsList_DoubleClick);
+            this.ReferencedByList.DoubleClick += new System.EventHandler(this.ProcedureList_DoubleClick);
             // 
             // GoTosList
             // 
@@ -91,8 +90,7 @@
             this.GoTosList.Name = "GoTosList";
             this.GoTosList.Size = new System.Drawing.Size(235, 34);
             this.GoTosList.TabIndex = 11;
-            this.GoTosList.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged);
-            this.GoTosList.DoubleClick += new System.EventHandler(this.PerformsList_DoubleClick);
+            this.GoTosList.DoubleClick += new System.EventHandler(this.ProcedureList_DoubleClick);
             // 
             // CallsList
             // 
@@ -105,8 +103,7 @@
             this.CallsList.Name = "CallsList";
             this.CallsList.Size = new System.Drawing.Size(235, 34);
             this.CallsList.TabIndex = 9;
-            this.CallsList.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged);
-            this.CallsList.DoubleClick += new System.EventHandler(this.PerformsList_DoubleClick);
+            this.CallsList.DoubleClick += new System.EventHandler(this.ProcedureList_DoubleClick);
             // 
             // label7
             // 
@@ -164,8 +161,7 @@
             this.PerformsList.Name = "PerformsList";
             this.PerformsList.Size = new System.Drawing.Size(235, 34);
             this.PerformsList.TabIndex = 8;
-            this.PerformsList.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged);
-            this.PerformsList.DoubleClick += new System.EventHandler(this.PerformsList_DoubleClick);
+            this.PerformsList.DoubleClick += new System.EventHandler(this.ProcedureList_DoubleClick);
             // 
             // label2
             // 
