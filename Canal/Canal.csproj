@@ -118,6 +118,12 @@
     <Compile Include="UserControls\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\FileListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\FileListBox.Designer.cs">
+      <DependentUpon>FileListBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\FileReferenceFilter.cs">
       <SubType>Form</SubType>
     </Compile>
