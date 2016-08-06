@@ -16,17 +16,10 @@ namespace Canal.UserControls.WordInfoViews
 
             VariableInfoTreeView.SetTree(treeNode);
 
-            //if (variable.Root != null && variable.Root.CopyReference != null)
-            //{
-            //    gotoFileButton.Visible = true;
-            //    gotoFileButton.Click += (sender, args) => _parent.MainWindow.OpenFile(variable.Root.CopyReference.FilePath, variable);
-            //}
-
             VariableInfoTreeView.OnVariableSelected += (sender, clickedVariable) =>
             {
                 if (variable.Root != null && variable.Root.CopyReference != null)
                     _parent.MainWindow.OpenFile(variable.Root.CopyReference.FilePath, variable);
-                // _parent.FindInCodeBox(clickedVariable.VariableName, false, false, false, true);
             };
         }
 
