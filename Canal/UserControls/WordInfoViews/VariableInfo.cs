@@ -1,7 +1,5 @@
-﻿using Model;
-using System.Drawing;
+﻿using Model.File;
 using System.Windows.Forms;
-using Model.File;
 using Util;
 
 namespace Canal.UserControls.WordInfoViews
@@ -14,20 +12,33 @@ namespace Canal.UserControls.WordInfoViews
         {
             InitializeComponent();
             _parent = parent;
-            FillVariableTreeView(variable);
+            var treeNode = FillVariableTreeView(variable);
+
+            VariableInfoTreeView.SetTree(treeNode);
+
+            //if (variable.Root != null && variable.Root.CopyReference != null)
+            //{
+            //    gotoFileButton.Visible = true;
+            //    gotoFileButton.Click += (sender, args) => _parent.MainWindow.OpenFile(variable.Root.CopyReference.FilePath, variable);
+            //}
+
+            VariableInfoTreeView.OnVariableSelected += (sender, clickedVariable) =>
+            {
+                if (variable.Root != null && variable.Root.CopyReference != null)
+                    _parent.MainWindow.OpenFile(variable.Root.CopyReference.FilePath, variable);
+                // _parent.FindInCodeBox(clickedVariable.VariableName, false, false, false, true);
+            };
         }
 
-        private void FillVariableTreeView(Variable variable)
+        private TreeNode FillVariableTreeView(Variable variable)
         {
             var newNode = VariablesUtil.Instance.ConvertToTreeNode(variable);
-
-            var parent = variable;
 
             if (variable.ParentVariable != null)
             {
                 // save variable node
                 var temp = newNode;
-                parent = variable.ParentVariable;
+                var parent = variable.ParentVariable;
 
                 // new node for parent variable
                 newNode = new TreeNode(variable.ParentVariable.GetLevelAndName()) { Tag = variable.ParentVariable };
@@ -52,62 +63,7 @@ namespace Canal.UserControls.WordInfoViews
                 }
             }
 
-            VariableInfoTreeView.DrawMode = TreeViewDrawMode.OwnerDrawText;
-            VariableInfoTreeView.DrawNode += VariableInfoTreeViewOnDrawNode;
-            VariableInfoTreeView.Nodes.Add(newNode);
-            VariableInfoTreeView.ExpandAll();
-
-            if (parent.CopyReference != null)
-            {
-                gotoFileButton.Visible = true;
-                gotoFileButton.Click += (sender, args) => _parent.MainWindow.OpenFile(parent.CopyReference.FilePath, variable);
-            }
-
-            VariableInfoTreeView.NodeMouseDoubleClick += (sender, args) =>
-            {
-                var vari = VariableInfoTreeView.SelectedNode.Tag as Variable;
-                if (vari != null)
-                    _parent.FindInCodeBox(vari.VariableName, false, false, false, true);
-            };
-        }
-
-        private void VariableInfoTreeViewOnDrawNode(object sender, DrawTreeNodeEventArgs e)
-        {
-            var variable = e.Node.Tag as Variable;
-            if (variable == null)
-                return;
-
-            var levelWidth = 20;
-            var nameWidth = 280 - e.Node.Level * 20;
-            var picWidth = 160;
-
-            // Level
-            TextRenderer.DrawText(e.Graphics,
-                                  variable.VariableLevel.ToString("D2"),
-                                  e.Node.NodeFont,
-                                  new Rectangle(e.Bounds.X, e.Bounds.Y, levelWidth, e.Bounds.Height),
-                                  Color.DarkGray,
-                                  Color.Empty,
-                                  TextFormatFlags.VerticalCenter);
-
-            // Name
-            TextRenderer.DrawText(e.Graphics,
-                                  variable.VariableName,
-                                  e.Node.NodeFont,
-                                  new Rectangle(e.Bounds.X + levelWidth, e.Bounds.Y, nameWidth, e.Bounds.Height),
-                                  (e.State & TreeNodeStates.Selected) != 0 ? SystemColors.HighlightText : e.Node.ForeColor,
-                                  Color.Empty,
-                                  TextFormatFlags.VerticalCenter);
-
-            // PIC
-            if (variable.Picture != null)
-                TextRenderer.DrawText(e.Graphics,
-                                      variable.Picture.ToString(),
-                                      e.Node.NodeFont,
-                                      new Rectangle(e.Bounds.X + levelWidth + nameWidth, e.Bounds.Y, picWidth, e.Bounds.Height),
-                                      Color.DarkGray,
-                                      Color.Empty,
-                                      TextFormatFlags.VerticalCenter);
+            return newNode;
         }
 
         /// <summary> 
@@ -116,7 +72,6 @@ namespace Canal.UserControls.WordInfoViews
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            VariableInfoTreeView.Nodes.Clear();
             VariableInfoTreeView.Dispose();
 
             if (disposing && (components != null))
