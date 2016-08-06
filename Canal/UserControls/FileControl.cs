@@ -55,7 +55,7 @@ namespace Canal.UserControls
             }
             catch (Exception exception)
             {
-                Logger.Error("Error initializing file control for CobolFile {0}: {1}", filename, exception.Message);
+                Logger.Error(exception, "Error initializing file control for CobolFile {0}: {1}", filename, exception.Message);
                 MessageBox.Show(Resources.ErrorMessage_FileControl_Constructor + exception.Message, Resources.Error, MessageBoxButtons.OK);
             }
         }
@@ -97,7 +97,7 @@ namespace Canal.UserControls
             }
             catch (Exception exception)
             {
-                Logger.Error("Error setting folding markers: {0}.", exception.Message);
+                Logger.Error(exception, "Error setting folding markers: {0}.", exception.Message);
             }
         }
 
@@ -204,7 +204,7 @@ namespace Canal.UserControls
             }
             catch (Exception exception)
             {
-                Logger.Error("Error initializing tabs for CobolFile {0}: {1}", CobolFile.Name, exception.Message);
+                Logger.Error(exception, "Error initializing tabs for CobolFile {0}: {1}", CobolFile.Name, exception.Message);
                 MessageBox.Show(Resources.ErrorMessage_FileControl_Constructor + exception.Message, Resources.Error, MessageBoxButtons.OK);
             }
         }
@@ -327,7 +327,7 @@ namespace Canal.UserControls
             }
             catch (Exception exception)
             {
-                Logger.Error("Error processing key event {0} with KeyCode {1}: {2}.", e.ToString(), e.KeyCode, exception.Message);
+                Logger.Error(exception, "Error processing key event {0} with KeyCode {1}: {2}.", e.ToString(), e.KeyCode, exception.Message);
             }
         }
 
@@ -342,7 +342,7 @@ namespace Canal.UserControls
             }
             catch (Exception exception)
             {
-                Logger.Error("Error trying to show selected word {0}: {1}.", eventArgs.Word, exception.Message);
+                Logger.Error(exception, "Error trying to show selected word {0}: {1}.", eventArgs.Word, exception.Message);
             }
         }
 
@@ -372,7 +372,7 @@ namespace Canal.UserControls
             }
             catch (Exception exception)
             {
-                Logger.Error("Error trying to search for {0}: {1}.", searchBox.Text, exception.GetType());
+                Logger.Error(exception, "Error trying to search for {0}: {1}.", searchBox.Text, exception.GetType());
             }
         }
 
@@ -508,7 +508,7 @@ namespace Canal.UserControls
             }
             catch (Exception exception)
             {
-                Logger.Error("Error trying to insert copybooks into source: {0}.", exception.Message);
+                Logger.Error(exception, "Error trying to insert copybooks into source: {0}.", exception.Message);
                 MessageBox.Show(string.Format("Error trying to insert copybooks into source: {0}.", exception.Message),
                     Resources.Error, MessageBoxButtons.OK);
             }

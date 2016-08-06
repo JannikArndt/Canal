@@ -17,7 +17,7 @@ namespace Canal
             InitializeComponent();
 
             _eventList = Logger.Singleton.GetEvents();
-            Logger.Singleton.Log += OnLog;
+            Logger.Singleton.All += OnLog;
 
             levelFilter.DataSource = Enum.GetValues(typeof(LoggingLevel));
 

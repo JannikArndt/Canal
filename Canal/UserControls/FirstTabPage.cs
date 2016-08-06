@@ -28,7 +28,7 @@ namespace Canal.UserControls
             }
             catch (Exception exception)
             {
-                Logger.Error("Error on startup (FirstTabPage) {0}: {1}", exception.GetType(), exception.Message);
+                Logger.Error(exception, "Error on startup (FirstTabPage) {0}: {1}", exception.GetType(), exception.Message);
             }
         }
 

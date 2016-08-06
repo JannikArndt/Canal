@@ -6,7 +6,7 @@ namespace Logging
     {
         static ConsoleLogger()
         {
-            Logger.Singleton.Log += (sender, msg) =>
+            Logger.Singleton.All += (sender, msg) =>
             {
                 Console.WriteLine("{0}:\t{1}", msg.Level.ToString(), msg.Message);
             };

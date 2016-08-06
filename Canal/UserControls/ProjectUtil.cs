@@ -38,7 +38,7 @@ namespace Canal.UserControls
             }
             catch (Exception exception)
             {
-                Logger.Error("Error on ProjectAssistant: {0}", exception.Message);
+                Logger.Error(exception, "Error on ProjectAssistant: {0}", exception.Message);
             }
 
         }
@@ -93,7 +93,7 @@ namespace Canal.UserControls
             }
             catch (Exception exception)
             {
-                Logger.Error("Error trying to save project at path {0}: {1}", fileName, exception.Message);
+                Logger.Error(exception, "Error trying to save project at path {0}: {1}", fileName, exception.Message);
                 MessageBox.Show("Error saving project: " + exception.Message, Resources.Error, MessageBoxButtons.OK);
             }
 
@@ -111,7 +111,7 @@ namespace Canal.UserControls
             }
             catch (Exception exception)
             {
-                Logger.Error("Error trying to open project at path {0}: {1}", fileName, exception.Message);
+                Logger.Error(exception, "Error trying to open project at path {0}: {1}", fileName, exception.Message);
                 MessageBox.Show("Error opening project: " + exception.Message, Resources.Error, MessageBoxButtons.OK);
             }
         }

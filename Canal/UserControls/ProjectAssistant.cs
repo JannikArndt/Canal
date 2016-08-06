@@ -86,7 +86,7 @@ namespace Canal.UserControls
             }
             catch (Exception exception)
             {
-                Logger.Error("Project creation failed: {0}.", exception.Message);
+                Logger.Error(exception, "Project creation failed: {0}.", exception.Message);
                 MessageBox.Show("Project creation failed: " + exception.Message, Resources.Error, MessageBoxButtons.OK);
             }
         }

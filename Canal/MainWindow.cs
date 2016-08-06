@@ -85,7 +85,7 @@ namespace Canal
             }
             catch (Exception exception)
             {
-                Logger.Error("Error trying to open files on startup {0}: {1}.",
+                Logger.Error(exception, "Error trying to open files on startup {0}: {1}.",
                     _openFilesOnStartup == null ? "_openFilesOnStartup is null" : string.Join(", ", _openFilesOnStartup),
                     exception.Message);
                 MessageBox.Show(Resources.ErrorMessage_MainWindow_OpenPrevious + exception.Message, Resources.Error, MessageBoxButtons.OK);
@@ -221,7 +221,7 @@ namespace Canal
             }
             catch (Exception exception)
             {
-                Logger.Error("Error opening file {0}: {1}", filename, exception.Message);
+                Logger.Error(exception, "Error opening file {0}: {1}", filename, exception.Message);
                 MessageBox.Show(Resources.ErrorMessage_MainWindow_ErrorLoadingFile + exception.Message, Resources.Error, MessageBoxButtons.OK);
             }
             finally
