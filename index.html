@@ -1,148 +1,149 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en-us">
-  <head>
+<head>
     <meta charset="UTF-8">
     <title>CANAL - Cobol Analyzer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-  </head>
-  <body>
-    <section class="page-header">
-	<img src="bridge.png" alt="">
-      <h1 class="project-name">CANAL Cobol Analyzer</h1>
-      <h2 class="project-tagline">Make COBOL great again ;-)</h2>
-      <a href="https://github.com/JannikArndt/Canal" class="btn">View on GitHub</a>
-      <a href="http://www.jannikarndt.de/media/canal/Canal.application" class="btn">&nbsp;&nbsp;&nbsp;Install App&nbsp;&nbsp;&nbsp;</a>
-    </section>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script>
+    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
 
-    <section class="main-content">
-	<img src="CanalScreenShot.png" alt="">
-      <h1>
-<a id="canal" class="anchor" href="#canal" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Canal</h1>
+    <div class="jumbotron text-center">
+        <img src="bridge.png" alt="">
+        <h1>CANAL &ndash; Cobol Analyzer</h1>
+        <h3>A free and open-source COBOL editor and analysis tool</h3>
+        <div class="m-b-3"></div>
+        <a href="https://github.com/JannikArndt/Canal" class="btn btn-default btn-lg">View on GitHub</a>
+        <a href="http://www.jannikarndt.de/media/canal/Canal.application" class="btn btn-success btn-lg">&nbsp;&nbsp;&nbsp;Install App&nbsp;&nbsp;&nbsp;</a>
 
-<p>CANAL Cobol Analyzer is an open source tool for editing and analyzing COBOL files, written by someone, who does that every day.</p>
+    </div>
+    <div class="container">
+        <img src="screenshots/screencast.gif" class="img-responsive center-block m-b-2" alt="">
 
-<ul>
-<li>Incredibly fast loading and syntax highlighting thanks to <a href="https://github.com/PavelTorgashov/FastColoredTextBox">FastColoredTextBox</a>.</li>
-<li>Beautiful code thanks to <a href="http://adobe-fonts.github.io/source-code-pro/">Source Code Pro</a> font and automatic formatting.</li>
-<li>Easily insert Copybooks into main code or open them in another tab.</li>
-<li>Extensive automatic analysis, allowing you to
-<ul>
-<li>View variable definition on double click (and jump to definition &ndash;even in copybooks&ndash; with just another click),</li>
-<li>See perform tree (which procedures call which other procedures?),</li>
-<li>Find all variables used in a procedure, and if they are input or output.</li>
-</ul>
-</ul>
+        <div class="section"></div>
+    </div>
+    <div class="jumbotron">
 
-<p>Installation via <a href="http://www.jannikarndt.de/media/canal/Canal.application">www.jannikarndt.de/media/canal/Canal.application</a>, requires .NET 4.5</p>
+        <div class="section container features">
+            <div class="row">
+                <div class="col-md-6 feature m-b-2">
+                    <img class="img-responsive img-margin" src="screenshots/navigation.png" />
+                    <h3>Find your way</h3>
+                    <p>
+                        Easily navigate through performs, gotos and calls, within one or between several files.
+                    </p>
+                </div>
+                <div class="col-md-6 feature m-b-2">
+                    <img class="img-responsive img-margin" src="screenshots/infoview.PNG" />
+                    <h3>Everything at a glance</h3>
+                    <p>
+                        Just double-click to see what a procedure references and what is it referenced by, as well as all variables it uses.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 feature m-b-2">
+                    <img class="img-responsive img-margin" src="screenshots/toc.PNG" />
+                    <h3>Structure uncovered</h3>
+                    <p>See your procedures sorted alphabetically, by sections or as a perform-hierarchy.</p>
+                </div>
 
-<h2>
-<a id="versionhistory" class="anchor" href="#versionhistory" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Version History</h2>
-also see <a href="https://github.com/JannikArndt/Canal/releases">https://github.com/JannikArndt/Canal/releases</a>
-<h3><a id="v2"></a>v2.0</h3>
-<ul>
-<li>Completely rewritten analysis algorithm</li>
-<li>Copybooks are now loaded automatically and do not need to be inserted into text</li>
-<li>New window when inserting copybooks into text</li>
-<li>New formatter for COBOL code! Works with selections and complete files</li>
-<li>More toolbar buttons, like undo, redo, new, open, save</li>
-<li>Horizontal lines mark sentence endings</li>
-<li>Markers on the left side mark Perform, Go To and Call statements</li>
-<li>Improved syntax highlighting</li>
-<li>Table of Contents can be ordered alphabetically and searched</li>
-<li>Issues can now also be reported anonymously via <a href="http://gitreports.com">gitreports.com</a></li>
-<li>Many small improvements and fixes</li>
-</ul>
-<h3><a id="v114_13"></a>v1.14</h3>
-<ul>
-<li>Opening a copy book from WordInfo now jumps to the variable definition</li>
-<li>Unsaved changes now prevent accidential closing of program</li>
-<li>Fixed syntax highlighting of reserved words in variable names</li>
-<li>Fixed variable parsing: PIC -9 is now recognized</li>
-</ul>
-<h3><a id="v113_19"></a>v1.13</h3>
-<ul>
-<li>"Open Copybook" now also works if copybook starts with comment</li>
-<li>"Resolve COPYs" can be executed multiple times</li>
-<li>Ctrl + Tab and Ctrl + Shift + Tab circle through tabs</li>
-<li>Alt + 1 to 9 selects tab directly</li>
-<li>Fixes #9: Start tab can now be closed.</li>
-</ul>
-<h3><a id="v112_26"></a>v1.12</h3>
-<ul>
-<li>Improved search</li>
-<li>Fixed error where search would skip elements</li>
-<li>Copy resolving is now parallel</li>
-<li>Already resolved Copys are commented out to prevent multiple resolvings</li>
-<li>Unsaved changes are marked with an asterisk</li>
-<li>Added "Open Copybook"-Button in Variable-view if the level-01-variable is from a copybook</li>
-</ul>
-<h3><a id="v111_34"></a>v1.11</h3>
-<ul>
-<li>opening a file is now 30x faster!</li>
-<li>sped up file loading, caching is now in background thread</li>
-<li>moved more analysis into background threads</li>
-<li>moved syntax highlighting into background thread</li>
-<li>improved logging</li>
-<li>stability improvements (try-catch)</li>
-</ul>
-<h3><a id="v110_42"></a>v1.10</h3>
-<ul>
-<li>added save functionality</li>
-<li>added export to html functionality</li>
-<li>improved variable info view</li>
-<li>you can now double click on a variable to find it in the source</li>
-<li>added navigate backward/forward buttons</li>
-</ul>
-<h3><a id="v19_49"></a>v1.9</h3>
-<ul>
-<li>Rebuild variable parsing</li>
-<li>Remodeled Info-view</li>
-<li>Various improvements</li>
-</ul>
-<h3><a id="v18_54"></a>v1.8</h3>
-<ul>
-<li>Fixed issue #8</li>
-<li>Added logging</li>
-<li>Added start screen</li>
-</ul>
-<h3><a id="v172_59"></a>v1.7.2</h3>
-<ul>
-<li>Stability and performance improvements</li>
-</ul>
-<h3><a id="v171_62"></a>v1.7.1</h3>
-<ul>
-<li>Bug fixes</li>
-</ul>
-<h3><a id="v17_65"></a>v1.7</h3>
-<ul>
-<li>Added multithreading for analysis</li>
-</ul>
-<h3><a id="v164_68"></a>v1.6.4</h3>
-<ul>
-<li>Stability improvements</li>
-</ul>
-<h3><a id="v163_71"></a>v1.6.3</h3>
-<ul>
-<li>Made SourceCodePro the default font</li>
-</ul>
+                <div class="col-md-6 feature m-b-2">
+                    <img class="img-responsive img-margin" src="screenshots/code.png" />
+                    <h3>Incredibly fast and beautiful</h3>
+                    <p>
+                        Based on the <a href="https://github.com/PavelTorgashov/FastColoredTextBox">FastColoredTextBox</a>-project and combined with Adobe's <a href="http://adobe-fonts.github.io/source-code-pro/">Source Code Pro</a> font, analysing COBOL was never more delightful. And all that in less then 4MB.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 feature m-b-2">
+                    <img class="img-responsive img-margin" src="screenshots/variables.PNG" />
+                    <h3>Where is that defined?</h3>
+                    <p>
+                        Just double-click on any variable to see its definition, double-click again to jump to the source.
+                    </p>
+                </div>
+                <div class="col-md-6 feature m-b-2">
+                    <img class="img-responsive img-margin" src="screenshots/copybooks.png" />
+                    <h3>Made for humans, not compilers.</h3>
+                    <p>
+                        Let CANAL find copy-books and insert them into the source code for you.
+                    </p>
+                </div>
 
-<h2>
-<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
 
-<p>Published under GNU General Public License v3.0</p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h1>More features</h1>
 
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/JannikArndt/Canal">Canal Cobol Analyzer</a> is maintained by <a href="https://github.com/JannikArndt">JannikArndt</a>.</span>
+        <div class="row m-b-3">
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">Code formatting</h4>
+                    </div>
+                    <img class="img-responsive" src="screenshots/formatting.PNG" width="100%">
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">Column selection</h4>
+                    </div>
+                    <img class="img-responsive" src="screenshots/columnselection.PNG" width="100%">
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">RegEx-search</h4>
+                    </div>
+                    <img class="img-responsive" src="screenshots/regex.PNG" width="100%">
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">Navigation</h4>
+                    </div>
+                    <img class="img-responsive" src="screenshots/backwardsForwards.PNG" width="100%">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">HTML export</h4>
+                    </div>
+                    <img class="img-responsive" src="screenshots/html.PNG" width="100%">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron">
+        <div class="container">
+            <h2>Links</h2>
+            <p>
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="http://www.jannikarndt.de/media/canal/Canal.application">Install App</a></li>
+                    <li class="list-group-item"><a href="https://github.com/JannikArndt/Canal/releases">Version History</a></li>
+                    <li class="list-group-item"><a href="https://github.com/JannikArndt/Canal/issues">Issues</a></li>
+                </ul>
+            </p>
+        </div>
+    </div>
+    <div class="container">
+        <p>CANAL is developed with dedication by <a href="http://www.jannikarndt.de">Jannik Arndt</a> in his spare time, used by him and his team every work day and licensed <a href="https://www.gnu.org/licenses/gpl-3.0.html">GPL v3.0</a>.</p>
+    </div>
+    <div class="m-b-3"></div>
 
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
-
-    </section>
-
-  
-  </body>
+</body>
 </html>
