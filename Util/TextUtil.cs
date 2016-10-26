@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Model.Exceptions;
 using Model.File;
 
 namespace Util
@@ -51,15 +52,37 @@ namespace Util
         public IEnumerable<FileReference> FindCopyReferences(string text, bool textIsTrimmed = false)
         {
             Logger.Info("Finding copy references...");
+            List<FileReference> references = new List<FileReference>();
 
+            //Finding copy references with explictily named folders
             var prefix = textIsTrimmed ? @"^" : @"^.{6}";
             var copyRegex = new Regex(prefix + Constants.Copy, RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
-
             var matches = copyRegex.Matches(text);
-            Logger.Info("Found {0} COPYs...", matches.Count);
+            references.AddRange(from Match match in matches.AsParallel()
+                   select FileUtil.Instance.GetFileReference(match.Groups["program"].Value, match.Groups["folder"].Value));
 
-            return from Match match in matches.AsParallel()
-                   select FileUtil.Instance.GetFileReference(match.Groups["program"].Value, match.Groups["folder"].Value);
+            //Finding copy references without explicitly named folders
+            copyRegex = new Regex(prefix + Constants.CopyWithoutFolder, RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            matches = copyRegex.Matches(text);
+            int notCopyableCnt = 0;
+            foreach(string programName in from Match match in matches.AsParallel() select match.Groups["program"].Value)
+            {
+                try
+                {
+                    references.Add(FileUtil.Instance.GetFileReferenceWithoutKnownFolderName(programName));
+                }
+                catch (CopiedRessourceNotIdentifiedDistinctlyByNameException e)
+                {
+                    Logger.Error(e.Message);
+                    notCopyableCnt++;
+                }
+            }
+
+            Logger.Info("Found {0} COPYs...", references.Count);
+            if (notCopyableCnt > 0)
+                Logger.Warning("{0} of the {1} found COPYs could not be copied due to indistinct references.", notCopyableCnt, references.Count);
+        
+            return references;
         }
 
         public void Insert(CobolFile file, FileReference copyReference)

@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using Model.Exceptions;
 using Util.Events;
 using Util.Properties;
 
@@ -103,6 +104,25 @@ namespace Util
                 return null;
 
             return _files.AsParallel().Where(file => file.Key.Contains(programName + ".") && file.Key.Contains(folderName)).Select(file => file.Value).First();
+        }
+
+        public FileReference GetFileReferenceWithoutKnownFolderName(string programName)
+        {
+            if (string.IsNullOrWhiteSpace(programName))
+                return null;
+
+
+            
+            ParallelQuery<FileReference> allFileReferencesWithGivenName =  _files.AsParallel().Where(file => file.Key.Contains(programName + ".")).Select(file => file.Value);
+            if (allFileReferencesWithGivenName.Count() > 1)
+            {
+                //exception
+                throw new CopiedRessourceNotIdentifiedDistinctlyByNameException(programName);
+            }
+            else
+            {
+                return allFileReferencesWithGivenName.First();
+            }
         }
 
         /// <summary>

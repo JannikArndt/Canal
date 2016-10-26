@@ -37,6 +37,8 @@ namespace Util
 
         public static readonly string Copy = @" *COPY (?<program>[\w]+) +OF +(?<folder>[\w]+)\.";
 
+        public static readonly string CopyWithoutFolder = @" *COPY (?<program>[\w]+)\.";
+
         private static readonly string VarLevel = @"^[ ]+(?<level>\d\d)";
 
         private static readonly string VarRedefines = @"(REDEFINES *(?<redefines>[\w\d-()]+))?";
