@@ -15,6 +15,8 @@ namespace Util
     {
         public static readonly TextUtil Instance = new TextUtil();
 
+        public event EventHandler<String> ErrorEventHandler;
+
         private TextUtil()
         {
         }
@@ -64,7 +66,11 @@ namespace Util
             //Finding copy references without explicitly named folders
             copyRegex = new Regex(prefix + Constants.CopyWithoutFolder, RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
             matches = copyRegex.Matches(text);
+
+            
             int notCopyableCnt = 0;
+            string notCopyableNames = "";
+
             foreach(string programName in from Match match in matches.AsParallel() select match.Groups["program"].Value)
             {
                 try
@@ -73,15 +79,22 @@ namespace Util
                 }
                 catch (CopiedRessourceNotIdentifiedDistinctlyByNameException e)
                 {
+                    //Handling not distincly selectable files
                     Logger.Error(e.Message);
                     notCopyableCnt++;
+                    notCopyableNames += "\n" + e.Filename;
                 }
             }
 
             Logger.Info("Found {0} COPYs...", references.Count);
             if (notCopyableCnt > 0)
-                Logger.Warning("{0} of the {1} found COPYs could not be copied due to indistinct references.", notCopyableCnt, references.Count);
-        
+            {
+                Logger.Warning("{0} of the {1} found COPYs could not be copied due to multiple occurences in the file system.",
+                    notCopyableCnt, references.Count);
+                ErrorEventHandler(this, notCopyableCnt + " of the " + references.Count + " found COPYs could not be copied due to multiple occurences in the file system. " +
+                    "Please try to specify their parent folders in your Cobol code using\n\"COPY Filename OF Directory\" instead of just\n\"COPY Filename\" and then re-run the analysis.\n\nAffected file(s):" + notCopyableNames);
+            }
+
             return references;
         }
 

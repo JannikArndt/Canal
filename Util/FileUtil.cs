@@ -106,21 +106,38 @@ namespace Util
             return _files.AsParallel().Where(file => file.Key.Contains(programName + ".") && file.Key.Contains(folderName)).Select(file => file.Value).First();
         }
 
+        /// <summary>
+        /// Method to find file references (more specific in the using context of this method: file references to copybooks) without a given parent folder.
+        /// Because there is no distinct location given, the selection of the file reference is based on a searching pattern:
+        /// If there is only one file with the given name in the cache, it's selected. If there are more than one, it's checked if only one of them ends
+        /// with the extension *.cbl. If that is true, this file reference is selected, if not an exception is thrown. This method could also search directly
+        /// for the filename + extension but that would cut out the possibility of loading files with functionally not correct extension like *.txt (in case their
+        /// name is unique).
+        /// </summary>
+        /// <param name="programName">The name of the program the file reference is wanted for.</param>
+        /// <returns>The file reference for the program.</returns>
         public FileReference GetFileReferenceWithoutKnownFolderName(string programName)
         {
             if (string.IsNullOrWhiteSpace(programName))
                 return null;
 
 
-            
+            //Selecting all files with the programName in the file cache ignoring the file extension.
             ParallelQuery<FileReference> allFileReferencesWithGivenName =  _files.AsParallel().Where(file => file.Key.Contains(programName + ".")).Select(file => file.Value);
+
+            //If more than one file of that name is found, a more specific search is done, icluding the file extension.
+            if (allFileReferencesWithGivenName.Count()>1)
+                allFileReferencesWithGivenName = _files.AsParallel().Where(file => file.Key.Contains(programName + ".cbl")).Select(file => file.Value);
+
+            
             if (allFileReferencesWithGivenName.Count() > 1)
             {
-                //exception
+                //If there is still more than one file, an exception is thrown, stating the fact, that a distinct file selection is impossible.
                 throw new CopiedRessourceNotIdentifiedDistinctlyByNameException(programName);
             }
             else
             {
+                //Else the found reference is returned.
                 return allFileReferencesWithGivenName.First();
             }
         }
