@@ -37,6 +37,11 @@ namespace Canal.UserControls.WordInfoViews
             VariableInfoTreeView.SelectedNode = selectedTreeNode;
         }
 
+        public void ScrollToSelectedNode()
+        {
+            VariableInfoTreeView.SelectedNode.EnsureVisible();
+        }
+
         public void SetTree(List<TreeNode> nodes)
         {
             VariableInfoTreeView.Nodes.AddRange(nodes.ToArray());
