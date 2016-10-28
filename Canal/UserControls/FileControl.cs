@@ -241,12 +241,14 @@ namespace Canal.UserControls
             // 3. Is the word a variable?
             if (CobolFile.Variables.ContainsKey(word))
             {
-                var variableInfoControl = new VariableInfo(CobolFile.Variables[word], this) { Dock = DockStyle.Fill };
+                VariableInfo variableInfoControl = new VariableInfo(CobolFile.Variables[word], this) { Dock = DockStyle.Fill };
                 splitContainerRight.Panel2.Controls.Add(variableInfoControl);
+
+                //Giving focus to the control so the double clicked variable stays highlighted.
+                variableInfoControl.Focus();
 
                 if (findInCode)
                     codeBox.FindNext(word, false, false, true, true);
-
                 return;
             }
 
