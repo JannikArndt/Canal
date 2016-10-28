@@ -82,7 +82,13 @@ namespace Util
                     //Handling not distincly selectable files
                     Logger.Error(e.Message);
                     notCopyableCnt++;
-                    notCopyableNames += "\n" + e.Filename;
+                    notCopyableNames += "\n" + e.Filename + " (multiple occurences in related folders)";
+                }
+                catch (CopiedRessourceNotFoundException e)
+                {
+                    Logger.Error(e.Message);
+                    notCopyableCnt++;
+                    notCopyableNames += "\n" + e.Filename + " (no occurences in related folders)";
                 }
             }
 
@@ -91,8 +97,10 @@ namespace Util
             {
                 Logger.Warning("{0} of the {1} found COPYs could not be copied due to multiple occurences in the file system.",
                     notCopyableCnt, references.Count);
-                ErrorEventHandler(this, notCopyableCnt + " of the " + references.Count + " found COPYs could not be copied due to multiple occurences in the file system. " +
-                    "Please try to specify their parent folders in your Cobol code using\n\"COPY Filename OF Directory\" instead of just\n\"COPY Filename\" and then re-run the analysis.\n\nAffected file(s):" + notCopyableNames);
+                ErrorEventHandler(this, notCopyableCnt + " of the " + references.Count + " found COPYs could not be copied due to multiple or no occurences in the file system. " +
+                    "To fix multiple occurences please try to specify their parent folders in your Cobol code using\n\"COPY Filename OF Directory\" instead of just\n\"COPY Filename\" and then re-run the analysis.\n"+
+                    "To fix no occurenecs please make sure the file is available in the related folders."+
+                    "\n\nAffected file(s):" + notCopyableNames);
             }
 
             return references;
