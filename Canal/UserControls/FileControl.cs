@@ -246,7 +246,6 @@ namespace Canal.UserControls
 
                 //Giving focus to the control so the double clicked variable stays highlighted.
                 variableInfoControl.Focus();
-                variableInfoControl.ScrollToSelectedVariable();
 
                 if (findInCode)
                     codeBox.FindNext(word, false, false, true, true);
