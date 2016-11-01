@@ -38,6 +38,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\CanalException.cs" />
+    <Compile Include="Exceptions\CopiedRessourceNotIdentifiedDistinctlyByNameException.cs" />
+    <Compile Include="Exceptions\CopiedRessourceNotFoundException.cs" />
     <Compile Include="Exceptions\MultipleOccursException.cs" />
     <Compile Include="Exceptions\RecursionTooDeepException.cs" />
     <Compile Include="Exceptions\RedefinedVariableNotFoundException.cs" />

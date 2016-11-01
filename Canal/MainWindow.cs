@@ -3,6 +3,7 @@ using Model.File;
 using System.Diagnostics;
 using System.Net;
 using Util;
+using Util.Events;
 
 namespace Canal
 {
@@ -19,6 +20,8 @@ namespace Canal
         private readonly TabUtil _tabUtil;
 
         private readonly string[] _openFilesOnStartup;
+
+        
 
         public MainWindow(string[] files = null)
         {
@@ -38,7 +41,11 @@ namespace Canal
             UpdateMenuItems(null, null);
 
             LoadMostRecentDirectory();
+            
+            TextUtil.Instance.ErrorEventHandler+=(sender, s) => MessageBox.Show(s, Resources.Error, MessageBoxButtons.OK);
         }
+
+        
 
         private void LoadMostRecentDirectory()
         {
