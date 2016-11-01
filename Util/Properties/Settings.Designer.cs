@@ -34,22 +34,7 @@ namespace Util.Properties {
                 this["FileTypeCob"] = value;
             }
         }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool FileTypeCbl
-        {
-            get
-            {
-                return ((bool)(this["FileTypeCbl"]));
-            }
-            set
-            {
-                this["FileTypeCbl"] = value;
-            }
-        }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
@@ -106,6 +91,30 @@ namespace Util.Properties {
             }
             set {
                 this["TocSort"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool FileTypeCbl {
+            get {
+                return ((bool)(this["FileTypeCbl"]));
+            }
+            set {
+                this["FileTypeCbl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowFileType {
+            get {
+                return ((bool)(this["ShowFileType"]));
+            }
+            set {
+                this["ShowFileType"] = value;
             }
         }
     }

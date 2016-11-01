@@ -14,6 +14,7 @@ namespace Model.References
             ReferencedIn = new List<Procedure>();
             FilePath = fileSystemEntry;
             ProgramName = Path.GetFileNameWithoutExtension(fileSystemEntry);
+            Extension = Path.GetExtension(fileSystemEntry);
             var folder = Path.GetDirectoryName(fileSystemEntry);
             if (folder != null)
                 Directory = folder.TrimEnd(Path.DirectorySeparatorChar).Substring(folder.LastIndexOf(Path.DirectorySeparatorChar) + 1);
@@ -24,6 +25,12 @@ namespace Model.References
         /// </summary>
         [DataMember]
         public string ProgramName { get; private set; }
+
+        /// <summary>
+        /// The extension of the file.
+        /// </summary>
+        [DataMember]
+        public string Extension { get; private set; }
 
         /// <summary>
         /// Name of leaf-directory

@@ -22,5 +22,17 @@ namespace Canal.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Bar")]
+        public string Foo {
+            get {
+                return ((string)(this["Foo"]));
+            }
+            set {
+                this["Foo"] = value;
+            }
+        }
     }
 }
