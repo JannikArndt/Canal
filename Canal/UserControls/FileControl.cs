@@ -41,6 +41,7 @@ namespace Canal.UserControls
                 codeBox.WordSelected += CodeBoxOnWordSelected;
                 codeBox.UndoRedoStateChanged += CodeBoxOnUndoRedoStateChanged;
                 codeBox.VisualMarkerClick += CodeBoxOnPerformMarkerClick;
+                codeBox.SelectionChanged+= CodeBoxOnSelectionChanged;
                 codeBox.TextChanged += (sender, args) =>
                 {
                     if (!UnsavedChanges && SavedVersionChanged != null)
@@ -355,6 +356,30 @@ namespace Canal.UserControls
             redoButton.Enabled = codeBox.RedoEnabled;
         }
 
+        private void CodeBoxOnSelectionChanged(object sender, EventArgs eventArgs)
+        {
+           tableOfContents.HighlightFirstMatchingNode(FindLastProcedureOrSectionOrDivisonNames(codeBox.Selection.FromLine));
+        }
+
+        /// <summary>
+        /// Filters all possible procedure, section and division names from the given line up to the start of the document.
+        /// This has to return a list of all possible names instead of just the next name as there is no way of finding a 
+        /// regex which distincly filters named names only. This list can be compared to the ToC later and the first match equals the contextual correct name. 
+        /// </summary>
+        /// <param name="lineNumber">The line number to search up from.</param>
+        /// <returns>A list of possible procedure, section and division names from the given line up.</returns>
+        private List<string> FindLastProcedureOrSectionOrDivisonNames(int lineNumber)
+        {
+            List<string> procedureNames = new List<string>();
+            for (int currentLineNumber = lineNumber; currentLineNumber >= 0; currentLineNumber--)
+            {
+                string currenctLineText = codeBox.GetLineText(currentLineNumber);
+                procedureNames.Add(Constants.ProcedureOrSectionOrDivisonRegex.Match(currenctLineText).Groups["name"].Value);
+            }
+         
+            return procedureNames;
+        }
+
         #endregion
 
         #region Search Box
@@ -518,5 +543,10 @@ namespace Canal.UserControls
         }
 
         #endregion
+
+        private void tableOfContents_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
