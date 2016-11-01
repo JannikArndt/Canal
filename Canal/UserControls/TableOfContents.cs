@@ -175,8 +175,8 @@ namespace Canal.UserControls
                 {
                     if (_lastHighlightedNode != node)
                     {
-                        node.BackColor = Color.Crimson;
-                        node.ForeColor = Color.DarkGray;
+                        node.BackColor = Color.FromArgb(1, 155, 205, 155);
+                        node.ForeColor = Color.FromArgb(1, 89, 140, 89);
 
                         if (_lastHighlightedNode != null)
                         {
