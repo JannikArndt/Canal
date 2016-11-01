@@ -24,6 +24,12 @@ namespace Canal.UserControls.WordInfoViews
             SetUpTreeView();
         }
 
+        //public void SetTree(TreeNode node)
+        //{
+        //    VariableInfoTreeView.Nodes.Add(node);
+        //    VariableInfoTreeView.ExpandAll();
+        //}
+
         public void SetTreeWithSelection(TreeNode node, TreeNode selectedTreeNode)
         {
             VariableInfoTreeView.Nodes.Add(node);
