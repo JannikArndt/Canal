@@ -126,19 +126,15 @@ namespace Util
             var allFileReferencesWithGivenName =  _files.AsParallel().Where(file => file.Key.Contains(programName + ".")).Select(file => file.Value).ToList();
 
 
-            if (!allFileReferencesWithGivenName.Any())
+            if (allFileReferencesWithGivenName.None())
                 //No file found, also no chance of finding it using the more precise filters below
                 throw new CopiedRessourceNotFoundException(programName);
             else if (allFileReferencesWithGivenName.Count() > 1)
             {
                 //If more than one file of that name is found, a more specific search is done, including the file extension.
                 allFileReferencesWithGivenName =
-                    _files.AsParallel()
-                        .Where(file => file.Key.Contains(programName + ".cbl"))
-                        .Select(file => file.Value)
-                        .ToList();
-
-
+                    (from file in allFileReferencesWithGivenName where file.FilePath.EndsWith(".cbl") select file).ToList();
+                    
                 if (allFileReferencesWithGivenName.Count() != 1)
                     //If there is still more than one file (or no file now), an exception is thrown, stating the fact, that a distinct file selection is impossible.
                     throw new CopiedRessourceNotIdentifiedDistinctlyByNameException(programName);
@@ -146,7 +142,6 @@ namespace Util
 
             //Else the found reference is returned.
             return allFileReferencesWithGivenName.First();
-            
         }
 
         /// <summary>
