@@ -175,7 +175,7 @@ namespace Canal.UserControls
             var node = nodeTexts.Select(FindNodeByName).FirstOrDefault(n => n != null);
 
             //No need to proceed if node is already highlighted or not found
-            if (node == null | node == _lastHighlightedNode) return;
+            if (node == null || node == _lastHighlightedNode) return;
 
             node.BackColor = Color.FromArgb(1, 155, 205, 155); //equals the runtime folding indicator color of the fast colored textbox which can't be referenced here because it's generated at runtime
             node.ForeColor = Color.FromArgb(1, 89, 140, 89);
@@ -202,13 +202,9 @@ namespace Canal.UserControls
         /// <returns>The matching node or null.</returns>
         private TreeNode FindNodeByName(string name)
         {
-            //var list =
-            //    (from n in tocTreeView.Nodes.Find("", true).Cast<TreeNode>() where n.Text.ToLower().Equals(name.ToLower()) select n).ToList();
-            //return list.Any() ? list.First() : null;
-
             return
                 tocTreeView.Nodes.Find("", true)
-                    .FirstOrDefault(node => node.Text.ToLower() == name.ToLower());
+                    .FirstOrDefault(node => node.Text.ToLowerInvariant() == name.ToLowerInvariant());
         }
         #endregion
 
