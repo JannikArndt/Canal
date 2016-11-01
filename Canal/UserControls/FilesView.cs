@@ -125,6 +125,7 @@ namespace Canal.UserControls
             Util.Properties.Settings.Default.FileTypeTxt = showFileTypes_txt.Checked;
             Util.Properties.Settings.Default.FileTypeSrc = showFileTypes_src.Checked;
             Util.Properties.Settings.Default.FileTypeCustom = showFileTypes_custom.Text;
+            Util.Properties.Settings.Default.ShowFileType = showFileTypes.Checked;
             Util.Properties.Settings.Default.Save();
         }
 
@@ -138,6 +139,7 @@ namespace Canal.UserControls
             showFileTypes_txt.Checked = Util.Properties.Settings.Default.FileTypeTxt;
             showFileTypes_src.Checked = Util.Properties.Settings.Default.FileTypeSrc;
             showFileTypes_custom.Text = Util.Properties.Settings.Default.FileTypeCustom;
+            showFileTypes.Checked = Util.Properties.Settings.Default.ShowFileType;
         }
 
         #endregion

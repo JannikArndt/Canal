@@ -34,6 +34,8 @@ namespace Util
 
         private List<string> _allowedEndings = new List<string>();
 
+        private Boolean _showEndings;
+
         /// <summary>
         /// Loads the given file. Uses internal cache for file contents.
         /// </summary>
@@ -244,6 +246,11 @@ namespace Util
             if (!string.IsNullOrWhiteSpace(Settings.Default.FileTypeCustom)) _allowedEndings.Add(Settings.Default.FileTypeCustom);
         }
 
+        private void UpdateShowEndings()
+        {
+            _showEndings = Settings.Default.ShowFileType;
+        }
+
         public void ReduceDirectoriesToAllowedFiles()
         {
             _directoriesWithAllowedFiles = new ConcurrentDictionary<string, List<FileReference>>();
@@ -277,6 +284,8 @@ namespace Util
             if (_directoriesWithAllowedFiles == null || !_directoriesWithAllowedFiles.Any())
                 ReduceDirectoriesToAllowedFiles();
 
+            UpdateShowEndings();
+
             var result = new List<TreeNode>();
 
             // ReSharper disable once PossibleNullReferenceException Nope
@@ -284,7 +293,7 @@ namespace Util
             {
                 var foundFiles = _directoriesWithAllowedFiles[dir]
                     .Where(file => CultureInfo.CurrentCulture.CompareInfo.IndexOf(file.ProgramName, query, CompareOptions.IgnoreCase) >= 0)
-                    .Select(file => new TreeNode(file.ProgramName) { Tag = file }).ToArray();
+                    .Select(file => new TreeNode(_showEndings ? file.ProgramName + file.Extension : file.ProgramName) { Tag = file }).ToArray();
 
                 if (foundFiles.Any())
                     result.Add(new TreeNode(dir, foundFiles));
