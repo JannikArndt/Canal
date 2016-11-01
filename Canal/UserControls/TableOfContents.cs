@@ -166,34 +166,45 @@ namespace Canal.UserControls
                 SortToc(_tocSort);
         }
 
+        /// <summary>
+        /// Compares the given possible node names withe the ToC tree and highlights the first match.
+        /// </summary>
+        /// <param name="nodeTexts">A list of possible node names.</param>
         public void HighlightFirstMatchingNode(List<string> nodeTexts)
         {
-            foreach (string nodeText in nodeTexts)
+            var nodeList = (from n in nodeTexts where FindNodeByName(n) != null select FindNodeByName(n)).ToList();
+            if(nodeList.Any())
             {
-                var node = FindNodeByName(nodeText);
-                if (node != null)
+                var node = nodeList.First();
+
+                //No need to proceed if node is already highlighted
+                if (_lastHighlightedNode != node)
                 {
-                    if (_lastHighlightedNode != node)
+                    node.BackColor = Color.FromArgb(1, 155, 205, 155); //equals the runtime folding indicator color of the fast colored textbox which can't be referenced here because it's generated at runtime
+                    node.ForeColor = Color.FromArgb(1, 89, 140, 89);
+
+                    //Tidy up last highlighted node if possible
+                    if (_lastHighlightedNode != null)
                     {
-                        node.BackColor = Color.FromArgb(1, 155, 205, 155);
-                        node.ForeColor = Color.FromArgb(1, 89, 140, 89);
-
-                        if (_lastHighlightedNode != null)
-                        {
-                            _lastHighlightedNode.BackColor = Color.Transparent;
-                            _lastHighlightedNode.ForeColor = Color.Black;
-                        }
-                        _lastHighlightedNode = node;
-                        node.EnsureVisible();
+                        _lastHighlightedNode.BackColor = Color.Transparent;
+                        _lastHighlightedNode.ForeColor = Color.Black;
                     }
-                    return;
-                }
-            }
-        }
 
+                    //Set new node as currently highlighted
+                    _lastHighlightedNode = node;
+
+                    node.EnsureVisible();
+                }
+             }
+           }
+
+        /// <summary>
+        /// Returns the first node with the given name or null if no matching node is found.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns>The matching node or null.</returns>
         private TreeNode FindNodeByName(string name)
         {
-            //return tocTreeView.Nodes.Find(name, true).First();
             var list =
                 (from n in tocTreeView.Nodes.Find("", true).Cast<TreeNode>() where n.Text.ToLower().Equals(name.ToLower()) select n).ToList();
             return list.Any() ? list.First() : null;
