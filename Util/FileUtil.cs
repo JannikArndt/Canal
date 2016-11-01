@@ -239,7 +239,9 @@ namespace Util
         {
             _allowedEndings = new List<string>();
             if (Settings.Default.FileTypeCob)
-                _allowedEndings.AddRange(new List<string> { ".cob", ".cbl" });
+                _allowedEndings.Add(".cob");
+            if (Settings.Default.FileTypeCbl)
+                _allowedEndings.Add(".cbl");
             if (Settings.Default.FileTypeTxt)
                 _allowedEndings.Add(".txt");
             if (Settings.Default.FileTypeCob)

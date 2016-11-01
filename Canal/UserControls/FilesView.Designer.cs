@@ -33,6 +33,7 @@
             this.filesTabSearchBox = new System.Windows.Forms.ToolStripTextBox();
             this.fileTypeDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.showFileTypes_cob = new System.Windows.Forms.ToolStripMenuItem();
+            this.showFileTypes_cbl = new System.Windows.Forms.ToolStripMenuItem();
             this.showFileTypes_txt = new System.Windows.Forms.ToolStripMenuItem();
             this.showFileTypes_src = new System.Windows.Forms.ToolStripMenuItem();
             this.showFileTypes_custom = new System.Windows.Forms.ToolStripTextBox();
@@ -72,6 +73,7 @@
             this.fileTypeDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.fileTypeDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showFileTypes_cob,
+            this.showFileTypes_cbl,
             this.showFileTypes_txt,
             this.showFileTypes_src,
             this.showFileTypes_custom});
@@ -88,8 +90,18 @@
             this.showFileTypes_cob.CheckState = System.Windows.Forms.CheckState.Checked;
             this.showFileTypes_cob.Name = "showFileTypes_cob";
             this.showFileTypes_cob.Size = new System.Drawing.Size(160, 22);
-            this.showFileTypes_cob.Text = "*.cob/*.cbl";
+            this.showFileTypes_cob.Text = "*.cob";
             this.showFileTypes_cob.Click += new System.EventHandler(this.FileTypeClicked);
+            // 
+            // showFileTypes_cbl
+            // 
+            this.showFileTypes_cbl.Checked = true;
+            this.showFileTypes_cbl.CheckOnClick = true;
+            this.showFileTypes_cbl.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showFileTypes_cbl.Name = "showFileTypes_cbl";
+            this.showFileTypes_cbl.Size = new System.Drawing.Size(160, 22);
+            this.showFileTypes_cbl.Text = "*.cbl";
+            this.showFileTypes_cbl.Click += new System.EventHandler(this.FileTypeClicked);
             // 
             // showFileTypes_txt
             // 
@@ -168,6 +180,7 @@
         private System.Windows.Forms.ToolStripTextBox filesTabSearchBox;
         private System.Windows.Forms.ToolStripDropDownButton fileTypeDropDownButton;
         private System.Windows.Forms.ToolStripMenuItem showFileTypes_cob;
+        private System.Windows.Forms.ToolStripMenuItem showFileTypes_cbl;
         private System.Windows.Forms.ToolStripMenuItem showFileTypes_txt;
         private System.Windows.Forms.ToolStripMenuItem showFileTypes_src;
         private System.Windows.Forms.ToolStripTextBox showFileTypes_custom;
