@@ -2,6 +2,7 @@
 using FastColoredTextBoxNS.Events;
 using Model.File;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -165,24 +166,29 @@ namespace Canal.UserControls
                 SortToc(_tocSort);
         }
 
-        public void HighlightNode(string nodeText)
+        public void HighlightFirstMatchingNode(List<string> nodeTexts)
         {
-            var node = FindNodeByName(nodeText);
-            if (_lastHighlightedNode != node && node != null)
+            foreach (string nodeText in nodeTexts)
             {
-                node.BackColor = Color.Brown;
-                node.ForeColor = Color.Crimson;
-
-                if (_lastHighlightedNode != null)
+                var node = FindNodeByName(nodeText);
+                if (node != null)
                 {
-                    _lastHighlightedNode.BackColor = Color.Transparent;
-                    _lastHighlightedNode.ForeColor = Color.Black;
+                    if (_lastHighlightedNode != node)
+                    {
+                        node.BackColor = Color.Crimson;
+                        node.ForeColor = Color.DarkGray;
+
+                        if (_lastHighlightedNode != null)
+                        {
+                            _lastHighlightedNode.BackColor = Color.Transparent;
+                            _lastHighlightedNode.ForeColor = Color.Black;
+                        }
+                        _lastHighlightedNode = node;
+                        node.EnsureVisible();
+                    }
+                    return;
                 }
-                _lastHighlightedNode = node;
-                node.EnsureVisible();
-                //tocTreeView.SelectedNode = FindNodeByName(nodeText);
             }
-            //RefreshTree();
         }
 
         private TreeNode FindNodeByName(string name)

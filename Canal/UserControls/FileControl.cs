@@ -355,26 +355,25 @@ namespace Canal.UserControls
 
         private void CodeBoxOnSelectionChanged(object sender, EventArgs eventArgs)
         {
-           tableOfContents.HighlightNode(findLastProcedureName(codeBox.Selection.FromLine));
+           tableOfContents.HighlightFirstMatchingNode(findLastProcedureName(codeBox.Selection.FromLine));
             
             
             //Console.Write(findLastProcedureName(codeBox.Selection.FromLine));
         }
 
-        private string findLastProcedureName(int lineNumber)
+        private List<string> findLastProcedureName(int lineNumber)
         {
             int currentLineNumber = lineNumber;
-            string procedureName = null;
+            List<string> procedureNames = new List<string>();
             while (currentLineNumber >= 0)
             {
                 string currenctLineText = codeBox.GetLineText(currentLineNumber);
-                procedureName = Constants.ProcedureOrSectionRegex.Match(currenctLineText).Groups["name"].Value;
-                if (!String.IsNullOrEmpty(procedureName))
-                    break;
+                procedureNames.Add(Constants.ProcedureOrSectionRegex.Match(currenctLineText).Groups["name"].Value);
+                
                 currentLineNumber--;
             }
          
-            return procedureName;
+            return procedureNames;
         }
 
         #endregion
