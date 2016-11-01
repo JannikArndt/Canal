@@ -41,6 +41,7 @@ namespace Canal.UserControls
                 codeBox.WordSelected += CodeBoxOnWordSelected;
                 codeBox.UndoRedoStateChanged += CodeBoxOnUndoRedoStateChanged;
                 codeBox.VisualMarkerClick += CodeBoxOnPerformMarkerClick;
+                codeBox.SelectionChanged+= CodeBoxOnSelectionChanged;
                 codeBox.TextChanged += (sender, args) =>
                 {
                     if (!UnsavedChanges && SavedVersionChanged != null)
@@ -352,6 +353,30 @@ namespace Canal.UserControls
             redoButton.Enabled = codeBox.RedoEnabled;
         }
 
+        private void CodeBoxOnSelectionChanged(object sender, EventArgs eventArgs)
+        {
+           tableOfContents.HighlightNode(findLastProcedureName(codeBox.Selection.FromLine));
+            
+            
+            //Console.Write(findLastProcedureName(codeBox.Selection.FromLine));
+        }
+
+        private string findLastProcedureName(int lineNumber)
+        {
+            int currentLineNumber = lineNumber;
+            string procedureName = null;
+            while (currentLineNumber >= 0)
+            {
+                string currenctLineText = codeBox.GetLineText(currentLineNumber);
+                procedureName = Constants.ProcedureOrSectionRegex.Match(currenctLineText).Groups["name"].Value;
+                if (!String.IsNullOrEmpty(procedureName))
+                    break;
+                currentLineNumber--;
+            }
+         
+            return procedureName;
+        }
+
         #endregion
 
         #region Search Box
@@ -515,5 +540,10 @@ namespace Canal.UserControls
         }
 
         #endregion
+
+        private void tableOfContents_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -54,9 +54,9 @@ namespace Canal.UserControls
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.formatCodeButton = new System.Windows.Forms.ToolStripButton();
             this.splitContainerRight = new System.Windows.Forms.SplitContainer();
+            this.tableOfContents = new Canal.UserControls.TableOfContents();
             this.loaderImageInfoTab = new System.Windows.Forms.PictureBox();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
-            this.tableOfContents = new Canal.UserControls.TableOfContents();
             ((System.ComponentModel.ISupportInitialize)(this.codeBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerTop)).BeginInit();
             this.splitContainerTop.Panel1.SuspendLayout();
@@ -323,6 +323,15 @@ namespace Canal.UserControls
             this.splitContainerRight.SplitterDistance = 321;
             this.splitContainerRight.TabIndex = 0;
             // 
+            // tableOfContents
+            // 
+            this.tableOfContents.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableOfContents.Location = new System.Drawing.Point(0, 0);
+            this.tableOfContents.Name = "tableOfContents";
+            this.tableOfContents.Size = new System.Drawing.Size(378, 321);
+            this.tableOfContents.TabIndex = 0;
+            this.tableOfContents.Load += new System.EventHandler(this.tableOfContents_Load);
+            // 
             // loaderImageInfoTab
             // 
             this.loaderImageInfoTab.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -344,14 +353,6 @@ namespace Canal.UserControls
             this.miniToolStrip.Name = "miniToolStrip";
             this.miniToolStrip.Size = new System.Drawing.Size(200, 25);
             this.miniToolStrip.TabIndex = 1;
-            // 
-            // tableOfContents
-            // 
-            this.tableOfContents.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableOfContents.Location = new System.Drawing.Point(0, 0);
-            this.tableOfContents.Name = "tableOfContents";
-            this.tableOfContents.Size = new System.Drawing.Size(378, 321);
-            this.tableOfContents.TabIndex = 0;
             // 
             // FileControl
             // 

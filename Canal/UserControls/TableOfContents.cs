@@ -3,6 +3,7 @@ using FastColoredTextBoxNS.Events;
 using Model.File;
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Util;
 
@@ -15,6 +16,7 @@ namespace Canal.UserControls
         private CobolFile _cobolFile;
         private bool _userIsStillWaitingForPerformsTreeView;
         private readonly PictureBox _loader;
+        private TreeNode _lastHighlightedNode;
 
         public event EventHandler<WordSelectedEventArgs> OnWordSelected;
 
@@ -163,6 +165,33 @@ namespace Canal.UserControls
                 SortToc(_tocSort);
         }
 
+        public void HighlightNode(string nodeText)
+        {
+            var node = FindNodeByName(nodeText);
+            if (_lastHighlightedNode != node && node != null)
+            {
+                node.BackColor = Color.Brown;
+                node.ForeColor = Color.Crimson;
+
+                if (_lastHighlightedNode != null)
+                {
+                    _lastHighlightedNode.BackColor = Color.Transparent;
+                    _lastHighlightedNode.ForeColor = Color.Black;
+                }
+                _lastHighlightedNode = node;
+                node.EnsureVisible();
+                //tocTreeView.SelectedNode = FindNodeByName(nodeText);
+            }
+            //RefreshTree();
+        }
+
+        private TreeNode FindNodeByName(string name)
+        {
+            //return tocTreeView.Nodes.Find(name, true).First();
+            var list =
+                (from n in tocTreeView.Nodes.Find("", true).Cast<TreeNode>() where n.Text.ToLower().Equals(name.ToLower()) select n).ToList();
+            return list.Any() ? list.First() : null;
+        }
         #endregion
 
         private void tocTreeView_AfterSelect(object sender, TreeViewEventArgs e)
