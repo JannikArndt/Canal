@@ -34,6 +34,8 @@ namespace Util
 
         private List<string> _allowedEndings = new List<string>();
 
+        private bool _showFileExtensions;
+
         /// <summary>
         /// Loads the given file. Uses internal cache for file contents.
         /// </summary>
@@ -228,23 +230,28 @@ namespace Util
             return foundFiles;
         }
 
-        private void UpdateAllowedEndings()
+        private void UpdateAllowedAndVisibleEndings()
         {
             _allowedEndings = new List<string>();
             if (Settings.Default.FileTypeCob)
-                _allowedEndings.AddRange(new List<string> { ".cob", ".cbl" });
+                _allowedEndings.Add(".cob");
+            if (Settings.Default.FileTypeCbl)
+                _allowedEndings.Add(".cbl");
             if (Settings.Default.FileTypeTxt)
                 _allowedEndings.Add(".txt");
             if (Settings.Default.FileTypeCob)
                 _allowedEndings.Add(".src");
             if (!string.IsNullOrWhiteSpace(Settings.Default.FileTypeCustom)) _allowedEndings.Add(Settings.Default.FileTypeCustom);
+
+            _showFileExtensions = Settings.Default.ShowFileExtensions;
         }
+
 
         public void ReduceDirectoriesToAllowedFiles()
         {
             _directoriesWithAllowedFiles = new ConcurrentDictionary<string, List<FileReference>>();
 
-            UpdateAllowedEndings();
+            UpdateAllowedAndVisibleEndings();
 
             foreach (var dir in _directoriesAndFiles.Keys.AsParallel())
             {
@@ -256,7 +263,7 @@ namespace Util
 
         public int CountValidFiles(string dir)
         {
-            UpdateAllowedEndings();
+            UpdateAllowedAndVisibleEndings();
 
             AnalyzeFolder(dir);
 
@@ -280,7 +287,7 @@ namespace Util
             {
                 var foundFiles = _directoriesWithAllowedFiles[dir]
                     .Where(file => CultureInfo.CurrentCulture.CompareInfo.IndexOf(file.ProgramName, query, CompareOptions.IgnoreCase) >= 0)
-                    .Select(file => new TreeNode(file.ProgramName) { Tag = file }).ToArray();
+                    .Select(file => new TreeNode(_showFileExtensions ? file.ProgramName + file.FileExtension : file.ProgramName) { Tag = file }).ToArray();
 
                 if (foundFiles.Any())
                     result.Add(new TreeNode(dir, foundFiles));
