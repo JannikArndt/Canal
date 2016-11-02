@@ -37,6 +37,7 @@
             this.showFileTypes_txt = new System.Windows.Forms.ToolStripMenuItem();
             this.showFileTypes_src = new System.Windows.Forms.ToolStripMenuItem();
             this.showFileTypes_custom = new System.Windows.Forms.ToolStripTextBox();
+            this.showFileExtensions = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.CollapseAllToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.ExpandAllToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -76,7 +77,9 @@
             this.showFileTypes_cbl,
             this.showFileTypes_txt,
             this.showFileTypes_src,
-            this.showFileTypes_custom});
+            this.showFileTypes_custom,
+            this.toolStripSeparator1,
+            this.showFileExtensions});
             this.fileTypeDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("fileTypeDropDownButton.Image")));
             this.fileTypeDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.fileTypeDropDownButton.Name = "fileTypeDropDownButton";
@@ -123,6 +126,14 @@
             // 
             this.showFileTypes_custom.Name = "showFileTypes_custom";
             this.showFileTypes_custom.Size = new System.Drawing.Size(100, 23);
+            // 
+            // showFileTypes_src
+            // 
+            this.showFileExtensions.CheckOnClick = true;
+            this.showFileExtensions.Name = "showFileExtensions";
+            this.showFileExtensions.Size = new System.Drawing.Size(160, 22);
+            this.showFileExtensions.Text = "Show file extensions";
+            this.showFileExtensions.Click += new System.EventHandler(this.FileTypeClicked);
             // 
             // toolStripSeparator1
             // 
@@ -184,6 +195,7 @@
         private System.Windows.Forms.ToolStripMenuItem showFileTypes_txt;
         private System.Windows.Forms.ToolStripMenuItem showFileTypes_src;
         private System.Windows.Forms.ToolStripTextBox showFileTypes_custom;
+        private System.Windows.Forms.ToolStripMenuItem showFileExtensions;
         private System.Windows.Forms.TreeView filesTreeView;
         private System.Windows.Forms.ToolStripButton CollapseAllToolStripButton;
         private System.Windows.Forms.ToolStripButton ExpandAllToolStripButton;
