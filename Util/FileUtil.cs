@@ -1,4 +1,4 @@
-﻿using Logging;
+using Logging;
 using Model.References;
 using System;
 using System.Collections.Concurrent;
@@ -123,13 +123,13 @@ namespace Util
 
 
             //Selecting all files with the programName in the file cache ignoring the file extension.
-            ParallelQuery<FileReference> allFileReferencesWithGivenName =  _files.AsParallel().Where(file => file.Key.Contains(programName + ".")).Select(file => file.Value);
+            ParallelQuery<FileReference> allFileReferencesWithGivenName = _files.AsParallel().Where(file => file.Key.Contains(programName + ".")).Select(file => file.Value);
 
             //If more than one file of that name is found, a more specific search is done, icluding the file extension.
-            if (allFileReferencesWithGivenName.Count()>1)
+            if (allFileReferencesWithGivenName.Count() > 1)
                 allFileReferencesWithGivenName = _files.AsParallel().Where(file => file.Key.Contains(programName + ".cbl")).Select(file => file.Value);
 
-            
+
             if (allFileReferencesWithGivenName.Count() > 1)
             {
                 //If there is still more than one file, an exception is thrown, stating the fact, that a distinct file selection is impossible.

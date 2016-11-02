@@ -121,6 +121,7 @@ namespace Canal.UserControls
         private void SaveUsedFileTypesToSettings()
         {
             Util.Properties.Settings.Default.FileTypeCob = showFileTypes_cob.Checked;
+            Util.Properties.Settings.Default.FileTypeCbl = showFileTypes_cbl.Checked;
             Util.Properties.Settings.Default.FileTypeTxt = showFileTypes_txt.Checked;
             Util.Properties.Settings.Default.FileTypeSrc = showFileTypes_src.Checked;
             Util.Properties.Settings.Default.FileTypeCustom = showFileTypes_custom.Text;
@@ -133,6 +134,7 @@ namespace Canal.UserControls
         private void LoadUsedFileTypesFromSettings()
         {
             showFileTypes_cob.Checked = Util.Properties.Settings.Default.FileTypeCob;
+            showFileTypes_cbl.Checked = Util.Properties.Settings.Default.FileTypeCbl;
             showFileTypes_txt.Checked = Util.Properties.Settings.Default.FileTypeTxt;
             showFileTypes_src.Checked = Util.Properties.Settings.Default.FileTypeSrc;
             showFileTypes_custom.Text = Util.Properties.Settings.Default.FileTypeCustom;
