@@ -59,13 +59,13 @@ namespace Level88ToEnum
             {
                 string commentText = inputComments.Count > index ? inputComments[index] : inputCsharp[index];
                 string cobolName = inputCobol.Count > index ? "        /// entspricht dem Wert " + inputCobol[index] + "\n" : string.Empty;
-
+                string cSharpValue = inputCobol.Count > index ? inputCsharp[index] + " = '" + inputCobol[index] + "'" : inputCsharp[index];
                 enumList.Add("        /// <summary>\n"
                     + "        /// " + commentText + "\n" + cobolName
-                    + "        /// </summary>\n        " + inputCsharp[index]);
+                    + "        /// </summary>\n        " + cSharpValue);
             }
 
-            enumList.Add("        /// <summary>\n" + "        /// kein Wert gesetzt\n" + "        /// </summary>\n        Undefined");
+            enumList.Add("        /// <summary>\n" + "        /// kein Wert gesetzt\n" + "        /// </summary>\n        Undefined = 0");
 
             var ending = "\n    }\n}";
 
