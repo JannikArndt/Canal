@@ -50,6 +50,8 @@ namespace Canal.UserControls
             this.searchBox = new System.Windows.Forms.ToolStripTextBox();
             this.findPreviousButton = new System.Windows.Forms.ToolStripButton();
             this.findNextButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.searchTypeImageLabel = new System.Windows.Forms.ToolStripLabel();
             this.searchPrecise = new System.Windows.Forms.ToolStripButton();
             this.searchRegEx = new System.Windows.Forms.ToolStripButton();
             this.searchFuzzy = new System.Windows.Forms.ToolStripButton();
@@ -153,6 +155,8 @@ namespace Canal.UserControls
             this.searchBox,
             this.findPreviousButton,
             this.findNextButton,
+            this.toolStripSeparator5,
+            this.searchTypeImageLabel,
             this.searchPrecise,
             this.searchRegEx,
             this.searchFuzzy,
@@ -285,35 +289,45 @@ namespace Canal.UserControls
             this.findNextButton.Text = "Find Next (F3)";
             this.findNextButton.Click += new System.EventHandler(this.FindNextButtonClick);
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
+            // searchTypeImageLabel
+            // 
+            this.searchTypeImageLabel.Image = ((System.Drawing.Image)(resources.GetObject("searchTypeImageLabel.Image")));
+            this.searchTypeImageLabel.ImageTransparentColor = System.Drawing.Color.Black;
+            this.searchTypeImageLabel.Name = "searchTypeImageLabel";
+            this.searchTypeImageLabel.Size = new System.Drawing.Size(16, 22);
+            // 
             // searchPrecise
             // 
             this.searchPrecise.CheckOnClick = true;
-            this.searchPrecise.Image = ((System.Drawing.Image)(resources.GetObject("searchPrecise.Image")));
             this.searchPrecise.ImageTransparentColor = System.Drawing.Color.Black;
             this.searchPrecise.Name = "searchPrecise";
-            this.searchPrecise.Size = new System.Drawing.Size(64, 22);
+            this.searchPrecise.Size = new System.Drawing.Size(48, 22);
             this.searchPrecise.Text = "Precise";
-            this.searchPrecise.ToolTipText = "Precise search, search string needs to match possible results 100%";
+            this.searchPrecise.ToolTipText = "Precise search, search string needs to match possible matches exactly, only capit" +
+    "alization is ignored.";
             // 
             // searchRegEx
             // 
             this.searchRegEx.CheckOnClick = true;
-            this.searchRegEx.Image = ((System.Drawing.Image)(resources.GetObject("searchRegEx.Image")));
             this.searchRegEx.ImageTransparentColor = System.Drawing.Color.Black;
             this.searchRegEx.Name = "searchRegEx";
-            this.searchRegEx.Size = new System.Drawing.Size(58, 22);
+            this.searchRegEx.Size = new System.Drawing.Size(42, 22);
             this.searchRegEx.Text = "RegEx";
-            this.searchRegEx.ToolTipText = "RegEx search, search text is used as a regular expression";
+            this.searchRegEx.ToolTipText = "RegEx search, search text is used as a regular expression to find matches.";
             // 
             // searchFuzzy
             // 
             this.searchFuzzy.CheckOnClick = true;
-            this.searchFuzzy.Image = ((System.Drawing.Image)(resources.GetObject("searchFuzzy.Image")));
             this.searchFuzzy.ImageTransparentColor = System.Drawing.Color.Black;
             this.searchFuzzy.Name = "searchFuzzy";
-            this.searchFuzzy.Size = new System.Drawing.Size(56, 22);
+            this.searchFuzzy.Size = new System.Drawing.Size(40, 22);
             this.searchFuzzy.Text = "Fuzzy";
-            this.searchFuzzy.ToolTipText = "Fuzzy";
+            this.searchFuzzy.ToolTipText = resources.GetString("searchFuzzy.ToolTipText");
             // 
             // toolStripSeparator1
             // 
@@ -410,7 +424,6 @@ namespace Canal.UserControls
         private System.Windows.Forms.SplitContainer splitContainerRight;
         private System.Windows.Forms.ToolStrip codeViewToolStrip;
         private System.Windows.Forms.ToolStripTextBox searchBox;
-        private System.Windows.Forms.ToolStripButton searchFuzzy;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private ToolStrip miniToolStrip;
         private PictureBox loaderImageInfoTab;
@@ -430,5 +443,8 @@ namespace Canal.UserControls
         private TableOfContents tableOfContents;
         private ToolStripButton searchPrecise;
         private ToolStripButton searchRegEx;
+        private ToolStripSeparator toolStripSeparator5;
+        private ToolStripLabel searchTypeImageLabel;
+        private ToolStripButton searchFuzzy;
     }
 }
