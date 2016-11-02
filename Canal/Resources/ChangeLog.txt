@@ -1,4 +1,10 @@
-﻿v2.11
+﻿v2.12
+- COPY-books can be found without explicit folder name ("OF") if filename is unique (@koljag)
+- Double-clicking a variable now selects it in the variable tree (@koljag)
+- Tree-view now highlights the currently displayed procedure (@koljag)
+- .cob and .cbl files are now treated separately (@koljag)
+
+v2.11
 - "Referenced By" now jumps to the line where the "perform" is
 - Added support for multiline-variable-definitions
 - Reworked VariableTree
