@@ -33,6 +33,11 @@ namespace Canal.UserControls
 
                 AnalyzeFile();
 
+                searchPrecise.Checked = true;
+                searchFuzzy.Click += HandleSearchKindChanged;
+                searchRegEx.Click += HandleSearchKindChanged;
+                searchPrecise.Click += HandleSearchKindChanged;
+
                 // initialize FastColoredTextBox
                 codeBox.Font = SourceCodePro.Instance.Regular();
                 codeBox.SetTextAsync(CobolFile.Text);
@@ -391,7 +396,17 @@ namespace Canal.UserControls
             try
             {
                 searchBox.BackColor = SystemColors.Window;
-                codeBox.FindNext(searchBox.Text, false, searchWithRegEx.Checked, false, firstSearch, reverse);
+                if (searchFuzzy.Checked)
+                {
+                    string regex = Regex.Replace(searchBox.Text, "[^a-zA-Z0-9 \\*]", "[^a-zA-Z0-9 ]");
+                    regex = Regex.Replace(regex, " ", " *");
+                    codeBox.FindNext(regex, false, true, false, firstSearch, reverse);
+                }
+                else
+                {
+                    codeBox.FindNext(searchBox.Text, false, searchRegEx.Checked, false, firstSearch, reverse);
+                }
+                
             }
             catch (ArgumentException)
             {
@@ -429,6 +444,14 @@ namespace Canal.UserControls
                 box.Text = Resources.SearchPlaceholder;
                 box.Tag = true;
             }
+        }
+
+        private void HandleSearchKindChanged(object sender, EventArgs eventArgs)
+        {
+            searchFuzzy.Checked = false;
+            searchPrecise.Checked = false;
+            searchRegEx.Checked = false;
+            ((ToolStripButton)sender).Checked = true;
         }
 
         #endregion

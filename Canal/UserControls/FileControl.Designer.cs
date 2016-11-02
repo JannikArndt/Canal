@@ -50,7 +50,9 @@ namespace Canal.UserControls
             this.searchBox = new System.Windows.Forms.ToolStripTextBox();
             this.findPreviousButton = new System.Windows.Forms.ToolStripButton();
             this.findNextButton = new System.Windows.Forms.ToolStripButton();
-            this.searchWithRegEx = new System.Windows.Forms.ToolStripButton();
+            this.searchPrecise = new System.Windows.Forms.ToolStripButton();
+            this.searchRegEx = new System.Windows.Forms.ToolStripButton();
+            this.searchFuzzy = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.formatCodeButton = new System.Windows.Forms.ToolStripButton();
             this.splitContainerRight = new System.Windows.Forms.SplitContainer();
@@ -151,7 +153,9 @@ namespace Canal.UserControls
             this.searchBox,
             this.findPreviousButton,
             this.findNextButton,
-            this.searchWithRegEx,
+            this.searchPrecise,
+            this.searchRegEx,
+            this.searchFuzzy,
             this.toolStripSeparator1,
             this.formatCodeButton});
             this.codeViewToolStrip.Location = new System.Drawing.Point(0, 0);
@@ -281,14 +285,35 @@ namespace Canal.UserControls
             this.findNextButton.Text = "Find Next (F3)";
             this.findNextButton.Click += new System.EventHandler(this.FindNextButtonClick);
             // 
-            // searchWithRegEx
+            // searchPrecise
             // 
-            this.searchWithRegEx.CheckOnClick = true;
-            this.searchWithRegEx.Image = ((System.Drawing.Image)(resources.GetObject("searchWithRegEx.Image")));
-            this.searchWithRegEx.ImageTransparentColor = System.Drawing.Color.Black;
-            this.searchWithRegEx.Name = "searchWithRegEx";
-            this.searchWithRegEx.Size = new System.Drawing.Size(58, 22);
-            this.searchWithRegEx.Text = "RegEx";
+            this.searchPrecise.CheckOnClick = true;
+            this.searchPrecise.Image = ((System.Drawing.Image)(resources.GetObject("searchPrecise.Image")));
+            this.searchPrecise.ImageTransparentColor = System.Drawing.Color.Black;
+            this.searchPrecise.Name = "searchPrecise";
+            this.searchPrecise.Size = new System.Drawing.Size(64, 22);
+            this.searchPrecise.Text = "Precise";
+            this.searchPrecise.ToolTipText = "Precise search, search string needs to match possible results 100%";
+            // 
+            // searchRegEx
+            // 
+            this.searchRegEx.CheckOnClick = true;
+            this.searchRegEx.Image = ((System.Drawing.Image)(resources.GetObject("searchRegEx.Image")));
+            this.searchRegEx.ImageTransparentColor = System.Drawing.Color.Black;
+            this.searchRegEx.Name = "searchRegEx";
+            this.searchRegEx.Size = new System.Drawing.Size(58, 22);
+            this.searchRegEx.Text = "RegEx";
+            this.searchRegEx.ToolTipText = "RegEx search, search text is used as a regular expression";
+            // 
+            // searchFuzzy
+            // 
+            this.searchFuzzy.CheckOnClick = true;
+            this.searchFuzzy.Image = ((System.Drawing.Image)(resources.GetObject("searchFuzzy.Image")));
+            this.searchFuzzy.ImageTransparentColor = System.Drawing.Color.Black;
+            this.searchFuzzy.Name = "searchFuzzy";
+            this.searchFuzzy.Size = new System.Drawing.Size(56, 22);
+            this.searchFuzzy.Text = "Fuzzy";
+            this.searchFuzzy.ToolTipText = "Fuzzy";
             // 
             // toolStripSeparator1
             // 
@@ -385,7 +410,7 @@ namespace Canal.UserControls
         private System.Windows.Forms.SplitContainer splitContainerRight;
         private System.Windows.Forms.ToolStrip codeViewToolStrip;
         private System.Windows.Forms.ToolStripTextBox searchBox;
-        private System.Windows.Forms.ToolStripButton searchWithRegEx;
+        private System.Windows.Forms.ToolStripButton searchFuzzy;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private ToolStrip miniToolStrip;
         private PictureBox loaderImageInfoTab;
@@ -403,5 +428,7 @@ namespace Canal.UserControls
         private ToolStripSeparator toolStripSeparator3;
         private ToolStripButton formatCodeButton;
         private TableOfContents tableOfContents;
+        private ToolStripButton searchPrecise;
+        private ToolStripButton searchRegEx;
     }
 }
