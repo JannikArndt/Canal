@@ -55,6 +55,8 @@ namespace Util
 
         public static readonly Regex ProcedureRegex = new Regex(@"^.{6} (?<procedureName>[\w\d-]+)\.", RegexOptions.Compiled | RegexOptions.Multiline);
 
+        public static readonly Regex ProcedureOrSectionOrDivisonRegex = new Regex(@"^.{6} ((?<name>[\w\d-]+( SECTION| DIVISION)?)\.)", RegexOptions.Compiled | RegexOptions.Multiline);
+
         public static readonly HashSet<string> CobolKeywords = new HashSet<string>
         {
             "ACCEPT",

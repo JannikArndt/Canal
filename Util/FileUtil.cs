@@ -1,4 +1,4 @@
-﻿using Logging;
+using Logging;
 using Model.References;
 using System;
 using System.Collections.Concurrent;
@@ -33,8 +33,6 @@ namespace Util
         private ConcurrentDictionary<string, List<FileReference>> _directoriesWithAllowedFiles = new ConcurrentDictionary<string, List<FileReference>>();
 
         private List<string> _allowedEndings = new List<string>();
-
-        //should work
 
         /// <summary>
         /// Loads the given file. Uses internal cache for file contents.
@@ -125,25 +123,23 @@ namespace Util
 
 
             //Selecting all files with the programName in the file cache ignoring the file extension.
-            var allFileReferencesWithGivenName = _files.AsParallel().Where(file => file.Key.Contains(programName + ".")).Select(file => file.Value).ToList();
+            ParallelQuery<FileReference> allFileReferencesWithGivenName = _files.AsParallel().Where(file => file.Key.Contains(programName + ".")).Select(file => file.Value);
+
+            //If more than one file of that name is found, a more specific search is done, icluding the file extension.
+            if (allFileReferencesWithGivenName.Count() > 1)
+                allFileReferencesWithGivenName = _files.AsParallel().Where(file => file.Key.Contains(programName + ".cbl")).Select(file => file.Value);
 
 
-            if (allFileReferencesWithGivenName.None())
-                //No file found, also no chance of finding it using the more precise filters below
-                throw new CopiedRessourceNotFoundException(programName);
-            else if (allFileReferencesWithGivenName.Count() > 1)
+            if (allFileReferencesWithGivenName.Count() > 1)
             {
-                //If more than one file of that name is found, a more specific search is done, including the file extension.
-                allFileReferencesWithGivenName =
-                    (from file in allFileReferencesWithGivenName where file.FilePath.EndsWith(".cbl") select file).ToList();
-
-                if (allFileReferencesWithGivenName.Count() != 1)
-                    //If there is still more than one file (or no file now), an exception is thrown, stating the fact, that a distinct file selection is impossible.
-                    throw new CopiedRessourceNotIdentifiedDistinctlyByNameException(programName);
+                //If there is still more than one file, an exception is thrown, stating the fact, that a distinct file selection is impossible.
+                throw new CopiedRessourceNotIdentifiedDistinctlyByNameException(programName);
             }
-
-            //Else the found reference is returned.
-            return allFileReferencesWithGivenName.First();
+            else
+            {
+                //Else the found reference is returned.
+                return allFileReferencesWithGivenName.First();
+            }
         }
 
         /// <summary>
@@ -236,9 +232,7 @@ namespace Util
         {
             _allowedEndings = new List<string>();
             if (Settings.Default.FileTypeCob)
-                _allowedEndings.Add(".cob");
-            if (Settings.Default.FileTypeCbl)
-                _allowedEndings.Add(".cbl");
+                _allowedEndings.AddRange(new List<string> { ".cob", ".cbl" });
             if (Settings.Default.FileTypeTxt)
                 _allowedEndings.Add(".txt");
             if (Settings.Default.FileTypeCob)
