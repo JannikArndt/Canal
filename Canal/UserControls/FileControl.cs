@@ -244,11 +244,7 @@ namespace Canal.UserControls
             {
                 VariableInfo variableInfoControl = new VariableInfo(CobolFile.Variables[word], this) { Dock = DockStyle.Fill };
                 splitContainerRight.Panel2.Controls.Add(variableInfoControl);
-
-                //Giving focus to the control so the double clicked variable stays highlighted.
-                variableInfoControl.Focus();
-                variableInfoControl.ScrollToSelectedVariable();
-
+                
                 if (findInCode)
                     codeBox.FindNext(word, false, false, true, true);
                 return;
