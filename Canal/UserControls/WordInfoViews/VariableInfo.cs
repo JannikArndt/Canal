@@ -25,6 +25,10 @@ namespace Canal.UserControls.WordInfoViews
             };
         }
 
+        public void ScrollToSelectedVariable()
+        {
+            VariableInfoTreeView.ScrollToSelectedNode();
+        }
 
 
         private TreeNode FillVariableTreeView(Variable variable)

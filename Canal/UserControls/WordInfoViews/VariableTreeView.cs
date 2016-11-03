@@ -28,11 +28,15 @@ namespace Canal.UserControls.WordInfoViews
         {
             VariableInfoTreeView.Nodes.Add(node);
             VariableInfoTreeView.ExpandAll();
-
-            selectedTreeNode.ForeColor = Color.FromArgb(255, 207, 122, 1);
+            VariableInfoTreeView.SelectedNode = selectedTreeNode;
+            selectedTreeNode.ForeColor = Color.FromArgb(255, 207, 100, 1);
             selectedTreeNode.BackColor = Color.FromArgb(255, 255, 188, 112);
-           
-            selectedTreeNode.EnsureVisible();
+        }
+
+
+        public void ScrollToSelectedNode()
+        {
+            VariableInfoTreeView.SelectedNode.EnsureVisible();
         }
 
         public void SetTree(List<TreeNode> nodes)
