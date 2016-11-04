@@ -58,8 +58,10 @@ namespace Canal.UserControls.WordInfoViews
             VariableInfoTreeView.MouseDown += (sender, args) => _doubleClicked = args.Button == MouseButtons.Left && args.Clicks == 2;
             VariableInfoTreeView.BeforeExpand += (sender, args) => args.Cancel = args.Action == TreeViewAction.Expand ? _doubleClicked : args.Cancel;
             VariableInfoTreeView.BeforeCollapse += (sender, args) => args.Cancel = args.Action == TreeViewAction.Collapse ? _doubleClicked : args.Cancel;
-        }
 
+           
+        }
+        
         private void VariableInfoTreeViewOnDrawNode(object sender, DrawTreeNodeEventArgs e)
         {
             var variable = e.Node.Tag as Variable;

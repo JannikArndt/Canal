@@ -19,6 +19,12 @@ namespace Canal.UserControls
 {
     public sealed partial class FileControl : UserControl
     {
+
+        public event EventHandler<Variable> VariableSelected;
+        public event EventHandler<Section> SectionSelected;
+        public event EventHandler<FileReference> CallReferenceSelected;
+        public event EventHandler<Procedure> ProcedureSelected;
+
         public FileControl(string filename, MainWindow parent)
         {
             InitializeComponent();
@@ -33,6 +39,12 @@ namespace Canal.UserControls
 
                 AnalyzeFile();
 
+                // event handlers
+                this.VariableSelected += OnVariableSelected;
+                this.SectionSelected += OnSectionSelected;
+                this.CallReferenceSelected += OnCallReferenceSelected;
+                this.ProcedureSelected += OnProcedureSelected;
+                
                 // initialize FastColoredTextBox
                 codeBox.Font = SourceCodePro.Instance.Regular();
                 codeBox.SetTextAsync(CobolFile.Text);
@@ -60,6 +72,8 @@ namespace Canal.UserControls
                 MessageBox.Show(Resources.ErrorMessage_FileControl_Constructor + exception.Message, Resources.Error, MessageBoxButtons.OK);
             }
         }
+
+        
 
         public void AnalyzeFile()
         {
@@ -212,6 +226,7 @@ namespace Canal.UserControls
 
         private void ShowWordInfo(string word = "", bool findInCode = false, string lookFor = "")
         {
+            
             // 1. No CobolFile? Nothing to do.
             if (CobolFile == null)
                 return;
@@ -271,6 +286,9 @@ namespace Canal.UserControls
 
                 }
 
+
+                //This should get it's own event after splitting up into events
+
                 return;
             }
 
@@ -294,6 +312,27 @@ namespace Canal.UserControls
 
             var fileInfoControl2 = new ProgramInfo(CobolFile, this) { Dock = DockStyle.Fill };
             splitContainerRight.Panel2.Controls.Add(fileInfoControl2);
+        }
+
+        private void OnProcedureSelected(object sender, Procedure procedure)
+        {
+
+
+        }
+
+        private void OnCallReferenceSelected(object sender, FileReference fileReference)
+        {
+
+        }
+
+        private void OnSectionSelected(object sender, Section section)
+        {
+
+        }
+
+        private void OnVariableSelected(object sender, Variable variable)
+        {
+           
         }
 
         private void HandleKeyDown(object sender, KeyEventArgs e)
