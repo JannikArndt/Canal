@@ -316,6 +316,10 @@
       <Project>{340e7efd-f1ed-421f-a4d9-fd027e10724b}</Project>
       <Name>Util</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VariableUsageAnalyzer\VariableUsageAnalyzer.csproj">
+      <Project>{f14fefcb-017f-424e-a502-d1ffd4bdc81a}</Project>
+      <Name>VariableUsageAnalyzer</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

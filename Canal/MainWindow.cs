@@ -78,6 +78,12 @@ namespace Canal
             reRunAnalysisToolStripMenuItem.Enabled = _tabUtil.CurrentFileControl != null;
         }
 
+        public void OpenVariableUsageWindow(Variable variable)
+        {
+            var variableUsageWindow = new VariableUsageAnalyzer.VariableUsageAnalyzer(variable);
+            variableUsageWindow.Show();
+        }
+
         #region Overrides
 
         protected override void OnShown(EventArgs e)
