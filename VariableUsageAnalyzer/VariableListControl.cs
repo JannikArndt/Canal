@@ -19,10 +19,8 @@ namespace VariableUsageAnalyzer
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
-
-            tableLayoutPanel1.RowStyles[0] = (new RowStyle(SizeType.AutoSize));
-
-
+            
+            tableLayoutPanel1.RowStyles.Clear();
             foreach (String line in lines)
             {
                 AddContainingFileName("hallo");
@@ -52,7 +50,8 @@ namespace VariableUsageAnalyzer
             Label name = new Label();
             name.Text = filename;
             name.Dock = DockStyle.Top;
-            name.Margin = new Padding(0);
+            name.Margin = new Padding(3, 10, 0, 0);
+            name.Height = 12;
             AddToTable(name);
         }
 

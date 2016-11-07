@@ -54,11 +54,23 @@
     <Compile Include="VariableListControl.Designer.cs">
       <DependentUpon>VariableListControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="VariableUsageAnalyzer.cs">
+    <Compile Include="VariableSelectionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="VariableSelectionControl.Designer.cs">
+      <DependentUpon>VariableSelectionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VariableTreeView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="VariableTreeView.Designer.cs">
+      <DependentUpon>VariableTreeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VariableUsageAnalyzerMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VariableUsageAnalyzer.Designer.cs">
-      <DependentUpon>VariableUsageAnalyzer.cs</DependentUpon>
+    <Compile Include="VariableUsageAnalyzerMain.Designer.cs">
+      <DependentUpon>VariableUsageAnalyzerMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,8 +87,14 @@
     <EmbeddedResource Include="VariableListControl.resx">
       <DependentUpon>VariableListControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VariableUsageAnalyzer.resx">
-      <DependentUpon>VariableUsageAnalyzer.cs</DependentUpon>
+    <EmbeddedResource Include="VariableSelectionControl.resx">
+      <DependentUpon>VariableSelectionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VariableTreeView.resx">
+      <DependentUpon>VariableTreeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VariableUsageAnalyzerMain.resx">
+      <DependentUpon>VariableUsageAnalyzerMain.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

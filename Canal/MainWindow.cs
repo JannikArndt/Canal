@@ -80,7 +80,7 @@ namespace Canal
 
         public void OpenVariableUsageWindow(Variable variable)
         {
-            var variableUsageWindow = new VariableUsageAnalyzer.VariableUsageAnalyzer(variable);
+            var variableUsageWindow = new VariableUsageAnalyzer.VariableUsageAnalyzerMain(variable);
             variableUsageWindow.Show();
         }
 

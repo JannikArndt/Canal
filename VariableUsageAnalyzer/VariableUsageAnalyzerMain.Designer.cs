@@ -1,6 +1,6 @@
 ﻿namespace VariableUsageAnalyzer
 {
-    partial class VariableUsageAnalyzer
+    partial class VariableUsageAnalyzerMain
     {
         /// <summary>
         /// Required designer variable.
@@ -42,17 +42,17 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel2_Paint);
-            this.splitContainer1.Size = new System.Drawing.Size(1057, 615);
-            this.splitContainer1.SplitterDistance = 344;
+            this.splitContainer1.Size = new System.Drawing.Size(1268, 637);
+            this.splitContainer1.SplitterDistance = 503;
             this.splitContainer1.TabIndex = 0;
             // 
-            // VariableUsageAnalyzer
+            // VariableUsageAnalyzerMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1057, 615);
+            this.ClientSize = new System.Drawing.Size(1268, 637);
             this.Controls.Add(this.splitContainer1);
-            this.Name = "VariableUsageAnalyzer";
+            this.Name = "VariableUsageAnalyzerMain";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.VariableUsageAnalyzer_Load);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
