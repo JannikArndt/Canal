@@ -22,6 +22,10 @@ namespace VariableUsageAnalyzer
             var treeNode = FillVariableTreeView(variable);
             variableTreeView1.Dock = DockStyle.Fill;
             variableTreeView1.SetTreeWithSelection(treeNode, _selectedNode);
+            variableTreeView1.OnVariableSelected += (sender, variable1) =>
+            {
+
+            };
 
         }
 
@@ -44,15 +48,17 @@ namespace VariableUsageAnalyzer
                 // new node for parent variable
                 newNode = new TreeNode(variable.ParentVariable.GetLevelAndName()) { Tag = variable.ParentVariable };
 
-                // add parents' children (siblings and self)
-                foreach (var sibling in variable.ParentVariable.Variables)
-                {
-                    newNode.Nodes.Add(sibling == variable
-                        ? temp
-                        : new TreeNode(sibling.GetLevelAndName()) { Tag = sibling });
+                //// add parents' children (siblings and self)
+                //foreach (var sibling in variable.ParentVariable.Variables)
+                //{
+                //    newNode.Nodes.Add(sibling == variable
+                //        ? temp
+                //        : new TreeNode(sibling.GetLevelAndName()) { Tag = sibling });
 
 
-                }
+                //}
+
+                newNode.Nodes.Add(temp);
 
                 // go further up, add grandparents etc.
                 while (parent.ParentVariable != null)
