@@ -16,7 +16,7 @@ namespace VariableUsageAnalyzer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new VariableUsageAnalyzerMain(null));
+            Application.Run(new VariableUsageAnalyzerMain(null, null));
         }
     }
 }

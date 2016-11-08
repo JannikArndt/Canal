@@ -20,12 +20,8 @@ namespace VariableUsageAnalyzer
         {
             InitializeComponent();
             var treeNode = FillVariableTreeView(variable);
-            variableTreeView1.Dock = DockStyle.Fill;
-            variableTreeView1.SetTreeWithSelection(treeNode, _selectedNode);
-            variableTreeView1.OnVariableSelected += (sender, variable1) =>
-            {
-
-            };
+            VariableSelectionTreeView.Dock = DockStyle.Fill;
+            VariableSelectionTreeView.SetTreeWithSelection(treeNode, _selectedNode);
 
         }
 
@@ -37,40 +33,40 @@ namespace VariableUsageAnalyzer
             //However, using a field is a little bit dirty as this method is already returning something. But the
             //only completely right way would be creating a new type like TreeNodeWithSelection which seems pretty
             //overdone so I sticked to this way.
-            _selectedNode = newNode;
+            //_selectedNode = newNode;
 
-            if (variable.ParentVariable != null)
-            {
-                // save variable node
-                var temp = newNode;
-                var parent = variable.ParentVariable;
+            //if (variable.ParentVariable != null)
+            //{
+            //    // save variable node
+            //    var temp = newNode;
+            //    var parent = variable.ParentVariable;
 
-                // new node for parent variable
-                newNode = new TreeNode(variable.ParentVariable.GetLevelAndName()) { Tag = variable.ParentVariable };
+            //    // new node for parent variable
+            //    newNode = new TreeNode(variable.ParentVariable.GetLevelAndName()) { Tag = variable.ParentVariable };
 
-                //// add parents' children (siblings and self)
-                //foreach (var sibling in variable.ParentVariable.Variables)
-                //{
-                //    newNode.Nodes.Add(sibling == variable
-                //        ? temp
-                //        : new TreeNode(sibling.GetLevelAndName()) { Tag = sibling });
+            //    //// add parents' children (siblings and self)
+            //    //foreach (var sibling in variable.ParentVariable.Variables)
+            //    //{
+            //    //    newNode.Nodes.Add(sibling == variable
+            //    //        ? temp
+            //    //        : new TreeNode(sibling.GetLevelAndName()) { Tag = sibling });
 
 
-                //}
+            //    //}
 
-                newNode.Nodes.Add(temp);
+            //    newNode.Nodes.Add(temp);
 
-                // go further up, add grandparents etc.
-                while (parent.ParentVariable != null)
-                {
-                    newNode = new TreeNode(parent.ParentVariable.GetLevelAndName(), new[] { newNode })
-                    {
-                        Tag = parent.ParentVariable
-                    };
+            //    // go further up, add grandparents etc.
+            //    while (parent.ParentVariable != null)
+            //    {
+            //        newNode = new TreeNode(parent.ParentVariable.GetLevelAndName(), new[] { newNode })
+            //        {
+            //            Tag = parent.ParentVariable
+            //        };
 
-                    parent = parent.ParentVariable;
-                }
-            }
+            //        parent = parent.ParentVariable;
+            //    }
+            //}
 
             return newNode;
         }

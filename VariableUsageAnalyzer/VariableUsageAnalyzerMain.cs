@@ -13,14 +13,18 @@ namespace VariableUsageAnalyzer
 {
     public partial class VariableUsageAnalyzerMain : Form
     {
-        public VariableUsageAnalyzerMain(Variable variable = null)
+        public VariableUsageAnalyzerMain(Variable variable, CobolFile file)
         {
             InitializeComponent();
-            List<String> lines = new List<string>();
-            lines.AddRange(new [] { "040300     MOVE    SPACES                      TO BETEI-FEHLER   ", "zwei", "drei", "vier"});
-            this.splitContainer1.Panel2.Controls.Add(new VariableListControl(lines));
+         
 
-            this.splitContainer1.Panel1.Controls.Add(new VariableSelectionControl(variable));
+            var variableSelectionControl = new VariableSelectionControl(variable);
+            variableSelectionControl.VariableSelectionTreeView.OnVariableSelected += (sender, variable1) =>
+            {
+                this.splitContainer1.Panel2.Controls.Clear();
+                this.splitContainer1.Panel2.Controls.Add(new VariableListControl(variable1, file));
+            };
+            this.splitContainer1.Panel1.Controls.Add(variableSelectionControl);
         }
 
         private void VariableUsageAnalyzer_Load(object sender, EventArgs e)
