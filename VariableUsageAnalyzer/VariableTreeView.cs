@@ -46,7 +46,7 @@ namespace VariableUsageAnalyzer
         {
             VariableInfoTreeView.DrawMode = TreeViewDrawMode.OwnerDrawText;
             VariableInfoTreeView.DrawNode += VariableInfoTreeViewOnDrawNode;
-            VariableInfoTreeView.NodeMouseClick += (sender, args) =>
+            VariableInfoTreeView.AfterSelect += (sender, args) =>
             {
                 if (VariableInfoTreeView.SelectedNode == null) return;
                 var clickedVariable = VariableInfoTreeView.SelectedNode.Tag as Variable;

@@ -34,23 +34,51 @@ namespace VariableUsageAnalyzer
         }
 
 
-        private List<LineDto> FindVariableInFile(Variable variable, CobolFile file)
+        private List<LineDto> FindVariableInFile(Variable variable, CobolFile file, bool includeChildren = true)
         {
             var findings = new List<LineDto>();
-            var currLineNumber = 1;
-            var currLineText = "";
+            var nameList = new List<string>();
+            
+
+            if (includeChildren)
+            {
+                WriteAllChildrensAndOwnNamesIntoList(variable, nameList);
+            }
+            else
+            {
+                nameList.Add(variable.VariableName);
+            }
+            
+
             using (var fileText = new StringReader(file.Text))
             {
+                var currLineNumber = 1;
+                var currLineText = "";
                 while ((currLineText = fileText.ReadLine()) != null)
                 {
-                    if (currLineText.Contains(variable.VariableName))
+                    foreach (var name in nameList)
                     {
-                        findings.Add(new LineDto(currLineText, currLineNumber));
+                        if (currLineText.Contains(name))
+                        {
+                            findings.Add(new LineDto(currLineText, currLineNumber));
+                            break;
+                        }
                     }
                     currLineNumber++;
                 }
             }
             return findings;
+        }
+
+        private void WriteAllChildrensAndOwnNamesIntoList(Variable variable, List<string> nameList)
+        {
+            //using nameList.Contains is probably faster than casting from HashSet to List later on as the list will contains less than 10 entries in most cases
+            if(!nameList.Contains(variable.VariableName))
+                nameList.Add(variable.VariableName);
+            foreach (Variable child in variable.Variables)
+            {
+                WriteAllChildrensAndOwnNamesIntoList(child, nameList);
+            }
         }
 
         private void AddCodeLine(LineDto line)
