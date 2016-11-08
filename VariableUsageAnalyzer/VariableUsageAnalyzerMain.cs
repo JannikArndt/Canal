@@ -25,6 +25,8 @@ namespace VariableUsageAnalyzer
                 this.splitContainer1.Panel2.Controls.Add(new VariableListControl(variable1, file));
             };
             this.splitContainer1.Panel1.Controls.Add(variableSelectionControl);
+            this.splitContainer1.FixedPanel = FixedPanel.Panel1;
+            
         }
 
         private void VariableUsageAnalyzer_Load(object sender, EventArgs e)

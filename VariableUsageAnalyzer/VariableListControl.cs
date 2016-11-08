@@ -16,7 +16,7 @@ namespace VariableUsageAnalyzer
 {
     public partial class VariableListControl : UserControl
     {
-        private FastColoredTextBox codeBox;
+        private int numberOfChildVariables;
         public VariableListControl(Variable variable, CobolFile file)
         {
             InitializeComponent();
@@ -25,7 +25,7 @@ namespace VariableUsageAnalyzer
 
             var lines = FindVariableInFile(variable, file);
 
-            AddContainingFileName(file.Name);
+            AddContainingFileName("Usages of variable " + variable.VariableName + " in " +file.Name + file.FileReference.FileExtension + " including " + numberOfChildVariables + " direct or indirect child variable(s).");
             foreach (LineDto line in lines)
             {
                 AddCodeLine(line);
@@ -48,7 +48,7 @@ namespace VariableUsageAnalyzer
             {
                 nameList.Add(variable.VariableName);
             }
-            
+            numberOfChildVariables = nameList.Count - 1;
 
             using (var fileText = new StringReader(file.Text))
             {
@@ -102,8 +102,8 @@ namespace VariableUsageAnalyzer
             Label name = new Label();
             name.Text = filename;
             name.Dock = DockStyle.Top;
-            name.Margin = new Padding(3, 10, 0, 0);
-            name.Height = 12;
+            name.Margin = new Padding(0, 6 , 0, 0);
+            name.Height = 16;
             AddToTable(name);
         }
 

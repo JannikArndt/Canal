@@ -31,12 +31,12 @@
             this.VariableSelectionTreeView = new VariableUsageAnalyzer.VariableTreeView();
             this.SuspendLayout();
             // 
-            // variableTreeView1
+            // VariableSelectionTreeView
             // 
             this.VariableSelectionTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VariableSelectionTreeView.Location = new System.Drawing.Point(0, 0);
+            this.VariableSelectionTreeView.Location = new System.Drawing.Point(6, 6);
             this.VariableSelectionTreeView.Name = "VariableSelectionTreeView";
-            this.VariableSelectionTreeView.Size = new System.Drawing.Size(520, 658);
+            this.VariableSelectionTreeView.Size = new System.Drawing.Size(508, 646);
             this.VariableSelectionTreeView.TabIndex = 0;
             // 
             // VariableSelectionControl
@@ -44,7 +44,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.VariableSelectionTreeView);
+            this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "VariableSelectionControl";
+            this.Padding = new System.Windows.Forms.Padding(6);
             this.Size = new System.Drawing.Size(520, 658);
             this.ResumeLayout(false);
 

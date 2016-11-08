@@ -20,6 +20,7 @@ namespace VariableUsageAnalyzer
         {
             InitializeComponent();
             var treeNode = FillVariableTreeView(variable);
+            this.Dock = DockStyle.Fill;
             VariableSelectionTreeView.Dock = DockStyle.Fill;
             VariableSelectionTreeView.SetTreeWithSelection(treeNode, _selectedNode);
 
