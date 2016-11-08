@@ -31,6 +31,8 @@ namespace VariableUsageAnalyzer
                 AddCodeLine(line);
             }
 
+            AddEmptyBuffer();
+
         }
 
 
@@ -105,6 +107,14 @@ namespace VariableUsageAnalyzer
             name.Margin = new Padding(0, 6 , 0, 0);
             name.Height = 16;
             AddToTable(name);
+        }
+
+        private void AddEmptyBuffer()
+        {
+            Label text = new Label();
+            text.Text = " ";
+            text.Height = 12;
+            AddToTable(text);
         }
 
         private void AddToTable(Control u)
