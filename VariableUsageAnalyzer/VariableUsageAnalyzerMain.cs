@@ -13,6 +13,8 @@ namespace VariableUsageAnalyzer
 {
     public partial class VariableUsageAnalyzerMain : Form
     {
+        public delegate  void VariableUsageSelectedEventHandler(object sender, Variable variable, CobolFile file, uint lineNumber);
+        public event VariableUsageSelectedEventHandler VariableUsageSelected;
         public VariableUsageAnalyzerMain(Variable variable, CobolFile file)
         {
             InitializeComponent();
@@ -22,7 +24,13 @@ namespace VariableUsageAnalyzer
             variableSelectionControl.VariableSelectionTreeView.OnVariableSelected += (sender, variable1) =>
             {
                 this.splitContainer1.Panel2.Controls.Clear();
-                this.splitContainer1.Panel2.Controls.Add(new VariableListControl(variable1, file));
+                VariableListControl vlc = new VariableListControl(variable1, file);
+                vlc.VariableUsageDoubleClicked += (o, variable2, cobolFile, number) =>
+                {
+                    VariableUsageSelected(this, variable2, cobolFile, number);
+                };
+                this.splitContainer1.Panel2.Controls.Add(vlc);
+                
             };
             this.splitContainer1.Panel1.Controls.Add(variableSelectionControl);
             this.splitContainer1.FixedPanel = FixedPanel.Panel1;

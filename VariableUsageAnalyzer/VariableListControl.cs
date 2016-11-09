@@ -36,21 +36,22 @@ namespace VariableUsageAnalyzer
         }
 
 
+
         private List<LineDto> FindVariableInFile(Variable variable, CobolFile file, bool includeChildren = true)
         {
             var findings = new List<LineDto>();
-            var nameList = new List<string>();
+            var variableList = new List<Variable>();
             
 
             if (includeChildren)
             {
-                WriteAllChildrensAndOwnNamesIntoList(variable, nameList);
+                WriteAllChildrensAndSelfIntoList(variable, variableList);
             }
             else
             {
-                nameList.Add(variable.VariableName);
+                variableList.Add(variable);
             }
-            numberOfChildVariables = nameList.Count - 1;
+            numberOfChildVariables = variableList.Count - 1;
 
             using (var fileText = new StringReader(file.Text))
             {
@@ -58,11 +59,11 @@ namespace VariableUsageAnalyzer
                 var currLineText = "";
                 while ((currLineText = fileText.ReadLine()) != null)
                 {
-                    foreach (var name in nameList)
+                    foreach (var currVariable in variableList)
                     {
-                        if (currLineText.Contains(name))
+                        if (currLineText.Contains(currVariable.VariableName))
                         {
-                            findings.Add(new LineDto(currLineText, currLineNumber));
+                            findings.Add(new LineDto(currLineText, currLineNumber, currVariable, file));
                             break;
                         }
                     }
@@ -72,16 +73,19 @@ namespace VariableUsageAnalyzer
             return findings;
         }
 
-        private void WriteAllChildrensAndOwnNamesIntoList(Variable variable, List<string> nameList)
+        private void WriteAllChildrensAndSelfIntoList(Variable variable, List<Variable> variableList)
         {
             //using nameList.Contains is probably faster than casting from HashSet to List later on as the list will contains less than 10 entries in most cases
-            if(!nameList.Contains(variable.VariableName))
-                nameList.Add(variable.VariableName);
+            if(!variableList.Contains(variable))
+                variableList.Add(variable);
             foreach (Variable child in variable.Variables)
             {
-                WriteAllChildrensAndOwnNamesIntoList(child, nameList);
+                WriteAllChildrensAndSelfIntoList(child, variableList);
             }
         }
+
+        public delegate void VariableUsageDoubleClickedEventHandler(object sender, Variable variable, CobolFile file, uint lineNumer);
+        public event VariableUsageDoubleClickedEventHandler VariableUsageDoubleClicked;
 
         private void AddCodeLine(LineDto line)
         {  
@@ -95,9 +99,14 @@ namespace VariableUsageAnalyzer
             
             lineBox.BorderStyle = BorderStyle.FixedSingle;
             lineBox.LineNumberStartValue = (uint) line.Number;
+
+            lineBox.MouseDoubleClick += (sender, args) =>
+            {
+                VariableUsageDoubleClicked(this, line.FoundVariable, line.ContainingFile, (uint) line.Number);
+            };
+
             AddToTable(lineBox);
-            
-        }
+            }
 
         private void AddContainingFileName(String filename)
         {
