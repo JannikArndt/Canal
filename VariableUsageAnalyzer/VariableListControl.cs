@@ -17,13 +17,15 @@ namespace VariableUsageAnalyzer
     public partial class VariableListControl : UserControl
     {
         private int numberOfChildVariables;
-        public VariableListControl(Variable variable, CobolFile file)
+
+
+        public VariableListControl(Variable variable, CobolFile file, bool includeDirectAndIndirectChildVariables, bool includeRedefines)
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
             tableLayoutPanel1.RowStyles.Clear();
 
-            var lines = FindVariableInFile(variable, file);
+            var lines = FindVariableInFile(variable, file, includeDirectAndIndirectChildVariables);
 
             AddContainingFileName("Usages of variable " + variable.VariableName + " in " +file.Name + file.FileReference.FileExtension + " including " + numberOfChildVariables + " direct or indirect child variable(s).");
             foreach (LineDto line in lines)
@@ -37,7 +39,7 @@ namespace VariableUsageAnalyzer
 
 
 
-        private List<LineDto> FindVariableInFile(Variable variable, CobolFile file, bool includeChildren = true)
+        private List<LineDto> FindVariableInFile(Variable variable, CobolFile file, bool includeChildren)
         {
             var findings = new List<LineDto>();
             var variableList = new List<Variable>();

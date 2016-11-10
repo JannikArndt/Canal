@@ -16,6 +16,11 @@ namespace VariableUsageAnalyzer
     {
         private TreeNode _selectedNode;
 
+        private Variable currentlySelectedVariable;
+
+        public delegate void VariableSelectionOrSearchConfigChangedEventHandler(object sender, Variable variable, bool includeDirectAndIndirectChildVariables, bool includeRedefines);
+        public event VariableSelectionOrSearchConfigChangedEventHandler VariableSelectionOrSearchConfigChanged;
+
         public VariableSelectionControl(Variable variable)
         {
             InitializeComponent();
@@ -23,7 +28,20 @@ namespace VariableUsageAnalyzer
             this.Dock = DockStyle.Fill;
             VariableSelectionTreeView.Dock = DockStyle.Fill;
             VariableSelectionTreeView.SetTreeWithSelection(treeNode, _selectedNode);
+            VariableSelectionTreeView.OnVariableSelected +=
+                (sender, variable1) => { currentlySelectedVariable = variable1; HandleVariableSelectionOrSearchConfigChanged();};
+            includeDirectAndIndirectChildVariablesCheckBox.CheckedChanged +=
+                (sender, args) => { HandleVariableSelectionOrSearchConfigChanged(); };
+            includeRedefinesCheckBox.CheckedChanged +=
+                (sender, args) => { HandleVariableSelectionOrSearchConfigChanged(); };
 
+        }
+
+        private void HandleVariableSelectionOrSearchConfigChanged()
+        {
+            if (currentlySelectedVariable != null)
+                VariableSelectionOrSearchConfigChanged(this, currentlySelectedVariable,
+                    includeDirectAndIndirectChildVariablesCheckBox.Checked, includeRedefinesCheckBox.Checked);
         }
 
         private TreeNode FillVariableTreeView(Variable variable)
@@ -34,7 +52,7 @@ namespace VariableUsageAnalyzer
             //However, using a field is a little bit dirty as this method is already returning something. But the
             //only completely right way would be creating a new type like TreeNodeWithSelection which seems pretty
             //overdone so I sticked to this way.
-            //_selectedNode = newNode;
+            _selectedNode = newNode;
 
             //if (variable.ParentVariable != null)
             //{
@@ -70,6 +88,21 @@ namespace VariableUsageAnalyzer
             //}
 
             return newNode;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

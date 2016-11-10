@@ -21,17 +21,17 @@ namespace VariableUsageAnalyzer
          
 
             var variableSelectionControl = new VariableSelectionControl(variable);
-            variableSelectionControl.VariableSelectionTreeView.OnVariableSelected += (sender, variable1) =>
-            {
-                this.splitContainer1.Panel2.Controls.Clear();
-                VariableListControl vlc = new VariableListControl(variable1, file);
-                vlc.VariableUsageDoubleClicked += (o, variable2, cobolFile, number) =>
+         variableSelectionControl.VariableSelectionOrSearchConfigChanged +=
+                (sender, variable1, variables, redefines) =>
                 {
-                    VariableUsageSelected(this, variable2, cobolFile, number);
+                    this.splitContainer1.Panel2.Controls.Clear();
+                    VariableListControl vlc = new VariableListControl(variable1, file, variables, redefines);
+                    vlc.VariableUsageDoubleClicked += (o, variable2, cobolFile, number) =>
+                    {
+                        VariableUsageSelected(this, variable2, cobolFile, number);
+                    };
+                    this.splitContainer1.Panel2.Controls.Add(vlc);
                 };
-                this.splitContainer1.Panel2.Controls.Add(vlc);
-                
-            };
             this.splitContainer1.Panel1.Controls.Add(variableSelectionControl);
             this.splitContainer1.FixedPanel = FixedPanel.Panel1;
             
