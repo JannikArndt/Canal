@@ -17,17 +17,23 @@ namespace VariableUsageAnalyzer
     public partial class VariableListControl : UserControl
     {
         private int numberOfChildVariables;
-
+        private bool _includeDirectAndIndirectChildVariables;
+        private bool _includeRedefines;
+        private Variable _variable;
 
         public VariableListControl(Variable variable, CobolFile file, bool includeDirectAndIndirectChildVariables, bool includeRedefines)
         {
             InitializeComponent();
-            this.Dock = DockStyle.Fill;
+            _includeDirectAndIndirectChildVariables = includeDirectAndIndirectChildVariables;
+            _includeRedefines = includeRedefines;
+            _variable = variable;
+
+            Dock = DockStyle.Fill;
             tableLayoutPanel1.RowStyles.Clear();
 
-            var lines = FindVariableInFile(variable, file, includeDirectAndIndirectChildVariables);
+            var lines = FindVariableInFile(_variable, file, _includeDirectAndIndirectChildVariables);
 
-            AddContainingFileName("Usages of variable " + variable.VariableName + " in " +file.Name + file.FileReference.FileExtension + " including " + numberOfChildVariables + " direct or indirect child variable(s).");
+            AddContainingFileName(file.Name, numberOfChildVariables, -1, lines.Count);
             foreach (LineDto line in lines)
             {
                 AddCodeLine(line);
@@ -110,10 +116,18 @@ namespace VariableUsageAnalyzer
             AddToTable(lineBox);
             }
 
-        private void AddContainingFileName(String filename)
+        private void AddContainingFileName(String filename, int childCount, int redefineCount, int usageCount)
         {
+      
+            var tmp = "Found " + usageCount +
+                      " usage(s) of the variable " + _variable.VariableName + 
+                      " in the file " + filename;
+            tmp += _includeDirectAndIndirectChildVariables ? " including " + childCount + " direct or indirect children" : " not looking for direct or indirect children";
+            tmp += " and";
+            tmp += _includeRedefines ? " including " + redefineCount + " redefine(s)" : " not looking for redefines.";
+           
             Label name = new Label();
-            name.Text = filename;
+            name.Text = tmp;
             name.Dock = DockStyle.Top;
             name.Margin = new Padding(0, 6 , 0, 0);
             name.Height = 16;
