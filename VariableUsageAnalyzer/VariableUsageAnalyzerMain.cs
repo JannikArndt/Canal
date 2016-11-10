@@ -18,10 +18,10 @@ namespace VariableUsageAnalyzer
         public VariableUsageAnalyzerMain(Variable variable, CobolFile file)
         {
             InitializeComponent();
-         
+            this.Text = "CANAL - Variable Usage Analyzer (Origin: " + file.Name + " -> " + variable.VariableName + ")";
 
             var variableSelectionControl = new VariableSelectionControl(variable);
-         variableSelectionControl.VariableSelectionOrSearchConfigChanged +=
+            variableSelectionControl.VariableSelectionOrSearchConfigChanged +=
                 (sender, variable1, variables, redefines) =>
                 {
                     this.splitContainer1.Panel2.Controls.Clear();
@@ -36,6 +36,8 @@ namespace VariableUsageAnalyzer
             this.splitContainer1.FixedPanel = FixedPanel.Panel1;
             
         }
+
+      
 
         private void VariableUsageAnalyzer_Load(object sender, EventArgs e)
         {
