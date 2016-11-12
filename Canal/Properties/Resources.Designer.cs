@@ -71,22 +71,19 @@ namespace Canal.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to v2.10
-        ///- Many small improvements on glitches in 2.9
-        ///- Current file name is now displayed in titlebar
-        ///- New &quot;Most recently used&quot;
+        ///   Looks up a localized string similar to v2.12
+        ///- COPY-books can be found without explicit folder name (&quot;OF&quot;) if filename is unique (@koljag)
+        ///- Double-clicking a variable now selects it in the variable tree (@koljag)
+        ///- Tree-view now highlights the currently displayed procedure (@koljag)
+        ///- .cob and .cbl files are now treated separately (@koljag)
         ///
-        ///v2.9
-        ///- Fixed perform tree
-        ///- Added &quot;Lines of Code&quot; information
-        ///- Redesigned procedure view
+        ///v2.11
+        ///- &quot;Referenced By&quot; now jumps to the line where the &quot;perform&quot; is
+        ///- Added support for multiline-variable-definitions
+        ///- Reworked VariableTree
         ///
-        ///v2.8
-        ///- Added jumping to sections
-        ///- Added command to revert all changes
-        ///- Control + F now focusses search textbox instead of opening search window
-        ///- Bugfix: Navigate backwards now includes lines from search and toc selection
-        ///- Bugfix: Filenames for resolving copys now have to be [rest of string was truncated]&quot;;.
+        ///v2.10
+        ///- Many small improvements on glitches in 2. [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ChangeLog {
             get {
@@ -201,6 +198,15 @@ namespace Canal.Properties {
         internal static string File_Could_Not_Be_Found {
             get {
                 return ResourceManager.GetString("File_Could_Not_Be_Found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error saving file: .
+        /// </summary>
+        internal static string FileControl_Save_Error_saving_file {
+            get {
+                return ResourceManager.GetString("FileControl_Save_Error_saving_file", resourceCulture);
             }
         }
         
