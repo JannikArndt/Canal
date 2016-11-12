@@ -61,8 +61,10 @@ namespace Canal.UserControls
             }
             catch (Exception exception)
             {
-                Logger.Error(exception, "Error initializing file control for CobolFile {0}: {1}", filename, exception.Message);
-                MessageBox.Show(Resources.ErrorMessage_FileControl_Constructor + exception.Message, Resources.Error, MessageBoxButtons.OK);
+                Logger.Error(exception, "Error initializing file control for CobolFile {0}: {1}", filename,
+                    exception.Message);
+                MessageBox.Show(Resources.ErrorMessage_FileControl_Constructor + exception.Message, Resources.Error,
+                    MessageBoxButtons.OK);
             }
         }
 
@@ -82,7 +84,8 @@ namespace Canal.UserControls
         {
             if (CobolFile.DivisionsAndSection.ProcedureMissing())
             {
-                var result = MessageBox.Show(Resources.ProcedureDivisionMissing_Text, Resources.ProcedureDivisionMissing_Title, MessageBoxButtons.YesNo);
+                var result = MessageBox.Show(Resources.ProcedureDivisionMissing_Text,
+                    Resources.ProcedureDivisionMissing_Title, MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                     InsertCopybooksIntoSource();
             }
@@ -93,8 +96,8 @@ namespace Canal.UserControls
             try
             {
                 var foldingAreas = new List<CobolTreeNode>(CobolFile.CobolTree.GetAllDivisions())
-                                                   .Concat(CobolFile.CobolTree.GetAllSections())
-                                                   .Concat(CobolFile.CobolTree.GetAllProcedures());
+                    .Concat(CobolFile.CobolTree.GetAllSections())
+                    .Concat(CobolFile.CobolTree.GetAllProcedures());
 
                 foreach (var area in foldingAreas)
                 {
@@ -114,7 +117,8 @@ namespace Canal.UserControls
             var performMatch = Regex.Match(clickedLineText, Constants.Perform, RegexOptions.IgnoreCase);
             if (performMatch.Success)
             {
-                codeBox.FindNext(@"^.{7}" + performMatch.Groups[1].Value + @"(\.| +USING| SECTION\.)", false, true, false, true);
+                codeBox.FindNext(@"^.{7}" + performMatch.Groups[1].Value + @"(\.| +USING| SECTION\.)", false, true,
+                    false, true);
                 return;
             }
 
@@ -132,7 +136,8 @@ namespace Canal.UserControls
                 if (fileRef.Count == 1)
                     MainWindow.OpenFile(fileRef.First().FilePath);
                 else if (fileRef.Count > 0)
-                    MessageBox.Show(Resources.MultipleFilesMatchSearch, Resources.MultipleFilesFound, MessageBoxButtons.OK);
+                    MessageBox.Show(Resources.MultipleFilesMatchSearch, Resources.MultipleFilesFound,
+                        MessageBoxButtons.OK);
                 else
                     MessageBox.Show(Resources.FileCouldNotBeFound, Resources.FileNotFound, MessageBoxButtons.OK);
             }
@@ -179,12 +184,19 @@ namespace Canal.UserControls
             if (!string.IsNullOrWhiteSpace(filename))
                 CobolFile.FileReference = new FileReference(filename);
 
-            File.WriteAllText(CobolFile.FileReference.FilePath, codeBox.Text);
-            CobolFile.Text = codeBox.Text;
-            UnsavedChanges = false;
-            saveButton.Enabled = false;
-            if (FileSaved != null)
-                FileSaved(this, new FileSystemEventArgs(WatcherChangeTypes.Changed, CobolFile.FileReference.Directory, CobolFile.FileReference.ProgramName));
+            try
+            {
+                File.WriteAllText(CobolFile.FileReference.FilePath, codeBox.Text);
+                CobolFile.Text = codeBox.Text;
+                UnsavedChanges = false;
+                saveButton.Enabled = false;
+                if (FileSaved != null)
+                    FileSaved(this, new FileSystemEventArgs(WatcherChangeTypes.Changed, CobolFile.FileReference.Directory, CobolFile.FileReference.ProgramName));
+            }
+            catch (IOException exception)
+            {
+                MessageBox.Show(Resources.FileControl_Save_Error_saving_file + exception.Message, Resources.Error, MessageBoxButtons.OK);
+            }
         }
 
         public void FindInCodeBox(string pattern, bool matchCase, bool regex, bool wholeWord, bool firstSearch = false)

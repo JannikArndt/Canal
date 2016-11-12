@@ -440,4 +440,7 @@
   <data name="ProcedureInfo_LinesOfCodeError" xml:space="preserve">
     <value>Lines incl. performs not calculated due to recursion.</value>
   </data>
+  <data name="FileControl_Save_Error_saving_file" xml:space="preserve">
+    <value>Error saving file: </value>
+  </data>
 </root>
