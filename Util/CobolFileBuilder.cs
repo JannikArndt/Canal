@@ -1,8 +1,7 @@
 ﻿using Logging;
-using Model;
+using Model.File;
 using Model.References;
 using System.IO;
-using Model.File;
 
 namespace Util
 {

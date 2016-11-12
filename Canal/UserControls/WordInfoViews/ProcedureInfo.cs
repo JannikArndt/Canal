@@ -92,7 +92,7 @@ namespace Canal.UserControls.WordInfoViews
             var varDict = new Dictionary<Variable, List<Variable>>();
 
             var result = new List<TreeNode>();
-            var local = new Variable(0, "Working-Storage Section", new PicGroup(), "", null);
+            var local = new Variable(0, "Working-Storage Section", new PicGroup(), null);
 
             // 1. Find all root variables
             foreach (var variable in procedure.VariableUsages.Keys)

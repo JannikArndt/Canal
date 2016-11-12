@@ -19,10 +19,6 @@ namespace Model.Pictures
                         return IntegersLength + FractionsLength + 1;
                     case CompType.Comp3:
                         return (int)Math.Ceiling((double)(IntegersLength + FractionsLength + 1) / 2);
-                    case CompType.Comp:
-                    case CompType.Comp1:
-                    case CompType.Comp2:
-                    case CompType.Comp4:
                     default:
                         throw new NotImplementedException();
                 }

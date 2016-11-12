@@ -10,9 +10,9 @@ namespace Model.File
 {
     public class Procedure : CobolTreeNode
     {
-        public override int StartIndex { get; protected set; }
+        public sealed override int StartIndex { get; protected set; }
 
-        public override int EndIndex { get; protected set; }
+        public sealed override int EndIndex { get; protected set; }
 
         public override List<CobolTreeNode> GetNodes()
         {

@@ -5,7 +5,7 @@ namespace Model.Pictures
 {
     public class Pic9V9 : Pic9
     {
-        private decimal? value;
+        private decimal? _value;
 
         public int IntegersLength { get; set; }
 
@@ -21,10 +21,6 @@ namespace Model.Pictures
                         return IntegersLength + FractionsLength;
                     case CompType.Comp3:
                         return (int)Math.Ceiling((double)(IntegersLength + FractionsLength) / 2);
-                    case CompType.Comp:
-                    case CompType.Comp1:
-                    case CompType.Comp2:
-                    case CompType.Comp4:
                     default:
                         throw new NotImplementedException();
                 }
@@ -33,8 +29,8 @@ namespace Model.Pictures
 
         public override string Value
         {
-            get { return value != null ? value.ToString() : null; }
-            set { this.value = string.IsNullOrWhiteSpace(value) ? (decimal?)null : value.StartsWith("ZERO") ? 0 : decimal.Parse(value, CultureInfo.InvariantCulture); }
+            get { return _value != null ? _value.ToString() : null; }
+            set { _value = string.IsNullOrWhiteSpace(value) ? (decimal?)null : value.StartsWith("ZERO") ? 0 : decimal.Parse(value, CultureInfo.InvariantCulture); }
         }
 
         public Pic9V9(int integersLength, int fractionsLength, CompType comp = CompType.None)

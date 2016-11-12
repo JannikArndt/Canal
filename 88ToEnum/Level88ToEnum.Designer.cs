@@ -301,7 +301,7 @@
             this.settingsName.Name = "settingsName";
             this.settingsName.Size = new System.Drawing.Size(179, 20);
             this.settingsName.TabIndex = 1;
-            this.settingsName.TextChanged += new System.EventHandler(this.settingsChanged);
+            this.settingsName.TextChanged += new System.EventHandler(this.SettingsChanged);
             // 
             // label2
             // 
@@ -330,7 +330,7 @@
             this.namespaceEnumInput.Name = "namespaceEnumInput";
             this.namespaceEnumInput.Size = new System.Drawing.Size(179, 20);
             this.namespaceEnumInput.TabIndex = 4;
-            this.namespaceEnumInput.TextChanged += new System.EventHandler(this.settingsChanged);
+            this.namespaceEnumInput.TextChanged += new System.EventHandler(this.SettingsChanged);
             // 
             // namespaceMapperInput
             // 
@@ -339,7 +339,7 @@
             this.namespaceMapperInput.Name = "namespaceMapperInput";
             this.namespaceMapperInput.Size = new System.Drawing.Size(179, 20);
             this.namespaceMapperInput.TabIndex = 5;
-            this.namespaceMapperInput.TextChanged += new System.EventHandler(this.settingsChanged);
+            this.namespaceMapperInput.TextChanged += new System.EventHandler(this.SettingsChanged);
             // 
             // csharpEnumMapper
             // 

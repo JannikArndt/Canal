@@ -2,27 +2,21 @@
 {
     public class PicGroup : IPic
     {
-        private const int length = 0;
-
-        private const string value = "";
-
-        private const CompType compType = CompType.None;
-
         public int Length
         {
-            get { return length; }
+            get { return 0; }
             set { }
         }
 
         public string Value
         {
-            get { return value; }
+            get { return ""; }
             set { }
         }
 
         public CompType CompType
         {
-            get { return compType; }
+            get { return CompType.None; }
             set { }
         }
 
