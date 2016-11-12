@@ -33,6 +33,11 @@ namespace Canal.UserControls
 
                 AnalyzeFile();
 
+                searchPrecise.Checked = true;
+                searchFuzzy.Click += HandleSearchKindChanged;
+                searchRegEx.Click += HandleSearchKindChanged;
+                searchPrecise.Click += HandleSearchKindChanged;
+
                 // initialize FastColoredTextBox
                 codeBox.Font = SourceCodePro.Instance.Regular();
                 codeBox.SetTextAsync(CobolFile.Text);
@@ -41,7 +46,7 @@ namespace Canal.UserControls
                 codeBox.WordSelected += CodeBoxOnWordSelected;
                 codeBox.UndoRedoStateChanged += CodeBoxOnUndoRedoStateChanged;
                 codeBox.VisualMarkerClick += CodeBoxOnPerformMarkerClick;
-                codeBox.SelectionChanged+= CodeBoxOnSelectionChanged;
+                codeBox.SelectionChanged += CodeBoxOnSelectionChanged;
                 codeBox.TextChanged += (sender, args) =>
                 {
                     if (!UnsavedChanges && SavedVersionChanged != null)
@@ -355,7 +360,7 @@ namespace Canal.UserControls
 
         private void CodeBoxOnSelectionChanged(object sender, EventArgs eventArgs)
         {
-           tableOfContents.HighlightFirstMatchingNode(FindLastProcedureOrSectionOrDivisonNames(codeBox.Selection.FromLine));
+            tableOfContents.HighlightFirstMatchingNode(FindLastProcedureOrSectionOrDivisonNames(codeBox.Selection.FromLine));
         }
 
         /// <summary>
@@ -373,7 +378,7 @@ namespace Canal.UserControls
                 string currenctLineText = codeBox.GetLineText(currentLineNumber);
                 procedureNames.Add(Constants.ProcedureOrSectionOrDivisonRegex.Match(currenctLineText).Groups["name"].Value);
             }
-         
+
             return procedureNames;
         }
 
@@ -388,7 +393,7 @@ namespace Canal.UserControls
             try
             {
                 searchBox.BackColor = SystemColors.Window;
-                codeBox.FindNext(searchBox.Text, false, searchWithRegEx.Checked, false, firstSearch, reverse);
+                codeBox.FindNext(GetSearchQuery(), false, SearchWithRegEx(), false, firstSearch, reverse);
             }
             catch (ArgumentException)
             {
@@ -399,6 +404,21 @@ namespace Canal.UserControls
             {
                 Logger.Error(exception, "Error trying to search for {0}: {1}.", searchBox.Text, exception.GetType());
             }
+        }
+
+        private string GetSearchQuery()
+        {
+            if (!searchFuzzy.Checked)
+                return searchBox.Text;
+
+            var queryAsRegex = Regex.Replace(searchBox.Text, "[^a-zA-Z0-9 \\*]", "[^a-zA-Z0-9 ]");
+            queryAsRegex = Regex.Replace(queryAsRegex, " ", " *");
+            return queryAsRegex;
+        }
+
+        private bool SearchWithRegEx()
+        {
+            return searchRegEx.Checked || searchFuzzy.Checked;
         }
 
         private void SeachBoxTextChanged(object sender, EventArgs e)
@@ -426,6 +446,14 @@ namespace Canal.UserControls
                 box.Text = Resources.SearchPlaceholder;
                 box.Tag = true;
             }
+        }
+
+        private void HandleSearchKindChanged(object sender, EventArgs eventArgs)
+        {
+            searchFuzzy.Checked = false;
+            searchPrecise.Checked = false;
+            searchRegEx.Checked = false;
+            ((ToolStripButton)sender).Checked = true;
         }
 
         #endregion
