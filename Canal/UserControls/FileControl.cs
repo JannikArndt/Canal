@@ -46,7 +46,7 @@ namespace Canal.UserControls
                 codeBox.WordSelected += CodeBoxOnWordSelected;
                 codeBox.UndoRedoStateChanged += CodeBoxOnUndoRedoStateChanged;
                 codeBox.VisualMarkerClick += CodeBoxOnPerformMarkerClick;
-                codeBox.SelectionChanged+= CodeBoxOnSelectionChanged;
+                codeBox.SelectionChanged += CodeBoxOnSelectionChanged;
                 codeBox.TextChanged += (sender, args) =>
                 {
                     if (!UnsavedChanges && SavedVersionChanged != null)
@@ -363,7 +363,7 @@ namespace Canal.UserControls
 
         private void CodeBoxOnSelectionChanged(object sender, EventArgs eventArgs)
         {
-           tableOfContents.HighlightFirstMatchingNode(FindLastProcedureOrSectionOrDivisonNames(codeBox.Selection.FromLine));
+            tableOfContents.HighlightFirstMatchingNode(FindLastProcedureOrSectionOrDivisonNames(codeBox.Selection.FromLine));
         }
 
         /// <summary>
@@ -381,7 +381,7 @@ namespace Canal.UserControls
                 string currenctLineText = codeBox.GetLineText(currentLineNumber);
                 procedureNames.Add(Constants.ProcedureOrSectionOrDivisonRegex.Match(currenctLineText).Groups["name"].Value);
             }
-         
+
             return procedureNames;
         }
 
@@ -396,17 +396,7 @@ namespace Canal.UserControls
             try
             {
                 searchBox.BackColor = SystemColors.Window;
-                if (searchFuzzy.Checked)
-                {
-                    string regex = Regex.Replace(searchBox.Text, "[^a-zA-Z0-9 \\*]", "[^a-zA-Z0-9 ]");
-                    regex = Regex.Replace(regex, " ", " *");
-                    codeBox.FindNext(regex, false, true, false, firstSearch, reverse);
-                }
-                else
-                {
-                    codeBox.FindNext(searchBox.Text, false, searchRegEx.Checked, false, firstSearch, reverse);
-                }
-                
+                codeBox.FindNext(GetSearchQuery(), false, SearchWithRegEx(), false, firstSearch, reverse);
             }
             catch (ArgumentException)
             {
@@ -417,6 +407,21 @@ namespace Canal.UserControls
             {
                 Logger.Error(exception, "Error trying to search for {0}: {1}.", searchBox.Text, exception.GetType());
             }
+        }
+
+        private string GetSearchQuery()
+        {
+            if (!searchFuzzy.Checked)
+                return searchBox.Text;
+
+            var queryAsRegex = Regex.Replace(searchBox.Text, "[^a-zA-Z0-9 \\*]", "[^a-zA-Z0-9 ]");
+            queryAsRegex = Regex.Replace(queryAsRegex, " ", " *");
+            return queryAsRegex;
+        }
+
+        private bool SearchWithRegEx()
+        {
+            return searchRegEx.Checked || searchFuzzy.Checked;
         }
 
         private void SeachBoxTextChanged(object sender, EventArgs e)
