@@ -10,9 +10,9 @@ namespace Model.File
 {
     public class Procedure : CobolTreeNode
     {
-        public override int StartIndex { get; }
+        public override int StartIndex { get; protected set; }
 
-        public override int EndIndex { get; }
+        public override int EndIndex { get; protected set; }
 
         public override List<CobolTreeNode> GetNodes()
         {
@@ -21,19 +21,19 @@ namespace Model.File
 
         #region References
 
-        public List<PerformReference> PerformReferences { get; }
+        public List<PerformReference> PerformReferences { get; private set; }
 
-        public List<GoToReference> GoToReferences { get; }
+        public List<GoToReference> GoToReferences { get; private set; }
 
-        public List<PerformReference> IsReferencedBy { get; }
+        public List<PerformReference> IsReferencedBy { get; private set; }
 
-        public List<FileReference> CallReferences { get; }
+        public List<FileReference> CallReferences { get; private set; }
 
         #endregion
 
         private int _linesOfCode;
 
-        public ConcurrentDictionary<Variable, UsedAs> VariableUsages { get; }
+        public ConcurrentDictionary<Variable, UsedAs> VariableUsages { get; private set; }
 
         public Procedure(CobolFile cobolFile, string name, int beginIndex, int endIndex) : base(cobolFile, name)
         {

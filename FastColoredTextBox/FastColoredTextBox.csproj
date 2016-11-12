@@ -24,6 +24,7 @@
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>bin\Debug\FastColoredTextBox.XML</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
