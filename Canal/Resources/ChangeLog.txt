@@ -1,4 +1,9 @@
-﻿v2.12
+﻿v2.13
+- new search option: fuzzy search
+- generated enums now have a value
+- bugfix: ctrl+c restored
+
+v2.12
 - COPY-books can be found without explicit folder name ("OF") if filename is unique (@koljag)
 - Double-clicking a variable now selects it in the variable tree (@koljag)
 - Tree-view now highlights the currently displayed procedure (@koljag)
