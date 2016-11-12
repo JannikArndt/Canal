@@ -3,7 +3,6 @@ using Model.File;
 using System.Diagnostics;
 using System.Net;
 using Util;
-using Util.Events;
 
 namespace Canal
 {
@@ -21,7 +20,7 @@ namespace Canal
 
         private readonly string[] _openFilesOnStartup;
 
-        
+
 
         public MainWindow(string[] files = null)
         {
@@ -41,11 +40,11 @@ namespace Canal
             UpdateMenuItems(null, null);
 
             LoadMostRecentDirectory();
-            
-            TextUtil.Instance.ErrorEventHandler+=(sender, s) => MessageBox.Show(s, Resources.Error, MessageBoxButtons.OK);
+
+            TextUtil.Instance.ErrorEventHandler += (sender, s) => MessageBox.Show(s, Resources.Error, MessageBoxButtons.OK);
         }
 
-        
+
 
         private void LoadMostRecentDirectory()
         {
@@ -56,12 +55,12 @@ namespace Canal
         {
             if (_tabUtil.CurrentFileControl != null)
             {
-                Text = "CANAL - " + _tabUtil.CurrentFileControl.CobolFile.Name + " (" +
-                       _tabUtil.CurrentFileControl.CobolFile.FileReference.FilePath + ")";
+                Text = Resources.Main_Name_Short + @" - " + _tabUtil.CurrentFileControl.CobolFile.Name + @" (" +
+                       _tabUtil.CurrentFileControl.CobolFile.FileReference.FilePath + @")";
             }
             else
             {
-                Text = "CANAL Cobol Analyzer";
+                Text = Resources.Main_Name_Long;
             }
         }
 
@@ -307,7 +306,7 @@ namespace Canal
         {
             if (ProjectUtil.Instance.Current != null)
             {
-                var result = MessageBox.Show("Close current project without saving?", "Warning", MessageBoxButtons.YesNo);
+                var result = MessageBox.Show(Resources.Close_current_project_without_saving, Resources.Warning, MessageBoxButtons.YesNo);
                 if (result == DialogResult.No)
                     return;
             }

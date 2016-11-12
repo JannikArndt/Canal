@@ -47,19 +47,19 @@ namespace Canal.UserControls
         {
             if (string.IsNullOrWhiteSpace(NameTextBox.Text))
             {
-                MessageBox.Show("Please enter a valid project name.", Resources.Error, MessageBoxButtons.OK);
+                MessageBox.Show(Resources.ProjectAssistant_StartAnalysisButton_Click_Please_enter_a_valid_project_name_, Resources.Error, MessageBoxButtons.OK);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(FolderTextBox.Text) || !Directory.Exists(FolderTextBox.Text))
             {
-                MessageBox.Show("Please enter a valid filepath.", Resources.Error, MessageBoxButtons.OK);
+                MessageBox.Show(Resources.ProjectAssistant_StartAnalysisButton_Click_Please_enter_a_valid_filepath_, Resources.Error, MessageBoxButtons.OK);
                 return;
             }
 
             if (FileTypesCheckedListBox.CheckedItems.Count == 0)
             {
-                MessageBox.Show("Please select at least one file type.", Resources.Error, MessageBoxButtons.OK);
+                MessageBox.Show(Resources.ProjectAssistant_StartAnalysisButton_Click_Please_select_at_least_one_file_type_, Resources.Error, MessageBoxButtons.OK);
                 return;
             }
 
@@ -87,7 +87,7 @@ namespace Canal.UserControls
             catch (Exception exception)
             {
                 Logger.Error(exception, "Project creation failed: {0}.", exception.Message);
-                MessageBox.Show("Project creation failed: " + exception.Message, Resources.Error, MessageBoxButtons.OK);
+                MessageBox.Show(Resources.ProjectAssistant_StartAnalysisButton_Click_Project_creation_failed__ + exception.Message, Resources.Error, MessageBoxButtons.OK);
             }
         }
 

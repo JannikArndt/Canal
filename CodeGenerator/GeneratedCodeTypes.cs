@@ -1,4 +1,5 @@
-﻿namespace CodeGenerator
+﻿// ReSharper disable InconsistentNaming
+namespace CodeGenerator
 {
     public enum GeneratedCodeTypes
     {

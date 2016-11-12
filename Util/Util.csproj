@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -64,7 +65,6 @@
     </Compile>
     <Compile Include="SortKind.cs" />
     <Compile Include="TableOfContentsWorker.cs" />
-    <Compile Include="Settings.cs" />
     <Compile Include="TextUtil.cs" />
     <Compile Include="VariablesUtil.cs" />
   </ItemGroup>

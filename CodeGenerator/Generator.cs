@@ -25,7 +25,7 @@ namespace CodeGenerator
         public string GenerateMapper(GeneratorConfiguration config)
         {
             var text = new StringBuilder(Resources.MapperExample);
-            var variables = config.Variables.Where(vari => vari.DoMap);
+            var variables = config.Variables.Where(vari => vari.DoMap).ToList();
             text.Replace("<!NAMESPACE!>", config.Namespace);
             text.Replace("<!BUSINESSOBJECTNAME!>", config.BusinessObjectName);
             text.Replace("<!BONAMEPARAMETER!>", config.BusinessObjectNameAsParameter);

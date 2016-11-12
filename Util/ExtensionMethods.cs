@@ -44,7 +44,7 @@ namespace Util
                 case UsedAs.Both:
                     return "(in/out)";
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(usedAs), usedAs, null);
+                    throw new ArgumentOutOfRangeException("usedAs", usedAs, null);
             }
         }
 

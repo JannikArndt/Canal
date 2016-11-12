@@ -443,4 +443,40 @@
   <data name="FileControl_Save_Error_saving_file" xml:space="preserve">
     <value>Error saving file: </value>
   </data>
+  <data name="Main_Name_Short" xml:space="preserve">
+    <value>CANAL</value>
+  </data>
+  <data name="Main_Name_Long" xml:space="preserve">
+    <value>CANAL Cobol Analyzer</value>
+  </data>
+  <data name="Close_current_project_without_saving" xml:space="preserve">
+    <value>Close current project without saving?</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Project_files_are_not_supported_in_this_version_of_Canal" xml:space="preserve">
+    <value>Project files are not supported in this version of Canal.</value>
+  </data>
+  <data name="Not_supported" xml:space="preserve">
+    <value>Not supported.</value>
+  </data>
+  <data name="ProjectAssistant_StartAnalysisButton_Click_Please_enter_a_valid_project_name_" xml:space="preserve">
+    <value>Please enter a valid project name.</value>
+  </data>
+  <data name="ProjectAssistant_StartAnalysisButton_Click_Please_enter_a_valid_filepath_" xml:space="preserve">
+    <value>Please enter a valid filepath.</value>
+  </data>
+  <data name="ProjectAssistant_StartAnalysisButton_Click_Please_select_at_least_one_file_type_" xml:space="preserve">
+    <value>Please select at least one file type.</value>
+  </data>
+  <data name="ProjectAssistant_StartAnalysisButton_Click_Project_creation_failed__" xml:space="preserve">
+    <value>Project creation failed: </value>
+  </data>
+  <data name="ProjectUtil_Save_Error_saving_project__" xml:space="preserve">
+    <value>Error saving project: </value>
+  </data>
+  <data name="ProjectUtil_Open_Error_opening_project__" xml:space="preserve">
+    <value>Error opening project: </value>
+  </data>
 </root>

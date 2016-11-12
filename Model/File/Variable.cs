@@ -20,8 +20,6 @@ namespace Model.File
 
         public IPic Picture { get; set; }
 
-        private string Code { get; set; }
-
         public List<Variable> Variables { get; set; }
 
         public Variable ParentVariable { get; set; }
@@ -55,12 +53,11 @@ namespace Model.File
         {
         }
 
-        public Variable(int variableLevel, string variableName, IPic picture, string code, Variable parentVariable)
+        public Variable(int variableLevel, string variableName, IPic picture, Variable parentVariable)
         {
             VariableLevel = variableLevel;
             VariableName = variableName;
             Picture = picture;
-            Code = code;
             ParentVariable = parentVariable;
             Variables = new List<Variable>();
         }

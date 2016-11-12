@@ -71,7 +71,7 @@ namespace Util
                     }
 
                     // Create Variable
-                    var currentVariable = new Variable(valLevel, valLiteral, picture, match.Value, null)
+                    var currentVariable = new Variable(valLevel, valLiteral, picture, null)
                     {
                         Redefines = redefined,
                         Occurs = !string.IsNullOrWhiteSpace(valOccurs) ? int.Parse(valOccurs) : 1,

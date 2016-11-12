@@ -94,7 +94,7 @@ namespace Canal.UserControls
             catch (Exception exception)
             {
                 Logger.Error(exception, "Error trying to save project at path {0}: {1}", fileName, exception.Message);
-                MessageBox.Show("Error saving project: " + exception.Message, Resources.Error, MessageBoxButtons.OK);
+                MessageBox.Show(Resources.ProjectUtil_Save_Error_saving_project__ + exception.Message, Resources.Error, MessageBoxButtons.OK);
             }
 
         }
@@ -112,7 +112,7 @@ namespace Canal.UserControls
             catch (Exception exception)
             {
                 Logger.Error(exception, "Error trying to open project at path {0}: {1}", fileName, exception.Message);
-                MessageBox.Show("Error opening project: " + exception.Message, Resources.Error, MessageBoxButtons.OK);
+                MessageBox.Show(Resources.ProjectUtil_Open_Error_opening_project__ + exception.Message, Resources.Error, MessageBoxButtons.OK);
             }
         }
     }

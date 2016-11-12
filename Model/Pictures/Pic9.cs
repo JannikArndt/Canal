@@ -4,7 +4,7 @@ namespace Model.Pictures
 {
     public class Pic9 : IPic
     {
-        private long? value;
+        private long? _value;
 
         public bool Negative { get; set; }
 
@@ -21,9 +21,6 @@ namespace Model.Pictures
                     case CompType.Comp:
                     case CompType.Comp3:
                         return (int)Math.Ceiling((double)Length / 2);
-                    case CompType.Comp1:
-                    case CompType.Comp2:
-                    case CompType.Comp4:
                     default:
                         throw new NotImplementedException();
                 }
@@ -41,8 +38,8 @@ namespace Model.Pictures
 
         public virtual string Value
         {
-            get { return value != null ? value.ToString() : null; }
-            set { this.value = string.IsNullOrWhiteSpace(value) ? (long?)null : value.StartsWith("ZERO") ? 0 : long.Parse(value); }
+            get { return _value != null ? _value.ToString() : null; }
+            set { _value = string.IsNullOrWhiteSpace(value) ? (long?)null : value.StartsWith("ZERO") ? 0 : long.Parse(value); }
         }
 
         public override string ToString()

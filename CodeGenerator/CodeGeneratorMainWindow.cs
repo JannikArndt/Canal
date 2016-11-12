@@ -1,6 +1,6 @@
 ﻿using CodeGenerator.Properties;
 using FastColoredTextBoxNS.Enums;
-using Model;
+using Model.File;
 using Model.Pictures;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using Model.File;
 using Util;
 
 namespace CodeGenerator
