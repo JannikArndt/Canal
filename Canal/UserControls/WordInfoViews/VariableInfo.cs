@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 ﻿using System;
 using System.Drawing;
 using Model.File;
-=======
 ﻿using Model.File;
->>>>>>> refs/remotes/origin/master
 using System.Windows.Forms;
 using Util;
 

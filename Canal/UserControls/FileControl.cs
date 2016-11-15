@@ -39,20 +39,18 @@ namespace Canal.UserControls
 
                 AnalyzeFile();
 
-<<<<<<< HEAD
                 // event handlers
                 this.VariableSelected += OnVariableSelected;
                 this.SectionSelected += OnSectionSelected;
                 this.CallReferenceSelected += OnCallReferenceSelected;
                 this.ProcedureSelected += OnProcedureSelected;
                 
-=======
+
                 searchPrecise.Checked = true;
                 searchFuzzy.Click += HandleSearchKindChanged;
                 searchRegEx.Click += HandleSearchKindChanged;
                 searchPrecise.Click += HandleSearchKindChanged;
-
->>>>>>> refs/remotes/origin/master
+                
                 // initialize FastColoredTextBox
                 codeBox.Font = SourceCodePro.Instance.Regular();
                 codeBox.SetTextAsync(CobolFile.Text);
