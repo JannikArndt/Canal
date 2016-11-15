@@ -7,7 +7,7 @@ namespace VariableUsageAnalyzer
 {
     public sealed partial class VariableUsageAnalyzerMain : Form
     {
-        public delegate  void VariableUsageSelectedEventHandler(object sender, Variable variable, CobolFile file, uint lineNumber);
+        public delegate  void VariableUsageSelectedEventHandler(object sender, Variable variable, CobolFile file, string lineText);
         public event VariableUsageSelectedEventHandler VariableUsageSelected;
         public VariableUsageAnalyzerMain(Variable variable, CobolFile file)
         {

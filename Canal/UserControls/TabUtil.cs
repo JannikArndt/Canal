@@ -63,8 +63,11 @@ namespace Canal.UserControls
                     // This is not done here because functionality from the not yet merged fuzzy search branch is needed.
                     //if (lineText != null)
                     //    CurrentFileControl.FindInCodeBox(lineText, false, false, false, true);
-                    if (currentVar != null)
+                    if (lineText != null && currentVar != null)
+                        CurrentFileControl.FindInCodeBoxAfterGivenString(currentVar.VariableName, lineText);
+                    else if (currentVar != null)
                         CurrentFileControl.FindInCodeBox(currentVar.VariableName, false, false, false, true);
+
                     return true;
                 }
                 return false;

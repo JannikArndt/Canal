@@ -88,7 +88,7 @@ namespace VariableUsageAnalyzer
             }
         }
 
-        public delegate void VariableUsageDoubleClickedEventHandler(object sender, Variable variable, CobolFile file, uint lineNumer);
+        public delegate void VariableUsageDoubleClickedEventHandler(object sender, Variable variable, CobolFile file, string lineText);
         public event VariableUsageDoubleClickedEventHandler VariableUsageDoubleClicked;
 
         private void AddCodeLine(LineDto line)
@@ -109,7 +109,7 @@ namespace VariableUsageAnalyzer
             lineBox.MouseDoubleClick += (sender, args) =>
             {
                 if (VariableUsageDoubleClicked != null)
-                    VariableUsageDoubleClicked(this, line.FoundVariable, line.ContainingFile, (uint) line.Number);
+                    VariableUsageDoubleClicked(this, line.FoundVariable, line.ContainingFile, lineBox.Text);
             };
 
             AddToTable(lineBox);

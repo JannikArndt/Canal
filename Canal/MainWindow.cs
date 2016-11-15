@@ -80,9 +80,10 @@ namespace Canal
         public void OpenVariableUsageWindow(Variable variable)
         {
             var variableUsageWindow = new VariableUsageAnalyzer.VariableUsageAnalyzerMain(variable, _tabUtil.CurrentFileControl.CobolFile);
-            variableUsageWindow.VariableUsageSelected += (sender, variable1, file, number) =>
+            variableUsageWindow.VariableUsageSelected += (sender, variable1, file, lineText) =>
             {
-                OpenFile(file.FileReference.FilePath, variable1);
+                OpenFile(file.FileReference.FilePath, variable1, lineText);
+                this.Focus();
             };
             variableUsageWindow.Show();
         }
@@ -231,12 +232,7 @@ namespace Canal
             try
             {
                 _tabUtil.AddTab(filename);
-                // Idea: Set codebox to line with named lineText and then search the variable name again to have only that marked. If the
-                // text selection is not set to the given line, the first occurence of the given variable will be selected regardless which number
-                // of appearance was meant to be selected.
-                // This is not done here because functionality from the not yet merged fuzzy search branch is needed.
-                //if (lineText != null)
-                //    _tabUtil.CurrentFileControl.FindInCodeBox(lineText, false, false, false, true);
+                //Scrolling to right variable when the file is newly opened still has to be implemented like in TabUtil.TryShowTab
                 if (currentVar != null)
                     _tabUtil.CurrentFileControl.FindInCodeBox(currentVar.VariableName, false, false, false, true);
                 MostRecentlyUsed.Instance.Add(filename);

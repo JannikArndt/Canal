@@ -219,6 +219,16 @@ namespace Canal.UserControls
             codeBox.FindNext(pattern, matchCase, regex, wholeWord, firstSearch);
         }
 
+        public void FindInCodeBoxAfterGivenString(string word, string searchFromHere)
+        {
+            searchFromHere = Regex.Replace(searchFromHere, "[^a-zA-Z0-9 \\*]", "[^a-zA-Z0-9 ]");
+            searchFromHere = Regex.Replace(searchFromHere, " ", " *");
+            codeBox.FindNext(searchFromHere, false, true, false, true);
+            codeBox.SelectionStart = codeBox.SelectionStart - codeBox.SelectionLength;
+            codeBox.ClearSelected();
+            codeBox.FindNext(word, false, false, false);
+        }
+
         private void InitTabs(object sender, RunWorkerCompletedEventArgs runWorkerCompletedEventArgs)
         {
             if (IsDisposed)
