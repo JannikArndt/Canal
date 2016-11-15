@@ -2,8 +2,14 @@
 
 namespace Model.File
 {
+    /// <summary>
+    /// Represents a SECTION
+    /// </summary>
     public class Section : Procedure
     {
+        /// <summary>
+        /// List of all PROCEDUREs in this SECTION
+        /// </summary>
         public List<Procedure> Procedures { get; set; }
 
         public Section(CobolFile cobolFile, string name, int startIndex, int endIndex)

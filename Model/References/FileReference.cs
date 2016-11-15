@@ -6,9 +6,16 @@ using System.Runtime.Serialization;
 
 namespace Model.References
 {
+    /// <summary>
+    /// Contains all information about a physical file on drive
+    /// </summary>
     [DataContract(IsReference = true)]
     public class FileReference
     {
+        /// <summary>
+        /// Creates an info-object from the given path (<paramref name="fileSystemEntry"/>)
+        /// </summary>
+        /// <param name="fileSystemEntry"></param>
         public FileReference(string fileSystemEntry)
         {
             ReferencedIn = new List<Procedure>();
@@ -44,9 +51,15 @@ namespace Model.References
         [DataMember]
         public string FilePath { get; private set; }
 
+        /// <summary>
+        /// Reference to canal-representation as a <see cref="CobolFile"/>
+        /// </summary>
         [DataMember]
         public CobolFile CobolFile { get; set; }
 
+        /// <summary>
+        /// List of <see cref="Procedure"/> that call this file
+        /// </summary>
         [DataMember]
         public List<Procedure> ReferencedIn { get; private set; }
 

@@ -2,6 +2,9 @@
 
 namespace Model.File
 {
+    /// <summary>
+    /// Represents the ENVIRONMENT DIVISION
+    /// </summary>
     public class EnvironmentDivision : Division
     {
         public EnvironmentDivision(CobolFile cobolFile) : base(cobolFile, "Environment Division",
