@@ -61,6 +61,15 @@ namespace VariableUsageAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Searching for &quot;FILLER&quot; is not supported..
+        /// </summary>
+        internal static string SearchingForFillerNotSupported {
+            get {
+                return ResourceManager.GetString("SearchingForFillerNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CANAL - Variable Usage Analyzer (Origin: {0} -&gt; {1}).
         /// </summary>
         internal static string VariableUsageAnalyzerMain_VariableUsageAnalyzerMain_CANAL___Variable_Usage_Analyzer__Origin___0______1__ {

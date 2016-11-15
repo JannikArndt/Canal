@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using FastColoredTextBoxNS;
 using FastColoredTextBoxNS.Enums;
 using Model.File;
+using VariableUsageAnalyzer.Properties;
 
 namespace VariableUsageAnalyzer
 {
@@ -27,14 +28,15 @@ namespace VariableUsageAnalyzer
 
             var lines = FindVariableInFile(_variable, file, _includeDirectAndIndirectChildVariables);
 
-            AddContainingFileName(file.Name, _numberOfChildVariables, -1, lines.Count);
-            foreach (LineDto line in lines)
+            if (variable.VariableName == "FILLER")
+                AddFillerNotSupportedMessage();
+            else
             {
-                AddCodeLine(line);
+                AddContainingFileName(file.Name, _numberOfChildVariables, -1, lines.Count);
+                foreach (LineDto line in lines)
+                    AddCodeLine(line);
+                AddEmptyBuffer();
             }
-
-            AddEmptyBuffer();
-
         }
 
 
@@ -127,6 +129,16 @@ namespace VariableUsageAnalyzer
             name.Text = tmp;
             name.Dock = DockStyle.Top;
             name.Margin = new Padding(0, 6 , 0, 0);
+            name.Height = 16;
+            AddToTable(name);
+        }
+
+        private void AddFillerNotSupportedMessage()
+        {
+            Label name = new Label();
+            name.Text = Resources.SearchingForFillerNotSupported;
+            name.Dock = DockStyle.Top;
+            name.Margin = new Padding(0, 6, 0, 0);
             name.Height = 16;
             AddToTable(name);
         }

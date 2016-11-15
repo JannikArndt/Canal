@@ -120,4 +120,7 @@
   <data name="VariableUsageAnalyzerWindowTitle" xml:space="preserve">
     <value>CANAL - Variable Usage Analyzer (Origin: {0} -&gt; {1})</value>
   </data>
+  <data name="SearchingForFillerNotSupported" xml:space="preserve">
+    <value>Searching for "FILLER" is not supported.</value>
+  </data>
 </root>
