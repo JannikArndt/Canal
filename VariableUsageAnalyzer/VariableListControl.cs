@@ -102,9 +102,10 @@ namespace VariableUsageAnalyzer
             lineBox.Name = "cl" + this.Controls.Count;
             lineBox.Dock = DockStyle.Top;
             lineBox.Height = 18;
-            lineBox.Text = line.Text;
             lineBox.Margin = new Padding(3,3,3,0);
-            
+            lineBox.Language = Language.Cobol;
+            lineBox.SetTextAsync(line.Text);
+
             lineBox.BorderStyle = BorderStyle.FixedSingle;
             lineBox.LineNumberStartValue = (uint) line.Number;
 
