@@ -104,7 +104,8 @@ namespace VariableUsageAnalyzer
             lineBox.Height = 18;
             lineBox.Margin = new Padding(3,3,3,0);
             lineBox.Language = Language.Cobol;
-            lineBox.SetTextAsync(line.Text);
+            lineBox.HighlightingRangeType = HighlightingRangeType.AllTextRange;
+            lineBox.Text = line.Text;
 
             lineBox.BorderStyle = BorderStyle.FixedSingle;
             lineBox.LineNumberStartValue = (uint) line.Number;
