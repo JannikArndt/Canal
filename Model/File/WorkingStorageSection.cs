@@ -2,6 +2,9 @@
 
 namespace Model.File
 {
+    /// <summary>
+    /// Represents the WORKING-STORAGE SECTION
+    /// </summary>
     public class WorkingStorageSection : Section
     {
         public override List<CobolTreeNode> GetNodes()
