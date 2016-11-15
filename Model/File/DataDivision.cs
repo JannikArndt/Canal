@@ -2,6 +2,9 @@
 
 namespace Model.File
 {
+    /// <summary>
+    /// Represents the DATA DIVISION
+    /// </summary>
     public class DataDivision : Division
     {
         public WorkingStorageSection WorkingStorageSection { set; get; }

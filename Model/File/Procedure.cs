@@ -8,10 +8,19 @@ using System.Linq;
 
 namespace Model.File
 {
+    /// <summary>
+    /// Represents a PROCEDURE
+    /// </summary>
     public class Procedure : CobolTreeNode
     {
+        /// <summary>
+        /// First character of this Procedure
+        /// </summary>
         public sealed override int StartIndex { get; protected set; }
 
+        /// <summary>
+        /// Last character of this Procedure
+        /// </summary>
         public sealed override int EndIndex { get; protected set; }
 
         public override List<CobolTreeNode> GetNodes()
@@ -21,18 +30,33 @@ namespace Model.File
 
         #region References
 
+        /// <summary>
+        /// List of all procedures that are performed from this procedure
+        /// </summary>
         public List<PerformReference> PerformReferences { get; private set; }
 
+        /// <summary>
+        /// List of all procedures that are jumped to from this procedure
+        /// </summary>
         public List<GoToReference> GoToReferences { get; private set; }
 
+        /// <summary>
+        /// List of all other procedures referencing this procedure via PERFORM or GO TO
+        /// </summary>
         public List<PerformReference> IsReferencedBy { get; private set; }
 
+        /// <summary>
+        /// List of all programs that are called within this procedure
+        /// </summary>
         public List<FileReference> CallReferences { get; private set; }
 
         #endregion
 
         private int _linesOfCode;
 
+        /// <summary>
+        /// A mapping of all variables in this procedure to how they are used
+        /// </summary>
         public ConcurrentDictionary<Variable, UsedAs> VariableUsages { get; private set; }
 
         public Procedure(CobolFile cobolFile, string name, int beginIndex, int endIndex) : base(cobolFile, name)
