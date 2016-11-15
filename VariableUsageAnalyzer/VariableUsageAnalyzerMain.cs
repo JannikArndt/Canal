@@ -1,39 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Model.File;
+using VariableUsageAnalyzer.Properties;
 
 namespace VariableUsageAnalyzer
 {
-    public partial class VariableUsageAnalyzerMain : Form
+    public sealed partial class VariableUsageAnalyzerMain : Form
     {
         public delegate  void VariableUsageSelectedEventHandler(object sender, Variable variable, CobolFile file, uint lineNumber);
         public event VariableUsageSelectedEventHandler VariableUsageSelected;
         public VariableUsageAnalyzerMain(Variable variable, CobolFile file)
         {
             InitializeComponent();
-            this.Text = "CANAL - Variable Usage Analyzer (Origin: " + file.Name + " -> " + variable.VariableName + ")";
+            Text = string.Format(Resources.VariableUsageAnalyzerWindowTitle, file.Name, variable.VariableName);
 
             var variableSelectionControl = new VariableSelectionControl(variable);
             variableSelectionControl.VariableSelectionOrSearchConfigChanged +=
                 (sender, variable1, variables, redefines) =>
                 {
-                    this.splitContainer1.Panel2.Controls.Clear();
+                    splitContainer1.Panel2.Controls.Clear();
                     VariableListControl vlc = new VariableListControl(variable1, file, variables, redefines);
                     vlc.VariableUsageDoubleClicked += (o, variable2, cobolFile, number) =>
                     {
-                        VariableUsageSelected(this, variable2, cobolFile, number);
+                        if (VariableUsageSelected != null)
+                            VariableUsageSelected(this, variable2, cobolFile, number);
                     };
-                    this.splitContainer1.Panel2.Controls.Add(vlc);
+                    splitContainer1.Panel2.Controls.Add(vlc);
                 };
-            this.splitContainer1.Panel1.Controls.Add(variableSelectionControl);
-            this.splitContainer1.FixedPanel = FixedPanel.Panel1;
+            splitContainer1.Panel1.Controls.Add(variableSelectionControl);
+            splitContainer1.FixedPanel = FixedPanel.Panel1;
             
         }
 

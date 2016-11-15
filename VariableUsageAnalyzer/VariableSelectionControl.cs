@@ -1,22 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Util;
 using Model.File;
 
 namespace VariableUsageAnalyzer
 {
-    public partial class VariableSelectionControl : UserControl
+    public sealed partial class VariableSelectionControl : UserControl
     {
         private TreeNode _selectedNode;
 
-        private Variable currentlySelectedVariable;
+        private Variable _currentlySelectedVariable;
 
         public delegate void VariableSelectionOrSearchConfigChangedEventHandler(object sender, Variable variable, bool includeDirectAndIndirectChildVariables, bool includeRedefines);
         public event VariableSelectionOrSearchConfigChangedEventHandler VariableSelectionOrSearchConfigChanged;
@@ -25,11 +18,11 @@ namespace VariableUsageAnalyzer
         {
             InitializeComponent();
             var treeNode = FillVariableTreeView(variable);
-            this.Dock = DockStyle.Fill;
+            Dock = DockStyle.Fill;
             VariableSelectionTreeView.Dock = DockStyle.Fill;
             VariableSelectionTreeView.SetTreeWithSelection(treeNode, _selectedNode);
             VariableSelectionTreeView.OnVariableSelected +=
-                (sender, variable1) => { currentlySelectedVariable = variable1; HandleVariableSelectionOrSearchConfigChanged();};
+                (sender, variable1) => { _currentlySelectedVariable = variable1; HandleVariableSelectionOrSearchConfigChanged();};
             includeDirectAndIndirectChildVariablesCheckBox.CheckedChanged +=
                 (sender, args) => { HandleVariableSelectionOrSearchConfigChanged(); };
             includeRedefinesCheckBox.CheckedChanged +=
@@ -39,8 +32,8 @@ namespace VariableUsageAnalyzer
 
         private void HandleVariableSelectionOrSearchConfigChanged()
         {
-            if (currentlySelectedVariable != null)
-                VariableSelectionOrSearchConfigChanged(this, currentlySelectedVariable,
+            if (_currentlySelectedVariable != null && VariableSelectionOrSearchConfigChanged != null)
+                VariableSelectionOrSearchConfigChanged(this, _currentlySelectedVariable,
                     includeDirectAndIndirectChildVariablesCheckBox.Checked, includeRedefinesCheckBox.Checked);
         }
 

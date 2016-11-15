@@ -1,6 +1,6 @@
 ﻿namespace VariableUsageAnalyzer
 {
-    partial class VariableSelectionControl
+    sealed partial class VariableSelectionControl
     {
         /// <summary> 
         /// Required designer variable.

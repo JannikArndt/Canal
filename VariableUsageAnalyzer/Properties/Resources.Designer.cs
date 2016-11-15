@@ -59,5 +59,24 @@ namespace VariableUsageAnalyzer.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CANAL - Variable Usage Analyzer (Origin: {0} -&gt; {1}).
+        /// </summary>
+        internal static string VariableUsageAnalyzerMain_VariableUsageAnalyzerMain_CANAL___Variable_Usage_Analyzer__Origin___0______1__ {
+            get {
+                return ResourceManager.GetString("VariableUsageAnalyzerMain_VariableUsageAnalyzerMain_CANAL___Variable_Usage_Analyz" +
+                        "er__Origin___0______1__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CANAL - Variable Usage Analyzer (Origin: {0} -&gt; {1}).
+        /// </summary>
+        internal static string VariableUsageAnalyzerWindowTitle {
+            get {
+                return ResourceManager.GetString("VariableUsageAnalyzerWindowTitle", resourceCulture);
+            }
+        }
     }
 }

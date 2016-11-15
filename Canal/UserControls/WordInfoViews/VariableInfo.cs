@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
 using Model.File;
-﻿using Model.File;
 using System.Windows.Forms;
 using Util;
 
@@ -24,7 +21,7 @@ namespace Canal.UserControls.WordInfoViews
             {
                 if (clickedVariable.Root != null && clickedVariable.Root.CopyReference != null)
                 {
-                    if (Control.ModifierKeys == Keys.Shift)
+                    if (ModifierKeys == Keys.Shift)
                     {
                         //shift + double click on variable name => open reference view
                         _parent.MainWindow.OpenVariableUsageWindow(clickedVariable);

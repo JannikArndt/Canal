@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using FastColoredTextBoxNS;
 using FastColoredTextBoxNS.Enums;
@@ -14,12 +8,12 @@ using Model.File;
 
 namespace VariableUsageAnalyzer
 {
-    public partial class VariableListControl : UserControl
+    public sealed partial class VariableListControl : UserControl
     {
-        private int numberOfChildVariables;
-        private bool _includeDirectAndIndirectChildVariables;
-        private bool _includeRedefines;
-        private Variable _variable;
+        private int _numberOfChildVariables;
+        private readonly bool _includeDirectAndIndirectChildVariables;
+        private readonly bool _includeRedefines;
+        private readonly Variable _variable;
 
         public VariableListControl(Variable variable, CobolFile file, bool includeDirectAndIndirectChildVariables, bool includeRedefines)
         {
@@ -33,7 +27,7 @@ namespace VariableUsageAnalyzer
 
             var lines = FindVariableInFile(_variable, file, _includeDirectAndIndirectChildVariables);
 
-            AddContainingFileName(file.Name, numberOfChildVariables, -1, lines.Count);
+            AddContainingFileName(file.Name, _numberOfChildVariables, -1, lines.Count);
             foreach (LineDto line in lines)
             {
                 AddCodeLine(line);
@@ -59,12 +53,12 @@ namespace VariableUsageAnalyzer
             {
                 variableList.Add(variable);
             }
-            numberOfChildVariables = variableList.Count - 1;
+            _numberOfChildVariables = variableList.Count - 1;
 
             using (var fileText = new StringReader(file.Text))
             {
                 var currLineNumber = 1;
-                var currLineText = "";
+                string currLineText;
                 while ((currLineText = fileText.ReadLine()) != null)
                 {
                     foreach (var currVariable in variableList)
@@ -98,8 +92,8 @@ namespace VariableUsageAnalyzer
         private void AddCodeLine(LineDto line)
         {  
             FastColoredTextBox lineBox =  new FastColoredTextBox();
-            lineBox.Tag = "cl" + this.Controls.Count;
-            lineBox.Name = "cl" + this.Controls.Count;
+            lineBox.Tag = "cl" + Controls.Count;
+            lineBox.Name = "cl" + Controls.Count;
             lineBox.Dock = DockStyle.Top;
             lineBox.Height = 18;
             lineBox.Margin = new Padding(3,3,3,0);
@@ -112,7 +106,8 @@ namespace VariableUsageAnalyzer
 
             lineBox.MouseDoubleClick += (sender, args) =>
             {
-                VariableUsageDoubleClicked(this, line.FoundVariable, line.ContainingFile, (uint) line.Number);
+                if (VariableUsageDoubleClicked != null)
+                    VariableUsageDoubleClicked(this, line.FoundVariable, line.ContainingFile, (uint) line.Number);
             };
 
             AddToTable(lineBox);
@@ -139,7 +134,7 @@ namespace VariableUsageAnalyzer
         private void AddEmptyBuffer()
         {
             Label text = new Label();
-            text.Text = " ";
+            text.Text = @" ";
             text.Height = 12;
             AddToTable(text);
         }

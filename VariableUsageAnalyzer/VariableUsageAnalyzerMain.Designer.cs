@@ -1,6 +1,6 @@
 ﻿namespace VariableUsageAnalyzer
 {
-    partial class VariableUsageAnalyzerMain
+    sealed partial class VariableUsageAnalyzerMain
     {
         /// <summary>
         /// Required designer variable.

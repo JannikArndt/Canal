@@ -1,6 +1,6 @@
 ﻿namespace VariableUsageAnalyzer
 {
-    partial class VariableListControl
+    sealed partial class VariableListControl
     {
         /// <summary> 
         /// Required designer variable.

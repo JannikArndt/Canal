@@ -114,4 +114,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="VariableUsageAnalyzerMain_VariableUsageAnalyzerMain_CANAL___Variable_Usage_Analyzer__Origin___0______1__" xml:space="preserve">
+    <value>CANAL - Variable Usage Analyzer (Origin: {0} -&gt; {1})</value>
+  </data>
+  <data name="VariableUsageAnalyzerWindowTitle" xml:space="preserve">
+    <value>CANAL - Variable Usage Analyzer (Origin: {0} -&gt; {1})</value>
+  </data>
 </root>
