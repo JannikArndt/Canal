@@ -23,7 +23,7 @@ namespace Canal.UserControls
             Process.Start("https://github.com/JannikArndt/Canal");
         }
 
-        private void GoToFCTB(object sender, EventArgs e)
+        private void GoToFctb(object sender, EventArgs e)
         {
             Process.Start("https://github.com/PavelTorgashov/FastColoredTextBox");
 

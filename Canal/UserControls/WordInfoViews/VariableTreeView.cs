@@ -29,7 +29,10 @@ namespace Canal.UserControls.WordInfoViews
             VariableInfoTreeView.Nodes.Add(node);
             VariableInfoTreeView.ExpandAll();
             VariableInfoTreeView.SelectedNode = selectedTreeNode;
+            selectedTreeNode.ForeColor = Color.FromArgb(255, 207, 100, 1);
+            selectedTreeNode.BackColor = Color.FromArgb(255, 255, 188, 112);
         }
+
 
         public void ScrollToSelectedNode()
         {
@@ -87,7 +90,7 @@ namespace Canal.UserControls.WordInfoViews
                                   font,
                                   new Rectangle(e.Bounds.X + LevelWidth, e.Bounds.Y, nameWidth, e.Bounds.Height),
                                   (e.State & TreeNodeStates.Selected) != 0 ? SystemColors.HighlightText : e.Node.ForeColor,
-                                  Color.Empty,
+                                  e.Node.BackColor,
                                   TextFormatFlags.VerticalCenter);
 
             // PIC

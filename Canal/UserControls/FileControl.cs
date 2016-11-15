@@ -39,12 +39,20 @@ namespace Canal.UserControls
 
                 AnalyzeFile();
 
+<<<<<<< HEAD
                 // event handlers
                 this.VariableSelected += OnVariableSelected;
                 this.SectionSelected += OnSectionSelected;
                 this.CallReferenceSelected += OnCallReferenceSelected;
                 this.ProcedureSelected += OnProcedureSelected;
                 
+=======
+                searchPrecise.Checked = true;
+                searchFuzzy.Click += HandleSearchKindChanged;
+                searchRegEx.Click += HandleSearchKindChanged;
+                searchPrecise.Click += HandleSearchKindChanged;
+
+>>>>>>> refs/remotes/origin/master
                 // initialize FastColoredTextBox
                 codeBox.Font = SourceCodePro.Instance.Regular();
                 codeBox.SetTextAsync(CobolFile.Text);
@@ -53,7 +61,7 @@ namespace Canal.UserControls
                 codeBox.WordSelected += CodeBoxOnWordSelected;
                 codeBox.UndoRedoStateChanged += CodeBoxOnUndoRedoStateChanged;
                 codeBox.VisualMarkerClick += CodeBoxOnPerformMarkerClick;
-                codeBox.SelectionChanged+= CodeBoxOnSelectionChanged;
+                codeBox.SelectionChanged += CodeBoxOnSelectionChanged;
                 codeBox.TextChanged += (sender, args) =>
                 {
                     if (!UnsavedChanges && SavedVersionChanged != null)
@@ -68,8 +76,10 @@ namespace Canal.UserControls
             }
             catch (Exception exception)
             {
-                Logger.Error(exception, "Error initializing file control for CobolFile {0}: {1}", filename, exception.Message);
-                MessageBox.Show(Resources.ErrorMessage_FileControl_Constructor + exception.Message, Resources.Error, MessageBoxButtons.OK);
+                Logger.Error(exception, "Error initializing file control for CobolFile {0}: {1}", filename,
+                    exception.Message);
+                MessageBox.Show(Resources.ErrorMessage_FileControl_Constructor + exception.Message, Resources.Error,
+                    MessageBoxButtons.OK);
             }
         }
 
@@ -91,7 +101,8 @@ namespace Canal.UserControls
         {
             if (CobolFile.DivisionsAndSection.ProcedureMissing())
             {
-                var result = MessageBox.Show(Resources.ProcedureDivisionMissing_Text, Resources.ProcedureDivisionMissing_Title, MessageBoxButtons.YesNo);
+                var result = MessageBox.Show(Resources.ProcedureDivisionMissing_Text,
+                    Resources.ProcedureDivisionMissing_Title, MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                     InsertCopybooksIntoSource();
             }
@@ -102,8 +113,8 @@ namespace Canal.UserControls
             try
             {
                 var foldingAreas = new List<CobolTreeNode>(CobolFile.CobolTree.GetAllDivisions())
-                                                   .Concat(CobolFile.CobolTree.GetAllSections())
-                                                   .Concat(CobolFile.CobolTree.GetAllProcedures());
+                    .Concat(CobolFile.CobolTree.GetAllSections())
+                    .Concat(CobolFile.CobolTree.GetAllProcedures());
 
                 foreach (var area in foldingAreas)
                 {
@@ -123,7 +134,8 @@ namespace Canal.UserControls
             var performMatch = Regex.Match(clickedLineText, Constants.Perform, RegexOptions.IgnoreCase);
             if (performMatch.Success)
             {
-                codeBox.FindNext(@"^.{7}" + performMatch.Groups[1].Value + @"(\.| +USING| SECTION\.)", false, true, false, true);
+                codeBox.FindNext(@"^.{7}" + performMatch.Groups[1].Value + @"(\.| +USING| SECTION\.)", false, true,
+                    false, true);
                 return;
             }
 
@@ -141,7 +153,8 @@ namespace Canal.UserControls
                 if (fileRef.Count == 1)
                     MainWindow.OpenFile(fileRef.First().FilePath);
                 else if (fileRef.Count > 0)
-                    MessageBox.Show(Resources.MultipleFilesMatchSearch, Resources.MultipleFilesFound, MessageBoxButtons.OK);
+                    MessageBox.Show(Resources.MultipleFilesMatchSearch, Resources.MultipleFilesFound,
+                        MessageBoxButtons.OK);
                 else
                     MessageBox.Show(Resources.FileCouldNotBeFound, Resources.FileNotFound, MessageBoxButtons.OK);
             }
@@ -188,12 +201,19 @@ namespace Canal.UserControls
             if (!string.IsNullOrWhiteSpace(filename))
                 CobolFile.FileReference = new FileReference(filename);
 
-            File.WriteAllText(CobolFile.FileReference.FilePath, codeBox.Text);
-            CobolFile.Text = codeBox.Text;
-            UnsavedChanges = false;
-            saveButton.Enabled = false;
-            if (FileSaved != null)
-                FileSaved(this, new FileSystemEventArgs(WatcherChangeTypes.Changed, CobolFile.FileReference.Directory, CobolFile.FileReference.ProgramName));
+            try
+            {
+                File.WriteAllText(CobolFile.FileReference.FilePath, codeBox.Text);
+                CobolFile.Text = codeBox.Text;
+                UnsavedChanges = false;
+                saveButton.Enabled = false;
+                if (FileSaved != null)
+                    FileSaved(this, new FileSystemEventArgs(WatcherChangeTypes.Changed, CobolFile.FileReference.Directory, CobolFile.FileReference.ProgramName));
+            }
+            catch (IOException exception)
+            {
+                MessageBox.Show(Resources.FileControl_Save_Error_saving_file + exception.Message, Resources.Error, MessageBoxButtons.OK);
+            }
         }
 
         public void FindInCodeBox(string pattern, bool matchCase, bool regex, bool wholeWord, bool firstSearch = false)
@@ -259,9 +279,6 @@ namespace Canal.UserControls
             {
                 VariableInfo variableInfoControl = new VariableInfo(CobolFile.Variables[word], this) { Dock = DockStyle.Fill };
                 splitContainerRight.Panel2.Controls.Add(variableInfoControl);
-
-                //Giving focus to the control so the double clicked variable stays highlighted.
-                variableInfoControl.Focus();
                 variableInfoControl.ScrollToSelectedVariable();
 
                 if (findInCode)
@@ -397,7 +414,7 @@ namespace Canal.UserControls
 
         private void CodeBoxOnSelectionChanged(object sender, EventArgs eventArgs)
         {
-           tableOfContents.HighlightFirstMatchingNode(FindLastProcedureOrSectionOrDivisonNames(codeBox.Selection.FromLine));
+            tableOfContents.HighlightFirstMatchingNode(FindLastProcedureOrSectionOrDivisonNames(codeBox.Selection.FromLine));
         }
 
         /// <summary>
@@ -415,7 +432,7 @@ namespace Canal.UserControls
                 string currenctLineText = codeBox.GetLineText(currentLineNumber);
                 procedureNames.Add(Constants.ProcedureOrSectionOrDivisonRegex.Match(currenctLineText).Groups["name"].Value);
             }
-         
+
             return procedureNames;
         }
 
@@ -430,7 +447,7 @@ namespace Canal.UserControls
             try
             {
                 searchBox.BackColor = SystemColors.Window;
-                codeBox.FindNext(searchBox.Text, false, searchWithRegEx.Checked, false, firstSearch, reverse);
+                codeBox.FindNext(GetSearchQuery(), false, SearchWithRegEx(), false, firstSearch, reverse);
             }
             catch (ArgumentException)
             {
@@ -441,6 +458,21 @@ namespace Canal.UserControls
             {
                 Logger.Error(exception, "Error trying to search for {0}: {1}.", searchBox.Text, exception.GetType());
             }
+        }
+
+        private string GetSearchQuery()
+        {
+            if (!searchFuzzy.Checked)
+                return searchBox.Text;
+
+            var queryAsRegex = Regex.Replace(searchBox.Text, "[^a-zA-Z0-9 \\*]", "[^a-zA-Z0-9 ]");
+            queryAsRegex = Regex.Replace(queryAsRegex, " ", " *");
+            return queryAsRegex;
+        }
+
+        private bool SearchWithRegEx()
+        {
+            return searchRegEx.Checked || searchFuzzy.Checked;
         }
 
         private void SeachBoxTextChanged(object sender, EventArgs e)
@@ -468,6 +500,14 @@ namespace Canal.UserControls
                 box.Text = Resources.SearchPlaceholder;
                 box.Tag = true;
             }
+        }
+
+        private void HandleSearchKindChanged(object sender, EventArgs eventArgs)
+        {
+            searchFuzzy.Checked = false;
+            searchPrecise.Checked = false;
+            searchRegEx.Checked = false;
+            ((ToolStripButton)sender).Checked = true;
         }
 
         #endregion

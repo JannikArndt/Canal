@@ -1,6 +1,7 @@
 ﻿using Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Threading;
@@ -19,13 +20,14 @@ namespace Canal
         [STAThread]
         static void Main(string[] args)
         {
+            const string logfile = "canal.log";
             try
             {
                 Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
                 Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
 
-                File.AppendAllLines("canal.log", new List<string> { DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "Program start." });
-                Logger.Singleton.Errors += (sender, eventArgs) => File.AppendAllLines("canal.log", new List<string> { DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + eventArgs.Message });
+                File.AppendAllLines(logfile, new List<string> { DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "Program start." });
+                Logger.Singleton.Errors += (sender, eventArgs) => File.AppendAllLines(logfile, new List<string> { DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + eventArgs.Message });
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
@@ -34,11 +36,12 @@ namespace Canal
             catch (Exception exception)
             {
                 Logger.Error(exception, "Error in application.");
-                MessageBox.Show(string.Format("An error occured: {0}.\n\nStack Trace:\n{1}", exception.Message, exception.StackTrace));
+                MessageBox.Show(string.Format("An error occured: {0}.\n\nCanal needs to be closed, but a log-file will be opened.", exception.Message));
+                Process.Start(logfile);
             }
             finally
             {
-                File.AppendAllLines("canal.log", new List<string> { DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "Program end." });
+                File.AppendAllLines(logfile, new List<string> { DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "Program end." });
             }
         }
     }

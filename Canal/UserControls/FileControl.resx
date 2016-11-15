@@ -225,7 +225,7 @@
         MFQHMBzQ489jkpApWARwGh6TUi+094VDG1XAPQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="searchWithRegEx.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="searchTypeImageLabel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACbSURBVDhPYxhc4Nu3b/+JxVAtqAAk4eTkhIHRxQe5Abgw
@@ -233,6 +233,9 @@
         G5EB3GSgAdhcAFWGHcA0x0zYBzYAhkGad559gN8AdM0gGiYGw1Cl2AFMEUgjsmaoNHEApokszTBAnmYG
         BgDhAnl/z3ZXRAAAAABJRU5ErkJggg==
 </value>
+  </data>
+  <data name="searchFuzzy.ToolTipText" xml:space="preserve">
+    <value>Fuzzy search, every space is interpretet as an undefined amount of spaces larger than one. Additionally every char which is not a letter, a number or a space (= all special chars) is treated as one and the same char, e.g. "TEST -" would match "TEST _".</value>
   </data>
   <data name="formatCodeButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

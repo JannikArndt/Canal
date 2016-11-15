@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 ﻿using System;
 using System.Drawing;
 using Model.File;
+=======
+﻿using Model.File;
+>>>>>>> refs/remotes/origin/master
 using System.Windows.Forms;
 using Util;
 
@@ -18,7 +22,7 @@ namespace Canal.UserControls.WordInfoViews
             var treeNode = FillVariableTreeView(variable);
 
             VariableInfoTreeView.SetTreeWithSelection(treeNode, _selectedNode);
-           
+
             VariableInfoTreeView.OnVariableSelected += (sender, clickedVariable) =>
             {
                 if (clickedVariable.Root != null && clickedVariable.Root.CopyReference != null)
@@ -68,10 +72,10 @@ namespace Canal.UserControls.WordInfoViews
                     newNode.Nodes.Add(sibling == variable
                         ? temp
                         : new TreeNode(sibling.GetLevelAndName()) { Tag = sibling });
-                    
-                        
+
+
                 }
-                
+
                 // go further up, add grandparents etc.
                 while (parent.ParentVariable != null)
                 {
@@ -83,7 +87,7 @@ namespace Canal.UserControls.WordInfoViews
                     parent = parent.ParentVariable;
                 }
             }
-         
+
             return newNode;
         }
 

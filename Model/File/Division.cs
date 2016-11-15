@@ -5,9 +5,9 @@
     /// </summary>
     public abstract class Division : CobolTreeNode
     {
-        public override int StartIndex { get; }
+        public sealed override int StartIndex { get; protected set; }
 
-        public override int EndIndex { get; }
+        public sealed override int EndIndex { get; protected set; }
 
         protected Division(CobolFile cobolFile, string nodeName, int beginIndex, int endIndex)
             : base(cobolFile, nodeName)

@@ -2,14 +2,14 @@ namespace Model.Pictures
 {
     public class PicX : IPic
     {
-        private string value;
+        private string _value;
 
         public int Length { get; set; }
 
         public string Value
         {
-            get { return value; }
-            set { this.value = value.StartsWith("SPACE") ? new string(' ', Length) : value.Trim('\"', '"', '\\'); }
+            get { return _value; }
+            set { _value = value.StartsWith("SPACE") ? new string(' ', Length) : value.Trim('\"', '"', '\\'); }
         }
 
         public CompType CompType { get; set; }

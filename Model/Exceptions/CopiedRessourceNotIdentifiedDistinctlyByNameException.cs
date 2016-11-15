@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Model.Exceptions
+﻿namespace Model.Exceptions
 {
     public class CopiedRessourceNotIdentifiedDistinctlyByNameException : CanalException
     {

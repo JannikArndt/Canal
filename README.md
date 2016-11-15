@@ -1,6 +1,8 @@
 # CANAL -- Cobol Analyzer
 A free and open-source COBOL editor and analysis tool
 
+[![Build status](https://ci.appveyor.com/api/projects/status/b7u8bmdc1dt9e7u4?svg=true)](https://ci.appveyor.com/project/JannikArndt/canal)
+
 # [Install App](http://www.jannikarndt.de/media/canal/Canal.application)
 
 - [Install App via http://www.jannikarndt.de/media/canal/Canal.application](http://www.jannikarndt.de/media/canal/Canal.application) (Requires .NET 4.5)

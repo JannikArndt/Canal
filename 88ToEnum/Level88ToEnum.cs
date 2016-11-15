@@ -45,7 +45,7 @@ namespace Level88ToEnum
             var mapperNamespace = string.IsNullOrWhiteSpace(namespaceMapperInput.Text) ? "Solution.Project.Mappers" : namespaceMapperInput.Text;
 
             csharpEnumOutput.Text = CreateEnum(enumName, enumNamespace, inputCobol, inputCsharp, inputComments);
-            csharpEnumMapperOutput.Text = CreateMapper(enumName, mapperNamespace, enumNamespace, inputCobol, inputCsharp, inputComments);
+            csharpEnumMapperOutput.Text = CreateMapper(enumName, mapperNamespace, enumNamespace, inputCobol, inputCsharp);
         }
 
         private string CreateEnum(string name, string enumNamespace, IList<string> inputCobol, IList<string> inputCsharp, IList<string> inputComments)
@@ -72,7 +72,7 @@ namespace Level88ToEnum
             return namespaceText + classComment + header + string.Join(",\n\n", enumList) + ending;
         }
 
-        private string CreateMapper(string enumName, string mapperNamespace, string enumNamespace, IList<string> inputCobol, IList<string> inputCsharp, IList<string> inputComments)
+        private string CreateMapper(string enumName, string mapperNamespace, string enumNamespace, IList<string> inputCobol, IList<string> inputCsharp)
         {
             string namespaceText = "namespace " + mapperNamespace + "\n{\n";
             string usingText = mapperNamespace != enumNamespace ? "    using " + enumNamespace + ";\n\n" : string.Empty;
@@ -123,7 +123,7 @@ namespace Level88ToEnum
                 + method2Comment + method2 + switch2 + string.Join("\n", caseList2) + ending2;
         }
 
-        private void settingsChanged(object sender, EventArgs e)
+        private void SettingsChanged(object sender, EventArgs e)
         {
             Settings.Default.NamespaceEnum = namespaceEnumInput.Text;
             Settings.Default.NamespaceMapper = namespaceMapperInput.Text;

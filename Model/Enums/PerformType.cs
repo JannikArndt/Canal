@@ -1,4 +1,5 @@
-﻿namespace Model.Enums
+﻿// ReSharper disable InconsistentNaming
+namespace Model.Enums
 {
     public enum PerformType
     {

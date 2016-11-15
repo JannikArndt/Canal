@@ -71,26 +71,32 @@ namespace Canal.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to v2.10
-        ///- Many small improvements on glitches in 2.9
-        ///- Current file name is now displayed in titlebar
-        ///- New &quot;Most recently used&quot;
+        ///   Looks up a localized string similar to v2.12
+        ///- COPY-books can be found without explicit folder name (&quot;OF&quot;) if filename is unique (@koljag)
+        ///- Double-clicking a variable now selects it in the variable tree (@koljag)
+        ///- Tree-view now highlights the currently displayed procedure (@koljag)
+        ///- .cob and .cbl files are now treated separately (@koljag)
         ///
-        ///v2.9
-        ///- Fixed perform tree
-        ///- Added &quot;Lines of Code&quot; information
-        ///- Redesigned procedure view
+        ///v2.11
+        ///- &quot;Referenced By&quot; now jumps to the line where the &quot;perform&quot; is
+        ///- Added support for multiline-variable-definitions
+        ///- Reworked VariableTree
         ///
-        ///v2.8
-        ///- Added jumping to sections
-        ///- Added command to revert all changes
-        ///- Control + F now focusses search textbox instead of opening search window
-        ///- Bugfix: Navigate backwards now includes lines from search and toc selection
-        ///- Bugfix: Filenames for resolving copys now have to be [rest of string was truncated]&quot;;.
+        ///v2.10
+        ///- Many small improvements on glitches in 2. [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ChangeLog {
             get {
                 return ResourceManager.GetString("ChangeLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close current project without saving?.
+        /// </summary>
+        internal static string Close_current_project_without_saving {
+            get {
+                return ResourceManager.GetString("Close_current_project_without_saving", resourceCulture);
             }
         }
         
@@ -205,6 +211,15 @@ namespace Canal.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error saving file: .
+        /// </summary>
+        internal static string FileControl_Save_Error_saving_file {
+            get {
+                return ResourceManager.GetString("FileControl_Save_Error_saving_file", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File could not be found..
         /// </summary>
         internal static string FileCouldNotBeFound {
@@ -242,6 +257,24 @@ namespace Canal.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CANAL Cobol Analyzer.
+        /// </summary>
+        internal static string Main_Name_Long {
+            get {
+                return ResourceManager.GetString("Main_Name_Long", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CANAL.
+        /// </summary>
+        internal static string Main_Name_Short {
+            get {
+                return ResourceManager.GetString("Main_Name_Short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Multiple Matching Files Found.
         /// </summary>
         internal static string MultipleFilesFound {
@@ -256,6 +289,15 @@ namespace Canal.Properties {
         internal static string MultipleFilesMatchSearch {
             get {
                 return ResourceManager.GetString("MultipleFilesMatchSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not supported..
+        /// </summary>
+        internal static string Not_supported {
+            get {
+                return ResourceManager.GetString("Not_supported", resourceCulture);
             }
         }
         
@@ -283,6 +325,69 @@ namespace Canal.Properties {
         internal static string ProcedureInfo_LinesOfCodeError {
             get {
                 return ResourceManager.GetString("ProcedureInfo_LinesOfCodeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project files are not supported in this version of Canal..
+        /// </summary>
+        internal static string Project_files_are_not_supported_in_this_version_of_Canal {
+            get {
+                return ResourceManager.GetString("Project_files_are_not_supported_in_this_version_of_Canal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter a valid filepath..
+        /// </summary>
+        internal static string ProjectAssistant_StartAnalysisButton_Click_Please_enter_a_valid_filepath_ {
+            get {
+                return ResourceManager.GetString("ProjectAssistant_StartAnalysisButton_Click_Please_enter_a_valid_filepath_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter a valid project name..
+        /// </summary>
+        internal static string ProjectAssistant_StartAnalysisButton_Click_Please_enter_a_valid_project_name_ {
+            get {
+                return ResourceManager.GetString("ProjectAssistant_StartAnalysisButton_Click_Please_enter_a_valid_project_name_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select at least one file type..
+        /// </summary>
+        internal static string ProjectAssistant_StartAnalysisButton_Click_Please_select_at_least_one_file_type_ {
+            get {
+                return ResourceManager.GetString("ProjectAssistant_StartAnalysisButton_Click_Please_select_at_least_one_file_type_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project creation failed: .
+        /// </summary>
+        internal static string ProjectAssistant_StartAnalysisButton_Click_Project_creation_failed__ {
+            get {
+                return ResourceManager.GetString("ProjectAssistant_StartAnalysisButton_Click_Project_creation_failed__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error opening project: .
+        /// </summary>
+        internal static string ProjectUtil_Open_Error_opening_project__ {
+            get {
+                return ResourceManager.GetString("ProjectUtil_Open_Error_opening_project__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error saving project: .
+        /// </summary>
+        internal static string ProjectUtil_Save_Error_saving_project__ {
+            get {
+                return ResourceManager.GetString("ProjectUtil_Save_Error_saving_project__", resourceCulture);
             }
         }
         
@@ -386,6 +491,15 @@ namespace Canal.Properties {
             get {
                 object obj = ResourceManager.GetObject("SourceCodePro_Regular", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        internal static string Warning {
+            get {
+                return ResourceManager.GetString("Warning", resourceCulture);
             }
         }
     }
