@@ -24,13 +24,25 @@ namespace VariableUsageAnalyzer
             variableSelectionControl.VariableSelectionOrSearchConfigChanged +=
                 (sender, variable1, variables, redefines) =>
                 {
+                    
                     this.splitContainer1.Panel2.Controls.Clear();
-                    VariableListControl vlc = new VariableListControl(variable1, file, variables, redefines);
-                    vlc.VariableUsageDoubleClicked += (o, variable2, cobolFile, number) =>
+                    var backgroundWorker = new BackgroundWorker();
+                    backgroundWorker.DoWork += (o, args) =>
                     {
-                        VariableUsageSelected(this, variable2, cobolFile, number);
+                        args.Result = new VariableListControl(variable1, file, variables, redefines);
                     };
-                    this.splitContainer1.Panel2.Controls.Add(vlc);
+                    backgroundWorker.RunWorkerCompleted += (o, args) =>
+                    {
+                     
+                        VariableListControl vlc = (VariableListControl)args.Result;
+                        vlc.VariableUsageDoubleClicked += (o2, variable2, cobolFile, number) =>
+                        {
+                            VariableUsageSelected(this, variable2, cobolFile, number);
+                        };
+                        this.splitContainer1.Panel2.Controls.Add(vlc);
+                    };
+                    backgroundWorker.RunWorkerAsync();
+
                 };
             this.splitContainer1.Panel1.Controls.Add(variableSelectionControl);
             this.splitContainer1.FixedPanel = FixedPanel.Panel1;
