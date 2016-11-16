@@ -2,6 +2,9 @@
 
 namespace Model.File
 {
+    /// <summary>
+    /// Represents the IDENTIFICATION DIVISION
+    /// </summary>
     public class IdentificationDivision : Division
     {
         // AUTHOR, INSTALLATION, DATE-WRITTEN; DATE-COMPILED; SECURITY

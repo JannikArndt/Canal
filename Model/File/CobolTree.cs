@@ -4,14 +4,29 @@ using Model.References;
 
 namespace Model.File
 {
+    /// <summary>
+    /// Semantic view of a cobol file
+    /// </summary>
     public class CobolTree
     {
+        /// <summary>
+        /// The IDENTIFICATION DIVISION
+        /// </summary>
         public IdentificationDivision IdentificationDivision { get; set; }
 
+        /// <summary>
+        /// The ENVIRONMENT DIVISION
+        /// </summary>
         public EnvironmentDivision EnvironmentDivision { get; set; }
 
+        /// <summary>
+        /// The DATA DIVISION
+        /// </summary>
         public DataDivision DataDivision { get; set; }
 
+        /// <summary>
+        /// The PROCEDURE DIVISION
+        /// </summary>
         public ProcedureDivision ProcedureDivision { get; set; }
 
         public IEnumerable<Division> GetAllDivisions()

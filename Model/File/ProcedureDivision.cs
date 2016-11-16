@@ -2,6 +2,9 @@
 
 namespace Model.File
 {
+    /// <summary>
+    /// Represents the PROCEDURE DIVISION
+    /// </summary>
     public class ProcedureDivision : Division
     {
         public override List<CobolTreeNode> GetNodes()
@@ -9,6 +12,9 @@ namespace Model.File
             return new List<CobolTreeNode>(Sections);
         }
 
+        /// <summary>
+        /// A list of all SECTIONs in the PROCEDURE DIVISION
+        /// </summary>
         public List<Section> Sections { get; set; }
 
         public ProcedureDivision(CobolFile cobolFile) : base(cobolFile, "Procedure Division",

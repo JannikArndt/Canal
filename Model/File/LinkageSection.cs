@@ -2,6 +2,9 @@
 
 namespace Model.File
 {
+    /// <summary>
+    /// Represents the LINKAGE SECTION
+    /// </summary>
     public class LinkageSection : Section
     {
         public override List<CobolTreeNode> GetNodes()
