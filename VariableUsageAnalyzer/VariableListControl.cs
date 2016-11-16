@@ -38,18 +38,15 @@ namespace VariableUsageAnalyzer
         {
             if (_variable.VariableName == "FILLER")
                 AddFillerNotSupportedMessage();
-            else {
-                var variableList = new List<Variable>();
-                if (_includeDirectAndIndirectChildVariables)
-                    WriteAllChildrensAndSelfIntoList(_variable, variableList);
-                else
-                    variableList.Add(_variable);
+            else
+            {
+                var variableList = BuildRelevantVariablesList();
                 var numberOfChildVariables = variableList.Count - 1;
 
                 foreach (var file in files)
                 {
                     var lines = FindVariablesInFile(file, variableList);
-                    AddContainingFileName(file.Name, numberOfChildVariables, -1, lines.Count);
+                    AddContainingFileName(file.Name, numberOfChildVariables, lines.Count);
                     foreach (LineDto line in lines)
                         AddCodeLine(line);
                }
@@ -81,15 +78,25 @@ namespace VariableUsageAnalyzer
             return findings;
         }
 
-        private void WriteAllChildrensAndSelfIntoList(Variable variable, List<Variable> variableList)
+        private List<Variable> BuildRelevantVariablesList()
+        {
+            var list = new List<Variable>();
+            IterateVariable(_variable, list);
+            return list;
+        }
+
+        private void IterateVariable(Variable variable, List<Variable> variableList)
         {
             //using nameList.Contains is probably faster than casting from HashSet to List later on as the list will contains less than 10 entries in most cases
             if(!variableList.Contains(variable))
                 variableList.Add(variable);
-            foreach (Variable child in variable.Variables)
-            {
-                WriteAllChildrensAndSelfIntoList(child, variableList);
-            }
+            if(_includeDirectAndIndirectChildVariables)
+                foreach (Variable child in variable.Variables)
+                {
+                    IterateVariable(child, variableList);
+                }
+            if(_includeRedefines && variable.Redefines != null)
+                IterateVariable(variable.Redefines, variableList);
         }
 
         public delegate void VariableUsageDoubleClickedEventHandler(object sender, Variable variable, CobolFile file, string lineText);
@@ -119,7 +126,7 @@ namespace VariableUsageAnalyzer
             AddToTable(lineBox);
             }
 
-        private void AddContainingFileName(String filename, int childCount, int redefineCount, int usageCount)
+        private void AddContainingFileName(String filename, int childCount, int usageCount)
         {
       
             var tmp = "Found " + usageCount +
@@ -127,7 +134,7 @@ namespace VariableUsageAnalyzer
                       " in the file " + filename;
             tmp += _includeDirectAndIndirectChildVariables ? " including " + childCount + " direct or indirect children" : " not looking for direct or indirect children";
             tmp += " and";
-            tmp += _includeRedefines ? " including " + redefineCount + " redefine(s)" : " not looking for redefines.";
+            tmp += _includeRedefines ? " including redefines." : " not looking for redefines.";
            
             Label name = new Label();
             name.Text = tmp;
