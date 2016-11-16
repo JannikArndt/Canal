@@ -38,6 +38,35 @@ namespace Canal.UserControls
             tocSearchTextBox.Tag = true;
 
             tocTreeView.Controls.Add(_loader);
+            tocTreeView.DrawMode = TreeViewDrawMode.OwnerDrawText;
+            tocTreeView.DrawNode += TocTreeViewOnDrawNode;
+            tocTreeView.HideSelection = false;
+        }
+
+        private void TocTreeViewOnDrawNode(object sender, DrawTreeNodeEventArgs e)
+        {
+            
+
+            var selectedBack = Color.FromArgb(255, 155, 205, 155); //equals the runtime folding indicator color of the fast colored textbox which can't be referenced here because it's generated at runtime
+            var selectedFore = Color.FromArgb(255, 89, 140, 89);
+            var font = e.Node.NodeFont ?? tocTreeView.Font;
+
+
+            e.Graphics.FillRectangle(
+                e.Node.IsSelected ? new SolidBrush(selectedBack) : new SolidBrush(Color.White),
+                e.Bounds);
+
+           
+            TextRenderer.DrawText(e.Graphics,
+                                  e.Node.Text,
+                                  font,
+                                  e.Bounds,
+                                  (e.State & TreeNodeStates.Selected) != 0 ? selectedFore : e.Node.ForeColor,
+                                  Color.Empty,
+                                  TextFormatFlags.VerticalCenter);
+
+         
+
         }
 
         public void SetCobolFile(CobolFile cobolFile)
@@ -177,19 +206,20 @@ namespace Canal.UserControls
             //No need to proceed if node is already highlighted or not found
             if (node == null || node == _lastHighlightedNode) return;
 
-            node.BackColor = Color.FromArgb(1, 155, 205, 155); //equals the runtime folding indicator color of the fast colored textbox which can't be referenced here because it's generated at runtime
-            node.ForeColor = Color.FromArgb(1, 89, 140, 89);
+            //node.BackColor = Color.FromArgb(1, 155, 205, 155); //equals the runtime folding indicator color of the fast colored textbox which can't be referenced here because it's generated at runtime
+            //node.ForeColor = Color.FromArgb(1, 89, 140, 89);
 
-            //Tidy up last highlighted node if possible
-            if (_lastHighlightedNode != null)
-            {
-                _lastHighlightedNode.BackColor = Color.Transparent;
-                _lastHighlightedNode.ForeColor = Color.Black;
-            }
+            ////Tidy up last highlighted node if possible
+            //if (_lastHighlightedNode != null)
+            //{
+            //    _lastHighlightedNode.BackColor = Color.Transparent;
+            //    _lastHighlightedNode.ForeColor = Color.Black;
+            //}
 
-            //Set new node as currently highlighted
-            _lastHighlightedNode = node;
+            ////Set new node as currently highlighted
+            //_lastHighlightedNode = node;
 
+            tocTreeView.SelectedNode = node;
             node.EnsureVisible();
 
         }
