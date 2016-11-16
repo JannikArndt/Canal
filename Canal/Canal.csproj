@@ -23,18 +23,20 @@
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>false</MapFileExtensions>
+    <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>https://raw.githubusercontent.com/JannikArndt/Canal/master/Publish/</InstallUrl>
     <UpdateUrl>https://raw.githubusercontent.com/JannikArndt/Canal/master/Publish/</UpdateUrl>
     <SupportUrl>http://jannikarndt.github.io/Canal/</SupportUrl>
+    <ErrorReportUrl>https://github.com/JannikArndt/Canal/issues</ErrorReportUrl>
     <TargetCulture>en</TargetCulture>
     <ProductName>CANAL Cobol Analyzer</ProductName>
     <PublisherName>Jannik Arndt</PublisherName>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>2.13.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
