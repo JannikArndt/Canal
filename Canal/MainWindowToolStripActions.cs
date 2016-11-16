@@ -122,7 +122,7 @@ namespace Canal
             if (_tabUtil == null || _tabUtil.CurrentFileControl == null)
                 return;
 
-            _tabUtil.CurrentFileControl.AnalyzeFile();
+            _tabUtil.CurrentFileControl.AnalyzeFileAsync();
         }
 
         private void codeGeneratorToolStripMenuItem_Click(object sender, EventArgs e)
