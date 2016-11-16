@@ -1,4 +1,4 @@
 *.manifest binary
 *.application binary
 *.deploy binary
-Publish/* binary
+*.cbl binary
