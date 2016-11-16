@@ -11,12 +11,16 @@ namespace VariableUsageAnalyzer
 {
     public sealed partial class VariableListControl : UserControl
     {
-        private int _numberOfChildVariables;
         private readonly bool _includeDirectAndIndirectChildVariables;
         private readonly bool _includeRedefines;
         private readonly Variable _variable;
 
-        public VariableListControl(Variable variable, CobolFile file, bool includeDirectAndIndirectChildVariables, bool includeRedefines)
+        public VariableListControl(Variable variable, CobolFile file, bool includeDirectAndIndirectChildVariables, bool includeRedefines) : this(variable, new List<CobolFile> {file}, includeDirectAndIndirectChildVariables, includeRedefines)
+        {
+          
+        }
+
+        public VariableListControl(Variable variable, List<CobolFile> files, bool includeDirectAndIndirectChildVariables, bool includeRedefines)
         {
             InitializeComponent();
             _includeDirectAndIndirectChildVariables = includeDirectAndIndirectChildVariables;
@@ -26,37 +30,37 @@ namespace VariableUsageAnalyzer
             Dock = DockStyle.Fill;
             tableLayoutPanel1.RowStyles.Clear();
 
-            var lines = FindVariableInFile(_variable, file, _includeDirectAndIndirectChildVariables);
+            BuildFindingsList(files);
+            
+        }
 
-            if (variable.VariableName == "FILLER")
+        private void BuildFindingsList(List<CobolFile> files)
+        {
+            if (_variable.VariableName == "FILLER")
                 AddFillerNotSupportedMessage();
-            else
-            {
-                AddContainingFileName(file.Name, _numberOfChildVariables, -1, lines.Count);
-                foreach (LineDto line in lines)
-                    AddCodeLine(line);
-                AddEmptyBuffer();
+            else {
+                var variableList = new List<Variable>();
+                if (_includeDirectAndIndirectChildVariables)
+                    WriteAllChildrensAndSelfIntoList(_variable, variableList);
+                else
+                    variableList.Add(_variable);
+                var numberOfChildVariables = variableList.Count - 1;
+
+                foreach (var file in files)
+                {
+                    var lines = FindVariablesInFile(file, variableList);
+                    AddContainingFileName(file.Name, numberOfChildVariables, -1, lines.Count);
+                    foreach (LineDto line in lines)
+                        AddCodeLine(line);
+               }
             }
+            AddEmptyBuffer();
         }
 
 
-
-        private List<LineDto> FindVariableInFile(Variable variable, CobolFile file, bool includeChildren)
+        private List<LineDto> FindVariablesInFile(CobolFile file, List<Variable> variableList )
         {
             var findings = new List<LineDto>();
-            var variableList = new List<Variable>();
-            
-
-            if (includeChildren)
-            {
-                WriteAllChildrensAndSelfIntoList(variable, variableList);
-            }
-            else
-            {
-                variableList.Add(variable);
-            }
-            _numberOfChildVariables = variableList.Count - 1;
-
             using (var fileText = new StringReader(file.Text))
             {
                 var currLineNumber = 1;
