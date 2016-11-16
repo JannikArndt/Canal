@@ -3,7 +3,7 @@ A free and open-source COBOL editor and analysis tool
 
 [![Build status](https://ci.appveyor.com/api/projects/status/b7u8bmdc1dt9e7u4?svg=true)](https://ci.appveyor.com/project/JannikArndt/canal)
 
-<a href="https://github.com/JannikArndt/Canal/raw/master/Publish/setup.exe" class="btn btn-success btn-lg">Install App</a>
+[![Install App](https://github.com/JannikArndt/Canal/raw/gh-pages/screenshots/installAppButton.PNG)](https://github.com/JannikArndt/Canal/raw/master/Publish/setup.exe)
 
 # Features
 
