@@ -45,8 +45,6 @@ namespace Canal.UserControls
 
         private void TocTreeViewOnDrawNode(object sender, DrawTreeNodeEventArgs e)
         {
-            
-
             var selectedBack = Color.FromArgb(255, 155, 205, 155); //equals the runtime folding indicator color of the fast colored textbox which can't be referenced here because it's generated at runtime
             var selectedFore = Color.FromArgb(255, 89, 140, 89);
             var font = e.Node.NodeFont ?? tocTreeView.Font;
@@ -64,9 +62,6 @@ namespace Canal.UserControls
                                   (e.State & TreeNodeStates.Selected) != 0 ? selectedFore : e.Node.ForeColor,
                                   Color.Empty,
                                   TextFormatFlags.VerticalCenter);
-
-         
-
         }
 
         public void SetCobolFile(CobolFile cobolFile)
