@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Model.File;
 
@@ -16,12 +17,14 @@ namespace VariableUsageAnalyzer
 
         private const int PicWidth = 160;
 
-        bool _doubleClicked;
+        private bool _doubleClicked;
+        
 
         public VariableTreeView()
         {
             InitializeComponent();
             SetUpTreeView();
+           
         }
 
         public void SetTreeWithSelection(TreeNode node, TreeNode selectedTreeNode)
@@ -31,6 +34,7 @@ namespace VariableUsageAnalyzer
             VariableInfoTreeView.SelectedNode = selectedTreeNode;
         }
 
+       
         public void ScrollToSelectedNode()
         {
             VariableInfoTreeView.SelectedNode.EnsureVisible();
@@ -59,11 +63,17 @@ namespace VariableUsageAnalyzer
             VariableInfoTreeView.BeforeExpand += (sender, args) => args.Cancel = args.Action == TreeViewAction.Expand ? _doubleClicked : args.Cancel;
             VariableInfoTreeView.BeforeCollapse += (sender, args) => args.Cancel = args.Action == TreeViewAction.Collapse ? _doubleClicked : args.Cancel;
 
-           
+            VariableInfoTreeView.HideSelection = false;
+
         }
         
         private void VariableInfoTreeViewOnDrawNode(object sender, DrawTreeNodeEventArgs e)
         {
+
+            var selectedFore = Color.FromArgb(255, 207, 100, 1);
+            var selectedForeLight = Color.FromArgb(255, 229, 138, 35);
+            var selectedBack = Color.FromArgb(255, 255, 188, 112);
+            
             var variable = e.Node.Tag as Variable;
             if (variable == null)
                 return;
@@ -72,21 +82,26 @@ namespace VariableUsageAnalyzer
 
             var font = e.Node.NodeFont ?? VariableInfoTreeView.Font;
 
+            e.Graphics.FillRectangle(
+                e.Node.IsSelected ? new SolidBrush(selectedBack) : new SolidBrush(VariableInfoTreeView.BackColor),
+                e.Bounds);
+
             // Level
             TextRenderer.DrawText(e.Graphics,
                                   variable.VariableLevel.ToString("D2"),
                                   font,
                                   new Rectangle(e.Bounds.X, e.Bounds.Y, LevelWidth, e.Bounds.Height),
-                                  Color.DarkGray,
+                                  (e.State & TreeNodeStates.Selected) != 0 ? selectedForeLight : Color.DarkGray,
                                   Color.Empty,
                                   TextFormatFlags.VerticalCenter);
 
             // Name
+            
             TextRenderer.DrawText(e.Graphics,
                                   variable.VariableName,
                                   font,
                                   new Rectangle(e.Bounds.X + LevelWidth, e.Bounds.Y, nameWidth, e.Bounds.Height),
-                                  (e.State & TreeNodeStates.Selected) != 0 ? SystemColors.HighlightText : e.Node.ForeColor,
+                                  (e.State & TreeNodeStates.Selected) != 0 ? selectedFore : e.Node.ForeColor,
                                   Color.Empty,
                                   TextFormatFlags.VerticalCenter);
 
