@@ -437,8 +437,10 @@ namespace Canal.UserControls
             List<string> procedureNames = new List<string>();
             for (int currentLineNumber = lineNumber; currentLineNumber >= 0; currentLineNumber--)
             {
-                string currenctLineText = codeBox.GetLineText(currentLineNumber);
-                procedureNames.Add(Constants.ProcedureOrSectionOrDivisonRegex.Match(currenctLineText).Groups["name"].Value);
+                var currenctLineText = codeBox.GetLineText(currentLineNumber);
+                var match = Constants.ProcedureOrSectionOrDivisonRegex.Match(currenctLineText).Groups["name"].Value;
+                if(!string.IsNullOrEmpty(match))
+                    procedureNames.Add(match);
             }
 
             return procedureNames;

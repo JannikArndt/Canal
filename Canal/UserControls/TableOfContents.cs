@@ -17,7 +17,7 @@ namespace Canal.UserControls
         private CobolFile _cobolFile;
         private bool _userIsStillWaitingForPerformsTreeView;
         private readonly PictureBox _loader;
-        private TreeNode _lastHighlightedNode;
+        private bool _suppressTreeNodeSelectedHandler = false;
 
         public event EventHandler<WordSelectedEventArgs> OnWordSelected;
 
@@ -199,21 +199,9 @@ namespace Canal.UserControls
             var node = nodeTexts.Select(FindNodeByName).FirstOrDefault(n => n != null);
 
             //No need to proceed if node is already highlighted or not found
-            if (node == null || node == _lastHighlightedNode) return;
+            if (node == null || tocTreeView.SelectedNode == node) return;
 
-            //node.BackColor = Color.FromArgb(1, 155, 205, 155); //equals the runtime folding indicator color of the fast colored textbox which can't be referenced here because it's generated at runtime
-            //node.ForeColor = Color.FromArgb(1, 89, 140, 89);
-
-            ////Tidy up last highlighted node if possible
-            //if (_lastHighlightedNode != null)
-            //{
-            //    _lastHighlightedNode.BackColor = Color.Transparent;
-            //    _lastHighlightedNode.ForeColor = Color.Black;
-            //}
-
-            ////Set new node as currently highlighted
-            //_lastHighlightedNode = node;
-
+            _suppressTreeNodeSelectedHandler = true;
             tocTreeView.SelectedNode = node;
             node.EnsureVisible();
 
@@ -235,8 +223,10 @@ namespace Canal.UserControls
 
         private void tocTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (OnWordSelected != null)
-                OnWordSelected(this, new WordSelectedEventArgs(tocTreeView.SelectedNode.Text));
+            if (_suppressTreeNodeSelectedHandler)
+                _suppressTreeNodeSelectedHandler = false;
+            else if (OnWordSelected != null)
+                    OnWordSelected(this, new WordSelectedEventArgs(tocTreeView.SelectedNode.Text));
+            }
         }
-    }
 }
