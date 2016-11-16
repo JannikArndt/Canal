@@ -17,7 +17,7 @@ namespace Canal.UserControls
         private CobolFile _cobolFile;
         private bool _userIsStillWaitingForPerformsTreeView;
         private readonly PictureBox _loader;
-        private bool _suppressTreeNodeSelectedHandler = false;
+        private bool _suppressTreeNodeSelectedHandler;
 
         public event EventHandler<WordSelectedEventArgs> OnWordSelected;
 

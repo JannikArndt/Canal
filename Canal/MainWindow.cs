@@ -83,7 +83,7 @@ namespace Canal
             variableUsageWindow.VariableUsageSelected += (sender, variable1, file, lineText) =>
             {
                 OpenFile(file.FileReference.FilePath, variable1, lineText);
-                this.Focus();
+                Focus();
             };
             variableUsageWindow.Show();
         }
