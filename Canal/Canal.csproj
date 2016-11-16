@@ -14,7 +14,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>Publish\</PublishUrl>
+    <PublishUrl>..\Publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -24,8 +24,8 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>false</MapFileExtensions>
-    <InstallUrl>https://raw.githubusercontent.com/JannikArndt/Canal/github-deployment/Canal/Publish/</InstallUrl>
-    <UpdateUrl>https://raw.githubusercontent.com/JannikArndt/Canal/github-deployment/Canal/Publish/</UpdateUrl>
+    <InstallUrl>https://raw.githubusercontent.com/JannikArndt/Canal/master/Publish/</InstallUrl>
+    <UpdateUrl>https://raw.githubusercontent.com/JannikArndt/Canal/master/Publish/</UpdateUrl>
     <SupportUrl>http://jannikarndt.github.io/Canal/</SupportUrl>
     <TargetCulture>en</TargetCulture>
     <ProductName>CANAL Cobol Analyzer</ProductName>
@@ -33,7 +33,7 @@
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <ApplicationRevision>2</ApplicationRevision>
-    <ApplicationVersion>2.13.1.%2a</ApplicationVersion>
+    <ApplicationVersion>2.13.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
