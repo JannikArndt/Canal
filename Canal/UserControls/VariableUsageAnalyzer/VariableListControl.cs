@@ -35,7 +35,7 @@ namespace Canal.UserControls.VariableUsageAnalyzer
 
         private void BuildFindingsList(IEnumerable<CobolFile> files, Variable variable)
         {
-            if (variable.VariableName == "FILLER")
+            if (variable.VariableName == Resources.FILLER)
                 AddFillerNotSupportedMessage();
             else
             {
@@ -90,11 +90,13 @@ namespace Canal.UserControls.VariableUsageAnalyzer
             //using nameList.Contains is probably faster than casting from HashSet to List later on as the list will contains less than 10 entries in most cases
             if (!variableList.Contains(variable))
                 variableList.Add(variable);
+
             if (_includeDirectAndIndirectChildVariables)
                 foreach (Variable child in variable.Variables)
                 {
                     IterateVariable(child, variableList);
                 }
+
             if (_includeRedefines && variable.Redefines != null)
                 IterateVariable(variable.Redefines, variableList);
         }
@@ -112,12 +114,14 @@ namespace Canal.UserControls.VariableUsageAnalyzer
                 Height = 18,
                 Margin = new Padding(3, 3, 3, 0),
                 Language = Language.Cobol,
-                HighlightingRangeType = HighlightingRangeType.AllTextRange,
-                Text = line.Text,
+                HighlightingRangeType = HighlightingRangeType.SingleLine,
                 BorderStyle = BorderStyle.FixedSingle,
+                ReservedCountOfLineNumberChars = 5,
                 LineNumberStartValue = (uint)line.Number
             };
 
+            // TODO this is crazy slow
+            lineBox.SetSingleLine(line.Text);
 
             lineBox.MouseDoubleClick += (sender, args) =>
             {

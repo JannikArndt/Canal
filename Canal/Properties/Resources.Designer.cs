@@ -239,6 +239,15 @@ namespace Canal.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FILLER.
+        /// </summary>
+        internal static string FILLER {
+            get {
+                return ResourceManager.GetString("FILLER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter Copybooks.
         /// </summary>
         internal static string FilterCopybooksWindowTitle {

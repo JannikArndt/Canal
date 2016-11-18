@@ -482,4 +482,7 @@
   <data name="SearchingForFillerNotSupported" xml:space="preserve">
     <value>Searching for "FILLER" is not supported.</value>
   </data>
+  <data name="FILLER" xml:space="preserve">
+    <value>FILLER</value>
+  </data>
 </root>

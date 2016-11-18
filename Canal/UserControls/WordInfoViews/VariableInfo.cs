@@ -21,14 +21,15 @@ namespace Canal.UserControls.WordInfoViews
             {
                 if (clickedVariable.Root != null && clickedVariable.Root.CopyReference != null)
                 {
+                    // TODO find better way to open VariableUsageWindow
                     if (ModifierKeys == Keys.Shift)
                     {
-                        //shift + double click on variable name => open reference view
+                        // shift + double click on variable name => open reference view
                         _parent.MainWindow.OpenVariableUsageWindow(clickedVariable);
                     }
                     else
                     {
-                        //simple double click on variable name => open file of definition
+                        // simple double click on variable name => open file of definition
                         _parent.MainWindow.OpenFile(clickedVariable.Root.CopyReference.FilePath, clickedVariable);
                     }
 
