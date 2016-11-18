@@ -1,10 +1,9 @@
-﻿using System;
+﻿using FastColoredTextBoxNS;
+using FastColoredTextBoxNS.Enums;
+using Model.File;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using FastColoredTextBoxNS;
-using FastColoredTextBoxNS.Enums;
-using Model.File;
 using VariableUsageAnalyzer.Properties;
 
 namespace VariableUsageAnalyzer
@@ -13,49 +12,50 @@ namespace VariableUsageAnalyzer
     {
         private readonly bool _includeDirectAndIndirectChildVariables;
         private readonly bool _includeRedefines;
-        private readonly Variable _variable;
 
-        public VariableListControl(Variable variable, CobolFile file, bool includeDirectAndIndirectChildVariables, bool includeRedefines) : this(variable, new List<CobolFile> {file}, includeDirectAndIndirectChildVariables, includeRedefines)
+        public VariableListControl(Variable variable, CobolFile file, bool includeDirectAndIndirectChildVariables, bool includeRedefines)
+            : this(variable, new List<CobolFile> { file }, includeDirectAndIndirectChildVariables, includeRedefines)
         {
-          
+
         }
 
-        public VariableListControl(Variable variable, List<CobolFile> files, bool includeDirectAndIndirectChildVariables, bool includeRedefines)
+        // ReSharper disable once MemberCanBePrivate.Global
+        public VariableListControl(Variable variable, IEnumerable<CobolFile> files, bool includeDirectAndIndirectChildVariables, bool includeRedefines)
         {
             InitializeComponent();
             _includeDirectAndIndirectChildVariables = includeDirectAndIndirectChildVariables;
             _includeRedefines = includeRedefines;
-            _variable = variable;
 
             Dock = DockStyle.Fill;
             tableLayoutPanel1.RowStyles.Clear();
 
-            BuildFindingsList(files);
-            
+            BuildFindingsList(files, variable);
+
         }
 
-        private void BuildFindingsList(List<CobolFile> files)
+        private void BuildFindingsList(IEnumerable<CobolFile> files, Variable variable)
         {
-            if (_variable.VariableName == "FILLER")
+            if (variable.VariableName == "FILLER")
                 AddFillerNotSupportedMessage();
             else
             {
-                var variableList = BuildRelevantVariablesList();
+                var variableList = BuildRelevantVariablesList(variable);
                 var numberOfChildVariables = variableList.Count - 1;
 
                 foreach (var file in files)
                 {
                     var lines = FindVariablesInFile(file, variableList);
-                    AddContainingFileName(file.Name, numberOfChildVariables, lines.Count);
+                    AddContainingFileName(file.Name, numberOfChildVariables, lines.Count, variable.VariableName);
                     foreach (LineDto line in lines)
                         AddCodeLine(line);
-               }
+                }
             }
+
             AddEmptyBuffer();
         }
 
 
-        private List<LineDto> FindVariablesInFile(CobolFile file, List<Variable> variableList )
+        private static List<LineDto> FindVariablesInFile(CobolFile file, List<Variable> variableList)
         {
             var findings = new List<LineDto>();
             using (var fileText = new StringReader(file.Text))
@@ -78,24 +78,24 @@ namespace VariableUsageAnalyzer
             return findings;
         }
 
-        private List<Variable> BuildRelevantVariablesList()
+        private List<Variable> BuildRelevantVariablesList(Variable variable)
         {
             var list = new List<Variable>();
-            IterateVariable(_variable, list);
+            IterateVariable(variable, list);
             return list;
         }
 
         private void IterateVariable(Variable variable, List<Variable> variableList)
         {
             //using nameList.Contains is probably faster than casting from HashSet to List later on as the list will contains less than 10 entries in most cases
-            if(!variableList.Contains(variable))
+            if (!variableList.Contains(variable))
                 variableList.Add(variable);
-            if(_includeDirectAndIndirectChildVariables)
+            if (_includeDirectAndIndirectChildVariables)
                 foreach (Variable child in variable.Variables)
                 {
                     IterateVariable(child, variableList);
                 }
-            if(_includeRedefines && variable.Redefines != null)
+            if (_includeRedefines && variable.Redefines != null)
                 IterateVariable(variable.Redefines, variableList);
         }
 
@@ -103,19 +103,21 @@ namespace VariableUsageAnalyzer
         public event VariableUsageDoubleClickedEventHandler VariableUsageDoubleClicked;
 
         private void AddCodeLine(LineDto line)
-        {  
-            FastColoredTextBox lineBox =  new FastColoredTextBox();
-            lineBox.Tag = "cl" + Controls.Count;
-            lineBox.Name = "cl" + Controls.Count;
-            lineBox.Dock = DockStyle.Top;
-            lineBox.Height = 18;
-            lineBox.Margin = new Padding(3,3,3,0);
-            lineBox.Language = Language.Cobol;
-            lineBox.HighlightingRangeType = HighlightingRangeType.AllTextRange;
-            lineBox.Text = line.Text;
+        {
+            var lineBox = new FastColoredTextBox
+            {
+                Tag = "cl" + Controls.Count,
+                Name = "cl" + Controls.Count,
+                Dock = DockStyle.Top,
+                Height = 18,
+                Margin = new Padding(3, 3, 3, 0),
+                Language = Language.Cobol,
+                HighlightingRangeType = HighlightingRangeType.AllTextRange,
+                Text = line.Text,
+                BorderStyle = BorderStyle.FixedSingle,
+                LineNumberStartValue = (uint)line.Number
+            };
 
-            lineBox.BorderStyle = BorderStyle.FixedSingle;
-            lineBox.LineNumberStartValue = (uint) line.Number;
 
             lineBox.MouseDoubleClick += (sender, args) =>
             {
@@ -124,41 +126,50 @@ namespace VariableUsageAnalyzer
             };
 
             AddToTable(lineBox);
-            }
+        }
 
-        private void AddContainingFileName(String filename, int childCount, int usageCount)
+        private void AddContainingFileName(string filename, int childCount, int usageCount, string variableName)
         {
-      
+
             var tmp = "Found " + usageCount +
-                      " usage(s) of the variable " + _variable.VariableName + 
+                      " usage(s) of the variable " + variableName +
                       " in the file " + filename;
             tmp += _includeDirectAndIndirectChildVariables ? " including " + childCount + " direct or indirect children" : " not looking for direct or indirect children";
             tmp += " and";
             tmp += _includeRedefines ? " including redefines." : " not looking for redefines.";
-           
-            Label name = new Label();
-            name.Text = tmp;
-            name.Dock = DockStyle.Top;
-            name.Margin = new Padding(0, 6 , 0, 0);
-            name.Height = 16;
+
+            var name = new Label
+            {
+                Text = tmp,
+                Dock = DockStyle.Top,
+                Margin = new Padding(0, 6, 0, 0),
+                Height = 16
+            };
+
             AddToTable(name);
         }
 
         private void AddFillerNotSupportedMessage()
         {
-            Label name = new Label();
-            name.Text = Resources.SearchingForFillerNotSupported;
-            name.Dock = DockStyle.Top;
-            name.Margin = new Padding(0, 6, 0, 0);
-            name.Height = 16;
+            var name = new Label
+            {
+                Text = Resources.SearchingForFillerNotSupported,
+                Dock = DockStyle.Top,
+                Margin = new Padding(0, 6, 0, 0),
+                Height = 16
+            };
+
             AddToTable(name);
         }
 
         private void AddEmptyBuffer()
         {
-            Label text = new Label();
-            text.Text = @" ";
-            text.Height = 12;
+            var text = new Label
+            {
+                Text = @" ",
+                Height = 12
+            };
+
             AddToTable(text);
         }
 

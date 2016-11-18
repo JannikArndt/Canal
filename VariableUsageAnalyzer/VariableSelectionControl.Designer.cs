@@ -73,7 +73,6 @@
             this.label1.Size = new System.Drawing.Size(512, 78);
             this.label1.TabIndex = 2;
             this.label1.Text = resources.GetString("label1.Text");
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // panel1
             // 
@@ -94,7 +93,6 @@
             this.includeDirectAndIndirectChildVariablesCheckBox.TabIndex = 0;
             this.includeDirectAndIndirectChildVariablesCheckBox.Text = "Include direct and indirect child variables";
             this.includeDirectAndIndirectChildVariablesCheckBox.UseVisualStyleBackColor = true;
-            this.includeDirectAndIndirectChildVariablesCheckBox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // includeRedefinesCheckBox
             // 
@@ -105,7 +103,6 @@
             this.includeRedefinesCheckBox.TabIndex = 1;
             this.includeRedefinesCheckBox.Text = "Include redefines";
             this.includeRedefinesCheckBox.UseVisualStyleBackColor = true;
-            this.includeRedefinesCheckBox.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // VariableSelectionTreeView
             // 

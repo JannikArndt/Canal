@@ -1,10 +1,17 @@
-﻿using System;
-using Model.File;
+﻿using Model.File;
 
 namespace VariableUsageAnalyzer
 {
-    class LineDto
+    internal class LineDto
     {
+        public string Text { get; private set; }
+
+        public int Number { get; private set; }
+
+        public Variable FoundVariable { get; private set; }
+
+        public CobolFile ContainingFile { get; private set; }
+
         public LineDto(string text, int number, Variable foundVariable, CobolFile containingFile)
         {
             Text = text;
@@ -12,10 +19,5 @@ namespace VariableUsageAnalyzer
             FoundVariable = foundVariable;
             ContainingFile = containingFile;
         }
-
-        public String Text { get; set; }
-        public int Number { get; set; }
-        public Variable FoundVariable { get; set; }
-        public CobolFile ContainingFile { get; set; }
     }
 }

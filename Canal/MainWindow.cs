@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Net;
 using Util;
 
+// ReSharper disable MemberCanBePrivate.Global
+
 namespace Canal
 {
     using Logging;
@@ -213,7 +215,7 @@ namespace Canal
             ProjectUtil.Instance.ShowProjectAssistant();
         }
 
-        public void OpenFile(string filename, Variable currentVar = null, String lineText = null)
+        public void OpenFile(string filename, Variable currentVar = null, string lineText = null)
         {
             Logger.Info("Opening file {0}", filename);
 

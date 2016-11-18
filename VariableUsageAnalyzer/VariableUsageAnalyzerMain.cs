@@ -1,47 +1,44 @@
-﻿using System;
+﻿using Model.File;
 using System.Windows.Forms;
-using Model.File;
 using VariableUsageAnalyzer.Properties;
 
 namespace VariableUsageAnalyzer
 {
     public sealed partial class VariableUsageAnalyzerMain : Form
     {
-        public delegate  void VariableUsageSelectedEventHandler(object sender, Variable variable, CobolFile file, string lineText);
+        private readonly CobolFile _file;
+
+        public delegate void VariableUsageSelectedEventHandler(object sender, Variable variable, CobolFile file, string lineText);
+
         public event VariableUsageSelectedEventHandler VariableUsageSelected;
+
         public VariableUsageAnalyzerMain(Variable variable, CobolFile file)
         {
             InitializeComponent();
             Text = string.Format(Resources.VariableUsageAnalyzerWindowTitle, file.Name, variable.VariableName);
 
+            _file = file;
+
             var variableSelectionControl = new VariableSelectionControl(variable);
-            variableSelectionControl.VariableSelectionOrSearchConfigChanged +=
-                (sender, variable1, variables, redefines) =>
-                {
-                    splitContainer1.Panel2.Controls.Clear();
-                    VariableListControl vlc = new VariableListControl(variable1, file, variables, redefines);
-                    vlc.VariableUsageDoubleClicked += (o, variable2, cobolFile, number) =>
-                    {
-                        if (VariableUsageSelected != null)
-                            VariableUsageSelected(this, variable2, cobolFile, number);
-                    };
-                    splitContainer1.Panel2.Controls.Add(vlc);
-                };
+            variableSelectionControl.VariableSelectionOrSearchConfigChanged += UpdateFindingsControl;
+
             splitContainer1.Panel1.Controls.Add(variableSelectionControl);
             splitContainer1.FixedPanel = FixedPanel.Panel1;
-            
+
         }
 
-      
-
-        private void VariableUsageAnalyzer_Load(object sender, EventArgs e)
+        private void UpdateFindingsControl(object sender, Variable variable, bool includeDirectAndIndirectChildVariables, bool includeRedefines)
         {
-            
-        }
+            var variableListControl = new VariableListControl(variable, _file, includeDirectAndIndirectChildVariables, includeRedefines);
 
-        private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
-        {
+            variableListControl.VariableUsageDoubleClicked += (o, variable2, cobolFile, number) =>
+            {
+                if (VariableUsageSelected != null)
+                    VariableUsageSelected(this, variable2, cobolFile, number);
+            };
 
+            splitContainer1.Panel2.Controls.Clear();
+            splitContainer1.Panel2.Controls.Add(variableListControl);
         }
     }
 }

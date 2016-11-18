@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Model.File;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using Model.File;
 
 namespace VariableUsageAnalyzer
 {
@@ -17,13 +17,11 @@ namespace VariableUsageAnalyzer
         private const int PicWidth = 160;
 
         private bool _doubleClicked;
-        
 
         public VariableTreeView()
         {
             InitializeComponent();
             SetUpTreeView();
-           
         }
 
         public void SetTreeWithSelection(TreeNode node, TreeNode selectedTreeNode)
@@ -33,7 +31,7 @@ namespace VariableUsageAnalyzer
             VariableInfoTreeView.SelectedNode = selectedTreeNode;
         }
 
-       
+
         public void ScrollToSelectedNode()
         {
             VariableInfoTreeView.SelectedNode.EnsureVisible();
@@ -65,14 +63,14 @@ namespace VariableUsageAnalyzer
             VariableInfoTreeView.HideSelection = false;
 
         }
-        
+
         private void VariableInfoTreeViewOnDrawNode(object sender, DrawTreeNodeEventArgs e)
         {
 
             var selectedFore = Color.FromArgb(255, 207, 100, 1);
             var selectedForeLight = Color.FromArgb(255, 229, 138, 35);
             var selectedBack = Color.FromArgb(255, 255, 188, 112);
-            
+
             var variable = e.Node.Tag as Variable;
             if (variable == null)
                 return;
@@ -95,7 +93,7 @@ namespace VariableUsageAnalyzer
                                   TextFormatFlags.VerticalCenter);
 
             // Name
-            
+
             TextRenderer.DrawText(e.Graphics,
                                   variable.VariableName,
                                   font,
