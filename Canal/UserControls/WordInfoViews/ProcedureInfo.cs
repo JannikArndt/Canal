@@ -46,7 +46,7 @@ namespace Canal.UserControls.WordInfoViews
                 Logger.Error("Error displaying information for Procedure {0}: {1}.", procedure.Name, exception.Message);
             }
 
-            variableTreeView.OnVariableSelected += (sender, clickedVariable) =>
+            variableTreeView.OnVariableDoubleClicked += (sender, clickedVariable) =>
             {
                 if (clickedVariable.Root != null && clickedVariable.Root.CopyReference != null)
                     _parent.MainWindow.OpenFile(clickedVariable.Root.CopyReference.FilePath, clickedVariable);

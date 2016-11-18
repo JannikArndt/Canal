@@ -181,12 +181,6 @@
     <Compile Include="UserControls\VariableUsageAnalyzer\VariableSelectionControl.Designer.cs">
       <DependentUpon>VariableSelectionControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\VariableUsageAnalyzer\VariableTreeView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\VariableUsageAnalyzer\VariableTreeView.Designer.cs">
-      <DependentUpon>VariableTreeView.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\VariableUsageAnalyzer\VariableUsageAnalyzerMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -276,9 +270,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\VariableUsageAnalyzer\VariableSelectionControl.resx">
       <DependentUpon>VariableSelectionControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\VariableUsageAnalyzer\VariableTreeView.resx">
-      <DependentUpon>VariableTreeView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\VariableUsageAnalyzer\VariableUsageAnalyzerMain.resx">
       <DependentUpon>VariableUsageAnalyzerMain.cs</DependentUpon>

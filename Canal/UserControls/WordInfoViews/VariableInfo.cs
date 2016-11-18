@@ -17,7 +17,7 @@ namespace Canal.UserControls.WordInfoViews
 
             VariableInfoTreeView.SetTreeWithSelection(treeNode, _selectedNode);
 
-            VariableInfoTreeView.OnVariableSelected += (sender, clickedVariable) =>
+            VariableInfoTreeView.OnVariableDoubleClicked += (sender, clickedVariable) =>
             {
                 if (clickedVariable.Root != null && clickedVariable.Root.CopyReference != null)
                 {
@@ -31,7 +31,7 @@ namespace Canal.UserControls.WordInfoViews
                         //simple double click on variable name => open file of definition
                         _parent.MainWindow.OpenFile(clickedVariable.Root.CopyReference.FilePath, clickedVariable);
                     }
-                    
+
                 }
             };
         }

@@ -10,13 +10,15 @@ namespace Canal.UserControls.WordInfoViews
     {
         public event EventHandler<Variable> OnVariableSelected;
 
+        public event EventHandler<Variable> OnVariableDoubleClicked;
+
         private const int LevelWidth = 20;
 
         private const int NameWidth = 280;
 
         private const int PicWidth = 160;
 
-        bool _doubleClicked;
+        private bool _doubleClicked;
 
         public VariableTreeView()
         {
@@ -47,7 +49,16 @@ namespace Canal.UserControls.WordInfoViews
         {
             VariableInfoTreeView.DrawMode = TreeViewDrawMode.OwnerDrawText;
             VariableInfoTreeView.DrawNode += VariableInfoTreeViewOnDrawNode;
+
             VariableInfoTreeView.NodeMouseDoubleClick += (sender, args) =>
+            {
+                if (VariableInfoTreeView.SelectedNode == null) return;
+                var clickedVariable = VariableInfoTreeView.SelectedNode.Tag as Variable;
+                if (clickedVariable != null && OnVariableDoubleClicked != null)
+                    OnVariableDoubleClicked(this, clickedVariable);
+            };
+
+            VariableInfoTreeView.AfterSelect += (sender, args) =>
             {
                 if (VariableInfoTreeView.SelectedNode == null) return;
                 var clickedVariable = VariableInfoTreeView.SelectedNode.Tag as Variable;

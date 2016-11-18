@@ -18,7 +18,6 @@ namespace Canal.UserControls.VariableUsageAnalyzer
             Dock = DockStyle.Fill;
 
             var treeNode = VariablesUtil.Instance.ConvertToTreeNode(variable);
-            // TODO VariableTreeView is duplicate code
             VariableSelectionTreeView.SetTreeWithSelection(treeNode, treeNode);
             VariableSelectionTreeView.Dock = DockStyle.Fill;
             VariableSelectionTreeView.OnVariableSelected += (sender, variable1) => HandleVariableSelectionOrSearchConfigChanged(variable1);
