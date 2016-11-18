@@ -1,4 +1,5 @@
 ﻿using Canal.UserControls;
+using Canal.UserControls.VariableUsageAnalyzer;
 using Model.File;
 using System.Diagnostics;
 using System.Net;
@@ -81,7 +82,7 @@ namespace Canal
 
         public void OpenVariableUsageWindow(Variable variable)
         {
-            var variableUsageWindow = new VariableUsageAnalyzer.VariableUsageAnalyzerMain(variable, _tabUtil.CurrentFileControl.CobolFile);
+            var variableUsageWindow = new VariableUsageAnalyzerMain(variable, _tabUtil.CurrentFileControl.CobolFile);
             variableUsageWindow.VariableUsageSelected += (sender, variable1, file, lineText) =>
             {
                 OpenFile(file.FileReference.FilePath, variable1, lineText);

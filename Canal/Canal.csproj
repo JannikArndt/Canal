@@ -168,6 +168,31 @@
     <Compile Include="UserControls\TextViewer.Designer.cs">
       <DependentUpon>TextViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\VariableUsageAnalyzer\LineDTO.cs" />
+    <Compile Include="UserControls\VariableUsageAnalyzer\VariableListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\VariableUsageAnalyzer\VariableListControl.Designer.cs">
+      <DependentUpon>VariableListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\VariableUsageAnalyzer\VariableSelectionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\VariableUsageAnalyzer\VariableSelectionControl.Designer.cs">
+      <DependentUpon>VariableSelectionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\VariableUsageAnalyzer\VariableTreeView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\VariableUsageAnalyzer\VariableTreeView.Designer.cs">
+      <DependentUpon>VariableTreeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\VariableUsageAnalyzer\VariableUsageAnalyzerMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControls\VariableUsageAnalyzer\VariableUsageAnalyzerMain.Designer.cs">
+      <DependentUpon>VariableUsageAnalyzerMain.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\WordInfoViews\ProcedureInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -246,6 +271,18 @@
     <EmbeddedResource Include="UserControls\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\VariableUsageAnalyzer\VariableListControl.resx">
+      <DependentUpon>VariableListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\VariableUsageAnalyzer\VariableSelectionControl.resx">
+      <DependentUpon>VariableSelectionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\VariableUsageAnalyzer\VariableTreeView.resx">
+      <DependentUpon>VariableTreeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\VariableUsageAnalyzer\VariableUsageAnalyzerMain.resx">
+      <DependentUpon>VariableUsageAnalyzerMain.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\WordInfoViews\ProcedureInfo.resx">
       <DependentUpon>ProcedureInfo.cs</DependentUpon>
     </EmbeddedResource>
@@ -318,10 +355,6 @@
     <ProjectReference Include="..\Util\Util.csproj">
       <Project>{340e7efd-f1ed-421f-a4d9-fd027e10724b}</Project>
       <Name>Util</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VariableUsageAnalyzer\VariableUsageAnalyzer.csproj">
-      <Project>{f14fefcb-017f-424e-a502-d1ffd4bdc81a}</Project>
-      <Name>VariableUsageAnalyzer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

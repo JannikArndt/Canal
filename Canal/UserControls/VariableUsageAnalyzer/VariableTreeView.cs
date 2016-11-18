@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace VariableUsageAnalyzer
+namespace Canal.UserControls.VariableUsageAnalyzer
 {
     public partial class VariableTreeView : UserControl
     {

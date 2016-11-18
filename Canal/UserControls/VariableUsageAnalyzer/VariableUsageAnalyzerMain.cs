@@ -1,8 +1,7 @@
 ﻿using Model.File;
 using System.Windows.Forms;
-using VariableUsageAnalyzer.Properties;
 
-namespace VariableUsageAnalyzer
+namespace Canal.UserControls.VariableUsageAnalyzer
 {
     public sealed partial class VariableUsageAnalyzerMain : Form
     {
@@ -15,7 +14,7 @@ namespace VariableUsageAnalyzer
         public VariableUsageAnalyzerMain(Variable variable, CobolFile file)
         {
             InitializeComponent();
-            Text = string.Format(Resources.VariableUsageAnalyzerWindowTitle, file.Name, variable.VariableName);
+            Text = string.Format("CANAL - Variable Usage Analyzer (Origin: {0} -> {1})", file.Name, variable.VariableName);
 
             _file = file;
 

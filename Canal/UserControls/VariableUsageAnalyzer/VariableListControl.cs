@@ -1,12 +1,12 @@
-﻿using FastColoredTextBoxNS;
+﻿using Canal.Properties;
+using FastColoredTextBoxNS;
 using FastColoredTextBoxNS.Enums;
 using Model.File;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using VariableUsageAnalyzer.Properties;
 
-namespace VariableUsageAnalyzer
+namespace Canal.UserControls.VariableUsageAnalyzer
 {
     public sealed partial class VariableListControl : UserControl
     {

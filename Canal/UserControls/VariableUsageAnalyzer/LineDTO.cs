@@ -1,6 +1,6 @@
 ﻿using Model.File;
 
-namespace VariableUsageAnalyzer
+namespace Canal.UserControls.VariableUsageAnalyzer
 {
     internal class LineDto
     {

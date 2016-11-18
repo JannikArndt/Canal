@@ -1,4 +1,4 @@
-﻿namespace VariableUsageAnalyzer
+﻿namespace Canal.UserControls.VariableUsageAnalyzer
 {
     sealed partial class VariableUsageAnalyzerMain
     {

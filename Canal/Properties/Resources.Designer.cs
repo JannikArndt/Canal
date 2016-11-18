@@ -71,7 +71,12 @@ namespace Canal.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to v2.12
+        ///   Looks up a localized string similar to v2.13
+        ///- new search option: fuzzy search
+        ///- generated enums now have a value
+        ///- bugfix: ctrl+c restored
+        ///
+        ///v2.12
         ///- COPY-books can be found without explicit folder name (&quot;OF&quot;) if filename is unique (@koljag)
         ///- Double-clicking a variable now selects it in the variable tree (@koljag)
         ///- Tree-view now highlights the currently displayed procedure (@koljag)
@@ -79,11 +84,7 @@ namespace Canal.Properties {
         ///
         ///v2.11
         ///- &quot;Referenced By&quot; now jumps to the line where the &quot;perform&quot; is
-        ///- Added support for multiline-variable-definitions
-        ///- Reworked VariableTree
-        ///
-        ///v2.10
-        ///- Many small improvements on glitches in 2. [rest of string was truncated]&quot;;.
+        ///- Added support for mu [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ChangeLog {
             get {
@@ -415,6 +416,15 @@ namespace Canal.Properties {
         internal static string RevertChanges_Title {
             get {
                 return ResourceManager.GetString("RevertChanges_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Searching for &quot;FILLER&quot; is not supported..
+        /// </summary>
+        internal static string SearchingForFillerNotSupported {
+            get {
+                return ResourceManager.GetString("SearchingForFillerNotSupported", resourceCulture);
             }
         }
         

@@ -1,4 +1,4 @@
-﻿namespace VariableUsageAnalyzer
+﻿namespace Canal.UserControls.VariableUsageAnalyzer
 {
     sealed partial class VariableSelectionControl
     {
@@ -34,7 +34,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.includeDirectAndIndirectChildVariablesCheckBox = new System.Windows.Forms.CheckBox();
             this.includeRedefinesCheckBox = new System.Windows.Forms.CheckBox();
-            this.VariableSelectionTreeView = new VariableUsageAnalyzer.VariableTreeView();
+            this.VariableSelectionTreeView = new global::Canal.UserControls.VariableUsageAnalyzer.VariableTreeView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();

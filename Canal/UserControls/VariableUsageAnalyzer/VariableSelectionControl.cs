@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Util;
 
-namespace VariableUsageAnalyzer
+namespace Canal.UserControls.VariableUsageAnalyzer
 {
     public sealed partial class VariableSelectionControl : UserControl
     {

@@ -479,4 +479,7 @@
   <data name="ProjectUtil_Open_Error_opening_project__" xml:space="preserve">
     <value>Error opening project: </value>
   </data>
+  <data name="SearchingForFillerNotSupported" xml:space="preserve">
+    <value>Searching for "FILLER" is not supported.</value>
+  </data>
 </root>
