@@ -87,6 +87,7 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -167,6 +168,25 @@
     <Compile Include="UserControls\TextViewer.Designer.cs">
       <DependentUpon>TextViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\VariableUsageAnalyzer\LineDTO.cs" />
+    <Compile Include="UserControls\VariableUsageAnalyzer\VariableListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\VariableUsageAnalyzer\VariableListControl.Designer.cs">
+      <DependentUpon>VariableListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\VariableUsageAnalyzer\VariableSelectionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\VariableUsageAnalyzer\VariableSelectionControl.Designer.cs">
+      <DependentUpon>VariableSelectionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\VariableUsageAnalyzer\VariableUsageAnalyzerMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControls\VariableUsageAnalyzer\VariableUsageAnalyzerMain.Designer.cs">
+      <DependentUpon>VariableUsageAnalyzerMain.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\WordInfoViews\ProcedureInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -244,6 +264,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\About.resx">
       <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\VariableUsageAnalyzer\VariableListControl.resx">
+      <DependentUpon>VariableListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\VariableUsageAnalyzer\VariableSelectionControl.resx">
+      <DependentUpon>VariableSelectionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\VariableUsageAnalyzer\VariableUsageAnalyzerMain.resx">
+      <DependentUpon>VariableUsageAnalyzerMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\WordInfoViews\ProcedureInfo.resx">
       <DependentUpon>ProcedureInfo.cs</DependentUpon>

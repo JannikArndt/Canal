@@ -1,4 +1,4 @@
-﻿using Model.File;
+using Model.File;
 using System.Windows.Forms;
 using Util;
 
@@ -17,10 +17,23 @@ namespace Canal.UserControls.WordInfoViews
 
             VariableInfoTreeView.SetTreeWithSelection(treeNode, _selectedNode);
 
-            VariableInfoTreeView.OnVariableSelected += (sender, clickedVariable) =>
+            VariableInfoTreeView.OnVariableDoubleClicked += (sender, clickedVariable) =>
             {
                 if (clickedVariable.Root != null && clickedVariable.Root.CopyReference != null)
-                    _parent.MainWindow.OpenFile(clickedVariable.Root.CopyReference.FilePath, clickedVariable);
+                {
+                    // TODO find better way to open VariableUsageWindow
+                    if (ModifierKeys == Keys.Shift)
+                    {
+                        // shift + double click on variable name => open reference view
+                        _parent.MainWindow.OpenVariableUsageWindow(clickedVariable);
+                    }
+                    else
+                    {
+                        // simple double click on variable name => open file of definition
+                        _parent.MainWindow.OpenFile(clickedVariable.Root.CopyReference.FilePath, clickedVariable);
+                    }
+
+                }
             };
         }
 

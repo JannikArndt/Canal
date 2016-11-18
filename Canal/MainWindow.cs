@@ -1,8 +1,11 @@
 ﻿using Canal.UserControls;
+using Canal.UserControls.VariableUsageAnalyzer;
 using Model.File;
 using System.Diagnostics;
 using System.Net;
 using Util;
+
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace Canal
 {
@@ -75,6 +78,17 @@ namespace Canal
 
             insertCopybooksIntoSourceToolStripMenuItem.Enabled = _tabUtil.CurrentFileControl != null;
             reRunAnalysisToolStripMenuItem.Enabled = _tabUtil.CurrentFileControl != null;
+        }
+
+        public void OpenVariableUsageWindow(Variable variable)
+        {
+            var variableUsageWindow = new VariableUsageAnalyzerMain(variable, _tabUtil.CurrentFileControl.CobolFile);
+            variableUsageWindow.VariableUsageSelected += (sender, variable1, file, lineText) =>
+            {
+                OpenFile(file.FileReference.FilePath, variable1, lineText);
+                Focus();
+            };
+            variableUsageWindow.Show();
         }
 
         #region Overrides
@@ -202,11 +216,11 @@ namespace Canal
             ProjectUtil.Instance.ShowProjectAssistant();
         }
 
-        public void OpenFile(string filename, Variable currentVar = null)
+        public void OpenFile(string filename, Variable currentVar = null, string lineText = null)
         {
             Logger.Info("Opening file {0}", filename);
 
-            if (_tabUtil.TryShowTab(filename, currentVar))
+            if (_tabUtil.TryShowTab(filename, currentVar, lineText))
                 return;
 
             if (!File.Exists(filename))
@@ -221,6 +235,7 @@ namespace Canal
             try
             {
                 _tabUtil.AddTab(filename);
+                //Scrolling to right variable when the file is newly opened still has to be implemented like in TabUtil.TryShowTab
                 if (currentVar != null)
                     _tabUtil.CurrentFileControl.FindInCodeBox(currentVar.VariableName, false, false, false, true);
                 MostRecentlyUsed.Instance.Add(filename);

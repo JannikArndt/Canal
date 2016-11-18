@@ -19,6 +19,30 @@ namespace Canal.UserControls
 {
     public sealed partial class FileControl : UserControl
     {
+        /// <summary>
+        /// Shows if there are unsaved changes in the text.
+        /// </summary>
+        public bool UnsavedChanges { get; private set; }
+
+        public CobolFile CobolFile { get; private set; }
+
+        public MainWindow MainWindow { get; private set; }
+
+        /// <summary>
+        /// Event is thrown the first time the text is changed after it is loaded or saved.
+        /// </summary>
+        public event EventHandler<TextChangedEventArgs> SavedVersionChanged;
+
+        public event EventHandler<FileSystemEventArgs> FileSaved;
+
+        public event EventHandler<Variable> VariableSelected;
+
+        public event EventHandler<Section> SectionSelected;
+
+        public event EventHandler<FileReference> CallReferenceSelected;
+
+        public event EventHandler<Tuple<Procedure, string>> ProcedureSelected;
+
         public FileControl(string filename, MainWindow parent)
         {
             InitializeComponent();
@@ -31,7 +55,13 @@ namespace Canal.UserControls
 
                 CobolFile = new CobolFileBuilder().Build(filename);
 
-                AnalyzeFile();
+                AnalyzeFileAsync();
+
+                // event handlers
+                VariableSelected += OnVariableSelected;
+                SectionSelected += OnSectionSelected;
+                CallReferenceSelected += OnCallReferenceSelected;
+                ProcedureSelected += OnProcedureSelected;
 
                 searchPrecise.Checked = true;
                 searchFuzzy.Click += HandleSearchKindChanged;
@@ -68,7 +98,7 @@ namespace Canal.UserControls
             }
         }
 
-        public void AnalyzeFile()
+        public void AnalyzeFileAsync()
         {
             if (CobolFile.FileReference == null) return;
 
@@ -143,22 +173,6 @@ namespace Canal.UserControls
             }
         }
 
-        /// <summary>
-        /// Event is thrown the first time the text is changed after it is loaded or saved.
-        /// </summary>
-        public event EventHandler<TextChangedEventArgs> SavedVersionChanged;
-
-        public event EventHandler<FileSystemEventArgs> FileSaved;
-
-        /// <summary>
-        /// Shows if there are unsaved changes in the text.
-        /// </summary>
-        public bool UnsavedChanges { get; private set; }
-
-        public CobolFile CobolFile { get; private set; }
-
-        public MainWindow MainWindow { get; private set; }
-
         public override string ToString()
         {
             return string.Format("FileControl: {0}", CobolFile.Name);
@@ -204,6 +218,16 @@ namespace Canal.UserControls
             codeBox.FindNext(pattern, matchCase, regex, wholeWord, firstSearch);
         }
 
+        public void FindInCodeBoxAfterGivenString(string word, string searchFromHere)
+        {
+            searchFromHere = Regex.Replace(searchFromHere, "[^a-zA-Z0-9 \\*]", "[^a-zA-Z0-9 ]");
+            searchFromHere = Regex.Replace(searchFromHere, " ", " *");
+            codeBox.FindNext(searchFromHere, false, true, false, true);
+            codeBox.SelectionStart = codeBox.SelectionStart - codeBox.SelectionLength;
+            codeBox.ClearSelected();
+            codeBox.FindNext(word, false, false, false);
+        }
+
         private void InitTabs(object sender, RunWorkerCompletedEventArgs runWorkerCompletedEventArgs)
         {
             if (IsDisposed)
@@ -215,10 +239,8 @@ namespace Canal.UserControls
             try
             {
                 tableOfContents.SetCobolFile(CobolFile);
-
-                tableOfContents.OnWordSelected += (o, args) => ShowWordInfo(args.Word, true);
-
-                ShowWordInfo();
+                tableOfContents.OnWordSelected += CodeBoxOnWordSelected;
+                ShowProgramInfo();
             }
             catch (Exception exception)
             {
@@ -227,85 +249,9 @@ namespace Canal.UserControls
             }
         }
 
-        private void ShowWordInfo(string word = "", bool findInCode = false, string lookFor = "")
+        private void ShowProgramInfo()
         {
-            // 1. No CobolFile? Nothing to do.
-            if (CobolFile == null)
-                return;
-
-            // 2. No CobolTree? Show Program infos
-            if (CobolFile.CobolTree == null)
-            {
-                foreach (Control control in splitContainerRight.Panel2.Controls)
-                {
-                    control.Dispose();
-                }
-
-                splitContainerRight.Panel2.Controls.Clear();
-
-                var fileInfoControl = new ProgramInfo(CobolFile, this) { Dock = DockStyle.Fill };
-                splitContainerRight.Panel2.Controls.Add(fileInfoControl);
-                return;
-            }
-
-            // dispose of current info
-            foreach (Control control in splitContainerRight.Panel2.Controls)
-            {
-                control.Dispose();
-            }
-
-            splitContainerRight.Panel2.Controls.Clear();
-
-            // 3. Is the word a variable?
-            if (CobolFile.Variables.ContainsKey(word))
-            {
-                VariableInfo variableInfoControl = new VariableInfo(CobolFile.Variables[word], this) { Dock = DockStyle.Fill };
-                splitContainerRight.Panel2.Controls.Add(variableInfoControl);
-                variableInfoControl.ScrollToSelectedVariable();
-
-                if (findInCode)
-                    codeBox.FindNext(word, false, false, true, true);
-                return;
-            }
-
-            // 4. Is the word a procedure?
-            var procedure = CobolFile.CobolTree.GetAllProcedures().FirstOrDefault(proc => proc.Name == word);
-            if (procedure != null)
-            {
-                var procedureInfoControl = new ProcedureInfo(procedure, this) { Dock = DockStyle.Fill, VerticalScroll = { Enabled = true } };
-                splitContainerRight.Panel2.Controls.Add(procedureInfoControl);
-
-                procedureInfoControl.OnWordSelected += (o, args) => ShowWordInfo(args.Word, true, args.LookFor);
-
-                if (findInCode)
-                {
-                    codeBox.FindNext(@"^.{7}" + word + @"(\.| +USING| OF)", false, true, false, true);
-                    if (!string.IsNullOrWhiteSpace(lookFor))
-                        codeBox.FindNext(@"PERFORM +" + lookFor, false, true, false); // NOT first search
-
-                }
-
-                return;
-            }
-
-            // 5. Is it a section?
-            var section = CobolFile.CobolTree.GetAllSections().FirstOrDefault(sec => sec.Name == word);
-            if (section != null)
-            {
-                if (findInCode)
-                    codeBox.FindNext(@"^.{7}" + word + @"\.", false, true, false, true);
-
-                return;
-            }
-
-            // 6. Call Reference? Open file, keep Info
-            var callRef = CobolFile.CobolTree.CallReferences.FirstOrDefault(call => call.ProgramName == word);
-            if (callRef != null)
-            {
-                MainWindow.OpenFile(callRef.FilePath);
-                return;
-            }
-
+            DisposeAndClear(splitContainerRight.Panel2.Controls);
             var fileInfoControl2 = new ProgramInfo(CobolFile, this) { Dock = DockStyle.Fill };
             splitContainerRight.Panel2.Controls.Add(fileInfoControl2);
         }
@@ -351,17 +297,113 @@ namespace Canal.UserControls
 
         #region Code Box Events
 
+        /// <summary>
+        /// Handles the Event if a word is selected and splits it up into the separate Events for 
+        /// <see cref="VariableSelected"/>, <see cref="ProcedureSelected"/>, <see cref="SectionSelected"/>
+        /// and <see cref="CallReferenceSelected"/>.
+        /// </summary>
         private void CodeBoxOnWordSelected(object sender, WordSelectedEventArgs eventArgs)
         {
             try
             {
                 Logger.Info("Selected word {0}", eventArgs.Word);
-                ShowWordInfo(eventArgs.Word);
+
+                // 1. No CobolFile? Nothing to do.
+                if (CobolFile == null)
+                    return;
+
+                // 2. No CobolTree? Show Program infos
+                if (CobolFile.CobolTree == null)
+                {
+                    ShowProgramInfo();
+                    return;
+                }
+
+                // 3. Is the word a variable?
+                if (CobolFile.Variables.ContainsKey(eventArgs.Word) && VariableSelected != null)
+                {
+                    VariableSelected(sender, CobolFile.Variables[eventArgs.Word]);
+                    return;
+                }
+
+                // 4. Is the word a procedure?
+                var procedure = CobolFile.CobolTree.GetAllProcedures().FirstOrDefault(proc => proc.Name == eventArgs.Word);
+                if (procedure != null && ProcedureSelected != null)
+                {
+                    ProcedureSelected(sender, new Tuple<Procedure, string>(procedure, eventArgs.LookFor));
+                    return;
+                }
+
+                // 5. Is it a section?
+                var section = CobolFile.CobolTree.GetAllSections().FirstOrDefault(sec => sec.Name == eventArgs.Word);
+                if (section != null && SectionSelected != null)
+                {
+                    SectionSelected(sender, section);
+                    return;
+                }
+
+                // 6. Call Reference? Open file, keep Info
+                var callRef = CobolFile.CobolTree.CallReferences.FirstOrDefault(call => call.ProgramName == eventArgs.Word);
+                if (callRef != null && CallReferenceSelected != null)
+                {
+                    CallReferenceSelected(sender, callRef);
+                    return;
+                }
+
+                ShowProgramInfo();
             }
             catch (Exception exception)
             {
                 Logger.Error(exception, "Error trying to show selected word {0}: {1}.", eventArgs.Word, exception.Message);
             }
+        }
+
+        private void OnProcedureSelected(object sender, Tuple<Procedure, string> info)
+        {
+            DisposeAndClear(splitContainerRight.Panel2.Controls);
+
+            var procedureInfoControl = new ProcedureInfo(info.Item1, this) { Dock = DockStyle.Fill, VerticalScroll = { Enabled = true } };
+            splitContainerRight.Panel2.Controls.Add(procedureInfoControl);
+
+            procedureInfoControl.OnProcedureSelected += CodeBoxOnWordSelected;
+
+            codeBox.FindNext(@"^.{7}" + info.Item1.Name + @"(\.| +USING| OF)", false, true, false, true);
+            if (!string.IsNullOrWhiteSpace(info.Item2))
+                codeBox.FindNext(@"PERFORM +" + info.Item2, false, true, false); // NOT first search
+        }
+
+        private void OnCallReferenceSelected(object sender, FileReference fileReference)
+        {
+            MainWindow.OpenFile(fileReference.FilePath);
+        }
+
+        private void OnSectionSelected(object sender, Section section)
+        {
+            if (sender.GetType() == typeof(TableOfContents))
+                codeBox.FindNext(@"^.{7}" + section.Name + @"\.", false, true, false, true);
+        }
+
+        private void OnVariableSelected(object sender, Variable variable)
+        {
+            DisposeAndClear(splitContainerRight.Panel2.Controls);
+
+            VariableInfo variableInfoControl = new VariableInfo(variable, this) { Dock = DockStyle.Fill };
+            splitContainerRight.Panel2.Controls.Add(variableInfoControl);
+            variableInfoControl.ScrollToSelectedVariable();
+
+            if (sender.GetType() == typeof(TableOfContents))
+                codeBox.FindNext(variable.VariableName, false, false, true, true);
+        }
+
+        /// <summary>
+        /// Disposes all items in the List and then clears the list
+        /// </summary>
+        private static void DisposeAndClear(ControlCollection controlCollection)
+        {
+            foreach (Control control in controlCollection)
+                control.Dispose();
+
+            controlCollection.Clear();
         }
 
         private void CodeBoxOnUndoRedoStateChanged(object sender, EventArgs eventArgs)
@@ -387,8 +429,10 @@ namespace Canal.UserControls
             List<string> procedureNames = new List<string>();
             for (int currentLineNumber = lineNumber; currentLineNumber >= 0; currentLineNumber--)
             {
-                string currenctLineText = codeBox.GetLineText(currentLineNumber);
-                procedureNames.Add(Constants.ProcedureOrSectionOrDivisonRegex.Match(currenctLineText).Groups["name"].Value);
+                var currenctLineText = codeBox.GetLineText(currentLineNumber);
+                var match = Constants.ProcedureOrSectionOrDivisonRegex.Match(currenctLineText).Groups["name"].Value;
+                if (!string.IsNullOrEmpty(match))
+                    procedureNames.Add(match);
             }
 
             return procedureNames;
@@ -565,7 +609,7 @@ namespace Canal.UserControls
                     {
                         var result = MessageBox.Show(Resources.CodeHasChanged_Text, Resources.CodeHasChanged_Title, MessageBoxButtons.YesNo);
                         if (result == DialogResult.Yes)
-                            AnalyzeFile();
+                            AnalyzeFileAsync();
                     };
 
                     worker.RunWorkerAsync();

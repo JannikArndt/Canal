@@ -44,7 +44,7 @@ namespace Canal.UserControls
             _tabControl.SelectedTab.Text = text;
         }
 
-        public bool TryShowTab(string filepath, Variable currentVar = null)
+        public bool TryShowTab(string filepath, Variable currentVar = null, String lineText = null)
         {
             try
             {
@@ -56,8 +56,18 @@ namespace Canal.UserControls
                 {
                     _tabControl.SelectedTab = tab;
                     Logger.Info("Switching to tab {0}: {1}", tab.TabIndex, tab.Text);
-                    if (currentVar != null)
+                    
+                    // Idea: Set codebox to line with named lineText and then search the variable name again to have only that marked. If the
+                    // text selection is not set to the given line, the first occurence of the given variable will be selected regardless which number
+                    // of appearance was meant to be selected.
+                    // This is not done here because functionality from the not yet merged fuzzy search branch is needed.
+                    //if (lineText != null)
+                    //    CurrentFileControl.FindInCodeBox(lineText, false, false, false, true);
+                    if (lineText != null && currentVar != null)
+                        CurrentFileControl.FindInCodeBoxAfterGivenString(currentVar.VariableName, lineText);
+                    else if (currentVar != null)
                         CurrentFileControl.FindInCodeBox(currentVar.VariableName, false, false, false, true);
+
                     return true;
                 }
                 return false;
@@ -68,6 +78,7 @@ namespace Canal.UserControls
                 return false;
             }
         }
+       
 
         private void TabControlOnMouseDown(object sender, MouseEventArgs mouseEventArgs)
         {

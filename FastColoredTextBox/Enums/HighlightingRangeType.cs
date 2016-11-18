@@ -23,6 +23,11 @@ namespace FastColoredTextBoxNS.Enums
         /// <summary>
         /// Highlights only first 100 lines, rest must be triggered manually.
         /// </summary>
-        First100Lines
+        First100Lines,
+
+        /// <summary>
+        /// Highlights only a single line
+        /// </summary>
+        SingleLine
     }
 }

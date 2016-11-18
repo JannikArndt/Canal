@@ -1367,6 +1367,13 @@ namespace FastColoredTextBoxNS
             highlightWorker.RunWorkerAsync();
         }
 
+        public void SetSingleLine(string text)
+        {
+            HighlightingRangeType = HighlightingRangeType.SingleLine;
+            Text = text;
+            SyntaxHighlighter.HighlightSyntax(Language, Range);
+        }
+
         /// <summary>
         /// Text of control
         /// </summary>
@@ -7320,6 +7327,10 @@ namespace FastColoredTextBoxNS
                 case HighlightingRangeType.First100Lines:
                     range = new Range(Range.tb, args.ChangedRange.Start,
                         new Place(args.ChangedRange.End.iChar, Math.Min(args.ChangedRange.End.iLine, args.ChangedRange.Start.iLine + 100)));
+                    break;
+                case HighlightingRangeType.SingleLine:
+                    range = new Range(Range.tb, args.ChangedRange.Start,
+                    new Place(args.ChangedRange.End.iChar, Math.Min(args.ChangedRange.End.iLine, args.ChangedRange.Start.iLine + 1)));
                     break;
                 default:
                     range = args.ChangedRange;

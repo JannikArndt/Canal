@@ -14,7 +14,7 @@ namespace Canal.UserControls.WordInfoViews
 {
     public partial class ProcedureInfo : UserControl
     {
-        public event EventHandler<WordSelectedEventArgs> OnWordSelected;
+        public event EventHandler<WordSelectedEventArgs> OnProcedureSelected;
 
         private Procedure CurrentProcedure { get; set; }
 
@@ -46,7 +46,7 @@ namespace Canal.UserControls.WordInfoViews
                 Logger.Error("Error displaying information for Procedure {0}: {1}.", procedure.Name, exception.Message);
             }
 
-            variableTreeView.OnVariableSelected += (sender, clickedVariable) =>
+            variableTreeView.OnVariableDoubleClicked += (sender, clickedVariable) =>
             {
                 if (clickedVariable.Root != null && clickedVariable.Root.CopyReference != null)
                     _parent.MainWindow.OpenFile(clickedVariable.Root.CopyReference.FilePath, clickedVariable);
@@ -136,12 +136,12 @@ namespace Canal.UserControls.WordInfoViews
 
         private void ProcedureList_DoubleClick(object sender, EventArgs e)
         {
-            if (OnWordSelected == null || ((ListBox)sender).SelectedItem == null) return;
+            if (OnProcedureSelected == null || ((ListBox)sender).SelectedItem == null) return;
 
             var clickedProcedureName = ((ListBox)sender).SelectedItem.ToString();
             var lookFor = sender == ReferencedByList ? CurrentProcedure.Name : "";
 
-            OnWordSelected(this, new WordSelectedEventArgs(clickedProcedureName, lookFor));
+            OnProcedureSelected(this, new WordSelectedEventArgs(clickedProcedureName, lookFor));
             ((ListBox)sender).ClearSelected();
         }
     }
