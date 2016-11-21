@@ -1,7 +1,10 @@
-﻿v2.13
-- new search option: fuzzy search
-- generated enums now have a value
-- bugfix: ctrl+c restored
+﻿v2.14
+- SHIFT-double-click a variable in the variable tree to find all occurrences (beta, @koljag)
+
+v2.13
+- new search option: fuzzy search (@koljag)
+- generated enums now have a value (@koljag)
+- bugfix: ctrl+c restored (@koljag)
 
 v2.12
 - COPY-books can be found without explicit folder name ("OF") if filename is unique (@koljag)
