@@ -369,6 +369,9 @@ namespace Canal.UserControls
 
             procedureInfoControl.OnProcedureSelected += CodeBoxOnWordSelected;
 
+            if (sender == codeBox)
+                return;
+
             codeBox.FindNext(@"^.{7}" + info.Item1.Name + @"(\.| +USING| OF)", false, true, false, true);
             if (!string.IsNullOrWhiteSpace(info.Item2))
                 codeBox.FindNext(@"PERFORM +" + info.Item2, false, true, false); // NOT first search
