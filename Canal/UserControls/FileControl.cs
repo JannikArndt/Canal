@@ -192,6 +192,11 @@
         public void RevertChanges()
         {
             codeBox.SetTextAsync(CobolFile.Text);
+
+            UnsavedChanges = false;
+            saveButton.Enabled = false;
+            if (FileSaved != null)
+                FileSaved(this, new FileSystemEventArgs(WatcherChangeTypes.Changed, CobolFile.FileReference.Directory, CobolFile.FileReference.ProgramName));
         }
 
         public void Save(string filename = "")
