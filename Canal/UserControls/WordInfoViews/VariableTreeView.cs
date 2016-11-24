@@ -1,8 +1,8 @@
-﻿using Model.File;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using Model.File;
 
 namespace Canal.UserControls.WordInfoViews
 {
@@ -17,6 +17,8 @@ namespace Canal.UserControls.WordInfoViews
         private const int NameWidth = 280;
 
         private const int PicWidth = 160;
+
+        private const int RedefinesWidth = 100;
 
         private bool _doubleClicked;
 
@@ -104,14 +106,23 @@ namespace Canal.UserControls.WordInfoViews
                                   TextFormatFlags.VerticalCenter);
 
             // Name
-
             TextRenderer.DrawText(e.Graphics,
-                                  variable.VariableName,
+                                  variable.VariableName + (variable.Occurs > 1 ? "  [" + variable.Occurs + "]" : ""),
                                   font,
                                   new Rectangle(e.Bounds.X + LevelWidth, e.Bounds.Y, nameWidth, e.Bounds.Height),
                                   (e.State & TreeNodeStates.Selected) != 0 ? selectedFore : e.Node.ForeColor,
                                   Color.Empty,
                                   TextFormatFlags.VerticalCenter);
+
+            // Redefines
+            if (variable.Redefines != null)
+                TextRenderer.DrawText(e.Graphics,
+                                  "↺ " + variable.Redefines.VariableName,
+                                  font,
+                                  new Rectangle(e.Bounds.X + LevelWidth + nameWidth - RedefinesWidth, e.Bounds.Y, RedefinesWidth + PicWidth, e.Bounds.Height),
+                                  Color.DarkBlue,
+                                  Color.Empty,
+                                  TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
 
             // PIC
             if (variable.Picture != null)
