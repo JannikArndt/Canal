@@ -1,7 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.File;
 using Model.Pictures;
-using System.Collections.Generic;
 using Util;
 
 namespace Tests
@@ -133,6 +133,32 @@ namespace Tests
 
             Assert.AreEqual(1, actual.Count, input);
             Assert.AreEqual("FOO-1-BAR", actual["FOO-1-BAR"].VariableName);
+            Assert.AreEqual(20, actual["FOO-1-BAR"].Occurs);
+
+        }
+
+        [TestMethod]
+        public void VariableParserTest_WithOccurs_2()
+        {
+            const string input = " 03 FOO-1-BAR           OCCURS 10  PIC S9 COMP.";
+
+            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""), false);
+
+            Assert.AreEqual(1, actual.Count, input);
+            Assert.AreEqual("FOO-1-BAR", actual["FOO-1-BAR"].VariableName);
+            Assert.AreEqual(10, actual["FOO-1-BAR"].Occurs);
+        }
+
+        [TestMethod]
+        public void VariableParserTest_WithOccurs_3()
+        {
+            const string input = " 03 FOO-1-BAR           OCCURS 10.";
+
+            var actual = VariablesUtil.Instance.AnalyzeVariables(new CobolFile(input, ""), false);
+
+            Assert.AreEqual(1, actual.Count, input);
+            Assert.AreEqual("FOO-1-BAR", actual["FOO-1-BAR"].VariableName);
+            Assert.AreEqual(10, actual["FOO-1-BAR"].Occurs);
         }
 
         [TestMethod]

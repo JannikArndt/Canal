@@ -47,9 +47,11 @@ namespace Util
 
         private static readonly string VarValue = @"((VALUE(S)?) (IS |ARE )?(?<value>(""[^""]+""|(\d*\.)?\d+|SPACE(S)?|ZERO(E)?(S)?|(HIGH-|LOW-)VALUES| +THROUGH +| +THRU +|, *|\n|\r| )*))?";
 
-        private static readonly string VarOccurs = @"(OCCURS (?<occurs>\d+))?";
+        private static readonly string VarOccurs1 = @"(OCCURS (?<occurs1>\d+))?";
 
-        public static readonly string Variable = VarLevel + OptSpaces + NamedLiteral + OptNewLine + VarRedefines + OptNewLine + VarPicture + OptNewLine + VarValue + OptNewLine + VarOccurs + OptNewLine + @"\.";
+        private static readonly string VarOccurs2 = @"(OCCURS (?<occurs2>\d+))?";
+
+        public static readonly string Variable = VarLevel + OptSpaces + NamedLiteral + OptNewLine + VarRedefines + OptNewLine + VarOccurs1 + OptNewLine + VarPicture + OptNewLine + VarValue + OptNewLine + VarOccurs2 + OptNewLine + @"\.";
 
         public static readonly Regex SectionRegex = new Regex(@"^.{6} (?<sectionName>[\w\d-]+ SECTION)\.", RegexOptions.Compiled | RegexOptions.Multiline);
 

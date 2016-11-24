@@ -1,13 +1,13 @@
-﻿using Logging;
-using Model.Enums;
-using Model.File;
-using Model.Pictures;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Logging;
+using Model.Enums;
+using Model.File;
+using Model.Pictures;
 
 namespace Util
 {
@@ -44,7 +44,7 @@ namespace Util
                     var valType = match.Groups["type"].Value;
                     var valComp = match.Groups["comp"].Value;
                     var valValue = match.Groups["value"].Value;
-                    var valOccurs = match.Groups["occurs"].Value;
+                    var valOccurs = string.IsNullOrWhiteSpace(match.Groups["occurs1"].Value) ? match.Groups["occurs2"].Value : match.Groups["occurs1"].Value;
                     var valIndex = match.Index;
 
                     // Create type definition ("PIC")

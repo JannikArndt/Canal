@@ -1,8 +1,8 @@
-﻿using Model.File;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using Model.File;
 
 namespace Canal.UserControls.WordInfoViews
 {
@@ -17,6 +17,8 @@ namespace Canal.UserControls.WordInfoViews
         private const int NameWidth = 280;
 
         private const int PicWidth = 160;
+
+        private const int RedefinesWidth = 100;
 
         private bool _doubleClicked;
 
@@ -77,11 +79,6 @@ namespace Canal.UserControls.WordInfoViews
 
         private void VariableInfoTreeViewOnDrawNode(object sender, DrawTreeNodeEventArgs e)
         {
-
-            var selectedFore = Color.FromArgb(255, 207, 100, 1);
-            var selectedForeLight = Color.FromArgb(255, 229, 138, 35);
-            var selectedBack = Color.FromArgb(255, 255, 188, 112);
-
             var variable = e.Node.Tag as Variable;
             if (variable == null)
                 return;
@@ -90,38 +87,71 @@ namespace Canal.UserControls.WordInfoViews
 
             var font = e.Node.NodeFont ?? VariableInfoTreeView.Font;
 
+            DrawBackground(e);
+            DrawLevel(e, variable, font);
+            DrawName(e, variable, font, nameWidth);
+            DrawRedefines(e, variable, font, nameWidth);
+            DrawPic(e, variable, font, nameWidth);
+        }
+
+        private void DrawBackground(DrawTreeNodeEventArgs e)
+        {
+            var selectedBack = Color.FromArgb(255, 255, 188, 112);
+
             e.Graphics.FillRectangle(
                 e.Node.IsSelected ? new SolidBrush(selectedBack) : new SolidBrush(VariableInfoTreeView.BackColor),
                 e.Bounds);
+        }
 
-            // Level
-            TextRenderer.DrawText(e.Graphics,
-                                  variable.VariableLevel.ToString("D2"),
-                                  font,
-                                  new Rectangle(e.Bounds.X, e.Bounds.Y, LevelWidth, e.Bounds.Height),
-                                  (e.State & TreeNodeStates.Selected) != 0 ? selectedForeLight : Color.DarkGray,
-                                  Color.Empty,
-                                  TextFormatFlags.VerticalCenter);
-
-            // Name
+        private static void DrawLevel(DrawTreeNodeEventArgs e, Variable variable, Font font)
+        {
+            var selectedForeLight = Color.FromArgb(255, 229, 138, 35);
 
             TextRenderer.DrawText(e.Graphics,
-                                  variable.VariableName,
-                                  font,
-                                  new Rectangle(e.Bounds.X + LevelWidth, e.Bounds.Y, nameWidth, e.Bounds.Height),
-                                  (e.State & TreeNodeStates.Selected) != 0 ? selectedFore : e.Node.ForeColor,
-                                  Color.Empty,
-                                  TextFormatFlags.VerticalCenter);
+                variable.VariableLevel.ToString("D2"),
+                font,
+                new Rectangle(e.Bounds.X, e.Bounds.Y, LevelWidth, e.Bounds.Height),
+                (e.State & TreeNodeStates.Selected) != 0 ? selectedForeLight : Color.DarkGray,
+                Color.Empty,
+                TextFormatFlags.VerticalCenter);
+        }
 
-            // PIC
+        private static void DrawName(DrawTreeNodeEventArgs e, Variable variable, Font font, int nameWidth)
+        {
+            var selectedFore = Color.FromArgb(255, 207, 100, 1);
+
+            TextRenderer.DrawText(e.Graphics,
+                variable.VariableName + (variable.Occurs > 1 ? "  [" + variable.Occurs + "]" : ""),
+                font,
+                new Rectangle(e.Bounds.X + LevelWidth, e.Bounds.Y, nameWidth, e.Bounds.Height),
+                (e.State & TreeNodeStates.Selected) != 0 ? selectedFore : e.Node.ForeColor,
+                Color.Empty,
+                TextFormatFlags.VerticalCenter);
+        }
+
+        private static void DrawRedefines(DrawTreeNodeEventArgs e, Variable variable, Font font, int nameWidth)
+        {
+            if (variable.Redefines != null)
+                TextRenderer.DrawText(e.Graphics,
+                    "↺ " + variable.Redefines.VariableName,
+                    font,
+                    new Rectangle(e.Bounds.X + LevelWidth + nameWidth - RedefinesWidth, e.Bounds.Y, RedefinesWidth + PicWidth,
+                        e.Bounds.Height),
+                    Color.DarkBlue,
+                    Color.Empty,
+                    TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
+        }
+
+        private static void DrawPic(DrawTreeNodeEventArgs e, Variable variable, Font font, int nameWidth)
+        {
             if (variable.Picture != null)
                 TextRenderer.DrawText(e.Graphics,
-                                  variable.Picture.ToString(),
-                                  font,
-                                  new Rectangle(e.Bounds.X + LevelWidth + nameWidth, e.Bounds.Y, PicWidth, e.Bounds.Height),
-                                  Color.DarkGray,
-                                  Color.Empty,
-                                  TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
+                    variable.Picture.ToString(),
+                    font,
+                    new Rectangle(e.Bounds.X + LevelWidth + nameWidth, e.Bounds.Y, PicWidth, e.Bounds.Height),
+                    Color.DarkGray,
+                    Color.Empty,
+                    TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
         }
 
         /// <summary> 
