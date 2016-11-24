@@ -1,5 +1,5 @@
-using Model.File;
 using System.Windows.Forms;
+using Model.File;
 using Util;
 
 namespace Canal.UserControls.WordInfoViews
@@ -19,20 +19,17 @@ namespace Canal.UserControls.WordInfoViews
 
             VariableInfoTreeView.OnVariableDoubleClicked += (sender, clickedVariable) =>
             {
-                if (clickedVariable.Root != null && clickedVariable.Root.CopyReference != null)
+                // TODO find better way to open VariableUsageWindow
+                if (ModifierKeys == Keys.Shift)
                 {
-                    // TODO find better way to open VariableUsageWindow
-                    if (ModifierKeys == Keys.Shift)
-                    {
-                        // shift + double click on variable name => open reference view
-                        _parent.MainWindow.OpenVariableUsageWindow(clickedVariable);
-                    }
-                    else
-                    {
-                        // simple double click on variable name => open file of definition
-                        _parent.MainWindow.OpenFile(clickedVariable.Root.CopyReference.FilePath, clickedVariable);
-                    }
-
+                    // shift + double click on variable name => open reference view
+                    _parent.MainWindow.OpenVariableUsageWindow(clickedVariable);
+                }
+                else
+                {
+                    // simple double click on variable name => open file of definition
+                    var filePath = (clickedVariable.Root ?? clickedVariable).CopyReference.FilePath;
+                    _parent.MainWindow.OpenFile(filePath, clickedVariable);
                 }
             };
         }
