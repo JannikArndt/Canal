@@ -54,7 +54,7 @@
                 codeBox.KeyDown += HandleKeyDown;
                 codeBox.WordSelected += CodeBoxOnWordSelected;
                 codeBox.UndoRedoStateChanged += CodeBoxOnUndoRedoStateChanged;
-                codeBox.VisualMarkerClick += CodeBoxOnPerformMarkerClick;
+                codeBox.VisualMarkerClick += CodeBoxOnSideMarkerClick;
                 codeBox.SelectionChanged += CodeBoxOnSelectionChanged;
                 codeBox.TextChanged += (sender, args) =>
                 {
@@ -141,7 +141,7 @@
             }
         }
 
-        private void CodeBoxOnPerformMarkerClick(object sender, VisualMarkerEventArgs visualMarkerEventArgs)
+        private void CodeBoxOnSideMarkerClick(object sender, VisualMarkerEventArgs visualMarkerEventArgs)
         {
             var clickedLineText = visualMarkerEventArgs.Marker.Text;
 
@@ -171,6 +171,14 @@
                     MessageBox.Show(Resources.MultipleFilesMatchSearch, Resources.MultipleFilesFound, MessageBoxButtons.OK);
                 else
                     MessageBox.Show(Resources.FileCouldNotBeFound, Resources.FileNotFound, MessageBoxButtons.OK);
+            }
+
+            var copyMatch = Regex.Match(clickedLineText, Constants.Copy, RegexOptions.IgnoreCase);
+            if (copyMatch.Success)
+            {
+                var copyFile = CobolFile.CopyReferences.FirstOrDefault(file => file.ProgramName == copyMatch.Groups["program"].Value);
+                if (copyFile != null)
+                    MainWindow.OpenFile(copyFile.FilePath);
             }
         }
 

@@ -1,13 +1,13 @@
-﻿using FastColoredTextBoxNS.Enums;
-using FastColoredTextBoxNS.Events;
-using FastColoredTextBoxNS.Styles;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
+using FastColoredTextBoxNS.Enums;
+using FastColoredTextBoxNS.Events;
+using FastColoredTextBoxNS.Styles;
 
 namespace FastColoredTextBoxNS
 {
@@ -1314,19 +1314,24 @@ namespace FastColoredTextBoxNS
         public Style DotStyle { get; set; }
 
         /// <summary>
-        /// COBOL PERFORMs and GO TOs
+        /// COBOL PERFORMs
         /// </summary>
         public Style PerformMarker { get; set; }
 
         /// <summary>
-        /// COBOL PERFORMs and GO TOs
+        /// COBOL GO TOs
         /// </summary>
         public Style GotoMarker { get; set; }
 
         /// <summary>
-        /// COBOL PERFORMs and GO TOs
+        /// COBOL CALLs
         /// </summary>
         public Style CallMarker { get; set; }
+
+        /// <summary>
+        /// COBOL COPYs
+        /// </summary>
+        public Style CopyMarker { get; set; }
 
         /// <summary>
         /// Style of tags in comments of C#

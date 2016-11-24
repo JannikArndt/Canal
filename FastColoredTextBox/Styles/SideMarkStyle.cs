@@ -1,6 +1,6 @@
-using FastColoredTextBoxNS.Properties;
 using System;
 using System.Drawing;
+using FastColoredTextBoxNS.Properties;
 
 namespace FastColoredTextBoxNS.Styles
 {
@@ -34,6 +34,9 @@ namespace FastColoredTextBoxNS.Styles
                 case MarkerStyle.Call:
                     image = Resources.callMarker;
                     break;
+                case MarkerStyle.Copy:
+                    image = Resources.callMarker;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -57,7 +60,8 @@ namespace FastColoredTextBoxNS.Styles
         {
             Perform,
             Goto,
-            Call
+            Call,
+            Copy
         }
     }
 }
