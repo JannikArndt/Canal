@@ -1,4 +1,8 @@
-﻿v2.14
+﻿v2.15
+- Variables where OCCURS appears before PIC are now recognized
+- Tree-View now shows number of OCCURS and REDEFINED variables
+
+v2.14
 - SHIFT-double-click a variable in the variable tree to find all occurrences (beta, @koljag)
 
 v2.13
