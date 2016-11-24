@@ -1,48 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
-using Canal.Properties;
-using Canal.UserControls.WordInfoViews;
-using FastColoredTextBoxNS;
-using FastColoredTextBoxNS.Events;
-using Logging;
-using Model.File;
-using Model.References;
-using Util;
-
-namespace Canal.UserControls
+﻿namespace Canal.UserControls
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using System.Windows.Forms;
+    using FastColoredTextBoxNS;
+    using FastColoredTextBoxNS.Events;
+    using Logging;
+    using Model.File;
+    using Model.References;
+    using Properties;
+    using Util;
+    using WordInfoViews;
+
+    /// <summary>
+    /// User control that handles a <see cref="CobolFile"/> and the Editor
+    /// </summary>
     public sealed partial class FileControl : UserControl
     {
-        /// <summary>
-        /// Shows if there are unsaved changes in the text.
-        /// </summary>
-        public bool UnsavedChanges { get; private set; }
-
-        public CobolFile CobolFile { get; private set; }
-
-        public MainWindow MainWindow { get; private set; }
-
-        /// <summary>
-        /// Event is thrown the first time the text is changed after it is loaded or saved.
-        /// </summary>
-        public event EventHandler<TextChangedEventArgs> SavedVersionChanged;
-
-        public event EventHandler<FileSystemEventArgs> FileSaved;
-
-        public event EventHandler<Variable> VariableSelected;
-
-        public event EventHandler<Section> SectionSelected;
-
-        public event EventHandler<FileReference> CallReferenceSelected;
-
-        public event EventHandler<Tuple<Procedure, string>> ProcedureSelected;
-
         public FileControl(string filename, MainWindow parent)
         {
             InitializeComponent();
@@ -84,6 +63,7 @@ namespace Canal.UserControls
                         UnsavedChanges = true;
                         SavedVersionChanged(sender, args);
                     }
+
                     saveButton.Enabled = true;
                 };
 
@@ -91,12 +71,34 @@ namespace Canal.UserControls
             }
             catch (Exception exception)
             {
-                Logger.Error(exception, "Error initializing file control for CobolFile {0}: {1}", filename,
-                    exception.Message);
-                MessageBox.Show(Resources.ErrorMessage_FileControl_Constructor + exception.Message, Resources.Error,
-                    MessageBoxButtons.OK);
+                Logger.Error(exception, "Error initializing file control for CobolFile {0}: {1}", filename, exception.Message);
+                MessageBox.Show(Resources.ErrorMessage_FileControl_Constructor + exception.Message, Resources.Error, MessageBoxButtons.OK);
             }
         }
+
+        /// <summary>
+        /// Event is thrown the first time the text is changed after it is loaded or saved.
+        /// </summary>
+        public event EventHandler<TextChangedEventArgs> SavedVersionChanged;
+
+        public event EventHandler<FileSystemEventArgs> FileSaved;
+
+        public event EventHandler<Variable> VariableSelected;
+
+        public event EventHandler<Section> SectionSelected;
+
+        public event EventHandler<FileReference> CallReferenceSelected;
+
+        public event EventHandler<Tuple<Procedure, string>> ProcedureSelected;
+
+        /// <summary>
+        /// Shows if there are unsaved changes in the text.
+        /// </summary>
+        public bool UnsavedChanges { get; private set; }
+
+        public CobolFile CobolFile { get; private set; }
+
+        public MainWindow MainWindow { get; private set; }
 
         public void AnalyzeFileAsync()
         {
@@ -114,8 +116,7 @@ namespace Canal.UserControls
         {
             if (CobolFile.DivisionsAndSection.ProcedureMissing())
             {
-                var result = MessageBox.Show(Resources.ProcedureDivisionMissing_Text,
-                    Resources.ProcedureDivisionMissing_Title, MessageBoxButtons.YesNo);
+                var result = MessageBox.Show(Resources.ProcedureDivisionMissing_Text, Resources.ProcedureDivisionMissing_Title, MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                     InsertCopybooksIntoSource();
             }
@@ -149,8 +150,7 @@ namespace Canal.UserControls
             var performMatch = Regex.Match(clickedLineText, Constants.Perform, RegexOptions.IgnoreCase);
             if (performMatch.Success)
             {
-                codeBox.FindNext(@"^.{7}" + performMatch.Groups[1].Value + @"(\.| +USING| SECTION\.)", false, true,
-                    false, true);
+                codeBox.FindNext(@"^.{7}" + performMatch.Groups[1].Value + @"(\.| +USING| SECTION\.)", false, true, false, true);
                 return;
             }
 
@@ -168,8 +168,7 @@ namespace Canal.UserControls
                 if (fileRef.Count == 1)
                     MainWindow.OpenFile(fileRef.First().FilePath);
                 else if (fileRef.Count > 0)
-                    MessageBox.Show(Resources.MultipleFilesMatchSearch, Resources.MultipleFilesFound,
-                        MessageBoxButtons.OK);
+                    MessageBox.Show(Resources.MultipleFilesMatchSearch, Resources.MultipleFilesFound, MessageBoxButtons.OK);
                 else
                     MessageBox.Show(Resources.FileCouldNotBeFound, Resources.FileNotFound, MessageBoxButtons.OK);
             }
@@ -392,7 +391,7 @@ namespace Canal.UserControls
         {
             DisposeAndClear(splitContainerRight.Panel2.Controls);
 
-            VariableInfo variableInfoControl = new VariableInfo(variable, this) { Dock = DockStyle.Fill };
+            var variableInfoControl = new VariableInfo(variable, this) { Dock = DockStyle.Fill };
             splitContainerRight.Panel2.Controls.Add(variableInfoControl);
             variableInfoControl.ScrollToSelectedVariable();
 
@@ -431,7 +430,7 @@ namespace Canal.UserControls
         /// <returns>A list of possible procedure, section and division names from the given line up.</returns>
         private List<string> FindLastProcedureOrSectionOrDivisonNames(int lineNumber)
         {
-            List<string> procedureNames = new List<string>();
+            var procedureNames = new List<string>();
             for (int currentLineNumber = lineNumber; currentLineNumber >= 0; currentLineNumber--)
             {
                 var currenctLineText = codeBox.GetLineText(currentLineNumber);
@@ -521,22 +520,22 @@ namespace Canal.UserControls
 
         #region Button Clicks
 
-        private void newButton_Click(object sender, EventArgs e)
+        private void NewButton_Click(object sender, EventArgs e)
         {
             MainWindow.New();
         }
 
-        private void openButton_Click(object sender, EventArgs e)
+        private void OpenButton_Click(object sender, EventArgs e)
         {
             MainWindow.OpenFile();
         }
 
-        private void saveButton_Click(object sender, EventArgs e)
+        private void SaveButton_Click(object sender, EventArgs e)
         {
             MainWindow.Save();
         }
 
-        private void formatCodeButton_Click(object sender, EventArgs e)
+        private void FormatCodeButton_Click(object sender, EventArgs e)
         {
             var selection = new Range(codeBox, codeBox.Selection.Start, codeBox.Selection.End);
             if (codeBox.Selection.IsEmpty)
@@ -558,12 +557,12 @@ namespace Canal.UserControls
                 navigateForwardButton.Enabled = false;
         }
 
-        private void undoButton_Click(object sender, EventArgs e)
+        private void UndoButton_Click(object sender, EventArgs e)
         {
             codeBox.Undo();
         }
 
-        private void redoButton_Click(object sender, EventArgs e)
+        private void RedoButton_Click(object sender, EventArgs e)
         {
             codeBox.Redo();
         }
@@ -623,16 +622,13 @@ namespace Canal.UserControls
             catch (Exception exception)
             {
                 Logger.Error(exception, "Error trying to insert copybooks into source: {0}.", exception.Message);
-                MessageBox.Show(string.Format("Error trying to insert copybooks into source: {0}.", exception.Message),
-                    Resources.Error, MessageBoxButtons.OK);
+                MessageBox.Show(
+                    string.Format("Error trying to insert copybooks into source: {0}.", exception.Message),
+                    Resources.Error,
+                    MessageBoxButtons.OK);
             }
         }
 
         #endregion
-
-        private void tableOfContents_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

@@ -1,15 +1,15 @@
-﻿using Canal.Properties;
-using FastColoredTextBoxNS.Events;
-using Logging;
-using Model.File;
-using System;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-
-namespace Canal.UserControls
+﻿namespace Canal.UserControls
 {
+    using System;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Forms;
+    using FastColoredTextBoxNS.Events;
+    using Logging;
+    using Model.File;
+    using Properties;
+
     public class TabUtil
     {
         private readonly TabControl _tabControl;
@@ -44,7 +44,7 @@ namespace Canal.UserControls
             _tabControl.SelectedTab.Text = text;
         }
 
-        public bool TryShowTab(string filepath, Variable currentVar = null, String lineText = null)
+        public bool TryShowTab(string filepath, Variable currentVar = null, string lineText = null)
         {
             try
             {
@@ -56,12 +56,12 @@ namespace Canal.UserControls
                 {
                     _tabControl.SelectedTab = tab;
                     Logger.Info("Switching to tab {0}: {1}", tab.TabIndex, tab.Text);
-                    
+
                     // Idea: Set codebox to line with named lineText and then search the variable name again to have only that marked. If the
                     // text selection is not set to the given line, the first occurence of the given variable will be selected regardless which number
                     // of appearance was meant to be selected.
                     // This is not done here because functionality from the not yet merged fuzzy search branch is needed.
-                    //if (lineText != null)
+                    // if (lineText != null)
                     //    CurrentFileControl.FindInCodeBox(lineText, false, false, false, true);
                     if (lineText != null && currentVar != null)
                         CurrentFileControl.FindInCodeBoxAfterGivenString(currentVar.VariableName, lineText);
@@ -70,6 +70,7 @@ namespace Canal.UserControls
 
                     return true;
                 }
+
                 return false;
             }
             catch (Exception exception)
@@ -78,18 +79,19 @@ namespace Canal.UserControls
                 return false;
             }
         }
-       
 
         private void TabControlOnMouseDown(object sender, MouseEventArgs mouseEventArgs)
         {
-            //Looping through the controls.
+            // Looping through the controls.
             for (int i = 0; i < _tabControl.TabPages.Count; i++)
             {
                 Rectangle r = _tabControl.GetTabRect(i);
 
-                Rectangle closeButton = new Rectangle(r.Right - 15, r.Top + 4, 9, 7);
+                var closeButton = new Rectangle(r.Right - 15, r.Top + 4, 9, 7);
 
-                if (r.Contains(mouseEventArgs.Location) && mouseEventArgs.Button == MouseButtons.Middle || closeButton.Contains(mouseEventArgs.Location))
+                var tabHitWithMiddleButton = r.Contains(mouseEventArgs.Location) && mouseEventArgs.Button == MouseButtons.Middle;
+                var closeButtonHit = closeButton.Contains(mouseEventArgs.Location);
+                if (tabHitWithMiddleButton || closeButtonHit)
                 {
                     CloseTab(i);
                     return;
@@ -145,6 +147,7 @@ namespace Canal.UserControls
                 {
                     Logger.Warning("Tried to close tab at index {0}, failed: {1}.", index, exception.Message);
                 }
+
                 return true;
             }
 
@@ -155,6 +158,7 @@ namespace Canal.UserControls
                 _tabControl.TabPages.RemoveAt(tabIndex);
                 return true;
             }
+
             return false;
         }
 

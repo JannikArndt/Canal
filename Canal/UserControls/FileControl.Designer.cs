@@ -1,5 +1,5 @@
-﻿using FastColoredTextBoxNS;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using FastColoredTextBoxNS;
 
 namespace Canal.UserControls
 {
@@ -203,7 +203,7 @@ namespace Canal.UserControls
             this.newButton.Name = "newButton";
             this.newButton.Size = new System.Drawing.Size(23, 22);
             this.newButton.Text = "New";
-            this.newButton.Click += new System.EventHandler(this.newButton_Click);
+            this.newButton.Click += new System.EventHandler(this.NewButton_Click);
             // 
             // openButton
             // 
@@ -213,7 +213,7 @@ namespace Canal.UserControls
             this.openButton.Name = "openButton";
             this.openButton.Size = new System.Drawing.Size(23, 22);
             this.openButton.Text = "Open";
-            this.openButton.Click += new System.EventHandler(this.openButton_Click);
+            this.openButton.Click += new System.EventHandler(this.OpenButton_Click);
             // 
             // saveButton
             // 
@@ -224,7 +224,7 @@ namespace Canal.UserControls
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(23, 22);
             this.saveButton.Text = "Save";
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            this.saveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // toolStripSeparator4
             // 
@@ -240,7 +240,7 @@ namespace Canal.UserControls
             this.undoButton.Name = "undoButton";
             this.undoButton.Size = new System.Drawing.Size(23, 22);
             this.undoButton.Text = "Undo";
-            this.undoButton.Click += new System.EventHandler(this.undoButton_Click);
+            this.undoButton.Click += new System.EventHandler(this.UndoButton_Click);
             // 
             // redoButton
             // 
@@ -251,7 +251,7 @@ namespace Canal.UserControls
             this.redoButton.Name = "redoButton";
             this.redoButton.Size = new System.Drawing.Size(23, 22);
             this.redoButton.Text = "Redo";
-            this.redoButton.Click += new System.EventHandler(this.redoButton_Click);
+            this.redoButton.Click += new System.EventHandler(this.RedoButton_Click);
             // 
             // toolStripSeparator3
             // 
@@ -341,7 +341,7 @@ namespace Canal.UserControls
             this.formatCodeButton.Name = "formatCodeButton";
             this.formatCodeButton.Size = new System.Drawing.Size(23, 22);
             this.formatCodeButton.Text = "Format Code";
-            this.formatCodeButton.Click += new System.EventHandler(this.formatCodeButton_Click);
+            this.formatCodeButton.Click += new System.EventHandler(this.FormatCodeButton_Click);
             // 
             // splitContainerRight
             // 
@@ -368,7 +368,6 @@ namespace Canal.UserControls
             this.tableOfContents.Name = "tableOfContents";
             this.tableOfContents.Size = new System.Drawing.Size(378, 321);
             this.tableOfContents.TabIndex = 0;
-            this.tableOfContents.Load += new System.EventHandler(this.tableOfContents_Load);
             // 
             // loaderImageInfoTab
             // 

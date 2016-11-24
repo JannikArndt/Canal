@@ -1,29 +1,24 @@
-﻿using Canal.UserControls;
-using Canal.UserControls.VariableUsageAnalyzer;
-using Model.File;
-using System.Diagnostics;
-using System.Net;
-using Util;
-
-// ReSharper disable MemberCanBePrivate.Global
-
-namespace Canal
+﻿namespace Canal
 {
-    using Logging;
-    using Properties;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.IO;
+    using System.Net;
     using System.Windows.Forms;
+    using Logging;
+    using Model.File;
+    using Properties;
+    using UserControls;
+    using UserControls.VariableUsageAnalyzer;
+    using Util;
 
     public partial class MainWindow : Form
     {
         private readonly TabUtil _tabUtil;
 
         private readonly string[] _openFilesOnStartup;
-
-
 
         public MainWindow(string[] files = null)
         {
@@ -46,8 +41,6 @@ namespace Canal
 
             TextUtil.Instance.ErrorEventHandler += (sender, s) => MessageBox.Show(s, Resources.Error, MessageBoxButtons.OK);
         }
-
-
 
         private void LoadMostRecentDirectory()
         {
@@ -133,72 +126,86 @@ namespace Canal
                 _tabUtil.ShowNextTab();
                 return true;
             }
+
             if (keyData == (Keys.Control | Keys.Shift | Keys.Tab))
             {
                 _tabUtil.ShowPreviousTab();
                 return true;
             }
+
             if (keyData == (Keys.Alt | Keys.D1))
             {
                 _tabUtil.TryShowTab(1);
                 return true;
             }
+
             if (keyData == (Keys.Alt | Keys.D2))
             {
                 _tabUtil.TryShowTab(2);
                 return true;
             }
+
             if (keyData == (Keys.Alt | Keys.D3))
             {
                 _tabUtil.TryShowTab(3);
                 return true;
             }
+
             if (keyData == (Keys.Alt | Keys.D4))
             {
                 _tabUtil.TryShowTab(4);
                 return true;
             }
+
             if (keyData == (Keys.Alt | Keys.D5))
             {
                 _tabUtil.TryShowTab(5);
                 return true;
             }
+
             if (keyData == (Keys.Alt | Keys.D6))
             {
                 _tabUtil.TryShowTab(6);
                 return true;
             }
+
             if (keyData == (Keys.Alt | Keys.D7))
             {
                 _tabUtil.TryShowTab(7);
                 return true;
             }
+
             if (keyData == (Keys.Alt | Keys.D8))
             {
                 _tabUtil.TryShowTab(8);
                 return true;
             }
+
             if (keyData == (Keys.Alt | Keys.D9))
             {
                 _tabUtil.TryShowTab(9);
                 return true;
             }
+
             if (keyData == (Keys.Alt | Keys.D0))
             {
                 _tabUtil.TryShowTab(0);
                 return true;
             }
+
             if (keyData == Keys.F1)
             {
                 var logWindow = new Log();
                 logWindow.Show();
                 return true;
             }
+
             if (keyData == Keys.F4)
             {
                 ShowCodeGenerator();
                 return true;
             }
+
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
@@ -235,7 +242,8 @@ namespace Canal
             try
             {
                 _tabUtil.AddTab(filename);
-                //Scrolling to right variable when the file is newly opened still has to be implemented like in TabUtil.TryShowTab
+
+                // Scrolling to right variable when the file is newly opened still has to be implemented like in TabUtil.TryShowTab
                 if (currentVar != null)
                     _tabUtil.CurrentFileControl.FindInCodeBox(currentVar.VariableName, false, false, false, true);
                 MostRecentlyUsed.Instance.Add(filename);
