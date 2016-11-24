@@ -1,9 +1,9 @@
 ﻿
+using System;
+using System.Drawing;
 using FastColoredTextBoxNS.Enums;
 using FastColoredTextBoxNS.Events;
 using FastColoredTextBoxNS.Styles;
-using System;
-using System.Drawing;
 
 namespace FastColoredTextBoxNS
 {
@@ -37,6 +37,7 @@ namespace FastColoredTextBoxNS
         private Regex _cobolPerformRegex;
         private Regex _cobolGotoRegex;
         private Regex _cobolCallRegex;
+        private Regex _cobolCopyRegex;
 
         /// <summary>
         /// Adds content to the RegExes
@@ -65,9 +66,10 @@ namespace FastColoredTextBoxNS
 
             _cobolDotRegex = new Regex(@"^.*\..*$", multilineAndCompiled);
 
-            _cobolPerformRegex = new Regex(@"^.*PERFORM.*$", multilineAndCompiled);
-            _cobolGotoRegex = new Regex(@"^.*GO TO.*$", multilineAndCompiled);
-            _cobolCallRegex = new Regex(@"^.*CALL.*$", multilineAndCompiled);
+            _cobolPerformRegex = new Regex(@"^.*PERFORM .*$", multilineAndCompiled);
+            _cobolGotoRegex = new Regex(@"^.*GO TO .*$", multilineAndCompiled);
+            _cobolCallRegex = new Regex(@"^.*CALL .*$", multilineAndCompiled);
+            _cobolCopyRegex = new Regex(@"^.*COPY .*$", multilineAndCompiled);
         }
 
         private void CobolSyntaxHighlight(Range range)
@@ -117,6 +119,7 @@ namespace FastColoredTextBoxNS
             range.SetStyle(PerformMarker, _cobolPerformRegex);
             range.SetStyle(GotoMarker, _cobolGotoRegex);
             range.SetStyle(CallMarker, _cobolCallRegex);
+            range.SetStyle(CopyMarker, _cobolCopyRegex);
 
             // clear folding markers
             range.ClearFoldingMarkers();
@@ -280,6 +283,7 @@ namespace FastColoredTextBoxNS
             PerformMarker = new SideMarkStyle(SideMarkStyle.MarkerStyle.Perform);
             GotoMarker = new SideMarkStyle(SideMarkStyle.MarkerStyle.Goto);
             CallMarker = new SideMarkStyle(SideMarkStyle.MarkerStyle.Call);
+            CopyMarker = new SideMarkStyle(SideMarkStyle.MarkerStyle.Copy);
         }
     }
 }
