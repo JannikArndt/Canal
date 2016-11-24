@@ -1,11 +1,4 @@
-﻿using Canal.Properties;
-using Canal.UserControls.WordInfoViews;
-using FastColoredTextBoxNS;
-using FastColoredTextBoxNS.Events;
-using Logging;
-using Model.File;
-using Model.References;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -13,6 +6,13 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Canal.Properties;
+using Canal.UserControls.WordInfoViews;
+using FastColoredTextBoxNS;
+using FastColoredTextBoxNS.Events;
+using Logging;
+using Model.File;
+using Model.References;
 using Util;
 
 namespace Canal.UserControls
@@ -143,6 +143,8 @@ namespace Canal.UserControls
         private void CodeBoxOnPerformMarkerClick(object sender, VisualMarkerEventArgs visualMarkerEventArgs)
         {
             var clickedLineText = visualMarkerEventArgs.Marker.Text;
+
+            codeBox.FindNext(clickedLineText, false, false, false, true);
 
             var performMatch = Regex.Match(clickedLineText, Constants.Perform, RegexOptions.IgnoreCase);
             if (performMatch.Success)
