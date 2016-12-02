@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.File;
 using Model.Pictures;
 using Util;
+using System.Linq;
 
 namespace Tests
 {
@@ -286,6 +287,22 @@ namespace Tests
             Assert.AreEqual(typeof(Pic88), actual["BAR"].Picture.GetType());
             Assert.AreEqual("BAR", actual["BAR"].VariableName);
             Assert.AreEqual("\"0\", \"1\", \"2\", \"3\", \"4\", \"A\", \"B\"", actual["BAR"].Picture.Value); // TODO
+        }
+
+        [TestMethod]
+        public void VariableParserTest_Compute()
+        {
+            string input = "026800             COMPUTE BETEI-AUFSETZ-4       = DATUM-CONS              " +
+                            "026900                                          - BETEI-START.            " +
+                            "026900                                          / BETEI-MIDDLE.           " +
+                            "026900                                          * BETEI-END.              ";
+            var foundTokens = VariablesUtil.Instance.GetIdentifierLiterals(input);
+            foundTokens.ElementAt<Literal>(0);
+            Assert.AreEqual("BETEI-AUFSETZ-4", foundTokens.ElementAt<Literal>(0).Name);
+            Assert.AreEqual("DATUM-CONS", foundTokens.ElementAt<Literal>(1).Name);
+            Assert.AreEqual("BETEI-START", foundTokens.ElementAt<Literal>(2).Name);
+            Assert.AreEqual("BETEI-MIDDLE", foundTokens.ElementAt<Literal>(3).Name);
+            Assert.AreEqual("BETEI-END", foundTokens.ElementAt<Literal>(4).Name);
         }
     }
 }
