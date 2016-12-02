@@ -293,8 +293,8 @@ namespace Tests
         public void VariableParserTest_Compute()
         {
             string input = "026800             COMPUTE BETEI-AUFSETZ-4       = DATUM-CONS              " +
-                            "026900                                          - BETEI-START.            " +
-                            "026900                                          / BETEI-MIDDLE.           " +
+                            "026900                                          - BETEI-START            " +
+                            "026900                                          / BETEI-MIDDLE           " +
                             "026900                                          * BETEI-END.              ";
             var foundTokens = VariablesUtil.Instance.GetIdentifierLiterals(input);
             foundTokens.ElementAt<Literal>(0);
