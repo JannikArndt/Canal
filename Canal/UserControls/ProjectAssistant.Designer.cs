@@ -1,4 +1,6 @@
-﻿namespace Canal.UserControls
+﻿using Canal.Properties;
+
+namespace Canal.UserControls
 {
     partial class ProjectAssistant
     {
@@ -214,7 +216,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(597, 272);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = Resources.Canal_Logo_small;
             this.Name = "ProjectAssistant";
             this.Text = "New Project";
             this.tableLayoutPanel1.ResumeLayout(false);

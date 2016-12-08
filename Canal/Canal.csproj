@@ -162,12 +162,6 @@
       <DependentUpon>TableOfContents.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\TabUtil.cs" />
-    <Compile Include="UserControls\TextViewer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UserControls\TextViewer.Designer.cs">
-      <DependentUpon>TextViewer.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\VariableUsageAnalyzer\LineDTO.cs" />
     <Compile Include="UserControls\VariableUsageAnalyzer\VariableListControl.cs">
       <SubType>UserControl</SubType>
@@ -259,9 +253,6 @@
     <EmbeddedResource Include="UserControls\TableOfContents.resx">
       <DependentUpon>TableOfContents.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\TextViewer.resx">
-      <DependentUpon>TextViewer.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
@@ -292,6 +283,10 @@
     </Resource>
     <None Include="Resources\CollapseAllButton.Image.png" />
     <None Include="Resources\ExpandAllButton.Image.png" />
+    <Content Include="Resources\icon\Canal Logo big.ico" />
+    <Content Include="Resources\icon\Canal Logo big.png" />
+    <Content Include="Resources\icon\Canal Logo small.ico" />
+    <Content Include="Resources\icon\Canal Logo small.png" />
     <Content Include="Resources\SourceCodePro-Bold.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -308,16 +303,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Resources\SourceCodePro-Black.ttf" />
-    <None Include="Resources\SourceCodePro-BlackIt.ttf" />
-    <None Include="Resources\SourceCodePro-ExtraLight.ttf" />
-    <None Include="Resources\SourceCodePro-ExtraLightIt.ttf" />
-    <None Include="Resources\SourceCodePro-Light.ttf" />
-    <None Include="Resources\SourceCodePro-LightIt.ttf" />
-    <None Include="Resources\SourceCodePro-Medium.ttf" />
-    <None Include="Resources\SourceCodePro-MediumIt.ttf" />
-    <None Include="Resources\SourceCodePro-Semibold.ttf" />
-    <None Include="Resources\SourceCodePro-SemiboldIt.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,4 +1,6 @@
-﻿namespace Canal
+﻿using Canal.Properties;
+
+namespace Canal
 {
     partial class Log
     {
@@ -71,6 +73,7 @@
             this.ClientSize = new System.Drawing.Size(826, 488);
             this.Controls.Add(this.levelFilter);
             this.Controls.Add(this.logTextBox);
+            this.Icon = Resources.Canal_Logo_small;
             this.Name = "Log";
             this.Text = "Log";
             ((System.ComponentModel.ISupportInitialize)(this.loggerEventArgsBindingSource)).EndInit();

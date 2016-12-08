@@ -16,7 +16,7 @@ namespace Canal.UserControls
             base.OnDrawItem(e);
             e.DrawBackground();
 
-            if (e.Index < 0)
+            if (e.Index < 0 || Items.Count == 0)
                 return;
 
             var text = Items[e.Index].ToString();

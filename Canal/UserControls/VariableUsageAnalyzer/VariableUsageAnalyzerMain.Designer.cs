@@ -1,4 +1,6 @@
-﻿namespace Canal.UserControls.VariableUsageAnalyzer
+﻿using Canal.Properties;
+
+namespace Canal.UserControls.VariableUsageAnalyzer
 {
     sealed partial class VariableUsageAnalyzerMain
     {
@@ -61,7 +63,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1268, 637);
             this.Controls.Add(this.splitContainer1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = Resources.Canal_Logo_small;
             this.Name = "VariableUsageAnalyzerMain";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();

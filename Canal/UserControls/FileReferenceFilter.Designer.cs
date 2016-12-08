@@ -1,4 +1,6 @@
-﻿namespace Canal.UserControls
+﻿using Canal.Properties;
+
+namespace Canal.UserControls
 {
     partial class FileReferenceFilter
     {
@@ -52,7 +54,7 @@
             this.referenceListBox.Location = new System.Drawing.Point(12, 12);
             this.referenceListBox.Margin = new System.Windows.Forms.Padding(5);
             this.referenceListBox.Name = "referenceListBox";
-            this.referenceListBox.Size = new System.Drawing.Size(512, 379);
+            this.referenceListBox.Size = new System.Drawing.Size(512, 365);
             this.referenceListBox.TabIndex = 0;
             // 
             // button_selectAll
@@ -111,7 +113,7 @@
             this.Controls.Add(this.button_selectNone);
             this.Controls.Add(this.button_selectAll);
             this.Controls.Add(this.referenceListBox);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = Resources.Canal_Logo_small;
             this.Name = "FileReferenceFilter";
             this.Text = "FileReferenceFilter";
             this.ResumeLayout(false);
