@@ -63,19 +63,9 @@ namespace Canal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap bridge {
+        internal static System.Drawing.Bitmap Canal_Logo {
             get {
-                object obj = ResourceManager.GetObject("bridge", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Canal_Logo_big {
-            get {
-                object obj = ResourceManager.GetObject("Canal_Logo_big", resourceCulture);
+                object obj = ResourceManager.GetObject("Canal_Logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +73,9 @@ namespace Canal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon Canal_Logo_big1 {
+        internal static System.Drawing.Icon Canal_Logo_big {
             get {
-                object obj = ResourceManager.GetObject("Canal_Logo_big1", resourceCulture);
+                object obj = ResourceManager.GetObject("Canal_Logo_big", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

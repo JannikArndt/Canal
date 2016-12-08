@@ -281,8 +281,6 @@
     <Resource Include="Resources\ChangeLog.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <None Include="Resources\CollapseAllButton.Image.png" />
-    <None Include="Resources\ExpandAllButton.Image.png" />
     <Content Include="Resources\icon\Canal Logo big.ico" />
     <Content Include="Resources\icon\Canal Logo big.png" />
     <Content Include="Resources\icon\Canal Logo small.ico" />
