@@ -16,11 +16,11 @@ namespace Util
 
         public static readonly RegexOptions CompiledCaseInsensitive = RegexOptions.Compiled | RegexOptions.IgnoreCase;
 
-        public static readonly string StatementsBeforeOutputLiteral = @"((?<beforeOutput>INTO|TO) +)";
+        public static readonly string StatementsBeforeOutputLiteral = @"((?<beforeOutput>INTO|TO|COMPUTE) +)";
 
         public static readonly string StatementsBeforeInputLiteralSpaceMandatory = @"((?<beforeInputWithSpace>MOVE|DIVIDE|ADD|SUBTRACT|MULTIPLY|SET|IF|AND|OR|THAN|GIVING|REMAINDER|NOT|BY|UNTIL) +)";
 
-        public static readonly string StatementsBeforeInputLiteralSpaceOptional = @"((?<beforeInput>=|<|>) *)";
+        public static readonly string StatementsBeforeInputLiteralSpaceOptional = @"((?<beforeInput>=|<|>|-|\+|\*|/) *)";
 
         public static readonly string LiteralWithInputOutput = "(" + StatementsBeforeOutputLiteral + Or + StatementsBeforeInputLiteralSpaceMandatory
             + Or + StatementsBeforeInputLiteralSpaceOptional + ")" + NamedLiteral;
