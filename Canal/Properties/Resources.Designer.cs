@@ -63,28 +63,48 @@ namespace Canal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap bridge {
+        internal static System.Drawing.Bitmap Canal_Logo {
             get {
-                object obj = ResourceManager.GetObject("bridge", resourceCulture);
+                object obj = ResourceManager.GetObject("Canal_Logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to v2.13
-        ///- new search option: fuzzy search
-        ///- generated enums now have a value
-        ///- bugfix: ctrl+c restored
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon Canal_Logo_big {
+            get {
+                object obj = ResourceManager.GetObject("Canal_Logo_big", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon Canal_Logo_small {
+            get {
+                object obj = ResourceManager.GetObject("Canal_Logo_small", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to v2.16
+        ///- NEW: Side marker for COPY books
+        ///- FIX: Clicking on a side marker now remembers the position when navigating backwards
+        ///- FIX: Double-clicking a procedure name in code does not jump there anymore
+        ///- FIX: Local root variables can be jumped to
+        ///- FIX: Files are marked as not changed after &quot;Revert Changes&quot;
         ///
-        ///v2.12
-        ///- COPY-books can be found without explicit folder name (&quot;OF&quot;) if filename is unique (@koljag)
-        ///- Double-clicking a variable now selects it in the variable tree (@koljag)
-        ///- Tree-view now highlights the currently displayed procedure (@koljag)
-        ///- .cob and .cbl files are now treated separately (@koljag)
         ///
-        ///v2.11
-        ///- &quot;Referenced By&quot; now jumps to the line where the &quot;perform&quot; is
-        ///- Added support for mu [rest of string was truncated]&quot;;.
+        ///v2.15
+        ///- FIX: Variables where OCCURS appears before PIC are now recognized
+        ///- NEW: Tree-View now shows number of OCCURS and REDEFINED variables
+        ///
+        ///v2.14
+        ///- SHIFT-double-click a variable in the  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ChangeLog {
             get {

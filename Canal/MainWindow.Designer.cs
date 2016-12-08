@@ -1,4 +1,6 @@
-﻿namespace Canal
+﻿using Canal.Properties;
+
+namespace Canal
 {
     partial class MainWindow
     {
@@ -438,7 +440,7 @@
             this.ClientSize = new System.Drawing.Size(1384, 762);
             this.Controls.Add(this.splitContainer);
             this.Controls.Add(this.MainMenu);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = Resources.Canal_Logo_small;
             this.MainMenuStrip = this.MainMenu;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainWindow";

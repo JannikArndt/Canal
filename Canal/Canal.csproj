@@ -74,7 +74,7 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>bridge.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\icon\Canal Logo small.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -162,12 +162,6 @@
       <DependentUpon>TableOfContents.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\TabUtil.cs" />
-    <Compile Include="UserControls\TextViewer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UserControls\TextViewer.Designer.cs">
-      <DependentUpon>TextViewer.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\VariableUsageAnalyzer\LineDTO.cs" />
     <Compile Include="UserControls\VariableUsageAnalyzer\VariableListControl.cs">
       <SubType>UserControl</SubType>
@@ -240,7 +234,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="bridge.ico" />
     <Content Include="Examples\RepWriteSumm.cbl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -258,9 +251,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\TableOfContents.resx">
       <DependentUpon>TableOfContents.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\TextViewer.resx">
-      <DependentUpon>TextViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\About.resx">
       <DependentUpon>About.cs</DependentUpon>
@@ -290,8 +280,10 @@
     <Resource Include="Resources\ChangeLog.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <None Include="Resources\CollapseAllButton.Image.png" />
-    <None Include="Resources\ExpandAllButton.Image.png" />
+    <Content Include="Resources\icon\Canal Logo big.ico" />
+    <Content Include="Resources\icon\Canal Logo big.png" />
+    <Content Include="Resources\icon\Canal Logo small.ico" />
+    <Content Include="Resources\icon\Canal Logo small.png" />
     <Content Include="Resources\SourceCodePro-Bold.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -308,16 +300,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Resources\SourceCodePro-Black.ttf" />
-    <None Include="Resources\SourceCodePro-BlackIt.ttf" />
-    <None Include="Resources\SourceCodePro-ExtraLight.ttf" />
-    <None Include="Resources\SourceCodePro-ExtraLightIt.ttf" />
-    <None Include="Resources\SourceCodePro-Light.ttf" />
-    <None Include="Resources\SourceCodePro-LightIt.ttf" />
-    <None Include="Resources\SourceCodePro-Medium.ttf" />
-    <None Include="Resources\SourceCodePro-MediumIt.ttf" />
-    <None Include="Resources\SourceCodePro-Semibold.ttf" />
-    <None Include="Resources\SourceCodePro-SemiboldIt.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -370,13 +352,13 @@
       <Visible>False</Visible>
       <Description>COBOL Copy Book</Description>
       <Progid>de.jannikarndt.canal.cbl</Progid>
-      <DefaultIcon>bridge.ico</DefaultIcon>
+      <DefaultIcon>Resources\icon\Canal Logo small.ico</DefaultIcon>
     </FileAssociation>
     <FileAssociation Include=".cob">
       <Visible>False</Visible>
       <Description>COBOL File</Description>
       <Progid>de.jannikarndt.canal.cob</Progid>
-      <DefaultIcon>bridge.ico</DefaultIcon>
+      <DefaultIcon>Resources\icon\Canal Logo small.ico</DefaultIcon>
     </FileAssociation>
   </ItemGroup>
   <ItemGroup />
