@@ -1,4 +1,7 @@
-﻿v2.16
+﻿v2.17
+- FIX: Line navigation was broken. Now you can go back the complete history.
+
+v2.16
 - NEW: Side marker for COPY books
 - FIX: Clicking on a side marker now remembers the position when navigating backwards
 - FIX: Double-clicking a procedure name in code does not jump there anymore
