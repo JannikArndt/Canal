@@ -48,7 +48,6 @@ namespace Canal
 
         private void NewProjectToolStripMenuItemClick(object sender, EventArgs e)
         {
-            MessageBox.Show(Resources.Project_files_are_not_supported_in_this_version_of_Canal, Resources.Not_supported, MessageBoxButtons.OK);
             NewProject();
         }
 
