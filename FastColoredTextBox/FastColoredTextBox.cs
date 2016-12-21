@@ -2334,8 +2334,11 @@ namespace FastColoredTextBoxNS
         {
             if (Selection.Start.iLine < LinesCount)
             {
-                _lines[Selection.Start.iLine].LastVisit = DateTime.Now;
-                _lastNavigatedDateTime = _lines[Selection.Start.iLine].LastVisit;
+                if (_lastNavigatedDateTime != _lines[Selection.Start.iLine].LastVisit)
+                {
+                    _lines[Selection.Start.iLine].LastVisit = DateTime.Now;
+                    _lastNavigatedDateTime = _lines[Selection.Start.iLine].LastVisit;
+                }
             }
         }
 
